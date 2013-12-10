@@ -1,0 +1,92 @@
+/**
+ * Angular JS slider directive
+ *
+ * (c) Rafal Zajac <rzajac@gmail.com>
+ * http://github.com/rzajac/angularjs-slider
+ *
+ * Licensed under the MIT license
+ */
+
+.rounded(@radius: 2px) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  border-radius: @radius;
+}
+
+rzslider {
+  display: inline-block;
+  position: relative;
+  height: 2px;
+  width: 100%;
+  margin: 30px 0 15px 0;
+  vertical-align: middle;
+}
+
+rzslider span {
+  white-space: nowrap;
+  position: absolute;
+  display: inline-block;
+}
+
+rzslider span.base {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+rzslider span.bar {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: #fff;
+}
+
+rzslider span.bar.selection {
+  width: 0%;
+  z-index: 1;
+  background: #67b700;
+}
+
+rzslider span.pointer {
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  top: -15px;
+  background-color: #fff;
+  z-index: 2;
+  .rounded(16px);
+}
+
+rzslider span.pointer:after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  .rounded(4px);
+  background: #71818e;
+}
+
+rzslider span.pointer:hover:after {
+  background-color: #67b700;
+}
+
+rzslider span.pointer.active:after {
+  background-color: #67b700;
+}
+
+rzslider span.bubble {
+  cursor: default;
+  top: -32px;
+  padding: 1px 3px 1px 3px;
+  color: #67b700;
+}
+
+rzslider span.bubble.selection {
+  top: 15px;
+}
+
+rzslider span.bubble.limit {
+  /*color: #808080;*/
+}
