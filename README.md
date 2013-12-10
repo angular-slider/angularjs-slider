@@ -19,6 +19,11 @@ Slider directive implementation for AngularJS, without any dependencies.
 
 [http://embed.plnkr.co/EqGIlU/preview](http://embed.plnkr.co/EqGIlU/preview)
 
+## Disclaimer
+
+This project is based on [https://github.com/prajwalkman/angular-slider](https://github.com/prajwalkman/angular-slider). It has been rewritten from scratch in JavaScript
+ (the original source was written in CoffeeScript).
+
 ## License
 
 Licensed under the MIT license
