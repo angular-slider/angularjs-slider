@@ -267,13 +267,27 @@ angular.module('rzModule', [])
           this.fullBar = _elem;
           break;
         case 1:
-          this.selBar = _elem;
+          if(this.range)
+          {
+            this.selBar = _elem;
+          }
+          else
+          {
+            _elem.remove();
+          }
           break;
         case 2:
           this.minPtr = _elem;
           break;
         case 3:
-          this.maxPtr = _elem;
+          if(this.range)
+          {
+            this.maxPtr = _elem;
+          }
+          else
+          {
+            _elem.remove();
+          }
           break;
         case 4:
           this.selBub = _elem;
@@ -288,10 +302,24 @@ angular.module('rzModule', [])
           this.lowBub = _elem;
           break;
         case 8:
-          this.highBub = _elem;
+          if(this.range)
+          {
+            this.highBub = _elem;
+          }
+          else
+          {
+            _elem.remove();
+          }
           break;
         case 9:
-          this.cmbBub = _elem;
+          if(this.range)
+          {
+            this.cmbBub = _elem;
+          }
+          else
+          {
+            _elem.remove();
+          }
           break;
         }
       }, this);
@@ -727,7 +755,6 @@ angular.module('rzModule', [])
       return {
         post: function(scope, elem, attr)
         {
-          console.log(scope); // TODO: remove this!
           return new Slider(scope, elem, attr);
         }
       };

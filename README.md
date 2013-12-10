@@ -15,6 +15,10 @@ Slider directive implementation for AngularJS, without any dependencies.
 </div>
 ```
 
+## Plunkers
+
+[http://embed.plnkr.co/EqGIlU/preview](http://embed.plnkr.co/EqGIlU/preview)
+
 ## License
 
 Licensed under the MIT license
