@@ -11,7 +11,42 @@
 
 angular.module('rzModule', [])
 
-.factory('Slider', ['$timeout', '$document', function($timeout, $document)
+.value('throttle',
+// Taken from underscore project
+function throttle(func, wait, options) {
+  var getTime = (Date.now || function() {
+    return new Date().getTime();
+  });
+  var context, args, result;
+  var timeout = null;
+  var previous = 0;
+  options || (options = {});
+  var later = function() {
+    previous = options.leading === false ? 0 : getTime();
+    timeout = null;
+    result = func.apply(context, args);
+    context = args = null;
+  };
+  return function() {
+    var now = getTime();
+    if (!previous && options.leading === false) previous = now;
+    var remaining = wait - (now - previous);
+    context = this;
+    args = arguments;
+    if (remaining <= 0) {
+      clearTimeout(timeout);
+      timeout = null;
+      previous = now;
+      result = func.apply(context, args);
+      context = args = null;
+    } else if (!timeout && options.trailing !== false) {
+      timeout = setTimeout(later, remaining);
+    }
+    return result;
+  }
+})
+
+.factory('Slider', ['$timeout', '$document', 'throttle', function($timeout, $document, throttle)
 {
   /**
    * Slider
@@ -108,6 +143,20 @@ angular.module('rzModule', [])
     this.maxValue = 0;
 
     /**
+     * High value handle offset in percentages
+     *
+     * @type {number}
+     */
+    this.highValOffsetPerc = 0;
+
+    /**
+     * Low value handle offset in percentages
+     *
+     * @type {number}
+     */
+    this.lowValOffsetPerc = 0;
+
+    /**
      * The delta between min and max value
      *
      * @type {number}
@@ -189,8 +238,8 @@ angular.module('rzModule', [])
 
       $timeout(function()
       {
-        self.setPointers();
-        self.adjustLabels();
+        self.updateHandles('both');
+        self.adjustLabels('timeout');
         self.bindToInputEvents();
       });
 
@@ -200,8 +249,8 @@ angular.module('rzModule', [])
       // Watch for changes to the model
       this.scope.$watch(this.refLow, function()
       {
-        self.setPointers();
-        self.adjustLabels();
+        self.updateHandles('low');
+        self.adjustLabels('refLow');
       });
 
       if(this.range)
@@ -209,8 +258,8 @@ angular.module('rzModule', [])
         // We have to watch it only for range slider
         this.scope.$watch(this.refHigh, function()
         {
-          self.setPointers();
-          self.adjustLabels();
+          self.updateHandles('high');
+          self.adjustLabels('refHigh');
         });
       }
 
@@ -220,8 +269,8 @@ angular.module('rzModule', [])
         this.scope.$watch('rzSliderFloor', function()
         {
           self.setMinAndMax();
-          self.setPointers();
-          self.adjustLabels();
+          self.updateHandles('both');
+          self.adjustLabels('floor');
         });
       }
 
@@ -231,8 +280,8 @@ angular.module('rzModule', [])
         this.scope.$watch('rzSliderCeil', function()
         {
           self.setMinAndMax();
-          self.setPointers();
-          self.adjustLabels();
+          self.updateHandles('both');
+          self.adjustLabels('ceil');
         });
       }
     },
@@ -308,6 +357,7 @@ angular.module('rzModule', [])
       this.minOffset = 0;
       this.maxOffset = this.barWidth - pointerWidth;
       this.offsetRange = this.maxOffset - this.minOffset;
+      this.setLeft(this.ceilBub, this.barWidth - this.offsetWidth(this.ceilBub));
     },
 
     /**
@@ -317,26 +367,25 @@ angular.module('rzModule', [])
      */
     setPointers: function()
     {
-      var newHighValue, newLowValue, minPtrOL, maxPtrOL, selBarOL, selBarWidth;
+      var minPtrOL, maxPtrOL, selBarOL, selBarWidth;
 
-      this.setLeft(this.ceilBub, this.barWidth - this.offsetWidth(this.ceilBub));
-      newLowValue = this.percentValue(this.scope[this.refLow]);
+      this.lowValOffsetPerc = this.percentValue(this.scope[this.refLow]);
       // Set low value slider handle position
-      minPtrOL = this.setLeft(this.minPtr, this.percentToOffset(newLowValue));
+      minPtrOL = this.setLeft(this.minPtr, this.percentToOffset(this.lowValOffsetPerc));
       // Set low value label position
       this.setLeft(this.lowBub, minPtrOL - this.halfOffsetWidth(this.lowBub) + this.ptrHalfWidth);
 
       if (this.range)
       {
-        newHighValue = this.percentValue(this.scope[this.refHigh]);
+        this.highValOffsetPerc = this.percentValue(this.scope[this.refHigh]);
         // Set high value slider handle position
-        maxPtrOL = this.setLeft(this.maxPtr, this.percentToOffset(newHighValue));
+        maxPtrOL = this.setLeft(this.maxPtr, this.percentToOffset(this.highValOffsetPerc));
         // Set high value slider handle label position
         this.setLeft(this.highBub, maxPtrOL - (this.halfOffsetWidth(this.highBub)) + this.ptrHalfWidth);
 
         // Set selection bar position
         selBarOL = this.setLeft(this.selBar, minPtrOL + this.ptrHalfWidth);
-        selBarWidth = this.percentToOffset(newHighValue - newLowValue);
+        selBarWidth = this.percentToOffset(this.highValOffsetPerc - this.lowValOffsetPerc);
         this.selBar.css({width: selBarWidth + 'px'});
 
         // Set combined label position
@@ -349,12 +398,93 @@ angular.module('rzModule', [])
     },
 
     /**
+     * Update slider handles and label positions
+     *
+     * @param {string} which
+     */
+    updateHandles: function(which)
+    {
+      if(which === 'low')
+      {
+        this.updateLowHandle();
+        if(this.range) { this.updateSelectionBar(); }
+        return;
+      }
+
+      if(which === 'high')
+      {
+        this.updateHighHandle();
+        if(this.range) { this.updateSelectionBar(); }
+        return;
+      }
+
+      // Update both
+      this.updateLowHandle();
+      this.updateHighHandle();
+      this.updateSelectionBar();
+    },
+
+    /**
+     * Update low slider handle position and label
+     *
+     * @returns {undefined}
+     */
+    updateLowHandle: function()
+    {
+      var minPtrOL;
+
+      this.lowValOffsetPerc = this.percentValue(this.scope[this.refLow]);
+      // Set low value slider handle position
+      minPtrOL = this.setLeft(this.minPtr, this.percentToOffset(this.lowValOffsetPerc));
+
+      // Set low value label position
+      this.setLeft(this.lowBub, minPtrOL - this.halfOffsetWidth(this.lowBub) + this.ptrHalfWidth);
+    },
+
+    /**
+     * Update high slider handle position and label
+     *
+     * @returns {undefined}
+     */
+    updateHighHandle: function()
+    {
+      var maxPtrOL;
+
+      this.highValOffsetPerc = this.percentValue(this.scope[this.refHigh]);
+      // Set high value slider handle position
+      maxPtrOL = this.setLeft(this.maxPtr, this.percentToOffset(this.highValOffsetPerc));
+      // Set high value slider handle label position
+      this.setLeft(this.highBub, maxPtrOL - (this.halfOffsetWidth(this.highBub)) + this.ptrHalfWidth);
+    },
+
+    /**
+     * Update slider selection bar, combined label and range label
+     */
+    updateSelectionBar: function()
+    {
+      var selBarOL, selBarWidth;
+
+      // Set selection bar position
+      selBarOL = this.setLeft(this.selBar, this.percentToOffset(this.lowValOffsetPerc) + this.ptrHalfWidth);
+      selBarWidth = this.percentToOffset(this.highValOffsetPerc - this.lowValOffsetPerc);
+      this.selBar.css({width: selBarWidth + 'px'});
+
+      // Set combined label position
+      this.setLeft(this.cmbBub, selBarOL + selBarWidth / 2 - this.halfOffsetWidth(this.cmbBub) + 1);
+
+      // Set range label position
+      this.setLeft(this.selBub, selBarOL + selBarWidth / 2 - this.halfOffsetWidth(this.selBub) + 1);
+      this.scope.rzSliderDiff = this.roundStep(this.scope[this.refHigh] - this.scope[this.refLow]);
+    },
+
+    /**
      * Adjust label positions and visibility
      *
      * @returns {undefined}
      */
     adjustLabels: function ()
     {
+//      console.log('al', this.scope.$id + ' ' + arguments[0]);
       var bubToAdjust = this.highBub;
 
       this.fitToBar(this.lowBub);
@@ -593,9 +723,23 @@ angular.module('rzModule', [])
      */
     onStart: function (pointer, ref, event)
     {
+      var which;
+
       if(this.tracking !== '') { return }
 
       this.tracking = ref;
+
+      switch (ref)
+      {
+        case 'rzSliderModel':
+        case 'rzSliderLow':
+          which = 'low';
+        break;
+
+        case 'rzSliderHigh':
+          which = 'high';
+        break;
+      }
 
       pointer.addClass('active');
 
@@ -604,12 +748,12 @@ angular.module('rzModule', [])
 
       if(event.touches)
       {
-        $document.on('touchmove', angular.bind(this, this.onMove));
+        $document.on('touchmove', angular.bind(this, this.onMove, which));
         $document.on('touchend', angular.bind(this, this.onEnd, pointer));
       }
       else
       {
-        $document.on('mousemove', angular.bind(this, this.onMove));
+        $document.on('mousemove', angular.bind(this, this.onMove, which));
         $document.on('mouseup', angular.bind(this, this.onEnd, pointer));
       }
     },
@@ -617,10 +761,11 @@ angular.module('rzModule', [])
     /**
      * onMove event handler
      *
-     * @param {Event} event The event
+     * @param {string} ref
+     * @param {Event}  event The event
      * @returns {undefined}
      */
-    onMove: function (event)
+    onMove: function (ref, event)
     {
       var eventX = event.clientX || event.touches[0].clientX,
         newOffset, newPercent, newValue;
@@ -648,8 +793,8 @@ angular.module('rzModule', [])
       }
 
       this.scope[this.tracking] = this.roundStep(newValue);
-      this.setPointers();
-      this.adjustLabels();
+      this.updateHandles(ref);
+      this.adjustLabels('onMove');
       this.scope.$apply();
     },
 
@@ -677,8 +822,9 @@ angular.module('rzModule', [])
 
       this.tracking = '';
     }
-
   };
+
+  Slider.prototype.adjustLabels = throttle(Slider.prototype.adjustLabels, 350);
 
   return Slider;
 }])
