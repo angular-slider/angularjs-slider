@@ -87,14 +87,14 @@ function throttle(func, wait, options) {
     this.range = (attributes.rzSliderModel === undefined) && ((attributes.rzSliderLow !== undefined) && (attributes.rzSliderHigh !== undefined));
 
     /**
-     * Name of the low value
+     * Name of the low value model
      *
      * @type {string}
      */
     this.refLow = this.range ? 'rzSliderLow' : 'rzSliderModel';
 
     /**
-     * Name of the high value
+     * Name of the high value model
      *
      * @type {string}
      */
@@ -129,14 +129,14 @@ function throttle(func, wait, options) {
     this.maxOffset = 0;
 
     /**
-     * Minimum value (floor)
+     * Minimum value (floor) of the model
      *
      * @type {number}
      */
     this.minValue = 0;
 
     /**
-     * Maximum value (ceiling)
+     * Maximum value (ceiling) of the model
      *
      * @type {number}
      */
@@ -196,12 +196,12 @@ function throttle(func, wait, options) {
     this.selBar = null;  // Highlight between two handles
     this.minPtr = null;  // Left slider handle
     this.maxPtr = null;  // Right slider handle
-    this.selBub = null;  // Range bubble
-    this.flrBub = null;  // Floor label
-    this.ceilBub = null; // Ceiling label
-    this.lowBub =  null; // Label above the low value
-    this.highBub = null; // Label above the high value
-    this.cmbBub = null;  // Combined label
+    this.selLab = null;  // Range label
+    this.flrLab = null;  // Floor label
+    this.ceilLab = null; // Ceiling label
+    this.lowLab =  null; // Label above the low value
+    this.highLab = null; // Label above the high value
+    this.cmbLab = null;  // Combined label
 
     // Initialize slider
     this.init();
@@ -322,12 +322,12 @@ function throttle(func, wait, options) {
           case 1: this.selBar = _elem; break;
           case 2: this.minPtr = _elem; break;
           case 3: this.maxPtr = _elem; break;
-          case 4: this.selBub = _elem; break;
-          case 5: this.flrBub = _elem; break;
-          case 6: this.ceilBub = _elem; break;
-          case 7: this.lowBub = _elem; break;
-          case 8: this.highBub = _elem; break;
-          case 9: this.cmbBub = _elem; break;
+          case 4: this.selLab = _elem; break;
+          case 5: this.flrLab = _elem; break;
+          case 6: this.ceilLab = _elem; break;
+          case 7: this.lowLab = _elem; break;
+          case 8: this.highLab = _elem; break;
+          case 9: this.cmbLab = _elem; break;
         }
 
       }, this);
@@ -335,11 +335,11 @@ function throttle(func, wait, options) {
       // Remove stuff not needed in single slider
       if( ! this.range)
       {
-        this.cmbBub.remove();
-        this.highBub.remove();
+        this.cmbLab.remove();
+        this.highLab.remove();
         this.maxPtr.remove();
         this.selBar.remove();
-        this.selBub.remove();
+        this.selLab.remove();
       }
     },
 
@@ -357,44 +357,7 @@ function throttle(func, wait, options) {
       this.minOffset = 0;
       this.maxOffset = this.barWidth - pointerWidth;
       this.offsetRange = this.maxOffset - this.minOffset;
-      this.setLeft(this.ceilBub, this.barWidth - this.offsetWidth(this.ceilBub));
-    },
-
-    /**
-     * Set positions of slider handles, labels and selection bar
-     *
-     * @returns {undefined}
-     */
-    setPointers: function()
-    {
-      var minPtrOL, maxPtrOL, selBarOL, selBarWidth;
-
-      this.lowValOffsetPerc = this.percentValue(this.scope[this.refLow]);
-      // Set low value slider handle position
-      minPtrOL = this.setLeft(this.minPtr, this.percentToOffset(this.lowValOffsetPerc));
-      // Set low value label position
-      this.setLeft(this.lowBub, minPtrOL - this.halfOffsetWidth(this.lowBub) + this.ptrHalfWidth);
-
-      if (this.range)
-      {
-        this.highValOffsetPerc = this.percentValue(this.scope[this.refHigh]);
-        // Set high value slider handle position
-        maxPtrOL = this.setLeft(this.maxPtr, this.percentToOffset(this.highValOffsetPerc));
-        // Set high value slider handle label position
-        this.setLeft(this.highBub, maxPtrOL - (this.halfOffsetWidth(this.highBub)) + this.ptrHalfWidth);
-
-        // Set selection bar position
-        selBarOL = this.setLeft(this.selBar, minPtrOL + this.ptrHalfWidth);
-        selBarWidth = this.percentToOffset(this.highValOffsetPerc - this.lowValOffsetPerc);
-        this.selBar.css({width: selBarWidth + 'px'});
-
-        // Set combined label position
-        this.setLeft(this.cmbBub, selBarOL + selBarWidth / 2 - this.halfOffsetWidth(this.cmbBub) + 1);
-
-        // Set range label position
-        this.setLeft(this.selBub, selBarOL + selBarWidth / 2 - this.halfOffsetWidth(this.selBub) + 1);
-        this.scope.rzSliderDiff = this.roundStep(this.scope[this.refHigh] - this.scope[this.refLow]);
-      }
+      this.setLeft(this.ceilLab, this.barWidth - this.offsetWidth(this.ceilLab));
     },
 
     /**
@@ -438,7 +401,7 @@ function throttle(func, wait, options) {
       minPtrOL = this.setLeft(this.minPtr, this.percentToOffset(this.lowValOffsetPerc));
 
       // Set low value label position
-      this.setLeft(this.lowBub, minPtrOL - this.halfOffsetWidth(this.lowBub) + this.ptrHalfWidth);
+      this.setLeft(this.lowLab, minPtrOL - this.halfOffsetWidth(this.lowLab) + this.ptrHalfWidth);
     },
 
     /**
@@ -454,7 +417,7 @@ function throttle(func, wait, options) {
       // Set high value slider handle position
       maxPtrOL = this.setLeft(this.maxPtr, this.percentToOffset(this.highValOffsetPerc));
       // Set high value slider handle label position
-      this.setLeft(this.highBub, maxPtrOL - (this.halfOffsetWidth(this.highBub)) + this.ptrHalfWidth);
+      this.setLeft(this.highLab, maxPtrOL - (this.halfOffsetWidth(this.highLab)) + this.ptrHalfWidth);
     },
 
     /**
@@ -470,10 +433,10 @@ function throttle(func, wait, options) {
       this.selBar.css({width: selBarWidth + 'px'});
 
       // Set combined label position
-      this.setLeft(this.cmbBub, selBarOL + selBarWidth / 2 - this.halfOffsetWidth(this.cmbBub) + 1);
+      this.setLeft(this.cmbLab, selBarOL + selBarWidth / 2 - this.halfOffsetWidth(this.cmbLab) + 1);
 
       // Set range label position
-      this.setLeft(this.selBub, selBarOL + selBarWidth / 2 - this.halfOffsetWidth(this.selBub) + 1);
+      this.setLeft(this.selLab, selBarOL + selBarWidth / 2 - this.halfOffsetWidth(this.selLab) + 1);
       this.scope.rzSliderDiff = this.roundStep(this.scope[this.refHigh] - this.scope[this.refLow]);
     },
 
@@ -482,79 +445,85 @@ function throttle(func, wait, options) {
      *
      * @returns {undefined}
      */
-    adjustLabels: function ()
+    adjustLabels: function (origin)
     {
 //      console.log('al', this.scope.$id + ' ' + arguments[0]);
-      var bubToAdjust = this.highBub;
+      var bubToAdjust = this.highLab;
 
-      this.fitToBar(this.lowBub);
+      this.fitToBar(this.lowLab);
 
       if (this.range)
       {
-        this.fitToBar(this.highBub);
-        this.fitToBar(this.selBub);
+        this.fitToBar(this.highLab);
+        this.fitToBar(this.selLab);
 
-        if (this.gap(this.lowBub, this.highBub) < 10)
+        if (this.gap(this.lowLab, this.highLab) < 10)
         {
-          this.hideEl(this.lowBub);
-          this.hideEl(this.highBub);
-          this.fitToBar(this.cmbBub);
-          this.showEl(this.cmbBub);
-          bubToAdjust = this.cmbBub;
+          this.hideEl(this.lowLab);
+          this.hideEl(this.highLab);
+          this.fitToBar(this.cmbLab);
+          this.showEl(this.cmbLab);
+          bubToAdjust = this.cmbLab;
         }
         else
         {
-          this.showEl(this.lowBub);
-          this.showEl(this.highBub);
-          this.hideEl(this.cmbBub);
-          bubToAdjust = this.highBub;
+          this.showEl(this.lowLab);
+          this.showEl(this.highLab);
+          this.hideEl(this.cmbLab);
+          bubToAdjust = this.highLab;
         }
       }
 
-      if (this.gap(this.flrBub, this.lowBub) < 5)
+      if (this.gap(this.flrLab, this.lowLab) < 5)
       {
-        this.hideEl(this.flrBub);
+        this.hideEl(this.flrLab);
       }
       else
       {
         if (this.range)
         {
-          if (this.gap(this.flrBub, bubToAdjust) < 5)
+          if (this.gap(this.flrLab, bubToAdjust) < 5)
           {
-            this.hideEl(this.flrBub);
+            this.hideEl(this.flrLab);
           }
           else
           {
-            this.showEl(this.flrBub);
+            this.showEl(this.flrLab);
           }
         }
         else
         {
-          this.showEl(this.flrBub);
+          this.showEl(this.flrLab);
         }
       }
 
-      if (this.gap(this.lowBub, this.ceilBub) < 5)
+      if (this.gap(this.lowLab, this.ceilLab) < 5)
       {
-        this.hideEl(this.ceilBub);
+        this.hideEl(this.ceilLab);
       }
       else
       {
         if (this.range)
         {
-          if (this.gap(bubToAdjust, this.ceilBub) < 5)
+          if (this.gap(bubToAdjust, this.ceilLab) < 5)
           {
-            this.hideEl(this.ceilBub);
+            this.hideEl(this.ceilLab);
           }
           else
           {
-            this.showEl(this.ceilBub);
+            this.showEl(this.ceilLab);
           }
         }
         else
         {
-          this.showEl(this.ceilBub);
+          this.showEl(this.ceilLab);
         }
+      }
+
+      // TODO:
+      if(arguments[0] === 'timeout')
+      {
+        Slider.prototype.adjustLabels = throttle(Slider.prototype.adjustLabels, 350);
       }
     },
 
@@ -823,8 +792,6 @@ function throttle(func, wait, options) {
       this.tracking = '';
     }
   };
-
-  Slider.prototype.adjustLabels = throttle(Slider.prototype.adjustLabels, 350);
 
   return Slider;
 }])
