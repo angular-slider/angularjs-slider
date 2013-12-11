@@ -40,7 +40,7 @@ angular.module('rzModule', [])
     /**
      * Slider element wrapped in jqLite
      *
-     * @type {Element}
+     * @type {jqLite}
      */
     this.element = element;
 
@@ -142,7 +142,7 @@ angular.module('rzModule', [])
      */
     this.tracking = '';
 
-    // Slider DOM elements
+    // Slider DOM elements wrapped in jqLite
     this.fullBar = null; // The whole slider bar
     this.selBar = null;  // Highlight between two handles
     this.minPtr = null;  // Left slider handle
@@ -163,6 +163,8 @@ angular.module('rzModule', [])
 
     /**
      * Initialize slider
+     *
+     * @returns {undefined}
      */
     init: function()
     {
@@ -173,7 +175,7 @@ angular.module('rzModule', [])
       {
         this.scope.rzSliderTranslate = function (value)
         {
-          return value;
+          return value.value;
         };
       }
 
@@ -237,6 +239,8 @@ angular.module('rzModule', [])
 
     /**
      * Set maximum and minimum values for the slider
+     *
+     * @returns {undefined}
      */
     setMinAndMax: function()
     {
@@ -254,6 +258,8 @@ angular.module('rzModule', [])
 
     /**
      * Set the slider children to variables for easy access
+     *
+     * @returns {undefined}
      */
     cacheElemHandles: function()
     {
@@ -263,70 +269,35 @@ angular.module('rzModule', [])
 
         switch(index)
         {
-        case 0:
-          this.fullBar = _elem;
-          break;
-        case 1:
-          if(this.range)
-          {
-            this.selBar = _elem;
-          }
-          else
-          {
-            _elem.remove();
-          }
-          break;
-        case 2:
-          this.minPtr = _elem;
-          break;
-        case 3:
-          if(this.range)
-          {
-            this.maxPtr = _elem;
-          }
-          else
-          {
-            _elem.remove();
-          }
-          break;
-        case 4:
-          this.selBub = _elem;
-          break;
-        case 5:
-          this.flrBub = _elem;
-          break;
-        case 6:
-          this.ceilBub = _elem;
-          break;
-        case 7:
-          this.lowBub = _elem;
-          break;
-        case 8:
-          if(this.range)
-          {
-            this.highBub = _elem;
-          }
-          else
-          {
-            _elem.remove();
-          }
-          break;
-        case 9:
-          if(this.range)
-          {
-            this.cmbBub = _elem;
-          }
-          else
-          {
-            _elem.remove();
-          }
-          break;
+          case 0: this.fullBar = _elem; break;
+          case 1: this.selBar = _elem; break;
+          case 2: this.minPtr = _elem; break;
+          case 3: this.maxPtr = _elem; break;
+          case 4: this.selBub = _elem; break;
+          case 5: this.flrBub = _elem; break;
+          case 6: this.ceilBub = _elem; break;
+          case 7: this.lowBub = _elem; break;
+          case 8: this.highBub = _elem; break;
+          case 9: this.cmbBub = _elem; break;
         }
+
       }, this);
+
+      // Remove stuff not needed in single slider
+      if( ! this.range)
+      {
+        this.cmbBub.remove();
+        this.highBub.remove();
+        this.maxPtr.remove();
+        this.selBar.remove();
+        this.selBub.remove();
+      }
     },
 
     /**
      * Calculate dimensions that are dependent on window size
+     *
+     * @returns {undefined}
      */
     calcViewDimensions: function ()
     {
@@ -341,6 +312,8 @@ angular.module('rzModule', [])
 
     /**
      * Set positions of slider handles, labels and selection bar
+     *
+     * @returns {undefined}
      */
     setPointers: function()
     {
@@ -376,7 +349,9 @@ angular.module('rzModule', [])
     },
 
     /**
-     * Adjust label positions
+     * Adjust label positions and visibility
+     *
+     * @returns {undefined}
      */
     adjustLabels: function ()
     {
@@ -473,7 +448,7 @@ angular.module('rzModule', [])
      * Hide element
      *
      * @param element
-     * @returns {jQlite} The jqLite
+     * @returns {jqLite} The jqLite
      */
     hideEl: function (element)
     {
@@ -483,8 +458,8 @@ angular.module('rzModule', [])
     /**
      * Show element
      *
-     * @param element
-     * @returns {jQlite} The jqLite
+     * @param element The jqLite wrapped DOM element
+     * @returns {jqLite} The jqLite
      */
     showEl: function (element)
     {
@@ -596,6 +571,8 @@ angular.module('rzModule', [])
 
     /**
      * Bind mouse and touch events to slider handles
+     *
+     * @returns {undefined}
      */
     bindToInputEvents: function()
     {
@@ -611,7 +588,8 @@ angular.module('rzModule', [])
      *
      * @param {Object} pointer The jqLite wrapped DOM element
      * @param {string} ref     One of the refLow, refHigh
-     * @param {Event} event    The event
+     * @param {Event}  event   The event
+     * @returns {undefined}
      */
     onStart: function (pointer, ref, event)
     {
@@ -639,7 +617,8 @@ angular.module('rzModule', [])
     /**
      * onMove event handler
      *
-     * @param {Event} event  The event
+     * @param {Event} event The event
+     * @returns {undefined}
      */
     onMove: function (event)
     {
@@ -679,6 +658,7 @@ angular.module('rzModule', [])
      *
      * @param {Object} pointer The jqLite wrapped DOM element
      * @param {Event} event    The event
+     * @returns {undefined}
      */
     onEnd: function(pointer, event)
     {
@@ -722,8 +702,8 @@ angular.module('rzModule', [])
                 '<span class="pointer"></span>' + // 2 Left slider handle
                 '<span class="pointer"></span>' + // 3 Right slider handle
                 '<span class="bubble selection"></span>' + // 4 Range label
-                '<span class="bubble limit" ng-bind="rzSliderTranslate(rzSliderFloor)"></span>' + // 5 Floor label
-                '<span class="bubble limit" ng-bind="rzSliderTranslate(rzSliderCeil)" class="bubble limit"></span>' + // 6 Ceiling label
+                '<span class="bubble limit" ng-bind="rzSliderTranslate({value: rzSliderFloor})"></span>' + // 5 Floor label
+                '<span class="bubble limit" ng-bind="rzSliderTranslate({value: rzSliderCeil})" class="bubble limit"></span>' + // 6 Ceiling label
                 '<span class="bubble"></span>' + // 7 Label above left slider handle
                 '<span class="bubble"></span>' + // 8 Label above right slider handle
                 '<span class="bubble"></span>', // 9 Range label when the slider handles are close ex. 15 - 17
@@ -744,13 +724,13 @@ angular.module('rzModule', [])
       }
 
       // Range label
-      angular.element(children[4]).attr('ng-bind', 'rzSliderTranslate(rzSliderDiff)');
+      angular.element(children[4]).attr('ng-bind', 'rzSliderTranslate({value: rzSliderDiff})');
       // Label above low slider
-      angular.element(children[7]).attr('ng-bind', 'rzSliderTranslate(' + refLow + ')');
+      angular.element(children[7]).attr('ng-bind', 'rzSliderTranslate({value: ' + refLow + '})');
       // Label above high slider
-      angular.element(children[8]).attr('ng-bind', 'rzSliderTranslate(' + refHigh + ')');
+      angular.element(children[8]).attr('ng-bind', 'rzSliderTranslate({value: ' + refHigh + '})');
       // Combined label for low and high
-      angular.element(children[9]).attr('ng-bind-html',  'rzSliderTranslate(' + refLow + ') + " - " + rzSliderTranslate(' + refHigh + ')');
+      angular.element(children[9]).attr('ng-bind-html',  'rzSliderTranslate({value: ' + refLow + '}) + " - " + rzSliderTranslate({value: ' + refHigh + '})');
 
       return {
         post: function(scope, elem, attr)
@@ -761,3 +741,14 @@ angular.module('rzModule', [])
     }
   };
 }]);
+
+// IDE assist
+
+/**
+ * @name jqLite
+ */
+
+/**
+ * @name Event
+ * @property {Array} touches
+ */
