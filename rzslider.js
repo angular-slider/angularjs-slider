@@ -749,12 +749,14 @@ function throttle(func, wait, options) {
       {
         if (this.tracking === this.refLow && newValue >= this.scope[this.refHigh])
         {
+          this.scope[this.tracking] = this.scope[this.refHigh];
           this.tracking = this.refHigh;
           this.minPtr.removeClass('active');
           this.maxPtr.addClass('active');
         }
         else if(newValue <= this.scope[this.refLow])
         {
+          this.scope[this.tracking] = this.scope[this.refLow];
           this.tracking = this.refLow;
           this.maxPtr.removeClass('active');
           this.minPtr.addClass('active');
