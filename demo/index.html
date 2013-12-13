@@ -11,15 +11,20 @@
 
 <body ng-controller="MainCtrl">
 
-<div style="background-color: #808080;margin-left: 50px;margin-right: 50px; padding: 30px;">
+<div style="background-color: #808080;margin-left: 40px;margin-right: 50px; padding: 30px;">
     <pre>{{ priceSlider | json }}</pre>
+
+    <input type="text" ng-model="priceSlider.min"/><br/>
+    <input type="text" ng-model="priceSlider.max"/><br/>
+
+    <br/>
 
     <rzslider
             rz-slider-floor="priceSlider.floor"
             rz-slider-ceil="priceSlider.ceil"
-            rz-slider-low="priceSlider.min"
+            rz-slider-model="priceSlider.min"
             rz-slider-high="priceSlider.max"
-            rz-slider-step="5"></rzslider>
+            rz-slider-step="1"></rzslider>
     <br> <br> <br>
 
     <pre>{{ priceSlider2 | json }}</pre>
@@ -29,6 +34,12 @@
             rz-slider-ceil="450"
             rz-slider-model="priceSlider2"
             rz-slider-translate="translate"></rzslider>
+
+    <pre>{{ priceSlider2 | json }}</pre>
+    <br> <br>
+    <rzslider rz-slider-model="priceSlider3"
+            rz-slider-floor="50"
+            rz-slider-ceil="450"></rzslider>
 
 </div>
 </body>
@@ -43,13 +54,14 @@
     app.controller('MainCtrl', function($scope)
     {
         $scope.priceSlider = {
-            min: 0,
-            max: 300,
+            min: 4,
+            max: 481,
             ceil: 500,
             floor: 0
         };
 
-        $scope.priceSlider2 = 100;
+        $scope.priceSlider2 = 150;
+        $scope.priceSlider3 = 250;
 
         $scope.translate = function(value)
         {
