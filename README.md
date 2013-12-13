@@ -120,6 +120,17 @@ $scope.translate = function(value)
 
 [http://embed.plnkr.co/EqGIlU/preview](http://embed.plnkr.co/EqGIlU/preview)
 
+## Project integration
+
+```html
+    <script src="/path/to/angularjs/angular.min.js"></script>
+    <script src="/path/to/slider/rzslider.min.js"></script>
+
+    <script>
+        var YourApp = angular.module('myapp', ['rzModule']);
+    </script>
+```
+
 ## Changelog
 
 **v0.0.1**

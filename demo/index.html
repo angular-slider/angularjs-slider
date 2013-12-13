@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <title>AngularJS Slider Plunker</title>
     <link rel="stylesheet" href="../dist/rzslider.css" />
-    <script src="../bower_components/angular/angular.min.js" data-semver="1.2.4"></script>
+    <script src="../bower_components/angular/angular.min.js"></script>
     <script src="../rzslider.js"></script>
 </head>
 
@@ -41,15 +41,23 @@
             rz-slider-floor="50"
             rz-slider-ceil="450"></rzslider>
 
+    <br><br><br>
+
+    <pre>{{ alphabetTranslate(letter) }}</pre>
+
+    <br><br>
+
+    <rzslider
+            rz-slider-floor="0"
+            rz-slider-ceil="letterMax"
+            rz-slider-model="letter"
+            rz-slider-translate="alphabetTranslate"></rzslider>
+
 </div>
 </body>
 
 <script>
-    var app = angular.module('plunker', ['rzModule']).config(function($sceProvider) {
-        // Completely disable SCE.  For demonstration purposes only!
-        // Do not use in new projects.
-        $sceProvider.enabled(false);
-    });
+    var app = angular.module('plunker', ['rzModule']);
 
     app.controller('MainCtrl', function($scope)
     {
@@ -66,7 +74,15 @@
         $scope.translate = function(value)
         {
             return '$' + value;
-        }
+        };
+
+        var alphabetArray = 'abcdefghijklmnopqrstuvwxyz'.split('');
+        $scope.letter = 5;
+        $scope.letterMax = alphabetArray.length - 1;
+        $scope.alphabetTranslate = function(value)
+        {
+            return alphabetArray[value].toUpperCase();
+        };
     });
 </script>
 
