@@ -1,0 +1,22 @@
+{
+  "name": "angularjs-slider",
+  "version": "0.1.0",
+  "homepage": "https://github.com/rzajac/angularjs-slider",
+  "authors": [
+    "Rafal Zajac <rzajac@gmail.com>"
+  ],
+  "description": "AngularJS slider directive with no dependencies.",
+  "main": "rzslider.js",
+  "keywords": [
+    "angularjs",
+    "slider"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
