@@ -510,23 +510,26 @@ function throttle(func, wait, options) {
         this.showEl(this.ceilLab);
       }
 
-      if(this.maxLab.rzsl + this.maxLab.rzsw >= this.ceilLab.rzsl - 10)
+      if(this.range)
       {
-        this.hideEl(this.ceilLab);
-      }
-      else if( ! clHidden)
-      {
-        this.showEl(this.ceilLab);
-      }
+        if(this.maxLab.rzsl + this.maxLab.rzsw >= this.ceilLab.rzsl - 10)
+        {
+          this.hideEl(this.ceilLab);
+        }
+        else if( ! clHidden)
+        {
+          this.showEl(this.ceilLab);
+        }
 
-      // Hide or show floor label
-      if(this.maxLab.rzsl <= this.flrLab.rzsl + this.flrLab.rzsw + this.handleHalfWidth)
-      {
-        this.hideEl(this.flrLab);
-      }
-      else if( ! flHidden)
-      {
-        this.showEl(this.flrLab);
+        // Hide or show floor label
+        if(this.maxLab.rzsl <= this.flrLab.rzsl + this.flrLab.rzsw + this.handleHalfWidth)
+        {
+          this.hideEl(this.flrLab);
+        }
+        else if( ! flHidden)
+        {
+          this.showEl(this.flrLab);
+        }
       }
     },
 
