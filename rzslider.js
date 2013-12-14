@@ -14,7 +14,16 @@
 angular.module('rzModule', [])
 
 .value('throttle',
-// Taken from underscore project
+  /**
+   * throttle
+   *
+   * Taken from underscore project
+   *
+   * @param {Function} func
+   * @param {number} wait
+   * @param {ThrottleOptions} options
+   * @returns {Function}
+   */
 function throttle(func, wait, options) {
   var getTime = (Date.now || function() {
     return new Date().getTime();
@@ -855,12 +864,21 @@ function throttle(func, wait, options) {
 /**
  * @name jqLite
  *
- * @property {number} rzsl
- * @property {number} rzsw
- * @property {string} rzsv
+ * @property {number|undefined} rzsl
+ * @property {number|undefined} rzsw
+ * @property {string|undefined} rzsv
+ * @property {Function} css
+ * @property {Function} text
  */
 
 /**
  * @name Event
  * @property {Array} touches
+ */
+
+/**
+ * @name ThrottleOptions
+ *
+ * @property {bool} leading
+ * @property {bool} trailing
  */
