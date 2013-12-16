@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v0.1.1
+ * Version: v0.1.2
  *
  * Licensed under the MIT license
  */
@@ -202,8 +202,7 @@ function throttle(func, wait, options) {
       this.initElemHandles();
       this.calcViewDimensions();
 
-      this.setMinAndMax();
-      this.valueRange = this.maxValue - this.minValue;
+      this.setMinAndMax();      
       this.precision = this.scope.rzSliderPrecision === undefined ? 0 : +this.scope.rzSliderPrecision;
       this.step = this.scope.rzSliderStep === undefined ? 1 : +this.scope.rzSliderStep;
 
@@ -278,11 +277,14 @@ function throttle(func, wait, options) {
      *
      * @param {number|string} value
      * @param {jqLite} label
+     * @param {bool} useCustomTr
      * @returns {undefined}
      */
-    translateFn: function(value, label)
+    translateFn: function(value, label, useCustomTr)
     {
-      var valStr = this.customTrFn ? '' + this.customTrFn(value) : '' + value,
+      useCustomTr = useCustomTr === undefined ? true : useCustomTr;
+
+      var valStr = this.customTrFn && useCustomTr ? '' + this.customTrFn(value) : '' + value,
         getWidth = false;
 
       if(label.rzsv === undefined || label.rzsv.length != valStr.length)
@@ -321,6 +323,8 @@ function throttle(func, wait, options) {
       {
         this.scope.rzSliderCeil = this.maxValue = this.range ? this.scope.rzSliderHigh : this.scope.rzSliderModel;
       }
+
+      this.valueRange = this.maxValue - this.minValue;
     },
 
     /**
@@ -560,9 +564,22 @@ function throttle(func, wait, options) {
      */
     updateCmbLabel: function()
     {
+      var lowTr, highTr;
+
       if(this.minLab.rzsl + this.minLab.rzsw + 10 >= this.maxLab.rzsl)
       {
-        this.translateFn(this.scope.rzSliderModel + ' - ' + this.scope.rzSliderHigh, this.cmbLab);
+        if(this.customTrFn)
+        {
+          lowTr = this.customTrFn(this.scope.rzSliderModel);
+          highTr = this.customTrFn(this.scope.rzSliderHigh);
+        }
+        else
+        {
+          lowTr = this.scope.rzSliderModel;
+          highTr = this.scope.rzSliderHigh;
+        }
+
+        this.translateFn(lowTr + ' - ' + highTr, this.cmbLab, false);
         this.setLeft(this.cmbLab, this.selBar.rzsl + this.selBar.rzsw / 2 - this.cmbLab.rzsw / 2);
         this.hideEl(this.minLab);
         this.hideEl(this.maxLab);
@@ -707,6 +724,9 @@ function throttle(func, wait, options) {
 
       if(this.tracking !== '') { return }
 
+      // We have to do this in case the HTML where the sliders are on 
+      // have been animated into view.
+      this.calcViewDimensions();
       this.tracking = ref;
 
       pointer.addClass('active');
