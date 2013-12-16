@@ -223,6 +223,7 @@ function throttle(func, wait, options) {
 
       var thrLow = throttle(function()
       {
+        self.setMinAndMax();
         self.updateLowHandle(self.valueToOffset(self.scope.rzSliderModel));
 
         if(self.range)
@@ -235,6 +236,7 @@ function throttle(func, wait, options) {
 
       var thrHigh = throttle(function()
       {
+        self.setMinAndMax();
         self.updateHighHandle(self.valueToOffset(self.scope.rzSliderHigh));
         self.updateSelectionBar();
         self.updateCmbLabel();
