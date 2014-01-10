@@ -202,7 +202,7 @@ function throttle(func, wait, options) {
       this.initElemHandles();
       this.calcViewDimensions();
 
-      this.setMinAndMax();      
+      this.setMinAndMax();
       this.precision = this.scope.rzSliderPrecision === undefined ? 0 : +this.scope.rzSliderPrecision;
       this.step = this.scope.rzSliderStep === undefined ? 1 : +this.scope.rzSliderStep;
 
@@ -213,6 +213,9 @@ function throttle(func, wait, options) {
         self.initHandles();
         self.bindEvents();
       });
+
+      // Recalculate slider view dimensions
+      this.scope.$on('reCalcViewDimensions', angular.bind(this, this.calcViewDimensions));
 
       // Recalculate stuff if view port dimensions have changed
       angular.element(window).on('resize', angular.bind(this, this.calcViewDimensions));
@@ -726,7 +729,7 @@ function throttle(func, wait, options) {
 
       if(this.tracking !== '') { return }
 
-      // We have to do this in case the HTML where the sliders are on 
+      // We have to do this in case the HTML where the sliders are on
       // have been animated into view.
       this.calcViewDimensions();
       this.tracking = ref;
