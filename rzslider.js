@@ -180,6 +180,8 @@ function throttle(func, wait, options) {
     this.maxLab = null; // Label above the high value
     this.cmbLab = null;  // Combined label
 
+    this.ignoreTracking = false;
+
     // Initialize slider
     this.init();
   };
@@ -759,7 +761,7 @@ function throttle(func, wait, options) {
         newOffset = eventX - sliderLO - this.handleHalfWidth,
         newValue;
 
-      if(newOffset <= 0)
+      if(newOffset <= 0 && ! this.ignoreTracking)
       {
         if(pointer.rzsl !== 0)
         {
@@ -771,7 +773,7 @@ function throttle(func, wait, options) {
         return;
       }
 
-      if(newOffset >= this.maxLeft)
+      if(newOffset >= this.maxLeft && ! this.ignoreTracking)
       {
         if(pointer.rzsl !== this.maxLeft)
         {
@@ -790,11 +792,13 @@ function throttle(func, wait, options) {
       {
         if(this.tracking === 'rzSliderModel' && ! this.customVlFn(newValue, this.scope['rzSliderHigh'], this.minValue, this.maxValue))
         {
+          this.ignoreTracking = true;
 //          this.onEnd(event);
           return;
         }
         else if(this.tracking === 'rzSliderHigh' && ! this.customVlFn(this.scope['rzSliderModel'], newValue, this.minValue, this.maxValue))
         {
+          this.ignoreTracking = true;
 //            this.onEnd(event);
             return;
         }
@@ -848,6 +852,7 @@ function throttle(func, wait, options) {
       }
 
       this.tracking = '';
+      this.ignoreTracking = false;
     }
   };
 
