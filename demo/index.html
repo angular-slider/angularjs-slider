@@ -24,7 +24,8 @@
             rz-slider-ceil="priceSlider.ceil"
             rz-slider-model="priceSlider.min"
             rz-slider-high="priceSlider.max"
-            rz-slider-step="1"></rzslider>
+            rz-slider-step="1"
+            rz-slider-validate="validate"></rzslider>
     <br> <br> <br>
 
     <pre>{{ priceSlider2 | json }}</pre>
@@ -62,8 +63,8 @@
     app.controller('MainCtrl', function($scope)
     {
         $scope.priceSlider = {
-            min: 4,
-            max: 481,
+            min: 200,
+            max: 450,
             ceil: 500,
             floor: 0
         };
@@ -74,6 +75,14 @@
         $scope.translate = function(value)
         {
             return '$' + value;
+        };
+
+        $scope.validate = function(min, max, ceil, floor)
+        {
+            console.log(arguments); // TODO: remove this
+            console.log(max !== min + 1); // TODO: remove this
+            return max > min;
+//            return true;
         };
 
         var alphabetArray = 'abcdefghijklmnopqrstuvwxyz'.split('');

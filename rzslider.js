@@ -167,6 +167,8 @@ function throttle(func, wait, options) {
      */
     this.customTrFn = null;
 
+    this.customVlFn = null;
+
     // Slider DOM elements wrapped in jqLite
     this.fullBar = null; // The whole slider bar
     this.selBar = null;  // Highlight between two handles
@@ -194,15 +196,13 @@ function throttle(func, wait, options) {
     {
       var self = this;
 
-      if(this.scope.rzSliderTranslate)
-      {
-        this.customTrFn = this.scope.rzSliderTranslate();
-      }
+      this.customTrFn = this.scope.rzSliderTranslate() || null;
+      this.customVlFn = this.scope.rzSliderValidate() || null;
 
       this.initElemHandles();
       this.calcViewDimensions();
 
-      this.setMinAndMax();      
+      this.setMinAndMax();
       this.precision = this.scope.rzSliderPrecision === undefined ? 0 : +this.scope.rzSliderPrecision;
       this.step = this.scope.rzSliderStep === undefined ? 1 : +this.scope.rzSliderStep;
 
@@ -726,7 +726,7 @@ function throttle(func, wait, options) {
 
       if(this.tracking !== '') { return }
 
-      // We have to do this in case the HTML where the sliders are on 
+      // We have to do this in case the HTML where the sliders are on
       // have been animated into view.
       this.calcViewDimensions();
       this.tracking = ref;
@@ -788,6 +788,17 @@ function throttle(func, wait, options) {
 
       if (this.range)
       {
+        if(this.tracking === 'rzSliderModel' && ! this.customVlFn(newValue, this.scope['rzSliderHigh'], this.minValue, this.maxValue))
+        {
+//          this.onEnd(event);
+          return;
+        }
+        else if(this.tracking === 'rzSliderHigh' && ! this.customVlFn(this.scope['rzSliderModel'], newValue, this.minValue, this.maxValue))
+        {
+//            this.onEnd(event);
+            return;
+        }
+
         if (this.tracking === 'rzSliderModel' && newValue >= this.scope.rzSliderHigh)
         {
           this.scope[this.tracking] = this.scope.rzSliderHigh;
@@ -854,7 +865,8 @@ function throttle(func, wait, options) {
       rzSliderPrecision: '@',
       rzSliderModel: '=?',
       rzSliderHigh: '=?',
-      rzSliderTranslate: '&'
+      rzSliderTranslate: '&',
+      rzSliderValidate: '&'
     },
     template:   '<span class="bar"></span>' + // 0 The slider bar
                 '<span class="bar selection"></span>' + // 1 Highlight between two handles
