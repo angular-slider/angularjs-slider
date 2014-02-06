@@ -256,6 +256,25 @@ function throttle(func, wait, options) {
         if(newValue === oldValue) return;
         thrHigh();
       });
+
+
+      this.scope.$watch('rzSliderFloor', function(newValue, oldValue){
+        if(newValue === oldValue) return;
+        self.resetSlider();
+      });
+
+      this.scope.$watch('rzSliderCeil', function(newValue, oldValue){
+        if(newValue === oldValue) return;
+        self.resetSlider();
+      });
+
+    },
+
+    resetSlider: function() {
+      this.setMinAndMax();
+      this.calcViewDimensions();
+      this.updateCeilLab();
+      this.updateFloorLab();
     },
 
     /**
