@@ -215,10 +215,10 @@ function throttle(func, wait, options) {
       });
 
       // Recalculate slider view dimensions
-      this.scope.$on('reCalcViewDimensions', angular.bind(this, this.calcViewDimensions));
+      this.scope.$on('reCalcViewDimensions', angular.bind(this, this.resetSlider));
 
       // Recalculate stuff if view port dimensions have changed
-      angular.element(window).on('resize', angular.bind(this, this.calcViewDimensions));
+      angular.element(window).on('resize', angular.bind(this, this.resetSlider));
 
       this.initRun = true;
 
@@ -256,7 +256,38 @@ function throttle(func, wait, options) {
         if(newValue === oldValue) return;
         thrHigh();
       });
+
+
+      this.scope.$watch('rzSliderFloor', function(newValue, oldValue){
+        if(newValue === oldValue) return;
+        self.resetSlider();
+      });
+
+      this.scope.$watch('rzSliderCeil', function(newValue, oldValue){
+        if(newValue === oldValue) return;
+        self.resetSlider();
+      });
+
+      this.scope.$watch('rzSliderForceRender', function(newValue, oldValue){
+        self.resetLabelsWidth();
+        thrLow();
+        thrHigh();
+        self.resetSlider();
+      });
+
     },
+
+    resetSlider: function() {
+      this.setMinAndMax();
+      this.calcViewDimensions();
+      this.updateCeilLab();
+      this.updateFloorLab();
+    },
+
+     resetLabelsWidth: function() {
+      this.minLab.rzsv = undefined;
+      this.maxLab.rzsv = undefined;
+     },
 
     /**
      * Initialize slider handles positions and labels
