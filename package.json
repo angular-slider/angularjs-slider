@@ -1,6 +1,6 @@
 {
   "name": "angularjs-slider",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "AngularJS slider directive with no external dependencies. Mobile friendly!.",
   "main": "rzslider.js",
   "repository": {
