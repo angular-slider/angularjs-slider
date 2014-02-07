@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v0.1.2
+ * Version: v0.1.3
  *
  * Licensed under the MIT license
  */
@@ -215,10 +215,10 @@ function throttle(func, wait, options) {
       });
 
       // Recalculate slider view dimensions
-      this.scope.$on('reCalcViewDimensions', angular.bind(this, this.resetSlider));
+      this.scope.$on('reCalcViewDimensions', angular.bind(this, this.calcViewDimensions));
 
       // Recalculate stuff if view port dimensions have changed
-      angular.element(window).on('resize', angular.bind(this, this.resetSlider));
+      angular.element(window).on('resize', angular.bind(this, this.calcViewDimensions));
 
       this.initRun = true;
 
@@ -245,6 +245,16 @@ function throttle(func, wait, options) {
         self.updateCmbLabel();
       }, 350, { leading: false });
 
+      this.scope.$on('rzSliderForceRender', function()
+      {
+        self.resetLabelsValue();
+        thrLow();
+        thrHigh();
+        self.resetSlider();
+      });
+
+      // Watchers
+
       this.scope.$watch('rzSliderModel', function(newValue, oldValue)
       {
         if(newValue === oldValue) return;
@@ -257,37 +267,42 @@ function throttle(func, wait, options) {
         thrHigh();
       });
 
-
-      this.scope.$watch('rzSliderFloor', function(newValue, oldValue){
+      this.scope.$watch('rzSliderFloor', function(newValue, oldValue)
+      {
         if(newValue === oldValue) return;
         self.resetSlider();
       });
 
-      this.scope.$watch('rzSliderCeil', function(newValue, oldValue){
+      this.scope.$watch('rzSliderCeil', function(newValue, oldValue)
+      {
         if(newValue === oldValue) return;
         self.resetSlider();
       });
-
-      this.scope.$watch('rzSliderForceRender', function(newValue, oldValue){
-        self.resetLabelsWidth();
-        thrLow();
-        thrHigh();
-        self.resetSlider();
-      });
-
     },
 
-    resetSlider: function() {
+    /**
+     * Resets slider
+     *
+     * @returns {undefined}
+     */
+    resetSlider: function()
+    {
       this.setMinAndMax();
       this.calcViewDimensions();
       this.updateCeilLab();
       this.updateFloorLab();
     },
 
-     resetLabelsWidth: function() {
+    /**
+     * Reset label values
+     *
+     * @return {undefined}
+     */
+    resetLabelsValue: function()
+    {
       this.minLab.rzsv = undefined;
       this.maxLab.rzsv = undefined;
-     },
+    },
 
     /**
      * Initialize slider handles positions and labels
@@ -313,7 +328,7 @@ function throttle(func, wait, options) {
      *
      * @param {number|string} value
      * @param {jqLite} label
-     * @param {bool} useCustomTr
+     * @param {bool?} useCustomTr
      * @returns {undefined}
      */
     translateFn: function(value, label, useCustomTr)
