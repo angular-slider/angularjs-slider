@@ -513,6 +513,22 @@ function throttle(func, wait, options) {
       this.updateCmbLabel();
     },
 
+    adjustObjectPositionByBoundaries: function(basePosition, objectWidth)
+    {
+      if(basePosition + objectWidth > this.barWidth)
+      {
+        basePosition -= basePosition + objectWidth - this.barWidth;
+      }
+
+      return Math.max(0, basePosition);
+    },
+
+    calculateLabelPosition: function(label, newOffset)
+    {
+      var basePosition = newOffset - label.rzsw / 2 + this.handleHalfWidth;
+      return this.adjustObjectPositionByBoundaries(basePosition, label.rzsw);
+    },
+
     /**
      * Update low slider handle position and label
      *
@@ -523,7 +539,7 @@ function throttle(func, wait, options) {
     {
       this.setLeft(this.minH, newOffset);
       this.translateFn(this.scope.rzSliderModel, this.minLab);
-      this.setLeft(this.minLab, newOffset - this.minLab.rzsw / 2 + this.handleHalfWidth);
+      this.setLeft(this.minLab, this.calculateLabelPosition(this.minLab, newOffset));
 
       this.shFloorCeil();
     },
@@ -538,7 +554,7 @@ function throttle(func, wait, options) {
     {
       this.setLeft(this.maxH, newOffset);
       this.translateFn(this.scope.rzSliderHigh, this.maxLab);
-      this.setLeft(this.maxLab, newOffset - this.maxLab.rzsw / 2 + this.handleHalfWidth);
+      this.setLeft(this.maxLab, this.calculateLabelPosition(this.maxLab, newOffset));
 
       this.shFloorCeil();
     },
@@ -631,7 +647,11 @@ function throttle(func, wait, options) {
         }
 
         this.translateFn(lowTr + ' - ' + highTr, this.cmbLab, false);
-        this.setLeft(this.cmbLab, this.selBar.rzsl + this.selBar.rzsw / 2 - this.cmbLab.rzsw / 2);
+        var position = this.selBar.rzsl + this.selBar.rzsw / 2 - this.cmbLab.rzsw / 2;
+        position = this.adjustObjectPositionByBoundaries(
+          position,
+          this.cmbLab.rzsw);
+        this.setLeft(this.cmbLab, position);
         this.hideEl(this.minLab);
         this.hideEl(this.maxLab);
         this.showEl(this.cmbLab);
