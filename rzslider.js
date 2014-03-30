@@ -854,6 +854,8 @@ function throttle(func, wait, options) {
 
       newValue = this.offsetToValue(newOffset);
       newValue = this.roundStep(newValue);
+      // Adjusts the offset by the rounded value;
+      newOffset = this.valueToOffset(newValue);
 
       if (this.range)
       {
