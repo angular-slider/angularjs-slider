@@ -2,7 +2,7 @@
 
 Slider directive implementation for AngularJS, without any dependencies.
 
-** This fork adds jQuery compatibility for touch events **
+**This fork adds jQuery compatibility for touch events. The original slider's touch events break when it is used outside jQuery Lite, ie. with full jQuery.**
 
 
 - Mobile friendly
