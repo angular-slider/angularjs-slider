@@ -782,7 +782,7 @@ function throttle(func, wait, options) {
 
       pointer.addClass('active');
 
-      if(event.touches)
+      if(event.touches || (typeof(event.originalEvent) != 'undefined' && event.originalEvent.touches))
       {
         $document.on('touchmove', angular.bind(this, this.onMove, pointer));
         $document.on('touchend', angular.bind(this, this.onEnd));
@@ -803,7 +803,7 @@ function throttle(func, wait, options) {
      */
     onMove: function (pointer, event)
     {
-      var eventX = event.clientX || event.touches[0].clientX,
+      var eventX = event.clientX || (typeof(event.originalEvent) != 'undefined' ? event.originalEvent.touches[0].clientX : event.touches[0].clientX),
         sliderLO = this.sliderElem.rzsl,
         newOffset = eventX - sliderLO - this.handleHalfWidth,
         newValue;
@@ -874,7 +874,7 @@ function throttle(func, wait, options) {
       this.minH.removeClass('active');
       this.maxH.removeClass('active');
 
-      if(event.touches)
+      if(event.touches || (typeof(event.originalEvent) != 'undefined' && event.originalEvent.touches))
       {
         $document.unbind('touchmove');
         $document.unbind('touchend');

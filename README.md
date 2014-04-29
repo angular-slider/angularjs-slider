@@ -2,6 +2,9 @@
 
 Slider directive implementation for AngularJS, without any dependencies.
 
+** This fork adds jQuery compatibility for touch events **
+
+
 - Mobile friendly
 - Fast
 - Well documented
@@ -140,19 +143,13 @@ You can also force redraw with **rzSliderForceRender** event.
 
 ## Changelog
 
-**v0.0.1**
+**v0.1.3**
+    
+    Forked from this version.
 
-    Original rewrite to JavaScript
+**v0.1.4**
 
-**v0.1.0**
-
-    Bug fixes
-    Performance improvements
-    Reduce number of angular bindings
-    Reduce number of function calls in event handlers
-    Avoid recalculate style
-    Hit 60fps
-    LESS variables for easier slider color customization
+    Touch events were broken if jQuery was used with Angular instead of jQuery lite. This version fixes them.
 
 ## Disclaimer
 
