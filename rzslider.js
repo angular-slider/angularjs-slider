@@ -877,13 +877,15 @@ function throttle(func, wait, options) {
       if(event.touches || (typeof(event.originalEvent) != 'undefined' && event.originalEvent.touches))
       {
         $document.unbind('touchmove');
-        $document.unbind('touchend');
+        $document.unbind('touchend');        
       }
       else
       {
         $document.unbind('mousemove');
         $document.unbind('mouseup');
       }
+
+      this.scope.$emit('slideEnded');
 
       this.tracking = '';
     }
