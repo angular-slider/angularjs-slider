@@ -7,6 +7,7 @@ Slider directive implementation for AngularJS, without any dependencies.
 - Well documented
 - Customizable
 - Simple to use
+- Compatibility with jQuery Lite, ie. with full jQuery ( Thanks Jusas! https://github.com/Jusas)
 
 ## Examples
 
@@ -140,19 +141,17 @@ You can also force redraw with **rzSliderForceRender** event.
 
 ## Changelog
 
-**v0.0.1**
+**v0.1.3**
 
-    Original rewrite to JavaScript
+    Forked from this version.
 
-**v0.1.0**
+**v0.1.4**
 
-    Bug fixes
-    Performance improvements
-    Reduce number of angular bindings
-    Reduce number of function calls in event handlers
-    Avoid recalculate style
-    Hit 60fps
-    LESS variables for easier slider color customization
+    Touch events were broken if jQuery was used with Angular instead of jQuery lite. This version fixes them (Jusas).
+
+**v0.1.5**
+
+    Added 'slideEnded' event emitted on slider knob dragging ended (Jusas).
 
 ## Disclaimer
 
