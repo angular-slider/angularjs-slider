@@ -923,8 +923,8 @@ function throttle(func, wait, options) {
     scope: {
       rzSliderFloor: '=?',
       rzSliderCeil: '=?',
-      rzSliderStep: '@',
-      rzSliderPrecision: '@',
+      rzSliderStep: '=',
+      rzSliderPrecision: '=',
       rzSliderModel: '=?',
       rzSliderHigh: '=?',
       rzSliderTranslate: '&'
