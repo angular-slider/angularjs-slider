@@ -1,11 +1,16 @@
 {
-  "name": "angularjs-slider",
+  "name": "ta-angularjs-slider",
   "version": "0.1.5",
-  "homepage": "https://github.com/rzajac/angularjs-slider",
+  "homepage": "https://github.com/nadavsamet/angularjs-slider",
   "authors": [
     "Rafal Zajac <rzajac@gmail.com>",
     "Jussi Saarivirta <jusasi@gmail.com>"
   ],
+  "contributors": [{
+    "name": "Nadav Samet Jr.",
+    "email": "nadavjr@trueaccord.com",
+    "url": "https://www.trueaccord.com"
+  }],
   "description": "AngularJS slider directive with no external dependencies. Mobile friendly!",
   "main": "rzslider.js",
   "keywords": [
