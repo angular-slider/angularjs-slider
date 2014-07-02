@@ -235,7 +235,7 @@ function throttle(func, wait, options) {
           self.updateCmbLabel();
         }
 
-      }, 350, { leading: false });
+      }, 50, { leading: false });
 
       var thrHigh = throttle(function()
       {
@@ -243,7 +243,7 @@ function throttle(func, wait, options) {
         self.updateHighHandle(self.valueToOffset(self.scope.rzSliderHigh));
         self.updateSelectionBar();
         self.updateCmbLabel();
-      }, 350, { leading: false });
+      }, 50, { leading: false });
 
       this.scope.$on('rzSliderForceRender', function()
       {
@@ -338,7 +338,7 @@ function throttle(func, wait, options) {
       var valStr = this.customTrFn && useCustomTr ? '' + this.customTrFn(value) : '' + value,
         getWidth = false;
 
-      if(label.rzsv === undefined || label.rzsv.length != valStr.length)
+      if(label.rzsv === undefined || label.rzsv != valStr)
       {
         getWidth = true;
         label.rzsv = valStr;
@@ -513,6 +513,22 @@ function throttle(func, wait, options) {
       this.updateCmbLabel();
     },
 
+    adjustObjectPositionByBoundaries: function(basePosition, objectWidth)
+    {
+      if(basePosition + objectWidth > this.barWidth)
+      {
+        basePosition -= basePosition + objectWidth - this.barWidth;
+      }
+
+      return Math.max(0, basePosition);
+    },
+
+    calculateLabelPosition: function(label, newOffset)
+    {
+      var basePosition = newOffset - label.rzsw / 2 + this.handleHalfWidth;
+      return this.adjustObjectPositionByBoundaries(basePosition, label.rzsw);
+    },
+
     /**
      * Update low slider handle position and label
      *
@@ -523,7 +539,7 @@ function throttle(func, wait, options) {
     {
       this.setLeft(this.minH, newOffset);
       this.translateFn(this.scope.rzSliderModel, this.minLab);
-      this.setLeft(this.minLab, newOffset - this.minLab.rzsw / 2 + this.handleHalfWidth);
+      this.setLeft(this.minLab, this.calculateLabelPosition(this.minLab, newOffset));
 
       this.shFloorCeil();
     },
@@ -538,7 +554,7 @@ function throttle(func, wait, options) {
     {
       this.setLeft(this.maxH, newOffset);
       this.translateFn(this.scope.rzSliderHigh, this.maxLab);
-      this.setLeft(this.maxLab, newOffset - this.maxLab.rzsw / 2 + this.handleHalfWidth);
+      this.setLeft(this.maxLab, this.calculateLabelPosition(this.maxLab, newOffset));
 
       this.shFloorCeil();
     },
@@ -631,7 +647,11 @@ function throttle(func, wait, options) {
         }
 
         this.translateFn(lowTr + ' - ' + highTr, this.cmbLab, false);
-        this.setLeft(this.cmbLab, this.selBar.rzsl + this.selBar.rzsw / 2 - this.cmbLab.rzsw / 2);
+        var position = this.selBar.rzsl + this.selBar.rzsw / 2 - this.cmbLab.rzsw / 2;
+        position = this.adjustObjectPositionByBoundaries(
+          position,
+          this.cmbLab.rzsw);
+        this.setLeft(this.cmbLab, position);
         this.hideEl(this.minLab);
         this.hideEl(this.maxLab);
         this.showEl(this.cmbLab);
@@ -834,6 +854,8 @@ function throttle(func, wait, options) {
 
       newValue = this.offsetToValue(newOffset);
       newValue = this.roundStep(newValue);
+      // Adjusts the offset by the rounded value;
+      newOffset = this.valueToOffset(newValue);
 
       if (this.range)
       {
@@ -901,8 +923,8 @@ function throttle(func, wait, options) {
     scope: {
       rzSliderFloor: '=?',
       rzSliderCeil: '=?',
-      rzSliderStep: '@',
-      rzSliderPrecision: '@',
+      rzSliderStep: '=',
+      rzSliderPrecision: '=',
       rzSliderModel: '=?',
       rzSliderHigh: '=?',
       rzSliderTranslate: '&'
