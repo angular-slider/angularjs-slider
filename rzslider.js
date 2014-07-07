@@ -338,7 +338,7 @@ function throttle(func, wait, options) {
       var valStr = this.customTrFn && useCustomTr ? '' + this.customTrFn(value) : '' + value,
         getWidth = false;
 
-      if(label.rzsv === undefined || label.rzsv.length != valStr.length)
+      if(label.rzsv === undefined || label.rzsv.length != valStr.length || (label.rzsv.length > 0 && label.rzsw == 0))
       {
         getWidth = true;
         label.rzsv = valStr;
