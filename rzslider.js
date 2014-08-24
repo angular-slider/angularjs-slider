@@ -823,8 +823,19 @@ function throttle(func, wait, options) {
      */
     onMove: function (pointer, event)
     {
-      var eventX = event.clientX || (typeof(event.originalEvent) != 'undefined' ? event.originalEvent.touches[0].clientX : event.touches[0].clientX),
-        sliderLO = this.sliderElem.rzsl,
+      var eventX;
+
+      if (typeof(event.clientX) == 'number') {
+        eventX = event.clientX;
+      } else {
+        if (typeof(event.originalEvent) != 'undefined') {
+          eventX = event.originalEvent.touches[0].clientX;
+        } else {
+          eventX = event.touches[0].clientX;
+        }
+      }
+
+      var sliderLO = this.sliderElem.rzsl,
         newOffset = eventX - sliderLO - this.handleHalfWidth,
         newValue;
 
@@ -899,7 +910,7 @@ function throttle(func, wait, options) {
       if(event.touches || (typeof(event.originalEvent) != 'undefined' && event.originalEvent.touches))
       {
         $document.unbind('touchmove');
-        $document.unbind('touchend');        
+        $document.unbind('touchend');
       }
       else
       {
