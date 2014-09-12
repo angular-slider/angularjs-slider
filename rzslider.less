@@ -33,26 +33,26 @@ rzslider {
     position: absolute;
     display: inline-block;
 
-    &.base {
+    &.rz-base {
       width: 100%;
       height: 100%;
       padding: 0;
     }
 
-    &.bar {
+    &.rz-bar {
       width: 100%;
       height: 100%;
       z-index: 0;
       background: #fff;
 
-      &.selection {
+      &.rz-selection {
         width: 0%;
         z-index: 1;
         background: #67b700;
       }
     }
 
-    &.pointer {
+    &.rz-pointer {
       cursor: pointer;
       width: 32px;
       height: 32px;
@@ -76,22 +76,22 @@ rzslider {
         background-color: @handleHoverColor;
       }
 
-      &.active:after {
+      &.rz-active:after {
         background-color: @handleActiveColor;
       }
     }
 
-    &.bubble {
+    &.rz-bubble {
       cursor: default;
       top: -32px;
       padding: 1px 3px 1px 3px;
       color: @labelTextColor;
 
-      &.selection {
+      &.rz-selection {
         top: 15px;
       }
 
-      &.limit {
+      &.rz-limit {
         color: @limitLabelTextColor;
       }
     }
