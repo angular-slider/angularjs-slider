@@ -7,7 +7,7 @@
     "Jussi Saarivirta <jusasi@gmail.com>"
   ],
   "description": "AngularJS slider directive with no external dependencies. Mobile friendly!",
-  "main": "rzslider.js",
+  "main": ["rzslider.js", "dist/rzslider.css"],
   "keywords": [
     "angularjs",
     "slider"
