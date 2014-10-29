@@ -784,13 +784,13 @@ function throttle(func, wait, options) {
 
       if(event.touches || (typeof(event.originalEvent) != 'undefined' && event.originalEvent.touches))
       {
-        $document.on('touchmove.rzslider', angular.bind(this, this.onMove, pointer));
-        $document.on('touchend.rzslider', angular.bind(this, this.onEnd));
+        this.sliderElem.on('touchmove', angular.bind(this, this.onMove, pointer));
+        $document.one('touchend', angular.bind(this, this.onEnd));
       }
       else
       {
-        $document.on('mousemove.rzslider', angular.bind(this, this.onMove, pointer));
-        $document.on('mouseup.rzslider', angular.bind(this, this.onEnd));
+        this.sliderElem.on('mousemove', angular.bind(this, this.onMove, pointer));
+        $document.one('mouseup', angular.bind(this, this.onEnd));
       }
     },
 
@@ -876,13 +876,11 @@ function throttle(func, wait, options) {
 
       if(event.touches || (typeof(event.originalEvent) != 'undefined' && event.originalEvent.touches))
       {
-        $document.unbind('touchmove.rzslider');
-        $document.unbind('touchend.rzslider');
+      	this.sliderElem.off('touchmove');
       }
       else
       {
-        $document.unbind('mousemove.rzslider');
-        $document.unbind('mouseup.rzslider');
+      	this.sliderElem.off('mousemove');
       }
 
       this.scope.$emit('slideEnded');
