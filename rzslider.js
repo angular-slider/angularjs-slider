@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v0.1.6
+ * Version: v0.1.6r
  *
  * Licensed under the MIT license
  */
@@ -652,7 +652,7 @@ function throttle(func, wait, options) {
      */
     roundStep: function(value)
     {
-      var step = this.step,
+      var step = this.step/Math.pow(10,this.precision),
         remainder = (value - this.minValue) % step,
         steppedValue = remainder > (step / 2) ? value + step - remainder : value - remainder;
 
