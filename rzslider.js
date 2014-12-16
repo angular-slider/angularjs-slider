@@ -126,6 +126,13 @@ function throttle(func, wait, options) {
     this.step = 0;
 
     /**
+     * Progressive step
+     *
+     * @type {number}
+     */
+    this.progressiveStep = false;
+
+    /**
      * The name of the handle we are currently tracking
      *
      * @type {string}
@@ -205,6 +212,7 @@ function throttle(func, wait, options) {
       this.setMinAndMax();
       this.precision = this.scope.rzSliderPrecision === undefined ? 0 : +this.scope.rzSliderPrecision;
       this.step = this.scope.rzSliderStep === undefined ? 1 : +this.scope.rzSliderStep;
+      this.progressiveStep = this.scope.rzSliderProgressiveStep === undefined ? false : this.scope.rzSliderProgressiveStep;
 
       $timeout(function()
       {
@@ -653,8 +661,19 @@ function throttle(func, wait, options) {
     roundStep: function(value)
     {
       var step = this.step,
-        remainder = (value - this.minValue) % step,
-        steppedValue = remainder > (step / 2) ? value + step - remainder : value - remainder;
+        exponent = 1,
+        remainder;
+
+      if (this.progressiveStep)
+      {
+        while (step < value / 60) step = Math.pow(10, exponent++);
+        remainder = value % step;
+      } else {
+        remainder = (value - this.minValue) % step
+      }
+
+      var steppedValue = remainder > (step / 2) ? value + step - remainder : value - remainder;
+      if ((steppedValue) < this.minValue) steppedValue = this.minValue;
 
       return +(steppedValue).toFixed(this.precision);
     },
@@ -902,6 +921,7 @@ function throttle(func, wait, options) {
       rzSliderFloor: '=?',
       rzSliderCeil: '=?',
       rzSliderStep: '@',
+      rzSliderProgressiveStep: '@',
       rzSliderPrecision: '@',
       rzSliderModel: '=?',
       rzSliderHigh: '=?',
