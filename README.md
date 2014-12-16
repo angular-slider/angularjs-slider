@@ -84,6 +84,10 @@ $scope.priceSlider = {
 
 > slider step.
 
+**rz-slider-progressive-step**
+
+> Step will be calculated automatically `step` will be taken as a minimal step value.
+
 **rz-slider-precision**
 
 > The precision to display values with. The `toFixed()` is used internally for this.
