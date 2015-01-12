@@ -919,6 +919,7 @@ function throttle(func, wait, options) {
 
     link: function(scope, elem, attr)
     {
+      alert('test');
       return new Slider(scope, elem, attr);
     }
   };
