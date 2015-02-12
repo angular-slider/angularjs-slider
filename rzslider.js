@@ -898,6 +898,7 @@ function throttle(func, wait, options) {
 {
   return {
     restrict: 'EA',
+    require: 'ngModel',
     scope: {
       rzSliderFloor: '=?',
       rzSliderCeil: '=?',
