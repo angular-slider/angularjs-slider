@@ -905,7 +905,8 @@ function throttle(func, wait, options) {
       rzSliderPrecision: '@',
       rzSliderModel: '=?',
       rzSliderHigh: '=?',
-      rzSliderTranslate: '&'
+      rzSliderTranslate: '&',
+      ngChange: '&'
     },
     template:   '<span class="bar"></span>' + // 0 The slider bar
                 '<span class="bar selection"></span>' + // 1 Highlight between two handles
@@ -919,9 +920,9 @@ function throttle(func, wait, options) {
 
     link: function(scope, elem, attr)
     {
-			if(b.ngChange) {
-				b.ngChange();
-			}
+	if(b.ngChange) {
+		b.ngChange();
+	}
       return new Slider(scope, elem, attr);
     }
   };
