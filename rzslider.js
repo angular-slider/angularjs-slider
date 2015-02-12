@@ -919,6 +919,9 @@ function throttle(func, wait, options) {
 
     link: function(scope, elem, attr)
     {
+			if(b.ngChange) {
+				b.ngChange();
+			}
       return new Slider(scope, elem, attr);
     }
   };
