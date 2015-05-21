@@ -57,7 +57,7 @@ function throttle(func, wait, options) {
   }
 })
 
-.factory('Slider', ['$timeout', '$document', 'throttle', function($timeout, $document, throttle)
+.factory('RzSlider', ['$timeout', '$document', 'throttle', function($timeout, $document, throttle)
 {
   /**
    * Slider
@@ -652,9 +652,9 @@ function throttle(func, wait, options) {
      */
     roundStep: function(value)
     {
-      var step = this.step,
-        remainder = (value - this.minValue) % step,
-        steppedValue = remainder > (step / 2) ? value + step - remainder : value - remainder;
+      var step = this.step/Math.pow(10,this.precision),
+          remainder = (value - this.minValue) % step,
+          steppedValue = remainder > (step / 2) ? value + step - remainder : value - remainder;
 
       return +(steppedValue).toFixed(this.precision);
     },
@@ -894,7 +894,7 @@ function throttle(func, wait, options) {
   return Slider;
 }])
 
-.directive('rzslider', ['Slider', function(Slider)
+.directive('rzslider', ['RzSlider', function(Slider)
 {
   return {
     restrict: 'EA',
