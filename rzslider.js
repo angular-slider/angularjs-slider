@@ -9,7 +9,7 @@
  * Licensed under the MIT license
  */
 
-/* global angular: false */
+/* global angular: false, window: false */
 
 angular.module('rzModule', [])
 
@@ -220,7 +220,7 @@ function throttle(func, wait, options) {
       this.scope.$on('reCalcViewDimensions', angular.bind(this, this.calcViewDimensions));
 
       // Recalculate stuff if view port dimensions have changed
-      angular.element(window).on('resize.rzslider', angular.bind(this, this.calcViewDimensions));
+      angular.element(window).on('resize', angular.bind(this, this.calcViewDimensions));
 
       this.initRun = true;
 
@@ -667,7 +667,7 @@ function throttle(func, wait, options) {
      */
     roundStep: function(value)
     {
-      var step = this.step/Math.pow(10,this.precision),
+      var step = this.step / Math.pow(10,this.precision),
           remainder = (value - this.minValue) % step,
           steppedValue = remainder > (step / 2) ? value + step - remainder : value - remainder;
 
@@ -768,11 +768,11 @@ function throttle(func, wait, options) {
      */
     bindEvents: function()
     {
-      this.minH.on('mousedown.rzslider', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
-      if(this.range) { this.maxH.on('mousedown.rzslider', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')) }
+      this.minH.on('mousedown', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
+      if(this.range) { this.maxH.on('mousedown', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')) }
 
       this.minH.on('touchstart.rzslider', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
-      if(this.range) { this.maxH.on('touchstart.rzslider', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')) }
+      if(this.range) { this.maxH.on('touchstart', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')) }
     },
 
     /**
