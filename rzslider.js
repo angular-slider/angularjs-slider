@@ -194,6 +194,8 @@ function throttle(func, wait, options) {
     {
       var self = this;
 
+      this.unbinders = [];
+
       if(this.scope.rzSliderTranslate)
       {
         this.customTrFn = this.scope.rzSliderTranslate();
@@ -218,7 +220,7 @@ function throttle(func, wait, options) {
       this.scope.$on('reCalcViewDimensions', angular.bind(this, this.calcViewDimensions));
 
       // Recalculate stuff if view port dimensions have changed
-      angular.element(window).on('resize', angular.bind(this, this.calcViewDimensions));
+      angular.element(window).on('resize.rzslider', angular.bind(this, this.calcViewDimensions));
 
       this.initRun = true;
 
@@ -255,28 +257,41 @@ function throttle(func, wait, options) {
 
       // Watchers
 
-      this.scope.$watch('rzSliderModel', function(newValue, oldValue)
+      this.unbinders.push(this.scope.$watch('rzSliderModel', function(newValue, oldValue)
       {
         if(newValue === oldValue) return;
         thrLow();
-      });
+      }));
 
-      this.scope.$watch('rzSliderHigh', function(newValue, oldValue)
+      this.unbinders.push(this.scope.$watch('rzSliderHigh', function(newValue, oldValue)
       {
         if(newValue === oldValue) return;
         thrHigh();
-      });
+      }));
 
-      this.scope.$watch('rzSliderFloor', function(newValue, oldValue)
+      this.unbinders.push(this.scope.$watch('rzSliderFloor', function(newValue, oldValue)
       {
         if(newValue === oldValue) return;
         self.resetSlider();
-      });
+      }));
 
-      this.scope.$watch('rzSliderCeil', function(newValue, oldValue)
+      this.unbinders.push(this.scope.$watch('rzSliderCeil', function(newValue, oldValue)
       {
         if(newValue === oldValue) return;
         self.resetSlider();
+      }));
+
+      this.sliderElem.on('$destroy', function() {
+        self.minH.off('.rzslider');
+        self.maxH.off('.rzslider');
+        $document.off('.rzslider');
+        angular.element(window).off('.rzslider');
+      });
+
+      this.scope.$on('$destroy', function() {
+        self.unbinders.map(function(unbind) {
+          unbind();
+        });
       });
     },
 
@@ -753,11 +768,11 @@ function throttle(func, wait, options) {
      */
     bindEvents: function()
     {
-      this.minH.on('mousedown', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
-      if(this.range) { this.maxH.on('mousedown', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')) }
+      this.minH.on('mousedown.rzslider', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
+      if(this.range) { this.maxH.on('mousedown.rzslider', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')) }
 
-      this.minH.on('touchstart', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
-      if(this.range) { this.maxH.on('touchstart', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')) }
+      this.minH.on('touchstart.rzslider', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
+      if(this.range) { this.maxH.on('touchstart.rzslider', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')) }
     },
 
     /**
