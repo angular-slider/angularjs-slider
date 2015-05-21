@@ -44,13 +44,13 @@ rzslider span {
   display: inline-block;
 }
 
-rzslider span.base {
+rzslider span.rz-base {
   width: 100%;
   height: 100%;
   padding: 0;
 }
 
-rzslider span.bar {
+rzslider span.rz-bar {
   width: 100%;
   height: 100%;
   z-index: 0;
@@ -58,14 +58,14 @@ rzslider span.bar {
   .rounded(@barHeight/2);
 }
 
-rzslider span.bar.selection {
+rzslider span.rz-bar.rz-selection {
   width: 0%;
   z-index: 1;
   background: @barFillColor;
   .rounded(@barHeight/2);
 }
 
-rzslider span.pointer {
+rzslider span.rz-pointer {
   cursor: pointer;
   width: @handleSize;
   height: @handleSize;
@@ -75,7 +75,7 @@ rzslider span.pointer {
   .rounded(@handleSize/2);
 }
 
-rzslider span.pointer:after {
+rzslider span.rz-pointer:after {
   content: '';
   width: @handlePointerSize;
   height: @handlePointerSize;
@@ -86,25 +86,25 @@ rzslider span.pointer:after {
   background: @handleInnerColor;
 }
 
-rzslider span.pointer:hover:after {
+rzslider span.rz-pointer:hover:after {
   background-color: @handleHoverColor;
 }
 
-rzslider span.pointer.active:after {
+rzslider span.rz-pointer.rz-active:after {
   background-color: @handleActiveColor;
 }
 
-rzslider span.bubble {
+rzslider span.rz-bubble {
   cursor: default;
   top: -@handleSize;
   padding: @bubblePadding;
   color: @labelTextColor;
 }
 
-rzslider span.bubble.selection {
+rzslider span.rz-bubble.rz-selection {
   top: @handleSize/2;
 }
 
-rzslider span.bubble.limit {
+rzslider span.rz-bubble.rz-limit {
   color: @limitLabelTextColor;
 }

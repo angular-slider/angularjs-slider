@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v0.1.6
+ * Version: v0.1.9
  *
  * Licensed under the MIT license
  */
@@ -780,7 +780,7 @@ function throttle(func, wait, options) {
       this.calcViewDimensions();
       this.tracking = ref;
 
-      pointer.addClass('active');
+      pointer.addClass('rz-active');
 
       if(event.touches || (typeof(event.originalEvent) != 'undefined' && event.originalEvent.touches))
       {
@@ -842,16 +842,16 @@ function throttle(func, wait, options) {
           this.scope[this.tracking] = this.scope.rzSliderHigh;
           this.updateHandles(this.tracking, this.maxH.rzsl);
           this.tracking = 'rzSliderHigh';
-          this.minH.removeClass('active');
-          this.maxH.addClass('active');
+          this.minH.removeClass('rz-active');
+          this.maxH.addClass('rz-active');
         }
         else if(this.tracking === 'rzSliderHigh' && newValue <= this.scope.rzSliderModel)
         {
           this.scope[this.tracking] = this.scope.rzSliderModel;
           this.updateHandles(this.tracking, this.minH.rzsl);
           this.tracking = 'rzSliderModel';
-          this.maxH.removeClass('active');
-          this.minH.addClass('active');
+          this.maxH.removeClass('rz-active');
+          this.minH.addClass('rz-active');
         }
       }
 
@@ -871,8 +871,8 @@ function throttle(func, wait, options) {
      */
     onEnd: function(event)
     {
-      this.minH.removeClass('active');
-      this.maxH.removeClass('active');
+      this.minH.removeClass('rz-active');
+      this.maxH.removeClass('rz-active');
 
       if(event.touches || (typeof(event.originalEvent) != 'undefined' && event.originalEvent.touches))
       {
@@ -907,15 +907,15 @@ function throttle(func, wait, options) {
       rzSliderHigh: '=?',
       rzSliderTranslate: '&'
     },
-    template:   '<span class="bar"></span>' + // 0 The slider bar
-                '<span class="bar selection"></span>' + // 1 Highlight between two handles
-                '<span class="pointer"></span>' + // 2 Left slider handle
-                '<span class="pointer"></span>' + // 3 Right slider handle
-                '<span class="bubble limit"></span>' + // 4 Floor label
-                '<span class="bubble limit"></span>' + // 5 Ceiling label
-                '<span class="bubble"></span>' + // 6 Label above left slider handle
-                '<span class="bubble"></span>' + // 7 Label above right slider handle
-                '<span class="bubble"></span>', // 8 Range label when the slider handles are close ex. 15 - 17
+    template:   '<span class="rz-bar"></span>' + // 0 The slider bar
+                '<span class="rz-bar rz-selection"></span>' + // 1 Highlight between two handles
+                '<span class="rz-pointer"></span>' + // 2 Left slider handle
+                '<span class="rz-pointer"></span>' + // 3 Right slider handle
+                '<span class="rz-bubble rz-limit"></span>' + // 4 Floor label
+                '<span class="rz-bubble rz-limit"></span>' + // 5 Ceiling label
+                '<span class="rz-bubble"></span>' + // 6 Label above left slider handle
+                '<span class="rz-bubble"></span>' + // 7 Label above right slider handle
+                '<span class="rz-bubble"></span>', // 8 Range label when the slider handles are close ex. 15 - 17
 
     link: function(scope, elem, attr)
     {
