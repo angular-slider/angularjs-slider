@@ -4,12 +4,12 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v0.1.6
+ * Version: v0.1.9
  *
  * Licensed under the MIT license
  */
 
-/* global angular: false */
+/* global angular: false, window: false */
 
 angular.module('rzModule', [])
 
@@ -194,6 +194,8 @@ function throttle(func, wait, options) {
     {
       var self = this;
 
+      this.unbinders = [];
+
       if(this.scope.rzSliderTranslate)
       {
         this.customTrFn = this.scope.rzSliderTranslate();
@@ -255,28 +257,41 @@ function throttle(func, wait, options) {
 
       // Watchers
 
-      this.scope.$watch('rzSliderModel', function(newValue, oldValue)
+      this.unbinders.push(this.scope.$watch('rzSliderModel', function(newValue, oldValue)
       {
         if(newValue === oldValue) return;
         thrLow();
-      });
+      }));
 
-      this.scope.$watch('rzSliderHigh', function(newValue, oldValue)
+      this.unbinders.push(this.scope.$watch('rzSliderHigh', function(newValue, oldValue)
       {
         if(newValue === oldValue) return;
         thrHigh();
-      });
+      }));
 
-      this.scope.$watch('rzSliderFloor', function(newValue, oldValue)
+      this.unbinders.push(this.scope.$watch('rzSliderFloor', function(newValue, oldValue)
       {
         if(newValue === oldValue) return;
         self.resetSlider();
-      });
+      }));
 
-      this.scope.$watch('rzSliderCeil', function(newValue, oldValue)
+      this.unbinders.push(this.scope.$watch('rzSliderCeil', function(newValue, oldValue)
       {
         if(newValue === oldValue) return;
         self.resetSlider();
+      }));
+
+      this.sliderElem.on('$destroy', function() {
+        self.minH.off('.rzslider');
+        self.maxH.off('.rzslider');
+        $document.off('.rzslider');
+        angular.element(window).off('.rzslider');
+      });
+
+      this.scope.$on('$destroy', function() {
+        self.unbinders.map(function(unbind) {
+          unbind();
+        });
       });
     },
 
@@ -652,7 +667,7 @@ function throttle(func, wait, options) {
      */
     roundStep: function(value)
     {
-      var step = this.step/Math.pow(10,this.precision),
+      var step = this.step / Math.pow(10,this.precision),
           remainder = (value - this.minValue) % step,
           steppedValue = remainder > (step / 2) ? value + step - remainder : value - remainder;
 
@@ -756,7 +771,7 @@ function throttle(func, wait, options) {
       this.minH.on('mousedown', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
       if(this.range) { this.maxH.on('mousedown', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')) }
 
-      this.minH.on('touchstart', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
+      this.minH.on('touchstart.rzslider', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
       if(this.range) { this.maxH.on('touchstart', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')) }
     },
 
@@ -780,7 +795,7 @@ function throttle(func, wait, options) {
       this.calcViewDimensions();
       this.tracking = ref;
 
-      pointer.addClass('active');
+      pointer.addClass('rz-active');
 
       if(event.touches || (typeof(event.originalEvent) != 'undefined' && event.originalEvent.touches))
       {
@@ -842,16 +857,16 @@ function throttle(func, wait, options) {
           this.scope[this.tracking] = this.scope.rzSliderHigh;
           this.updateHandles(this.tracking, this.maxH.rzsl);
           this.tracking = 'rzSliderHigh';
-          this.minH.removeClass('active');
-          this.maxH.addClass('active');
+          this.minH.removeClass('rz-active');
+          this.maxH.addClass('rz-active');
         }
         else if(this.tracking === 'rzSliderHigh' && newValue <= this.scope.rzSliderModel)
         {
           this.scope[this.tracking] = this.scope.rzSliderModel;
           this.updateHandles(this.tracking, this.minH.rzsl);
           this.tracking = 'rzSliderModel';
-          this.maxH.removeClass('active');
-          this.minH.addClass('active');
+          this.maxH.removeClass('rz-active');
+          this.minH.addClass('rz-active');
         }
       }
 
@@ -871,8 +886,8 @@ function throttle(func, wait, options) {
      */
     onEnd: function(event)
     {
-      this.minH.removeClass('active');
-      this.maxH.removeClass('active');
+      this.minH.removeClass('rz-active');
+      this.maxH.removeClass('rz-active');
 
       if(event.touches || (typeof(event.originalEvent) != 'undefined' && event.originalEvent.touches))
       {
@@ -907,15 +922,15 @@ function throttle(func, wait, options) {
       rzSliderHigh: '=?',
       rzSliderTranslate: '&'
     },
-    template:   '<span class="bar"></span>' + // 0 The slider bar
-                '<span class="bar selection"></span>' + // 1 Highlight between two handles
-                '<span class="pointer"></span>' + // 2 Left slider handle
-                '<span class="pointer"></span>' + // 3 Right slider handle
-                '<span class="bubble limit"></span>' + // 4 Floor label
-                '<span class="bubble limit"></span>' + // 5 Ceiling label
-                '<span class="bubble"></span>' + // 6 Label above left slider handle
-                '<span class="bubble"></span>' + // 7 Label above right slider handle
-                '<span class="bubble"></span>', // 8 Range label when the slider handles are close ex. 15 - 17
+    template:   '<span class="rz-bar"></span>' + // 0 The slider bar
+                '<span class="rz-bar rz-selection"></span>' + // 1 Highlight between two handles
+                '<span class="rz-pointer"></span>' + // 2 Left slider handle
+                '<span class="rz-pointer"></span>' + // 3 Right slider handle
+                '<span class="rz-bubble rz-limit"></span>' + // 4 Floor label
+                '<span class="rz-bubble rz-limit"></span>' + // 5 Ceiling label
+                '<span class="rz-bubble"></span>' + // 6 Label above left slider handle
+                '<span class="rz-bubble"></span>' + // 7 Label above right slider handle
+                '<span class="rz-bubble"></span>', // 8 Range label when the slider handles are close ex. 15 - 17
 
     link: function(scope, elem, attr)
     {

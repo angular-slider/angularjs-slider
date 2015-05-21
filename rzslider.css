@@ -26,13 +26,13 @@ rzslider span {
   white-space: nowrap;
 }
 
-rzslider span.base {
+rzslider span.rz-base {
   width: 100%;
   height: 100%;
   padding: 0;
 }
 
-rzslider span.bar {
+rzslider span.rz-bar {
   z-index: 0;
   width: 100%;
   height: 100%;
@@ -42,7 +42,7 @@ rzslider span.bar {
           border-radius: 2px;
 }
 
-rzslider span.bar.selection {
+rzslider span.rz-bar.rz-selection {
   z-index: 1;
   width: 0;
   background: #0db9f0;
@@ -51,7 +51,7 @@ rzslider span.bar.selection {
           border-radius: 2px;
 }
 
-rzslider span.pointer {
+rzslider span.rz-pointer {
   top: -14px;
   z-index: 2;
   width: 32px;
@@ -63,7 +63,7 @@ rzslider span.pointer {
           border-radius: 16px;
 }
 
-rzslider span.pointer:after {
+rzslider span.rz-pointer:after {
   position: absolute;
   top: 12px;
   left: 12px;
@@ -76,25 +76,25 @@ rzslider span.pointer:after {
   content: '';
 }
 
-rzslider span.pointer:hover:after {
+rzslider span.rz-pointer:hover:after {
   background-color: #ffffff;
 }
 
-rzslider span.pointer.active:after {
+rzslider span.rz-pointer.rz-active:after {
   background-color: #ffffff;
 }
 
-rzslider span.bubble {
+rzslider span.rz-bubble {
   top: -32px;
   padding: 1px 3px;
   color: #55637d;
   cursor: default;
 }
 
-rzslider span.bubble.selection {
+rzslider span.rz-bubble.rz-selection {
   top: 16px;
 }
 
-rzslider span.bubble.limit {
+rzslider span.rz-bubble.rz-limit {
   color: #55637d;
 }

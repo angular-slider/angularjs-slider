@@ -9,7 +9,7 @@ git co master -- dist/rzslider.css
 git co master -- rzslider.js
 
 mv demo/demo.css demo.css
-mv demo/index.html index.html
+# mv demo/index.html index.html
 mv dist/rzslider.css rzslider.css
 
 cp bower_components/angular/angular.min.js angular.min.js
