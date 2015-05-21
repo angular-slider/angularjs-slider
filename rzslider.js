@@ -57,7 +57,7 @@ function throttle(func, wait, options) {
   }
 })
 
-.factory('Slider', ['$timeout', '$document', 'throttle', function($timeout, $document, throttle)
+.factory('RzSlider', ['$timeout', '$document', 'throttle', function($timeout, $document, throttle)
 {
   /**
    * Slider
@@ -894,7 +894,7 @@ function throttle(func, wait, options) {
   return Slider;
 }])
 
-.directive('rzslider', ['Slider', function(Slider)
+.directive('rzslider', ['RzSlider', function(Slider)
 {
   return {
     restrict: 'EA',
