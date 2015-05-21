@@ -11,6 +11,8 @@ Slider directive implementation for AngularJS, without any dependencies.
 
 ## Examples
 
+[http://rzajac.github.io/angularjs-slider/](http://rzajac.github.io/angularjs-slider/)
+
 ### Single slider
 
 ```javascript
@@ -124,10 +126,6 @@ To force slider to recalculate dimensions broadcast **reCalcViewDimensions** eve
 You can also force redraw with **rzSliderForceRender** event.
 
 
-## Plunker example
-
-[http://embed.plnkr.co/53AUdB/preview](http://embed.plnkr.co/53AUdB/preview)
-
 ## Project integration
 
 ```html
@@ -152,6 +150,13 @@ You can also force redraw with **rzSliderForceRender** event.
 **v0.1.5**
 
     Added 'slideEnded' event emitted on slider knob dragging ended (Jusas).
+    
+**v0.1.6**
+
+    - Added github project page
+    - Updated to latest angular
+    - Updated CSS styles (Angelin Sirbu)
+     
 
 ## Disclaimer
 
