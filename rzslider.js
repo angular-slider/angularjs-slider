@@ -913,6 +913,7 @@ function throttle(func, wait, options) {
 {
   return {
     restrict: 'EA',
+    require: 'ngModel',
     scope: {
       rzSliderFloor: '=?',
       rzSliderCeil: '=?',
@@ -920,7 +921,8 @@ function throttle(func, wait, options) {
       rzSliderPrecision: '@',
       rzSliderModel: '=?',
       rzSliderHigh: '=?',
-      rzSliderTranslate: '&'
+      rzSliderTranslate: '&',
+      ngChange: '&'
     },
     template:   '<span class="rz-bar"></span>' + // 0 The slider bar
                 '<span class="rz-bar rz-selection"></span>' + // 1 Highlight between two handles
@@ -934,6 +936,9 @@ function throttle(func, wait, options) {
 
     link: function(scope, elem, attr)
     {
+	if(b.ngChange) {
+		b.ngChange();
+	}
       return new Slider(scope, elem, attr);
     }
   };
