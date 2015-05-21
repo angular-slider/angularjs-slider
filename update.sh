@@ -3,7 +3,7 @@
 git checkout master -- .gitignore
 
 git co master -- demo/demo.css
-git co master -- demo/index.html
+# git co master -- demo/index.html
 git co master -- dist/rzslider.css
 git co master -- dist/rzslider.css
 git co master -- rzslider.js
