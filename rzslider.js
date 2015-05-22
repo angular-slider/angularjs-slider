@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v0.1.9
+ * Version: v0.1.11
  *
  * Licensed under the MIT license
  */
@@ -145,6 +145,13 @@ function throttle(func, wait, options) {
      * @type {number}
      */
     this.maxValue = 0;
+
+    /**
+     * Hide limit labels
+     *
+     * @type {boolean}
+     */
+    this.hideLimitLabels = !!attributes.rzSliderHideLimitLabels || false;
 
     /**
      * The delta between min and max value
@@ -432,6 +439,14 @@ function throttle(func, wait, options) {
       this.maxLab.rzsl = 0;
       this.cmbLab.rzsl = 0;
 
+      if(this.hideLimitLabels)
+      {
+        this.flrLab.rzAlwaysHide = true;
+        this.ceilLab.rzAlwaysHide = true;
+        this.hideEl(this.flrLab);
+        this.hideEl(this.ceilLab);
+      }
+
       // Remove stuff not needed in single slider
       if( ! this.range)
       {
@@ -693,6 +708,8 @@ function throttle(func, wait, options) {
      */
     showEl: function (element)
     {
+      if(!!element.rzAlwaysHide) return element;
+
       return element.css({opacity: 1});
     },
 
@@ -745,7 +762,7 @@ function throttle(func, wait, options) {
      */
     valueToOffset: function(val)
     {
-      return (val - this.minValue) * this.maxLeft / this.valueRange;
+      return (Math.ceil(val) - this.minValue) * this.maxLeft / this.valueRange;
     },
 
     /**
@@ -756,7 +773,7 @@ function throttle(func, wait, options) {
      */
     offsetToValue: function(offset)
     {
-      return (offset / this.maxLeft) * this.valueRange + this.minValue;
+      return Math.ceil( (offset / this.maxLeft) * this.valueRange + this.minValue );
     },
 
     // Events
@@ -912,7 +929,7 @@ function throttle(func, wait, options) {
 .directive('rzslider', ['RzSlider', function(Slider)
 {
   return {
-    restrict: 'EA',
+    restrict: 'E',
     scope: {
       rzSliderFloor: '=?',
       rzSliderCeil: '=?',
@@ -920,7 +937,8 @@ function throttle(func, wait, options) {
       rzSliderPrecision: '@',
       rzSliderModel: '=?',
       rzSliderHigh: '=?',
-      rzSliderTranslate: '&'
+      rzSliderTranslate: '&',
+      rzSliderHideLimitLabels: '=?'
     },
     template:   '<span class="rz-bar"></span>' + // 0 The slider bar
                 '<span class="rz-bar rz-selection"></span>' + // 1 Highlight between two handles

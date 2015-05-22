@@ -81,7 +81,7 @@ rzslider span.rz-pointer:hover:after {
 }
 
 rzslider span.rz-pointer.rz-active:after {
-  background-color: #ffffff;
+  background-color: #451aff;
 }
 
 rzslider span.rz-bubble {
