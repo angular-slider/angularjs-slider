@@ -129,6 +129,13 @@ To force slider to recalculate dimensions broadcast **reCalcViewDimensions** eve
 
 You can also force redraw with **rzSliderForceRender** event.
 
+At the end of each "slide" slider emits `slideEnded` event. 
+
+```javascript
+$scope.$on("slideEnded", function() {
+     // user finished sliding a handle 
+});
+```
 
 ## Project integration
 
