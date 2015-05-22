@@ -141,6 +141,11 @@ You can also force redraw with **rzSliderForceRender** event.
     </script>
 ```
 
+## Browser support
+
+I use Slider on couple of my projects and it's being tested on desktop versions of Chrome, Firefox, Safari, IE 9/10.
+Slider is also tested on Android and iPhone using all browsers available on those platforms.
+
 ## Changelog
 
 **v0.1.3**
