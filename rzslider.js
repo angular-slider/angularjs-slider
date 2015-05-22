@@ -405,6 +405,11 @@ function throttle(func, wait, options) {
         this.scope.rzSliderCeil = this.maxValue = this.range ? this.scope.rzSliderHigh : this.scope.rzSliderModel;
       }
 
+      if(this.scope.rzSliderStep)
+      {
+        this.step = +this.scope.rzSliderStep;
+      }
+
       this.valueRange = this.maxValue - this.minValue;
     },
 
