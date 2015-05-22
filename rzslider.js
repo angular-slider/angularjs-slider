@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v0.1.10
+ * Version: v0.1.11
  *
  * Licensed under the MIT license
  */
@@ -762,7 +762,7 @@ function throttle(func, wait, options) {
      */
     valueToOffset: function(val)
     {
-      return (val - this.minValue) * this.maxLeft / this.valueRange;
+      return (Math.ceil(val) - this.minValue) * this.maxLeft / this.valueRange;
     },
 
     /**
@@ -773,7 +773,7 @@ function throttle(func, wait, options) {
      */
     offsetToValue: function(offset)
     {
-      return (offset / this.maxLeft) * this.valueRange + this.minValue;
+      return Math.ceil( (offset / this.maxLeft) * this.valueRange + this.minValue );
     },
 
     // Events
