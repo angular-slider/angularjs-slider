@@ -94,6 +94,10 @@ $scope.priceSlider = {
 
 > Set to true to hide min / max labels
 
+**rz-slider-always-show-bar**
+
+> Set to true to always show selection bar
+
 **rz-slider-translate**
 
 > Custom translate function. Use this if you want to translate values displayed on the slider. For example if you want to display dollar amounts instead of just numbers do this:
