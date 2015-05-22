@@ -90,6 +90,10 @@ $scope.priceSlider = {
 
 > The precision to display values with. The `toFixed()` is used internally for this.
 
+**rz-slider-hide-limit-labels**
+
+> Set to true to hide min / max labels
+
 **rz-slider-translate**
 
 > Custom translate function. Use this if you want to translate values displayed on the slider. For example if you want to display dollar amounts instead of just numbers do this:
