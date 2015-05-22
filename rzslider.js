@@ -929,7 +929,7 @@ function throttle(func, wait, options) {
 .directive('rzslider', ['RzSlider', function(Slider)
 {
   return {
-    restrict: 'EA',
+    restrict: 'E',
     scope: {
       rzSliderFloor: '=?',
       rzSliderCeil: '=?',
