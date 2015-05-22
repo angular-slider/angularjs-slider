@@ -2,11 +2,10 @@
 
 git checkout master -- .gitignore
 
-git co master -- demo/demo.css
-# git co master -- demo/index.html
-git co master -- dist/rzslider.css
-git co master -- dist/rzslider.css
-git co master -- rzslider.js
+git checkout master -- demo/demo.css
+# git checkout master -- demo/index.html
+git checkout master -- dist/rzslider.css
+git checkout master -- rzslider.js
 
 mv demo/demo.css demo.css
 # mv demo/index.html index.html
