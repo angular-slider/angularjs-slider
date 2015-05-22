@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v0.1.11
+ * Version: v0.1.12
  *
  * Licensed under the MIT license
  */
@@ -31,7 +31,7 @@ function throttle(func, wait, options) {
   var context, args, result;
   var timeout = null;
   var previous = 0;
-  options || (options = {});
+  options = options || {};
   var later = function() {
     previous = options.leading === false ? 0 : getTime();
     timeout = null;
@@ -103,6 +103,13 @@ function throttle(func, wait, options) {
      * @type {number}
      */
     this.handleHalfWidth = 0;
+
+    /**
+     * Always show selection bar
+     *
+     * @type {string|boolean}
+     */
+    this.alwaysShowBar = attributes.rzSliderAlwaysShowBar || false;
 
     /**
      * Maximum left the slider handle can have
@@ -237,10 +244,10 @@ function throttle(func, wait, options) {
       {
         self.setMinAndMax();
         self.updateLowHandle(self.valueToOffset(self.scope.rzSliderModel));
+        self.updateSelectionBar();
 
         if(self.range)
         {
-          self.updateSelectionBar();
           self.updateCmbLabel();
         }
 
@@ -340,9 +347,10 @@ function throttle(func, wait, options) {
       if(this.range)
       {
         this.updateHighHandle(this.valueToOffset(this.scope.rzSliderHigh));
-        this.updateSelectionBar();
         this.updateCmbLabel();
       }
+
+      this.updateSelectionBar();
     },
 
     /**
@@ -453,6 +461,10 @@ function throttle(func, wait, options) {
         this.cmbLab.remove();
         this.maxLab.remove();
         this.maxH.remove();
+      }
+
+      if( !this.range && !this.alwaysShowBar)
+      {
         this.selBar.remove();
       }
     },
@@ -517,9 +529,10 @@ function throttle(func, wait, options) {
       if(which === 'rzSliderModel')
       {
         this.updateLowHandle(newOffset);
+        this.updateSelectionBar();
+
         if(this.range)
         {
-          this.updateSelectionBar();
           this.updateCmbLabel();
         }
         return;
@@ -528,9 +541,10 @@ function throttle(func, wait, options) {
       if(which === 'rzSliderHigh')
       {
         this.updateHighHandle(newOffset);
+        this.updateSelectionBar();
+
         if(this.range)
         {
-          this.updateSelectionBar();
           this.updateCmbLabel();
         }
         return;
@@ -634,8 +648,8 @@ function throttle(func, wait, options) {
      */
     updateSelectionBar: function()
     {
-      this.setWidth(this.selBar, this.maxH.rzsl - this.minH.rzsl);
-      this.setLeft(this.selBar, this.minH.rzsl + this.handleHalfWidth);
+      this.setWidth(this.selBar, Math.abs(this.maxH.rzsl - this.minH.rzsl));
+      this.setLeft(this.selBar, this.range ? this.minH.rzsl + this.handleHalfWidth : 0);
     },
 
     /**
@@ -938,7 +952,8 @@ function throttle(func, wait, options) {
       rzSliderModel: '=?',
       rzSliderHigh: '=?',
       rzSliderTranslate: '&',
-      rzSliderHideLimitLabels: '=?'
+      rzSliderHideLimitLabels: '=?',
+      rzSliderAlwaysShowBar: '=?'
     },
     template:   '<span class="rz-bar"></span>' + // 0 The slider bar
                 '<span class="rz-bar rz-selection"></span>' + // 1 Highlight between two handles
@@ -980,6 +995,7 @@ function throttle(func, wait, options) {
 /**
  * @name Event
  * @property {Array} touches
+ * @property {Event} originalEvent
  */
 
 /**
