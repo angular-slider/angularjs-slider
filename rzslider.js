@@ -658,7 +658,7 @@ function throttle(func, wait, options) {
      */
     updateSelectionBar: function()
     {
-      this.setWidth(this.selBar, Math.abs(this.maxH.rzsl - this.minH.rzsl));
+      this.setWidth(this.selBar, this.range ? Math.abs(this.maxH.rzsl - this.minH.rzsl) : this.minH.rzsl);
       this.setLeft(this.selBar, this.range ? this.minH.rzsl + this.handleHalfWidth : 0);
     },
 
