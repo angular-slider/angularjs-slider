@@ -295,15 +295,18 @@ function throttle(func, wait, options) {
         self.resetSlider();
       }));
 
-      this.sliderElem.on('$destroy', function() {
+      this.sliderElem.on('$destroy', function()
+      {
         self.minH.off('.rzslider');
         self.maxH.off('.rzslider');
         $document.off('.rzslider');
         angular.element(window).off('.rzslider');
       });
 
-      this.scope.$on('$destroy', function() {
-        self.unbinders.map(function(unbind) {
+      this.scope.$on('$destroy', function()
+      {
+        self.unbinders.map(function(unbind)
+        {
           unbind();
         });
       });
@@ -405,6 +408,11 @@ function throttle(func, wait, options) {
         this.scope.rzSliderCeil = this.maxValue = this.range ? this.scope.rzSliderHigh : this.scope.rzSliderModel;
       }
 
+      if(this.scope.rzSliderStep)
+      {
+        this.step = +this.scope.rzSliderStep;
+      }
+
       this.valueRange = this.maxValue - this.minValue;
     },
 
@@ -460,11 +468,13 @@ function throttle(func, wait, options) {
       {
         this.cmbLab.remove();
         this.maxLab.remove();
-        this.maxH.remove();
+        this.maxH.rzAlwaysHide = true;
+        this.hideEl(this.maxH);
       }
 
       if( !this.range && !this.alwaysShowBar)
       {
+        this.maxH.remove();
         this.selBar.remove();
       }
     },
@@ -849,10 +859,19 @@ function throttle(func, wait, options) {
      */
     onMove: function (pointer, event)
     {
-      var eventX = event.clientX || (typeof(event.originalEvent) != 'undefined' ? event.originalEvent.touches[0].clientX : event.touches[0].clientX),
-        sliderLO = this.sliderElem.rzsl,
-        newOffset = eventX - sliderLO - this.handleHalfWidth,
-        newValue;
+      var eventX, sliderLO, newOffset, newValue;
+
+      if('clientX' in event)
+      {
+        eventX = event.clientX;
+      }
+      else
+      {
+        eventX = typeof event.originalEvent !== 'undefined' ? event.originalEvent.touches[0].clientX : event.touches[0].clientX;
+      }
+
+      sliderLO = this.sliderElem.rzsl;
+      newOffset = eventX - sliderLO - this.handleHalfWidth;
 
       if(newOffset <= 0)
       {
