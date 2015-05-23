@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html ng-app="plunker">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AngularJS Touch Slider</title>
+    <link rel="stylesheet" href="demo.css" />
+    <link rel="stylesheet" href="rzslider.css" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+</head>
+
+<body ng-controller="MainCtrl">
+
+    <div class="wrapper">
+        <header>
+            <h1>AngularJS Touch Slider</h1>
+        </header>
+
+        <article>
+            <h2>Min/max slider example</h2>
+
+            <rzslider
+                rz-slider-floor="priceSlider.floor"
+                rz-slider-ceil="priceSlider.ceil"
+                rz-slider-model="priceSlider.min"
+                rz-slider-high="priceSlider.max"
+                rz-slider-step="1"></rzslider>
+        </article>
+
+        <article>
+            <h2>Currency slider example</h2>
+
+            <rzslider
+                rz-slider-floor="0"
+                rz-slider-ceil="450"
+                rz-slider-model="priceSlider2"
+                rz-slider-translate="translate"></rzslider>
+        </article>
+
+        <article>
+            <h2>One value slider example</h2>
+
+            <rzslider rz-slider-model="priceSlider3"
+                rz-slider-floor="50"
+                rz-slider-ceil="450"
+                rz-slider-always-show-bar="true"></rzslider>
+        </article>
+
+        <article>
+            <h2>Alphabet slider example</h2>
+            <rzslider
+                rz-slider-floor="0"
+                rz-slider-ceil="letterMax"
+                rz-slider-model="letter"
+                rz-slider-translate="alphabetTranslate"></rzslider>
+        </article>
+
+    </div>
+</body>
+
+<script src="angular.min.js"></script>
+<script src="rzslider.js"></script>
+<script>
+    var app = angular.module('plunker', ['rzModule']);
+
+    app.controller('MainCtrl', function($scope)
+    {
+        $scope.priceSlider = {
+            min: 100,
+            max: 400,
+            ceil: 501,
+            floor: 0
+        };
+
+        $scope.priceSlider2 = 150;
+        $scope.priceSlider3 = 250;
+
+        $scope.translate = function(value)
+        {
+            return '$' + value;
+        };
+
+        var alphabetArray = 'abcdefghijklmnopqrstuvwxyz'.split('');
+        $scope.letter = 5;
+        $scope.letterMax = alphabetArray.length - 1;
+        $scope.alphabetTranslate = function(value)
+        {
+            return alphabetArray[value].toUpperCase();
+        };
+    });
+</script>
+
+</html>
