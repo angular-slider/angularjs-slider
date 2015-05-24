@@ -290,7 +290,7 @@ function throttle(func, wait, options) {
         self.resetSlider();
       }));
 
-      this.sliderElem.on('$destroy', function()
+      $document.on('$destroy', function()
       {
         self.minH.off('.rzslider');
         self.maxH.off('.rzslider');
@@ -843,12 +843,12 @@ function throttle(func, wait, options) {
 
       if(event.touches || (typeof(event.originalEvent) != 'undefined' && event.originalEvent.touches))
       {
-        this.sliderElem.on('touchmove', angular.bind(this, this.onMove, pointer));
+        $document.on('touchmove', angular.bind(this, this.onMove, pointer));
         $document.one('touchend', angular.bind(this, this.onEnd));
       }
       else
       {
-        this.sliderElem.on('mousemove', angular.bind(this, this.onMove, pointer));
+        $document.on('mousemove', angular.bind(this, this.onMove, pointer));
         $document.one('mouseup', angular.bind(this, this.onEnd));
       }
     },
@@ -944,11 +944,11 @@ function throttle(func, wait, options) {
 
       if(event.touches || (typeof(event.originalEvent) != 'undefined' && event.originalEvent.touches))
       {
-      	this.sliderElem.off('touchmove');
+      	$document.off('touchmove');
       }
       else
       {
-      	this.sliderElem.off('mousemove');
+        $document.off('mousemove');
       }
 
       this.scope.$emit('slideEnded');
