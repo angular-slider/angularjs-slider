@@ -960,7 +960,7 @@ function throttle(func, wait, options) {
   return Slider;
 }])
 
-.directive('rzslider', ['RzSlider', function(Slider)
+.directive('rzslider', ['$compile','RzSlider', function($compile,Slider)
 {
   return {
     restrict: 'E',
@@ -973,7 +973,8 @@ function throttle(func, wait, options) {
       rzSliderHigh: '=?',
       rzSliderTranslate: '&',
       rzSliderHideLimitLabels: '=?',
-      rzSliderAlwaysShowBar: '=?'
+      rzSliderAlwaysShowBar: '=?',
+      rzSliderTemplate: '=?'
     },
     template:   '<span class="rz-bar"></span>' + // 0 The slider bar
                 '<span class="rz-bar rz-selection"></span>' + // 1 Highlight between two handles
@@ -987,6 +988,11 @@ function throttle(func, wait, options) {
 
     link: function(scope, elem, attr)
     {
+      if(scope.rzSliderTemplate !== undefined){
+        template=scope.rzSliderTemplate;
+        elem.html(template);
+        $compile(elem.contents())(scope);
+      }
       return new Slider(scope, elem, attr);
     }
   };
