@@ -9,7 +9,7 @@
  * Licensed under the MIT license
  */
 
-/* global angular: false, window: false */
+/* global angular: false */
 
 angular.module('rzModule', [])
 
@@ -843,13 +843,13 @@ function throttle(func, wait, options) {
 
       if(event.touches || (typeof(event.originalEvent) != 'undefined' && event.originalEvent.touches))
       {
-        $document.on('touchmove', angular.bind(this, this.onMove, pointer));
-        $document.on('touchend', angular.bind(this, this.onEnd));
+        this.sliderElem.on('touchmove', angular.bind(this, this.onMove, pointer));
+        $document.one('touchend', angular.bind(this, this.onEnd));
       }
       else
       {
-        $document.on('mousemove', angular.bind(this, this.onMove, pointer));
-        $document.on('mouseup', angular.bind(this, this.onEnd));
+        this.sliderElem.on('mousemove', angular.bind(this, this.onMove, pointer));
+        $document.one('mouseup', angular.bind(this, this.onEnd));
       }
     },
 
@@ -944,13 +944,11 @@ function throttle(func, wait, options) {
 
       if(event.touches || (typeof(event.originalEvent) != 'undefined' && event.originalEvent.touches))
       {
-        $document.unbind('touchmove');
-        $document.unbind('touchend');
+      	this.sliderElem.off('touchmove');
       }
       else
       {
-        $document.unbind('mousemove');
-        $document.unbind('mouseup');
+      	this.sliderElem.off('mousemove');
       }
 
       this.scope.$emit('slideEnded');
