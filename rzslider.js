@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v0.1.13
+ * Version: v0.1.14
  *
  * Licensed under the MIT license
  */
@@ -575,6 +575,9 @@ function throttle(func, wait, options) {
      */
     updateLowHandle: function(newOffset)
     {
+      var delta = Math.abs(this.minH.rzsl - newOffset);
+      if(delta === 0 || delta === 1) return;
+
       this.setLeft(this.minH, newOffset);
       this.translateFn(this.scope.rzSliderModel, this.minLab);
       this.setLeft(this.minLab, newOffset - this.minLab.rzsw / 2 + this.handleHalfWidth);
@@ -786,7 +789,7 @@ function throttle(func, wait, options) {
      */
     valueToOffset: function(val)
     {
-      return (Math.ceil(val) - this.minValue) * this.maxLeft / this.valueRange;
+      return Math.round((Math.ceil(val) - this.minValue) * this.maxLeft / this.valueRange);
     },
 
     /**
@@ -879,7 +882,7 @@ function throttle(func, wait, options) {
         {
           this.scope[this.tracking] = this.minValue;
           this.updateHandles(this.tracking, 0);
-          //this.scope.$apply();
+          this.scope.$apply();
         }
 
         return;
@@ -891,7 +894,7 @@ function throttle(func, wait, options) {
         {
           this.scope[this.tracking] = this.maxValue;
           this.updateHandles(this.tracking, this.maxLeft);
-          //this.scope.$apply();
+          this.scope.$apply();
         }
 
         return;
