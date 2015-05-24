@@ -260,7 +260,7 @@ function throttle(func, wait, options) {
       {
         self.resetLabelsValue();
         thrLow();
-        thrHigh();
+        if(this.range) thrHigh();
         self.resetSlider();
       });
 
