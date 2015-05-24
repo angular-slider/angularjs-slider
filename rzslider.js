@@ -977,7 +977,7 @@ function throttle(func, wait, options) {
     },
 
     templateUrl: function(elem, attrs) {
-      return attrs.rzSliderTplUrl || '../rzSliderTpl.html'
+      return attrs.rzSliderTplUrl || 'rzSliderTpl.html'
     },
 
     link: function(scope, elem, attr)
