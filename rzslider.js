@@ -737,7 +737,7 @@ function throttle(func, wait, options) {
      */
     hideEl: function (element)
     {
-      return element.css({opacity: 0});
+      return element.css({display: 'none'});
     },
 
     /**
