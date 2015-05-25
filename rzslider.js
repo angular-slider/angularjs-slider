@@ -973,7 +973,7 @@ function throttle(func, wait, options) {
   return Slider;
 }])
 
-.directive('rzslider', ['RzSlider', function(Slider)
+.directive('rzslider', ['$compile','RzSlider', function($compile,Slider)
 {
   return {
     restrict: 'E',
@@ -986,7 +986,8 @@ function throttle(func, wait, options) {
       rzSliderHigh: '=?',
       rzSliderTranslate: '&',
       rzSliderHideLimitLabels: '=?',
-      rzSliderAlwaysShowBar: '=?'
+      rzSliderAlwaysShowBar: '=?',
+      rzSliderTemplate: '=?'
     },
 
     templateUrl: function(elem, attrs) {
@@ -995,6 +996,11 @@ function throttle(func, wait, options) {
 
     link: function(scope, elem, attr)
     {
+      if(scope.rzSliderTemplate !== undefined){
+        template=scope.rzSliderTemplate;
+        elem.html(template);
+        $compile(elem.contents())(scope);
+      }
       return new Slider(scope, elem, attr);
     }
   };
