@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="demo.css" />
     <link rel="stylesheet" href="rzslider.css" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 </head>
 
 <body ng-controller="MainCtrl">
@@ -63,15 +65,25 @@
                 rz-slider-translate="alphabetTranslate"></rzslider>
         </article>
 
+        <article>
+            <h2>Sliders into modal</h2>
+            Normal slider value: {{percentages.normal.low}}%
+            </br>
+            Range slider values: {{percentages.range.low}}% and {{percentages.range.high}}%
+            </br>
+            <button type="button" ng-click="openModal()" class="btn btn-default btn-lg">Open Modal!</button>
+        </article>
+
     </div>
 </body>
 
 <script src="angular.min.js"></script>
 <script src="rzslider.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.js"></script>
 <script>
-    var app = angular.module('plunker', ['rzModule']);
+    var app = angular.module('plunker', ['ui.bootstrap','rzModule']);
 
-    app.controller('MainCtrl', function($scope)
+    app.controller('MainCtrl', function($rootScope,$scope,$modal)
     {
         $scope.priceSlider = {
             min: 100,
@@ -95,7 +107,41 @@
         {
             return alphabetArray[value].toUpperCase();
         };
+
+        $scope.percentages = {normal:{low:15},range:{low:10,high:50}};
+        $scope.openModal = function() {
+            var modalInstance = $modal.open({
+                templateUrl: 'sliderModal.html',
+                controller: function($scope, $modalInstance,values){
+                    $scope.percentages = JSON.parse(JSON.stringify(values)); //Copy of the object in order to keep original values in $scope.percentages in parent controller.
+                    $scope.formatToPercentage = function(value){
+                          return value+'%';
+                      };
+                    $scope.ok = function(){
+                        $modalInstance.close($scope.percentages);
+                    };
+                    $scope.cancel = function(){
+                        $modalInstance.dismiss();
+                    };
+                },
+                resolve: {
+                  values: function() {
+                      return $scope.percentages;
+                      }
+                }
+            });
+
+            modalInstance.result.then(function(percentages){
+                  $scope.percentages = percentages;
+              });
+
+            modalInstance.rendered.then(function(){
+                $rootScope.$broadcast('rzSliderForceRender');//Force refresh sliders on render. Otherwise bullets are aligned at left side.
+            });
+        };
     });
+
+
 </script>
 
 </html>
