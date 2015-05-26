@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v0.1.15
+ * Version: v0.1.16
  *
  * Licensed under the MIT license
  */
@@ -12,6 +12,19 @@
 /* global angular: false */
 
 angular.module('rzModule', [])
+
+.run(function($templateCache) {
+    var template = '<span class="rz-bar"></span>' + // 0 The slider bar
+                '<span class="rz-bar rz-selection"></span>' + // 1 Highlight between two handles
+                '<span class="rz-pointer"></span>' + // 2 Left slider handle
+                '<span class="rz-pointer"></span>' + // 3 Right slider handle
+                '<span class="rz-bubble rz-limit"></span>' + // 4 Floor label
+                '<span class="rz-bubble rz-limit"></span>' + // 5 Ceiling label
+                '<span class="rz-bubble"></span>' + // 6 Label above left slider handle
+                '<span class="rz-bubble"></span>' + // 7 Label above right slider handle
+                '<span class="rz-bubble"></span>'; // 8 Range label when the slider handles are close ex. 15 - 17
+  $templateCache.put('rzSliderTpl.html', template);
+})
 
 .value('throttle',
   /**
@@ -468,6 +481,7 @@ function throttle(func, wait, options) {
 
         // Hide max handle
         this.maxH.rzAlwaysHide = true;
+        this.maxH[0].style.zIndex = '-1000';
         this.hideEl(this.maxH);
       }
 
