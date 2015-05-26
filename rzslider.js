@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v0.1.15
+ * Version: v0.1.16
  *
  * Licensed under the MIT license
  */
@@ -481,6 +481,7 @@ function throttle(func, wait, options) {
 
         // Hide max handle
         this.maxH.rzAlwaysHide = true;
+        this.maxH[0].style.zIndex = '-1000';
         this.hideEl(this.maxH);
       }
 

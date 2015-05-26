@@ -157,27 +157,6 @@ $scope.$on("slideEnded", function() {
 I use Slider on couple of my projects and it's being tested on desktop versions of Chrome, Firefox, Safari, IE 9/10.
 Slider is also tested on Android and iPhone using all browsers available on those platforms.
 
-## Changelog
-
-**v0.1.3**
-
-    Forked from this version.
-
-**v0.1.4**
-
-    Touch events were broken if jQuery was used with Angular instead of jQuery lite. This version fixes them (Jusas).
-
-**v0.1.5**
-
-    Added 'slideEnded' event emitted on slider knob dragging ended (Jusas).
-    
-**v0.1.6**
-
-    - Added github project page
-    - Updated to latest angular
-    - Updated CSS styles (Angelin Sirbu)
-     
-
 ## Disclaimer
 
 This project is based on [https://github.com/prajwalkman/angular-slider](https://github.com/prajwalkman/angular-slider). It has been rewritten from scratch in JavaScript
