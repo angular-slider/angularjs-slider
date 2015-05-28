@@ -98,6 +98,10 @@ $scope.priceSlider = {
 
 > Set to true to always show selection bar
 
+**rz-slider-present-only**
+
+> When set to true slider is used in presentation mode. No handle dragging. 
+
 **rz-slider-translate**
 
 > Custom translate function. Use this if you want to translate values displayed on the slider. For example if you want to display dollar amounts instead of just numbers do this:

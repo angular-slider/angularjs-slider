@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v0.1.17
+ * Version: v0.1.18
  *
  * Licensed under the MIT license
  */
@@ -178,6 +178,16 @@ function throttle(func, wait, options) {
     this.hideLimitLabels = !!attributes.rzSliderHideLimitLabels;
 
     /**
+     * Only present model values
+     *
+     * Do not allow to change values
+     *
+     * @type {boolean}
+     */
+    this.presentOnly = attributes.rzSliderPresentOnly === 'true';
+
+    console.log(this.presentOnly); // TODO: remove this!
+    /**
      * The delta between min and max value
      *
      * @type {number}
@@ -239,7 +249,7 @@ function throttle(func, wait, options) {
         self.updateCeilLab();
         self.updateFloorLab();
         self.initHandles();
-        self.bindEvents();
+        if (!self.presentOnly) { self.bindEvents(); }
       });
 
       // Recalculate slider view dimensions
@@ -995,7 +1005,8 @@ function throttle(func, wait, options) {
       rzSliderHigh: '=?',
       rzSliderTranslate: '&',
       rzSliderHideLimitLabels: '=?',
-      rzSliderAlwaysShowBar: '=?'
+      rzSliderAlwaysShowBar: '=?',
+      rzSliderPresentOnly: '@'
     },
 
     /**
