@@ -13,7 +13,7 @@
 
 angular.module('rzModule', [])
 
-.run(function($templateCache) {
+.run(['$templateCache', function($templateCache) {
     var template = '<span class="rz-bar"></span>' + // 0 The slider bar
                 '<span class="rz-bar rz-selection"></span>' + // 1 Highlight between two handles
                 '<span class="rz-pointer"></span>' + // 2 Left slider handle
@@ -24,7 +24,7 @@ angular.module('rzModule', [])
                 '<span class="rz-bubble"></span>' + // 7 Label above right slider handle
                 '<span class="rz-bubble"></span>'; // 8 Range label when the slider handles are close ex. 15 - 17
   $templateCache.put('rzSliderTpl.html', template);
-})
+}])
 
 .value('throttle',
   /**
