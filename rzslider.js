@@ -9,6 +9,7 @@
  * Licensed under the MIT license
  */
 
+/*jslint unparam: true */
 /*global angular: false */
 
 angular.module('rzModule', [])
@@ -205,7 +206,7 @@ function throttle(func, wait, options) {
      *
      * @type {function}
      */
-    this.customTrFn = this.scope.rzSliderTranslate() || function(value) { return '' + value; };
+    this.customTrFn = this.scope.rzSliderTranslate() || function(value) { return String(value); };
 
     this.unbinders = [];
 
@@ -389,7 +390,7 @@ function throttle(func, wait, options) {
     {
       useCustomTr = useCustomTr === undefined ? true : useCustomTr;
 
-      var valStr = useCustomTr ? '' + this.customTrFn(value) : '' + value,
+      var valStr = String(useCustomTr ? this.customTrFn(value) : value),
           getWidth = false;
 
       if(label.rzsv === undefined || label.rzsv.length !== valStr.length || (label.rzsv.length > 0 && label.rzsw === 0))
@@ -740,7 +741,8 @@ function throttle(func, wait, options) {
           remainder = (value - this.minValue) % step,
           steppedValue = remainder > (step / 2) ? value + step - remainder : value - remainder;
 
-      return +(steppedValue).toFixed(this.precision);
+      steppedValue = steppedValue.toFixed(this.precision);
+      return +steppedValue;
     },
 
     /**
@@ -891,6 +893,8 @@ function throttle(func, wait, options) {
     {
       var eventX, sliderLO, newOffset, newValue;
 
+      /* http://stackoverflow.com/a/12336075/282882 */
+      //noinspection JSLint
       if('clientX' in event)
       {
         eventX = event.clientX;
