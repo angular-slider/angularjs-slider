@@ -568,7 +568,8 @@ function throttle(func, wait, options) {
      */
     updateHandles: function(which, newOffset)
     {
-      console.log(which, newOffset); // TODO: remove this!
+      //console.log(this.scope[this.tracking], which, newOffset); // TODO: remove this!
+
       if(which === 'rzSliderModel')
       {
         this.updateLowHandle(newOffset);
