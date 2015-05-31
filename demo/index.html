@@ -19,6 +19,18 @@
 
         <article>
             <h2>Min/max slider example</h2>
+            Value: <pre>{{ slider_data | json }}</pre>
+
+            <rzslider
+                    rz-slider-floor="0.5"
+                    rz-slider-ceil="10.5"
+                    rz-slider-step="0.1"
+                    rz-slider-precision="1"
+                    rz-slider-model="slider_data.value"></rzslider>
+        </article>
+
+        <article>
+            <h2>Min/max slider example</h2>
             Value: <pre>{{ priceSlider | json }}</pre>
 
             <input type="text" ng-model="priceSlider.min"/><br/>
@@ -99,6 +111,8 @@
         {
             return alphabetArray[value].toUpperCase();
         };
+
+        $scope.slider_data = {value: 1};
     });
 </script>
 
