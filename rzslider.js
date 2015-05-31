@@ -568,8 +568,6 @@ function throttle(func, wait, options) {
      */
     updateHandles: function(which, newOffset)
     {
-      //console.log(this.scope[this.tracking], which, newOffset); // TODO: remove this!
-
       if(which === 'rzSliderModel')
       {
         this.updateLowHandle(newOffset);
@@ -610,6 +608,7 @@ function throttle(func, wait, options) {
     updateLowHandle: function(newOffset)
     {
       var delta = Math.abs(this.minH.rzsl - newOffset);
+
       if(delta <= 0 && delta < 1) { return; }
 
       this.setLeft(this.minH, newOffset);
@@ -824,7 +823,7 @@ function throttle(func, wait, options) {
      */
     valueToOffset: function(val)
     {
-      return Math.round((Math.ceil(val) - this.minValue) * this.maxLeft / this.valueRange);
+      return Math.round( (Math.ceil(val) - this.minValue) * this.maxLeft / this.valueRange );
     },
 
     /**
@@ -835,7 +834,7 @@ function throttle(func, wait, options) {
      */
     offsetToValue: function(offset)
     {
-      return Math.ceil( (offset / this.maxLeft) * this.valueRange + this.minValue );
+      return Math.round( (offset / this.maxLeft) * this.valueRange + this.minValue );
     },
 
     // Events
@@ -939,6 +938,7 @@ function throttle(func, wait, options) {
 
       newValue = this.offsetToValue(newOffset);
       newValue = this.roundStep(newValue);
+      newOffset = this.valueToOffset(newValue);
 
       if (this.range)
       {
