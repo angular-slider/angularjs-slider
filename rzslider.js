@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v0.1.18
+ * Version: v0.1.19
  *
  * Licensed under the MIT license
  */
@@ -186,7 +186,6 @@ function throttle(func, wait, options) {
      */
     this.presentOnly = attributes.rzSliderPresentOnly === 'true';
 
-    console.log(this.presentOnly); // TODO: remove this!
     /**
      * The delta between min and max value
      *
