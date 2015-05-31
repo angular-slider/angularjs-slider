@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v0.1.19
+ * Version: v0.1.20
  *
  * Licensed under the MIT license
  */
@@ -742,8 +742,8 @@ function throttle(func, wait, options) {
      */
     roundStep: function(value)
     {
-      var step = this.step / Math.pow(10,this.precision),
-          remainder = (value - this.minValue) % step,
+      var step = this.step,
+          remainder = +((value - this.minValue) % step).toFixed(3),
           steppedValue = remainder > (step / 2) ? value + step - remainder : value - remainder;
 
       steppedValue = steppedValue.toFixed(this.precision);
@@ -823,7 +823,7 @@ function throttle(func, wait, options) {
      */
     valueToOffset: function(val)
     {
-      return Math.round( (Math.ceil(val) - this.minValue) * this.maxLeft / this.valueRange );
+      return (val - this.minValue) * this.maxLeft / this.valueRange;
     },
 
     /**
@@ -834,7 +834,7 @@ function throttle(func, wait, options) {
      */
     offsetToValue: function(offset)
     {
-      return Math.round( (offset / this.maxLeft) * this.valueRange + this.minValue );
+      return (offset / this.maxLeft) * this.valueRange + this.minValue;
     },
 
     // Events
