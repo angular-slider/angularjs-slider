@@ -4,12 +4,13 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v0.1.17
+ * Version: v0.1.21
  *
  * Licensed under the MIT license
  */
 
-/*global angular: false */
+/*jslint unparam: true */
+/*global angular: false, console: false */
 
 angular.module('rzModule', [])
 
@@ -178,6 +179,15 @@ function throttle(func, wait, options) {
     this.hideLimitLabels = !!attributes.rzSliderHideLimitLabels;
 
     /**
+     * Only present model values
+     *
+     * Do not allow to change values
+     *
+     * @type {boolean}
+     */
+    this.presentOnly = attributes.rzSliderPresentOnly === 'true';
+
+    /**
      * The delta between min and max value
      *
      * @type {number}
@@ -196,9 +206,14 @@ function throttle(func, wait, options) {
      *
      * @type {function}
      */
-    this.customTrFn = this.scope.rzSliderTranslate() || function(value) { return '' + value; };
+    this.customTrFn = this.scope.rzSliderTranslate() || function(value) { return String(value); };
 
-    this.unbinders = [];
+    /**
+     * Array of de-registration functions to call on $destroy
+     *
+     * @type {Array.<Function>}
+     */
+    this.deRegFuncs = [];
 
     // Slider DOM elements wrapped in jqLite
     this.fullBar = null; // The whole slider bar
@@ -225,7 +240,9 @@ function throttle(func, wait, options) {
      */
     init: function()
     {
-      var self = this;
+      var thrLow, thrHigh, unRegFn,
+        calcDimFn = angular.bind(this, this.calcViewDimensions),
+        self = this;
 
       this.initElemHandles();
       this.calcViewDimensions();
@@ -239,20 +256,21 @@ function throttle(func, wait, options) {
         self.updateCeilLab();
         self.updateFloorLab();
         self.initHandles();
-        self.bindEvents();
+        if (!self.presentOnly) { self.bindEvents(); }
       });
 
       // Recalculate slider view dimensions
-      this.scope.$on('reCalcViewDimensions', angular.bind(this, this.calcViewDimensions));
+      unRegFn = this.scope.$on('reCalcViewDimensions', calcDimFn);
+      this.deRegFuncs.push(unRegFn);
 
       // Recalculate stuff if view port dimensions have changed
-      angular.element($window).on('resize', angular.bind(this, this.calcViewDimensions));
+      angular.element($window).on('resize', calcDimFn);
 
       this.initHasRun = true;
 
       // Watch for changes to the model
 
-      var thrLow = throttle(function()
+      thrLow = throttle(function()
       {
         self.setMinAndMax();
         self.updateLowHandle(self.valueToOffset(self.scope.rzSliderModel));
@@ -265,7 +283,7 @@ function throttle(func, wait, options) {
 
       }, 350, { leading: false });
 
-      var thrHigh = throttle(function()
+      thrHigh = throttle(function()
       {
         self.setMinAndMax();
         self.updateHighHandle(self.valueToOffset(self.scope.rzSliderHigh));
@@ -283,44 +301,40 @@ function throttle(func, wait, options) {
 
       // Watchers
 
-      this.unbinders.push(this.scope.$watch('rzSliderModel', function(newValue, oldValue)
+      unRegFn = this.scope.$watch('rzSliderModel', function(newValue, oldValue)
       {
         if(newValue === oldValue) { return; }
         thrLow();
-      }));
+      });
+      this.deRegFuncs.push(unRegFn);
 
-      this.unbinders.push(this.scope.$watch('rzSliderHigh', function(newValue, oldValue)
+      unRegFn = this.scope.$watch('rzSliderHigh', function(newValue, oldValue)
       {
         if(newValue === oldValue) { return; }
         thrHigh();
-      }));
-
-      this.unbinders.push(this.scope.$watch('rzSliderFloor', function(newValue, oldValue)
-      {
-        if(newValue === oldValue) { return; }
-        self.resetSlider();
-      }));
-
-      this.unbinders.push(this.scope.$watch('rzSliderCeil', function(newValue, oldValue)
-      {
-        if(newValue === oldValue) { return; }
-        self.resetSlider();
-      }));
-
-      $document.on('$destroy', function()
-      {
-        self.minH.off('.rzslider');
-        self.maxH.off('.rzslider');
-        $document.off('.rzslider');
-        angular.element($window).off('.rzslider');
       });
+      this.deRegFuncs.push(unRegFn);
+
+      this.scope.$watch('rzSliderFloor', function(newValue, oldValue)
+      {
+        if(newValue === oldValue) { return; }
+        self.resetSlider();
+      });
+      this.deRegFuncs.push(unRegFn);
+
+      unRegFn = this.scope.$watch('rzSliderCeil', function(newValue, oldValue)
+      {
+        if(newValue === oldValue) { return; }
+        self.resetSlider();
+      });
+      this.deRegFuncs.push(unRegFn);
 
       this.scope.$on('$destroy', function()
       {
-        self.unbinders.map(function(unbind)
-        {
-          unbind();
-        });
+        self.minH.off();
+        self.maxH.off();
+        angular.element($window).off('resize', calcDimFn);
+        self.deRegFuncs.map(function(unbind) { unbind(); });
       });
     },
 
@@ -380,7 +394,7 @@ function throttle(func, wait, options) {
     {
       useCustomTr = useCustomTr === undefined ? true : useCustomTr;
 
-      var valStr = useCustomTr ? '' + this.customTrFn(value) : '' + value,
+      var valStr = String(useCustomTr ? this.customTrFn(value) : value),
           getWidth = false;
 
       if(label.rzsv === undefined || label.rzsv.length !== valStr.length || (label.rzsv.length > 0 && label.rzsw === 0))
@@ -594,7 +608,8 @@ function throttle(func, wait, options) {
     updateLowHandle: function(newOffset)
     {
       var delta = Math.abs(this.minH.rzsl - newOffset);
-      if(delta === 0 || delta === 1) { return; }
+
+      if(delta <= 0 && delta < 1) { return; }
 
       this.setLeft(this.minH, newOffset);
       this.translateFn(this.scope.rzSliderModel, this.minLab);
@@ -727,11 +742,12 @@ function throttle(func, wait, options) {
      */
     roundStep: function(value)
     {
-      var step = this.step / Math.pow(10,this.precision),
-          remainder = (value - this.minValue) % step,
+      var step = this.step,
+          remainder = +((value - this.minValue) % step).toFixed(3),
           steppedValue = remainder > (step / 2) ? value + step - remainder : value - remainder;
 
-      return +(steppedValue).toFixed(this.precision);
+      steppedValue = steppedValue.toFixed(this.precision);
+      return +steppedValue;
     },
 
     /**
@@ -807,7 +823,7 @@ function throttle(func, wait, options) {
      */
     valueToOffset: function(val)
     {
-      return Math.round((Math.ceil(val) - this.minValue) * this.maxLeft / this.valueRange);
+      return (val - this.minValue) * this.maxLeft / this.valueRange;
     },
 
     /**
@@ -818,7 +834,7 @@ function throttle(func, wait, options) {
      */
     offsetToValue: function(offset)
     {
-      return Math.ceil( (offset / this.maxLeft) * this.valueRange + this.minValue );
+      return (offset / this.maxLeft) * this.valueRange + this.minValue;
     },
 
     // Events
@@ -847,6 +863,9 @@ function throttle(func, wait, options) {
      */
     onStart: function (pointer, ref, event)
     {
+      var ehMove, ehEnd,
+          eventNames = this.getEventNames(event);
+
       event.stopPropagation();
       event.preventDefault();
 
@@ -859,16 +878,11 @@ function throttle(func, wait, options) {
 
       pointer.addClass('rz-active');
 
-      if(event.touches || (event.originalEvent !== undefined && event.originalEvent.touches))
-      {
-        $document.on('touchmove', angular.bind(this, this.onMove, pointer));
-        $document.one('touchend', angular.bind(this, this.onEnd));
-      }
-      else
-      {
-        $document.on('mousemove', angular.bind(this, this.onMove, pointer));
-        $document.one('mouseup', angular.bind(this, this.onEnd));
-      }
+      ehMove = angular.bind(this, this.onMove, pointer);
+      ehEnd = angular.bind(this, this.onEnd, ehMove);
+
+      $document.on(eventNames.moveEvent, ehMove);
+      $document.one(eventNames.endEvent, ehEnd);
     },
 
     /**
@@ -882,6 +896,8 @@ function throttle(func, wait, options) {
     {
       var eventX, sliderLO, newOffset, newValue;
 
+      /* http://stackoverflow.com/a/12336075/282882 */
+      //noinspection JSLint
       if('clientX' in event)
       {
         eventX = event.clientX;
@@ -922,6 +938,7 @@ function throttle(func, wait, options) {
 
       newValue = this.offsetToValue(newOffset);
       newValue = this.roundStep(newValue);
+      newOffset = this.valueToOffset(newValue);
 
       if (this.range)
       {
@@ -954,26 +971,46 @@ function throttle(func, wait, options) {
     /**
      * onEnd event handler
      *
-     * @param {Event} event    The event
+     * @param {Event}    event    The event
+     * @param {Function} ehMove   The the bound move event handler
      * @returns {undefined}
      */
-    onEnd: function(event)
+    onEnd: function(ehMove, event)
     {
+      var moveEventName = this.getEventNames(event).moveEvent;
+
       this.minH.removeClass('rz-active');
       this.maxH.removeClass('rz-active');
 
+      $document.off(moveEventName, ehMove);
+
+      this.scope.$emit('slideEnded');
+      this.tracking = '';
+    },
+
+    /**
+     * Get event names for move and event end
+     *
+     * @param {Event}    event    The event
+     *
+     * @return {{moveEvent: string, endEvent: string}}
+     */
+    getEventNames: function(event)
+    {
+      var eventNames = {moveEvent: '', endEvent: ''};
+
       if(event.touches || (event.originalEvent !== undefined && event.originalEvent.touches))
       {
-      	$document.off('touchmove');
+        eventNames.moveEvent = 'touchmove';
+        eventNames.endEvent = 'touchend';
       }
       else
       {
-        $document.off('mousemove');
+        eventNames.moveEvent = 'mousemove';
+        eventNames.endEvent = 'mouseup';
       }
 
-      this.scope.$emit('slideEnded');
-
-      this.tracking = '';
+      return eventNames;
     }
   };
 
@@ -995,7 +1032,8 @@ function throttle(func, wait, options) {
       rzSliderHigh: '=?',
       rzSliderTranslate: '&',
       rzSliderHideLimitLabels: '=?',
-      rzSliderAlwaysShowBar: '=?'
+      rzSliderAlwaysShowBar: '=?',
+      rzSliderPresentOnly: '@'
     },
 
     /**
