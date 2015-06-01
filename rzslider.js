@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v0.1.20
+ * Version: v0.1.21
  *
  * Licensed under the MIT license
  */
@@ -333,7 +333,7 @@ function throttle(func, wait, options) {
       {
         self.minH.off();
         self.maxH.off();
-        angular.element($window).off(calcDimFn);
+        angular.element($window).off('resize', calcDimFn);
         self.deRegFuncs.map(function(unbind) { unbind(); });
       });
     },
