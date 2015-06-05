@@ -98,3 +98,16 @@ rzslider span.rz-bubble.rz-selection {
 rzslider span.rz-bubble.rz-limit {
   color: #55637d;
 }
+
+rzslider .rz-ticks {
+  position: absolute;
+  top: -5px;
+  height: 16px;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+rzslider .rz-ticks td {
+  border-right: 1px solid #666666;
+  border-left: 1px solid #666666;
+}
