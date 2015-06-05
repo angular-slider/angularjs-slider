@@ -848,9 +848,17 @@ function throttle(func, wait, options) {
     {
       this.minH.on('mousedown', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
       if(this.range) { this.maxH.on('mousedown', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')); }
+      this.fullBar.on('mousedown', angular.bind(this, this.onStart, this.fullBar, 'rzSliderModel'));
+      this.fullBar.on('mousedown', angular.bind(this, this.onMove, this.fullBar));
+      this.selBar.on('mousedown', angular.bind(this, this.onStart, this.selBar, 'rzSliderModel'));
+      this.selBar.on('mousedown', angular.bind(this, this.onMove, this.selBar));
 
       this.minH.on('touchstart', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
       if(this.range) { this.maxH.on('touchstart', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')); }
+      this.fullBar.on('touchstart', angular.bind(this, this.onStart, this.fullBar, 'rzSliderModel'));
+      this.fullBar.on('touchstart', angular.bind(this, this.onMove, this.fullBar));
+      this.selBar.on('touchstart', angular.bind(this, this.onStart, this.selBar, 'rzSliderModel'));
+      this.selBar.on('touchstart', angular.bind(this, this.onMove, this.selBar));
     },
 
     /**
