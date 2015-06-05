@@ -16,7 +16,7 @@ angular.module('rzModule', [])
 
 .run(['$templateCache', function($templateCache) {
   'use strict';
-  var template = '<span class="rz-bar"></span>' + // 0 The slider bar
+  var template = '<span class="rz-bar-wrapper"><span class="rz-bar"></span></span>' + // 0 The slider bar
               '<span class="rz-bar rz-selection"></span>' + // 1 Highlight between two handles
               '<span class="rz-pointer"></span>' + // 2 Left slider handle
               '<span class="rz-pointer"></span>' + // 3 Right slider handle
