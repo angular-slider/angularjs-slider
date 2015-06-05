@@ -561,6 +561,17 @@ function throttle(func, wait, options) {
     },
 
     /**
+     * Call the onChange callback if defined
+     *
+     * @returns {undefined}
+     */
+    callOnChange: function() {
+      if(this.scope.rzSliderOnChange) {
+        this.scope.rzSliderOnChange();
+      }
+    },
+
+    /**
      * Update slider handles and label positions
      *
      * @param {string} which
@@ -568,6 +579,7 @@ function throttle(func, wait, options) {
      */
     updateHandles: function(which, newOffset)
     {
+      this.callOnChange();
       if(which === 'rzSliderModel')
       {
         this.updateLowHandle(newOffset);
@@ -1033,7 +1045,8 @@ function throttle(func, wait, options) {
       rzSliderTranslate: '&',
       rzSliderHideLimitLabels: '=?',
       rzSliderAlwaysShowBar: '=?',
-      rzSliderPresentOnly: '@'
+      rzSliderPresentOnly: '@',
+      rzSliderOnChange: '&'
     },
 
     /**
