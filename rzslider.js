@@ -609,7 +609,7 @@ function throttle(func, wait, options) {
     {
       var delta = Math.abs(this.minH.rzsl - newOffset);
 
-      if(this.minLab.rzsv && delta <= 0 && delta < 1) { return; }
+      if(delta <= 0 && delta < 1) { return; }
 
       this.setLeft(this.minH, newOffset);
       this.translateFn(this.scope.rzSliderModel, this.minLab);
