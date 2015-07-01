@@ -22,6 +22,7 @@
 @limitLabelTextColor: @labelTextColor;
 @barFillColor: @handleBgColor;
 @barNormalColor: #d8e0f3;
+@ticksColor: #666;
 
 /* Slider size parameters */
 @handleSize: 32px;
@@ -119,4 +120,16 @@ rzslider span.rz-bubble.rz-selection {
 
 rzslider span.rz-bubble.rz-limit {
   color: @limitLabelTextColor;
+}
+
+rzslider .rz-ticks {
+  position: absolute;
+  height: 16px;
+  top: -5px;
+  border-collapse: collapse;
+  border-spacing: 0;
+  td {
+    border-left: 1px solid @ticksColor;
+    border-right: 1px solid @ticksColor;
+  }
 }
