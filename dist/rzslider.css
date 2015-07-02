@@ -50,6 +50,15 @@ rzslider span.rz-bar {
           border-radius: 2px;
 }
 
+rzslider span.rz-click-bar {
+  position: absolute;
+  top: -12px;
+  right: 0;
+  bottom: -12px;
+  left: 0;
+  z-index: 2;
+}
+
 rzslider span.rz-bar.rz-selection {
   z-index: 1;
   width: 0;
@@ -61,7 +70,7 @@ rzslider span.rz-bar.rz-selection {
 
 rzslider span.rz-pointer {
   top: -14px;
-  z-index: 2;
+  z-index: 3;
   width: 32px;
   height: 32px;
   cursor: pointer;

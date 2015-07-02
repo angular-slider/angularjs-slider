@@ -67,6 +67,15 @@ rzslider span.rz-bar {
   .rounded(@barHeight/2);
 }
 
+rzslider span.rz-click-bar {
+  position: absolute;
+  top: (-@handleSize / 2) + @barHeight;
+  bottom: (-@handleSize / 2) + @barHeight;
+  right: 0;
+  left: 0;
+  z-index: 2;
+}
+
 rzslider span.rz-bar.rz-selection {
   width: 0%;
   z-index: 1;
@@ -80,7 +89,7 @@ rzslider span.rz-pointer {
   height: @handleSize;
   top: -@handleSize/2 + @barHeight/2;
   background-color: @handleBgColor;
-  z-index: 2;
+  z-index: 3;
   .rounded(@handleSize/2);
 //  -webkit-transition:all linear 0.15s;
 //  -moz-transition:all linear 0.15s;
