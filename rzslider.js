@@ -24,7 +24,10 @@ angular.module('rzModule', [])
               '<span class="rz-bubble rz-limit"></span>' + // 5 Ceiling label
               '<span class="rz-bubble"></span>' + // 6 Label above left slider handle
               '<span class="rz-bubble"></span>' + // 7 Label above right slider handle
-              '<span class="rz-bubble"></span>'; // 8 Range label when the slider handles are close ex. 15 - 17
+              '<span class="rz-bubble"></span>' + // 8 Range label when the slider handles are close ex. 15 - 17
+              '<table class="rz-ticks"></table>' + // 9 the ticks
+              '<span class="rz-click-bar"></span>' +
+              '';
   $templateCache.put('rzSliderTpl.html', template);
 }])
 
@@ -188,6 +191,13 @@ function throttle(func, wait, options) {
     this.presentOnly = attributes.rzSliderPresentOnly === 'true';
 
     /**
+     * Display ticks on each possible value.
+     *
+     * @type {boolean}
+     */
+    this.showTicks = attributes.rzSliderShowTicks === 'true';
+
+    /**
      * The delta between min and max value
      *
      * @type {number}
@@ -225,6 +235,8 @@ function throttle(func, wait, options) {
     this.minLab =  null; // Label above the low value
     this.maxLab = null; // Label above the high value
     this.cmbLab = null;  // Combined label
+    this.ticks = null;  // The ticks
+    this.clickBar = null;
 
     // Initialize slider
     this.init();
@@ -257,6 +269,8 @@ function throttle(func, wait, options) {
         self.updateFloorLab();
         self.initHandles();
         if (!self.presentOnly) { self.bindEvents(); }
+        if(self.showTicks)
+          self.updateTicksScale();
       });
 
       // Recalculate slider view dimensions
@@ -467,6 +481,8 @@ function throttle(func, wait, options) {
           case 6: this.minLab = jElem; break;
           case 7: this.maxLab = jElem; break;
           case 8: this.cmbLab = jElem; break;
+          case 9: this.ticks = jElem; break;
+          case 10: this.clickBar = jElem; break;
         }
 
       }, this);
@@ -481,6 +497,8 @@ function throttle(func, wait, options) {
       this.minLab.rzsl = 0;
       this.maxLab.rzsl = 0;
       this.cmbLab.rzsl = 0;
+      this.ticks.rzsl = 0;
+      this.clickBar.rzsl = 0;
 
       // Hide limit labels
       if(this.hideLimitLabels)
@@ -529,12 +547,32 @@ function throttle(func, wait, options) {
 
       this.getWidth(this.sliderElem);
       this.sliderElem.rzsl = this.sliderElem[0].getBoundingClientRect().left;
+      if(this.showTicks)
+        this.updateTicksScale();
 
       if(this.initHasRun)
       {
         this.updateCeilLab();
         this.initHandles();
       }
+    },
+
+    /**
+     * Update the ticks position
+     *
+     * @returns {undefined}
+     */
+    updateTicksScale: function() {
+        var positions = '<tr>'
+        for (var i = this.minValue; i < this.maxValue; i += this.step) {
+            positions += '<td></td>';
+        }
+        positions += '</tr>';
+        this.ticks.html(positions);
+        this.ticks.css({
+          width: (this.barWidth - 2 * this.handleHalfWidth) + 'px',
+          left: this.handleHalfWidth + 'px'
+        });
     },
 
     /**
@@ -846,19 +884,38 @@ function throttle(func, wait, options) {
      */
     bindEvents: function()
     {
-      this.minH.on('mousedown', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
-      if(this.range) { this.maxH.on('mousedown', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')); }
-      this.fullBar.on('mousedown', angular.bind(this, this.onStart, this.fullBar, 'rzSliderModel'));
-      this.fullBar.on('mousedown', angular.bind(this, this.onMove, this.fullBar));
-      this.selBar.on('mousedown', angular.bind(this, this.onStart, this.selBar, 'rzSliderModel'));
-      this.selBar.on('mousedown', angular.bind(this, this.onMove, this.selBar));
+      this.minH.on('mousedown touchstart', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
+      if(this.range) { this.maxH.on('mousedown touchstart', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')); }
 
-      this.minH.on('touchstart', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
-      if(this.range) { this.maxH.on('touchstart', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')); }
-      this.fullBar.on('touchstart', angular.bind(this, this.onStart, this.fullBar, 'rzSliderModel'));
-      this.fullBar.on('touchstart', angular.bind(this, this.onMove, this.fullBar));
-      this.selBar.on('touchstart', angular.bind(this, this.onStart, this.selBar, 'rzSliderModel'));
-      this.selBar.on('touchstart', angular.bind(this, this.onMove, this.selBar));
+      this.clickBar.on('mousedown touchstart', angular.bind(this, this.range ? this.onStartRange : this.onStart, this.minH, 'rzSliderModel'));
+      this.clickBar.on('mousedown touchstart', angular.bind(this, this.onMove, this.minH));
+    },
+
+    /**
+     * onStartRange event handler
+     *
+     * @param {Object} pointer The jqLite wrapped DOM element
+     * @param {string} ref     One of the refLow, refHigh values
+     * @param {Event}  event   The event
+     * @returns {undefined}
+     */
+    onStartRange: function (pointer, ref, event) {
+      var clickLeft = isFinite(event.offsetX) ? event.offsetX : (event.touches[0].clientX - jQuery(event.srcElement).offset().left);
+
+      var minHandleLeft = this.minH.rzsl;
+      var maxHandleLeft = this.maxH.rzsl;
+      var minDelta      = Math.abs(minHandleLeft - clickLeft);
+      var maxDelta      = Math.abs(maxHandleLeft - clickLeft);
+
+      /**
+       * If mouse start near maxH, use it instead of minH
+       */
+      if (minDelta > maxDelta) {
+        pointer = this.maxH;
+        ref     = 'rzSliderHigh';
+      }
+
+      this.onStart.apply(this, [pointer, ref, event]);
     },
 
     /**
@@ -1041,7 +1098,8 @@ function throttle(func, wait, options) {
       rzSliderTranslate: '&',
       rzSliderHideLimitLabels: '=?',
       rzSliderAlwaysShowBar: '=?',
-      rzSliderPresentOnly: '@'
+      rzSliderPresentOnly: '@',
+      rzSliderShowTicks: '@'
     },
 
     /**
