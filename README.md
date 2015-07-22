@@ -137,7 +137,7 @@ $scope.translate = function(value)
 
 ## Slider events
 
-To force slider to recalculate dimensions broadcast **reCalcViewDimensions** event from parent scope. This is useful for example when you use slider with tabs - see *demo/tabs.html* example.
+To force slider to recalculate dimensions broadcast **reCalcViewDimensions** event from parent scope. This is useful for example when you use slider with tabs.
 
 You can also force redraw with **rzSliderForceRender** event.
 
