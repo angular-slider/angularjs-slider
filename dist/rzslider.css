@@ -32,10 +32,18 @@ rzslider span.rz-base {
   padding: 0;
 }
 
+rzslider span.rz-bar-wrapper {
+  width: 100%;
+  height: 32px;
+  padding-top: 16px;
+  margin-top: -16px;
+  box-sizing: border-box;
+}
+
 rzslider span.rz-bar {
   z-index: 0;
   width: 100%;
-  height: 100%;
+  height: 4px;
   background: #d8e0f3;
   -webkit-border-radius: 2px;
      -moz-border-radius: 2px;

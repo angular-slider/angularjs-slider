@@ -16,7 +16,7 @@ angular.module('rzModule', [])
 
 .run(['$templateCache', function($templateCache) {
   'use strict';
-  var template = '<span class="rz-bar"></span>' + // 0 The slider bar
+  var template = '<span class="rz-bar-wrapper"><span class="rz-bar"></span></span>' + // 0 The slider bar
               '<span class="rz-bar rz-selection"></span>' + // 1 Highlight between two handles
               '<span class="rz-pointer"></span>' + // 2 Left slider handle
               '<span class="rz-pointer"></span>' + // 3 Right slider handle
@@ -848,9 +848,17 @@ function throttle(func, wait, options) {
     {
       this.minH.on('mousedown', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
       if(this.range) { this.maxH.on('mousedown', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')); }
+      this.fullBar.on('mousedown', angular.bind(this, this.onStart, this.fullBar, 'rzSliderModel'));
+      this.fullBar.on('mousedown', angular.bind(this, this.onMove, this.fullBar));
+      this.selBar.on('mousedown', angular.bind(this, this.onStart, this.selBar, 'rzSliderModel'));
+      this.selBar.on('mousedown', angular.bind(this, this.onMove, this.selBar));
 
       this.minH.on('touchstart', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
       if(this.range) { this.maxH.on('touchstart', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')); }
+      this.fullBar.on('touchstart', angular.bind(this, this.onStart, this.fullBar, 'rzSliderModel'));
+      this.fullBar.on('touchstart', angular.bind(this, this.onMove, this.fullBar));
+      this.selBar.on('touchstart', angular.bind(this, this.onStart, this.selBar, 'rzSliderModel'));
+      this.selBar.on('touchstart', angular.bind(this, this.onMove, this.selBar));
     },
 
     /**
