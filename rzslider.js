@@ -24,7 +24,8 @@ angular.module('rzModule', [])
               '<span class="rz-bubble rz-limit"></span>' + // 5 Ceiling label
               '<span class="rz-bubble"></span>' + // 6 Label above left slider handle
               '<span class="rz-bubble"></span>' + // 7 Label above right slider handle
-              '<span class="rz-bubble"></span>'; // 8 Range label when the slider handles are close ex. 15 - 17
+              '<span class="rz-bubble"></span>' + // 8 Range label when the slider handles are close ex. 15 - 17
+              '<ul class="rz-labels"><li class="rz-label"></li></ul>';  // show labels
   $templateCache.put('rzSliderTpl.html', template);
 }])
 
@@ -171,12 +172,26 @@ function throttle(func, wait, options) {
      */
     this.maxValue = 0;
 
+      /**
+       * All values (labels)
+       * @type {Array}
+       */
+    this.allValues = [];
+
     /**
      * Hide limit labels
      *
      * @type {boolean}
      */
     this.hideLimitLabels = !!attributes.rzSliderHideLimitLabels;
+
+
+    /**
+       * Show labels
+       *
+       * @type {boolean}
+       */
+    this.showLabels = attributes.rzShowLabels;
 
     /**
      * Only present model values
@@ -213,6 +228,7 @@ function throttle(func, wait, options) {
      *
      * @type {Array.<Function>}
      */
+
     this.deRegFuncs = [];
 
     // Slider DOM elements wrapped in jqLite
@@ -225,6 +241,7 @@ function throttle(func, wait, options) {
     this.minLab =  null; // Label above the low value
     this.maxLab = null; // Label above the high value
     this.cmbLab = null;  // Combined label
+    this.allLab = null; // Show all labels
 
     // Initialize slider
     this.init();
@@ -254,6 +271,7 @@ function throttle(func, wait, options) {
       $timeout(function()
       {
         self.updateCeilLab();
+        self.updateAllLab();
         self.updateFloorLab();
         self.initHandles();
         if (!self.presentOnly) { self.bindEvents(); }
@@ -348,6 +366,7 @@ function throttle(func, wait, options) {
       this.setMinAndMax();
       this.calcViewDimensions();
       this.updateCeilLab();
+      this.updateAllLab();
       this.updateFloorLab();
     },
 
@@ -360,6 +379,7 @@ function throttle(func, wait, options) {
     {
       this.minLab.rzsv = undefined;
       this.maxLab.rzsv = undefined;
+      this.allLab.rzsv = undefined;
     },
 
     /**
@@ -392,18 +412,34 @@ function throttle(func, wait, options) {
      */
     translateFn: function(value, label, useCustomTr)
     {
+
       useCustomTr = useCustomTr === undefined ? true : useCustomTr;
 
-      var valStr = String(useCustomTr ? this.customTrFn(value) : value),
-          getWidth = false;
+      if(label[0].className == 'rz-labels'){
+          var valStr = '';
+          console.log(this.barWidth)
+           for(var i=0; i<value.length;i++){
+                valStr += '<li style="left: '+ ((label.rzsw - 38) / (value.length - 1)) * i  +'px">' + value[i] + '</li>';
+           }
+      }
+      else{
+          var valStr = String(useCustomTr ? this.customTrFn(value) : value),
+              getWidth = false;
+      }
+
 
       if(label.rzsv === undefined || label.rzsv.length !== valStr.length || (label.rzsv.length > 0 && label.rzsw === 0))
       {
         getWidth = true;
         label.rzsv = valStr;
       }
+       if(label[0].className == 'rz-labels'){
+            label.html(valStr);
+        }
+        else{
+            label.text(valStr);
 
-      label.text(valStr);
+        }
 
       // Update width only when length of the label have changed
       if(getWidth) { this.getWidth(label); }
@@ -439,6 +475,14 @@ function throttle(func, wait, options) {
         this.step = +this.scope.rzSliderStep;
       }
 
+      if(this.scope.rzShowLabels){
+            this.allValues = [];
+            for(var i=this.maxValue/this.step; i>=0; i--){
+                this.allValues.push(Math.floor(this.maxValue - i*this.step));
+            }
+            console.log(this.allValues)
+
+        }
       this.valueRange = this.maxValue - this.minValue;
     },
 
@@ -467,6 +511,7 @@ function throttle(func, wait, options) {
           case 6: this.minLab = jElem; break;
           case 7: this.maxLab = jElem; break;
           case 8: this.cmbLab = jElem; break;
+          case 9: this.allLab = jElem; break;
         }
 
       }, this);
@@ -481,6 +526,7 @@ function throttle(func, wait, options) {
       this.minLab.rzsl = 0;
       this.maxLab.rzsl = 0;
       this.cmbLab.rzsl = 0;
+      this.allLab.rzsl = 0;
 
       // Hide limit labels
       if(this.hideLimitLabels)
@@ -489,6 +535,11 @@ function throttle(func, wait, options) {
         this.ceilLab.rzAlwaysHide = true;
         this.hideEl(this.flrLab);
         this.hideEl(this.ceilLab);
+      }
+
+      // Show labels
+      if(this.showLabels){
+          console.log(this.allLab)
       }
 
       // Remove stuff not needed in single slider
@@ -533,6 +584,7 @@ function throttle(func, wait, options) {
       if(this.initHasRun)
       {
         this.updateCeilLab();
+        this.updateAllLab();
         this.initHandles();
       }
     },
@@ -547,6 +599,17 @@ function throttle(func, wait, options) {
       this.translateFn(this.scope.rzSliderCeil, this.ceilLab);
       this.setLeft(this.ceilLab, this.barWidth - this.ceilLab.rzsw);
       this.getWidth(this.ceilLab);
+    },
+
+      /**
+       * Update position of the all labels
+       */
+    updateAllLab: function()
+    {
+        this.setLeft(this.allLab, this.barWidth - this.allLab.rzsw);
+        this.getWidth(this.allLab);
+        this.translateFn(this.allValues, this.allLab);
+
     },
 
     /**
@@ -632,6 +695,7 @@ function throttle(func, wait, options) {
 
       this.shFloorCeil();
     },
+
 
     /**
      * Show / hide floor / ceiling label
@@ -1035,6 +1099,7 @@ function throttle(func, wait, options) {
       rzSliderFloor: '=?',
       rzSliderCeil: '=?',
       rzSliderStep: '@',
+      rzShowLabels: '=?',
       rzSliderPrecision: '@',
       rzSliderModel: '=?',
       rzSliderHigh: '=?',
