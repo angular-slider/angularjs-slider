@@ -960,6 +960,8 @@ function throttle(func, wait, options) {
           this.tracking = 'rzSliderHigh';
           this.minH.removeClass('rz-active');
           this.maxH.addClass('rz-active');
+           /* We need to apply here because we are not sure that we will enter the next block */
+          this.scope.$apply();
         }
         else if(this.tracking === 'rzSliderHigh' && newValue <= this.scope.rzSliderModel)
         {
@@ -968,6 +970,8 @@ function throttle(func, wait, options) {
           this.tracking = 'rzSliderModel';
           this.maxH.removeClass('rz-active');
           this.minH.addClass('rz-active');
+           /* We need to apply here because we are not sure that we will enter the next block */
+          this.scope.$apply();
         }
       }
 
