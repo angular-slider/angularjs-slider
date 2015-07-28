@@ -472,7 +472,6 @@ function throttle(func, wait, options) {
       }, this);
 
       // Initialize offset cache properties
-      this.fullBar.rzsl = 0;
       this.selBar.rzsl = 0;
       this.minH.rzsl = 0;
       this.maxH.rzsl = 0;
@@ -922,34 +921,38 @@ function throttle(func, wait, options) {
 
       if(newOffset <= 0)
       {
-        if(pointer.rzsl !== 0)
-        {
-          this.scope[this.tracking] = this.minValue;
-          this.updateHandles(this.tracking, 0);
-          this.scope.$apply();
-        }
-
-        return;
+        if(pointer.rzsl === 0)
+          return;
+        newValue = this.minValue;
+        newOffset = 0;
       }
-
-      if(newOffset >= this.maxLeft)
+      else if(newOffset >= this.maxLeft)
       {
-        if(pointer.rzsl !== this.maxLeft)
-        {
-          this.scope[this.tracking] = this.maxValue;
-          this.updateHandles(this.tracking, this.maxLeft);
-          this.scope.$apply();
-        }
-
-        return;
+        if(pointer.rzsl === this.maxLeft)
+          return;
+        newValue = this.maxValue;
+        newOffset = this.maxLeft;
       }
+      else {
+        newValue = this.offsetToValue(newOffset);
+        newValue = this.roundStep(newValue);
+        newOffset = this.valueToOffset(newValue);
+      }
+      this.positionTrackingHandle(newValue, newOffset);
+    },
 
-      newValue = this.offsetToValue(newOffset);
-      newValue = this.roundStep(newValue);
-      newOffset = this.valueToOffset(newValue);
 
+    /**
+     * Set the new value and offset to the current tracking handle
+     *
+     * @param {number} newValue new model value
+     * @param {number} newOffset new offset value
+     */
+    positionTrackingHandle: function(newValue, newOffset)
+    {
       if (this.range)
       {
+        /* This is to check if we need to switch the min and max handles*/
         if (this.tracking === 'rzSliderModel' && newValue >= this.scope.rzSliderHigh)
         {
           this.scope[this.tracking] = this.scope.rzSliderHigh;
