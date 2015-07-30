@@ -110,13 +110,15 @@ rzslider span.rz-bubble.rz-limit {
 rzslider ul.rz-labels{
     list-style: none;
     position: relative;
-    left: 10px!important;
+    left: 0px!important;
 }
 
 rzslider ul.rz-labels li{
 top: 20px;
 font-size: 14px;
 position: absolute;
+text-align: center;
+width:30px
 }
 rzslider ul.rz-labels li:before{content: '|';
     clear: both;

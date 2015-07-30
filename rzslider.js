@@ -271,7 +271,7 @@ function throttle(func, wait, options) {
       $timeout(function()
       {
         self.updateCeilLab();
-        self.updateAllLab();
+        self.updateTicksLab();
         self.updateFloorLab();
         self.initHandles();
         if (!self.presentOnly) { self.bindEvents(); }
@@ -366,7 +366,7 @@ function throttle(func, wait, options) {
       this.setMinAndMax();
       this.calcViewDimensions();
       this.updateCeilLab();
-      this.updateAllLab();
+      this.updateTicksLab();
       this.updateFloorLab();
     },
 
@@ -402,6 +402,23 @@ function throttle(func, wait, options) {
       this.updateSelectionBar();
     },
 
+      /**
+       * Scale ticks label
+       *
+       * @param {Array} value
+       * @param {jqLite} label
+       * @returns {undefined}
+       */
+    updateTicksScale: function(value, label){
+          var valStr = '';
+          var halfTickWidth = 15;
+          for(var i=0; i<value.length;i++){
+              var step = (label.rzsw - this.handleHalfWidth * 2) / (value.length - 1);
+              valStr += '<li style="left: '+ (((step * i)) - (halfTickWidth - this.handleHalfWidth))   +'px;">' + value[i] + '</li>';
+          }
+          label.html(valStr);
+    },
+
     /**
      * Translate value to human readable format
      *
@@ -415,17 +432,8 @@ function throttle(func, wait, options) {
 
       useCustomTr = useCustomTr === undefined ? true : useCustomTr;
 
-      if(label[0].className == 'rz-labels'){
-          var valStr = '';
-          console.log(this.barWidth)
-           for(var i=0; i<value.length;i++){
-                valStr += '<li style="left: '+ ((label.rzsw - 38) / (value.length - 1)) * i  +'px">' + value[i] + '</li>';
-           }
-      }
-      else{
-          var valStr = String(useCustomTr ? this.customTrFn(value) : value),
+      var valStr = String(useCustomTr ? this.customTrFn(value) : value),
               getWidth = false;
-      }
 
 
       if(label.rzsv === undefined || label.rzsv.length !== valStr.length || (label.rzsv.length > 0 && label.rzsw === 0))
@@ -433,13 +441,8 @@ function throttle(func, wait, options) {
         getWidth = true;
         label.rzsv = valStr;
       }
-       if(label[0].className == 'rz-labels'){
-            label.html(valStr);
-        }
-        else{
-            label.text(valStr);
 
-        }
+      label.text(valStr);
 
       // Update width only when length of the label have changed
       if(getWidth) { this.getWidth(label); }
@@ -480,7 +483,6 @@ function throttle(func, wait, options) {
             for(var i=this.maxValue/this.step; i>=0; i--){
                 this.allValues.push(Math.floor(this.maxValue - i*this.step));
             }
-            console.log(this.allValues)
 
         }
       this.valueRange = this.maxValue - this.minValue;
@@ -537,10 +539,6 @@ function throttle(func, wait, options) {
         this.hideEl(this.ceilLab);
       }
 
-      // Show labels
-      if(this.showLabels){
-          console.log(this.allLab)
-      }
 
       // Remove stuff not needed in single slider
       if(this.range === false)
@@ -584,7 +582,7 @@ function throttle(func, wait, options) {
       if(this.initHasRun)
       {
         this.updateCeilLab();
-        this.updateAllLab();
+        this.updateTicksLab();
         this.initHandles();
       }
     },
@@ -604,11 +602,12 @@ function throttle(func, wait, options) {
       /**
        * Update position of the all labels
        */
-    updateAllLab: function()
+    updateTicksLab: function()
     {
-        this.setLeft(this.allLab, this.barWidth - this.allLab.rzsw);
         this.getWidth(this.allLab);
-        this.translateFn(this.allValues, this.allLab);
+        console.log(this.handleHalfWidth)
+        this.setLeft(this.allLab, this.allLab.rzsw / (this.allLab.rzsw/this.step));
+        this.updateTicksScale(this.allValues, this.allLab);
 
     },
 
