@@ -128,6 +128,11 @@ $scope.translate = function(value)
 {
     return '$' + value;
 }
+
+$scope.onSliderChange = function()
+{
+    console.log('changed', $scope.priceSlider);
+}
 ```
 
 ```html

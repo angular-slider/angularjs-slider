@@ -1,6 +1,6 @@
 {
   "name": "jusas-angularjs-slider",
-  "version": "0.1.23",
+  "version": "0.1.24",
   "description": "AngularJS slider directive with no external dependencies. Mobile friendly!.",
   "main": "rzslider.js",
   "repository": {

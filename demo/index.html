@@ -26,7 +26,8 @@
                     rz-slider-ceil="10.5"
                     rz-slider-step="0.3"
                     rz-slider-precision="1"
-                    rz-slider-model="slider_data.value"></rzslider>
+                    rz-slider-model="slider_data.value"
+                    rz-slider-on-change="onChange()"></rzslider>
         </article>
 
         <article>
@@ -113,6 +114,10 @@
         };
 
         $scope.slider_data = {value: 1};
+
+        $scope.onChange = function() {
+          console.info('changed', $scope.slider_data.value);
+        };
     });
 </script>
 
