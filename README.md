@@ -110,6 +110,10 @@ $scope.priceSlider = {
 
 > Custom translate function. Use this if you want to translate values displayed on the slider. For example if you want to display dollar amounts instead of just numbers do this:
 
+**rz-slider-on-change**
+
+> Function to be called when rz-slider-model or rz-slider-high change.
+
 ```javascript
 // In your controller
 
@@ -132,7 +136,8 @@ $scope.translate = function(value)
     rz-slider-ceil="priceSlider.ceil"
     rz-slider-model="priceSlider.min"
     rz-slider-high="priceSlider.max"
-    rz-slider-translate="translate"></rzslider>
+    rz-slider-translate="translate"
+    rz-slider-on-change="onSliderChange()"></rzslider>
 ```
 
 ## Slider events
