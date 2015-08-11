@@ -54,7 +54,6 @@ rzslider span.rz-bar {
 
 rzslider span.rz-bar.rz-selection {
   z-index: 1;
-  width: 0;
   background: #0db9f0;
   -webkit-border-radius: 2px;
      -moz-border-radius: 2px;

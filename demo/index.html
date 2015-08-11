@@ -80,6 +80,23 @@
                 rz-slider-tpl-url="rzSliderTpl.html"></rzslider>
         </article>
 
+        <article>
+            <h2>Draggable range example</h2>
+            Value: <pre>{{ priceSlider | json }}</pre>
+
+            <input type="text" ng-model="priceSlider.min"/><br/>
+            <input type="text" ng-model="priceSlider.max"/><br/>
+
+            <rzslider
+                rz-slider-draggable-range="true"
+                rz-slider-floor="priceSlider.floor"
+                rz-slider-ceil="priceSlider.ceil"
+                rz-slider-model="priceSlider.min"
+                rz-slider-high="priceSlider.max"
+                rz-slider-step="5"
+                rz-slider-tpl-url="rzSliderTpl.html"></rzslider>
+        </article>
+
     </div>
 </body>
 
