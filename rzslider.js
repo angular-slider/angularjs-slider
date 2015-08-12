@@ -333,6 +333,8 @@ function throttle(func, wait, options) {
       {
         self.minH.off();
         self.maxH.off();
+        self.fullBar.off();
+        self.selBar.off();
         angular.element($window).off('resize', calcDimFn);
         self.deRegFuncs.map(function(unbind) { unbind(); });
       });
