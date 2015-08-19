@@ -106,6 +106,10 @@ $scope.priceSlider = {
 
 > When set to true slider is used in presentation mode. No handle dragging. 
 
+**rz-slider-draggable-range**
+
+> When set to true and using a range slider, the range can be dragged by the selection bar.
+
 **rz-slider-translate**
 
 > Custom translate function. Use this if you want to translate values displayed on the slider. For example if you want to display dollar amounts instead of just numbers do this:

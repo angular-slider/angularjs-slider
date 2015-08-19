@@ -17,7 +17,7 @@ angular.module('rzModule', [])
 .run(['$templateCache', function($templateCache) {
   'use strict';
   var template = '<span class="rz-bar-wrapper"><span class="rz-bar"></span></span>' + // 0 The slider bar
-              '<span class="rz-bar rz-selection"></span>' + // 1 Highlight between two handles
+              '<span class="rz-bar-wrapper"><span class="rz-bar rz-selection"></span></span>' + // 1 Highlight between two handles
               '<span class="rz-pointer"></span>' + // 2 Left slider handle
               '<span class="rz-pointer"></span>' + // 3 Right slider handle
               '<span class="rz-bubble rz-limit"></span>' + // 4 Floor label
@@ -114,6 +114,27 @@ function throttle(func, wait, options) {
      * @type {boolean} Set to true for range slider
      */
     this.range = attributes.rzSliderHigh !== undefined && attributes.rzSliderModel !== undefined;
+
+    /**
+     * Whether to allow draggable range
+     *
+     * @type {boolean} Set to true for draggable range slider
+     */
+    this.dragRange = this.range && attributes.rzSliderDraggableRange === 'true';
+
+    /**
+     * Values recorded when first dragging the bar
+     *
+     * @type {Object}
+     */
+    this.dragging = {
+      active: false,
+      value: 0,
+      difference: 0,
+      offset: 0,
+      lowDist: 0,
+      highDist: 0
+    };
 
     /**
      * Half of the width of the slider handles
@@ -510,6 +531,13 @@ function throttle(func, wait, options) {
         this.maxH.remove();
         this.selBar.remove();
       }
+
+      // If using draggable range, use appropriate cursor for this.selBar.
+      if (this.dragRange)
+      {
+        this.selBar.css('cursor', 'move');
+        this.selBar.addClass('rz-draggable');
+      }
     },
 
     /**
@@ -853,25 +881,60 @@ function throttle(func, wait, options) {
     // Events
 
     /**
+     * Get the X-coordinate of an event
+     *
+     * @param {Object} event  The event
+     * @returns {number}
+     */
+    getEventX: function(event)
+    {
+      /* http://stackoverflow.com/a/12336075/282882 */
+      //noinspection JSLint
+      if('clientX' in event)
+      {
+        return event.clientX;
+      }
+
+      return event.originalEvent === undefined ?
+          event.touches[0].clientX
+          : event.originalEvent.touches[0].clientX;
+    },
+
+    /**
      * Bind mouse and touch events to slider handles
      *
      * @returns {undefined}
      */
     bindEvents: function()
     {
+      var barTracking, barStart, barMove;
+
+      if (this.dragRange)
+      {
+        barTracking = 'rzSliderDrag';
+        barStart = this.onDragStart;
+        barMove = this.onDragMove;
+      }
+      else
+      {
+        barTracking = 'rzSliderModel';
+        barStart = this.onStart;
+        barMove = this.onMove;
+      }
+
       this.minH.on('mousedown', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
       if(this.range) { this.maxH.on('mousedown', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')); }
       this.fullBar.on('mousedown', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
       this.fullBar.on('mousedown', angular.bind(this, this.onMove, this.fullBar));
-      this.selBar.on('mousedown', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
-      this.selBar.on('mousedown', angular.bind(this, this.onMove, this.selBar));
+      this.selBar.on('mousedown', angular.bind(this, barStart, this.minH, barTracking));
+      this.selBar.on('mousedown', angular.bind(this, barMove, this.selBar));
 
       this.minH.on('touchstart', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
       if(this.range) { this.maxH.on('touchstart', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')); }
       this.fullBar.on('touchstart', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
       this.fullBar.on('touchstart', angular.bind(this, this.onMove, this.fullBar));
-      this.selBar.on('touchstart', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
-      this.selBar.on('touchstart', angular.bind(this, this.onMove, this.selBar));
+      this.selBar.on('touchstart', angular.bind(this, barStart, this.minH, barTracking));
+      this.selBar.on('touchstart', angular.bind(this, barMove, this.selBar));
     },
 
     /**
@@ -899,7 +962,7 @@ function throttle(func, wait, options) {
 
       pointer.addClass('rz-active');
 
-      ehMove = angular.bind(this, this.onMove, pointer);
+      ehMove = angular.bind(this, this.dragging.active ? this.onDragMove : this.onMove, pointer);
       ehEnd = angular.bind(this, this.onEnd, ehMove);
 
       $document.on(eventNames.moveEvent, ehMove);
@@ -915,20 +978,8 @@ function throttle(func, wait, options) {
      */
     onMove: function (pointer, event)
     {
-      var eventX, sliderLO, newOffset, newValue;
-
-      /* http://stackoverflow.com/a/12336075/282882 */
-      //noinspection JSLint
-      if('clientX' in event)
-      {
-        eventX = event.clientX;
-      }
-      else
-      {
-        eventX = event.originalEvent === undefined ?
-          event.touches[0].clientX
-          : event.originalEvent.touches[0].clientX;
-      }
+      var eventX = this.getEventX(event),
+          sliderLO, newOffset, newValue;
 
       sliderLO = this.sliderElem.rzsl;
       newOffset = eventX - sliderLO - this.handleHalfWidth;
@@ -955,6 +1006,92 @@ function throttle(func, wait, options) {
       this.positionTrackingHandle(newValue, newOffset);
     },
 
+    /**
+     * onDragStart event handler
+     *
+     * Handles dragging of the middle bar.
+     *
+     * @param {Object} pointer The jqLite wrapped DOM element
+     * @param {string} ref     One of the refLow, refHigh values
+     * @param {Event}  event   The event
+     * @returns {undefined}
+     */
+    onDragStart: function(pointer, ref, event)
+    {
+      var offset = this.getEventX(event) - this.sliderElem.rzsl - this.handleHalfWidth;
+      this.dragging = {
+        active: true,
+        value: this.offsetToValue(offset),
+        difference: this.scope.rzSliderHigh - this.scope.rzSliderModel,
+        offset: offset,
+        lowDist: offset - this.minH.rzsl,
+        highDist: this.maxH.rzsl - offset
+      };
+      this.minH.addClass('rz-active');
+      this.maxH.addClass('rz-active');
+
+      this.onStart(pointer, ref, event);
+    },
+
+    /**
+     * onDragMove event handler
+     *
+     * Handles dragging of the middle bar.
+     *
+     * @param {jqLite} pointer
+     * @param {Event}  event The event
+     * @returns {undefined}
+     */
+    onDragMove: function(pointer, event)
+    {
+      var newOffset = this.getEventX(event) - this.sliderElem.rzsl - this.handleHalfWidth,
+          newMinOffset, newMaxOffset,
+          newMinValue, newMaxValue;
+
+      if (newOffset <= this.dragging.lowDist)
+      {
+        if (pointer.rzsl === this.dragging.lowDist) { return; }
+        newMinValue = this.minValue;
+        newMinOffset = 0;
+        newMaxValue = this.dragging.difference;
+        newMaxOffset = this.valueToOffset(newMaxValue);
+      }
+      else if (newOffset >= this.maxLeft - this.dragging.highDist)
+      {
+        if (pointer.rzsl === this.dragging.highDist) { return; }
+        newMaxValue = this.maxValue;
+        newMaxOffset = this.maxLeft;
+        newMinValue = this.maxValue - this.dragging.difference;
+        newMinOffset = this.valueToOffset(newMinValue);
+      }
+      else
+      {
+        newMinValue = this.offsetToValue(newOffset - this.dragging.lowDist);
+        newMinValue = this.roundStep(newMinValue);
+        newMinOffset = this.valueToOffset(newMinValue);
+        newMaxValue = newMinValue + this.dragging.difference;
+        newMaxOffset = this.valueToOffset(newMaxValue);
+      }
+
+      this.positionTrackingBar(newMinValue, newMaxValue, newMinOffset, newMaxOffset);
+    },
+
+    /**
+     * Set the new value and offset for the entire bar
+     *
+     * @param {number} newMinValue   the new minimum value
+     * @param {number} newMaxValue   the new maximum value
+     * @param {number} newMinOffset  the new minimum offset
+     * @param {number} newMaxOffset  the new maximum offset
+     */
+    positionTrackingBar: function(newMinValue, newMaxValue, newMinOffset, newMaxOffset)
+    {
+      this.scope.rzSliderModel = newMinValue;
+      this.scope.rzSliderHigh = newMaxValue;
+      this.updateHandles('rzSliderModel', newMinOffset);
+      this.updateHandles('rzSliderHigh', newMaxOffset);
+      this.scope.$apply();
+    },
 
     /**
      * Set the new value and offset to the current tracking handle
@@ -964,7 +1101,7 @@ function throttle(func, wait, options) {
      */
     positionTrackingHandle: function(newValue, newOffset)
     {
-      if (this.range)
+      if(this.range)
       {
         /* This is to check if we need to switch the min and max handles*/
         if (this.tracking === 'rzSliderModel' && newValue >= this.scope.rzSliderHigh)
@@ -1015,6 +1152,8 @@ function throttle(func, wait, options) {
 
       this.scope.$emit('slideEnded');
       this.tracking = '';
+
+      this.dragging.active = false;
     },
 
     /**
@@ -1059,6 +1198,7 @@ function throttle(func, wait, options) {
       rzSliderPrecision: '@',
       rzSliderModel: '=?',
       rzSliderHigh: '=?',
+      rzSliderDraggable: '@',
       rzSliderTranslate: '&',
       rzSliderHideLimitLabels: '=?',
       rzSliderAlwaysShowBar: '=?',
