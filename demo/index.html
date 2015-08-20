@@ -20,6 +20,7 @@
         <article>
             <h2>Min/max slider example</h2>
             Value: <pre>{{ slider_data | json }}</pre>
+            <p>Value linked on change: {{ otherData.value }}</p>
 
             <rzslider
                     rz-slider-floor="0.5"
@@ -131,9 +132,11 @@
         };
 
         $scope.slider_data = {value: 1};
+        $scope.otherData = {value: 10};
 
         $scope.onChange = function() {
           console.info('changed', $scope.slider_data.value);
+          $scope.otherData.value = $scope.slider_data.value * 10;
         };
     });
 </script>
