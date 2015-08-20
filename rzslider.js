@@ -608,7 +608,6 @@ function throttle(func, wait, options) {
      */
     updateHandles: function(which, newOffset)
     {
-      this.callOnChange();
       if(which === 'rzSliderModel')
       {
         this.updateLowHandle(newOffset);
@@ -1135,6 +1134,7 @@ function throttle(func, wait, options) {
           this.maxH.addClass('rz-active');
            /* We need to apply here because we are not sure that we will enter the next block */
           this.scope.$apply();
+          this.callOnChange();
         }
         else if(this.tracking === 'rzSliderHigh' && newValue <= this.scope.rzSliderModel)
         {
@@ -1145,6 +1145,7 @@ function throttle(func, wait, options) {
           this.minH.addClass('rz-active');
            /* We need to apply here because we are not sure that we will enter the next block */
           this.scope.$apply();
+          this.callOnChange();
         }
       }
 
@@ -1153,6 +1154,7 @@ function throttle(func, wait, options) {
         this.scope[this.tracking] = newValue;
         this.updateHandles(this.tracking, newOffset);
         this.scope.$apply();
+        this.callOnChange();
       }
     },
 
