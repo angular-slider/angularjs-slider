@@ -901,6 +901,19 @@ function throttle(func, wait, options) {
     },
 
     /**
+     * Get the handle closest to an event.
+     *
+     * @param event {Event} The event
+     * @returns {jqLite} The handle closest to the event.
+     */
+    getNearestHandle: function(event)
+    {
+      if (!this.range) { return this.minH; }
+      var offset = this.getEventX(event) - this.sliderElem.rzsl - this.handleHalfWidth;
+      return Math.abs(offset - this.minH.rzsl) < Math.abs(offset - this.maxH.rzsl) ? this.minH : this.maxH;
+    },
+
+    /**
      * Bind mouse and touch events to slider handles
      *
      * @returns {undefined}
@@ -924,25 +937,25 @@ function throttle(func, wait, options) {
 
       this.minH.on('mousedown', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
       if(this.range) { this.maxH.on('mousedown', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')); }
-      this.fullBar.on('mousedown', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
+      this.fullBar.on('mousedown', angular.bind(this, this.onStart, null, null));
       this.fullBar.on('mousedown', angular.bind(this, this.onMove, this.fullBar));
-      this.selBar.on('mousedown', angular.bind(this, barStart, this.minH, barTracking));
+      this.selBar.on('mousedown', angular.bind(this, barStart, null, barTracking));
       this.selBar.on('mousedown', angular.bind(this, barMove, this.selBar));
 
       this.minH.on('touchstart', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
       if(this.range) { this.maxH.on('touchstart', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')); }
-      this.fullBar.on('touchstart', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
+      this.fullBar.on('touchstart', angular.bind(this, this.onStart, null, null));
       this.fullBar.on('touchstart', angular.bind(this, this.onMove, this.fullBar));
-      this.selBar.on('touchstart', angular.bind(this, barStart, this.minH, barTracking));
+      this.selBar.on('touchstart', angular.bind(this, barStart, null, barTracking));
       this.selBar.on('touchstart', angular.bind(this, barMove, this.selBar));
     },
 
     /**
      * onStart event handler
      *
-     * @param {Object} pointer The jqLite wrapped DOM element
-     * @param {string} ref     One of the refLow, refHigh values
-     * @param {Event}  event   The event
+     * @param {?Object} pointer The jqLite wrapped DOM element; if null, the closest handle is used
+     * @param {?string} ref     The name of the handle being changed; if null, the closest handle's value is modified
+     * @param {Event}   event   The event
      * @returns {undefined}
      */
     onStart: function (pointer, ref, event)
@@ -958,7 +971,16 @@ function throttle(func, wait, options) {
       // We have to do this in case the HTML where the sliders are on
       // have been animated into view.
       this.calcViewDimensions();
-      this.tracking = ref;
+
+      if(pointer)
+      {
+        this.tracking = ref;
+      }
+      else
+      {
+        pointer = this.getNearestHandle(event);
+        this.tracking = pointer === this.minH ? 'rzSliderModel' : 'rzSliderHigh';
+      }
 
       pointer.addClass('rz-active');
 
