@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v0.1.21
+ * Version: v0.1.27
  *
  * Licensed under the MIT license
  */
@@ -596,7 +596,10 @@ function throttle(func, wait, options) {
      */
     callOnChange: function() {
       if(this.scope.rzSliderOnChange) {
-        this.scope.rzSliderOnChange();
+        var self = this;
+        $timeout(function() {
+            self.scope.rzSliderOnChange();
+        });
       }
     },
 
