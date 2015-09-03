@@ -410,11 +410,19 @@ function throttle(func, wait, options) {
        * @returns {undefined}
        */
     updateTicksScale: function(value, label){
+            console.log('thick : ' + value.length);
+            console.log('widht : ' + label.rzsw);
+
+            var allTickWidh = value.length * (this.handleHalfWidth * 2);
+            console.log('allTickWidh : '+allTickWidh)
+            if(allTickWidh > label.rzsw){
+              var isRotate = 'rotateText'
+            }
             var valStr = '';
-            var halfTickWidth = 15;
+            var halfTickWidth = 25;
             for(var i=0; i<value.length;i++){
               var step = (label.rzsw - this.handleHalfWidth * 2) / (value.length - 1);
-              valStr += '<li style="left: '+ (((step * i)) - (halfTickWidth - this.handleHalfWidth))   +'px;">' + value[i] + '</li>';
+              valStr += '<li  style="left: '+ (((step * i)) - (halfTickWidth - this.handleHalfWidth))   +'px;"><p class='+ isRotate+'>' + value[i] + '</p></li>';
             }
             label.html(valStr);
 

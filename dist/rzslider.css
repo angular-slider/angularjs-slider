@@ -118,10 +118,24 @@ top: 20px;
 font-size: 14px;
 position: absolute;
 text-align: center;
-width:30px
+    width: 50px;
 }
 rzslider ul.rz-labels li:before{content: '|';
     clear: both;
     display: table; margin: 0 auto}
 
 rzslider ul.rz-labels li:last-child{margin-right: 0!important;}
+rzslider ul.rz-labels li p.rotateText{/* Safari */
+    text-align: right;
+    width: 50px;
+    margin-top: 20px;
+    -webkit-transform: rotate(-90deg);
+
+    /* Firefox */
+    -moz-transform: rotate(-90deg);
+
+    /* IE */
+    -ms-transform: rotate(-90deg);
+
+    /* Opera */
+    -o-transform: rotate(-90deg);}
