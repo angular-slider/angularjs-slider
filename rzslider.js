@@ -410,13 +410,15 @@ function throttle(func, wait, options) {
        * @returns {undefined}
        */
     updateTicksScale: function(value, label){
-          var valStr = '';
-          var halfTickWidth = 15;
-          for(var i=0; i<value.length;i++){
+            var valStr = '';
+            var halfTickWidth = 15;
+            for(var i=0; i<value.length;i++){
               var step = (label.rzsw - this.handleHalfWidth * 2) / (value.length - 1);
               valStr += '<li style="left: '+ (((step * i)) - (halfTickWidth - this.handleHalfWidth))   +'px;">' + value[i] + '</li>';
-          }
-          label.html(valStr);
+            }
+            label.html(valStr);
+
+
     },
 
     /**
@@ -478,7 +480,7 @@ function throttle(func, wait, options) {
         this.step = +this.scope.rzSliderStep;
       }
 
-      if(this.scope.rzShowLabels){
+      if(this.scope.rzShowLabels && this.scope.rzSliderStep){
             this.allValues = [];
             for(var i=this.maxValue/this.step; i>=0; i--){
                 this.allValues.push(Math.floor(this.maxValue - i*this.step));
