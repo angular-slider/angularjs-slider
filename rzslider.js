@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v0.1.27
+ * Version: v0.1.28
  *
  * Licensed under the MIT license
  */
@@ -369,9 +369,9 @@ function throttle(func, wait, options) {
     resetSlider: function()
     {
       this.setMinAndMax();
-      this.calcViewDimensions();
       this.updateCeilLab();
       this.updateFloorLab();
+      this.calcViewDimensions();
     },
 
     /**

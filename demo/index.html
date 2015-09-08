@@ -2,93 +2,96 @@
 <html ng-app="plunker">
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AngularJS Touch Slider</title>
-    <link rel="stylesheet" href="demo.css" />
-    <link rel="stylesheet" href="../dist/rzslider.css" />
+    <link rel="stylesheet" href="demo.css"/>
+    <link rel="stylesheet" href="../dist/rzslider.css"/>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
 </head>
 
 <body ng-controller="MainCtrl">
 
-    <div class="wrapper">
-        <header>
-            <h1>AngularJS Touch Slider</h1>
-        </header>
+<div class="wrapper">
+    <header>
+        <h1>AngularJS Touch Slider</h1>
+    </header>
 
-        <article>
-            <h2>Min/max slider example</h2>
-            Value: <pre>{{ slider_data | json }}</pre>
-            <p>Value linked on change: {{ otherData.value }}</p>
+    <article>
+        <h2>Min/max slider example</h2>
+        Value:
+        <pre>{{ slider_data | json }}</pre>
+        <p>Value linked on change: {{ otherData.value }}</p>
 
-            <rzslider
-                    rz-slider-floor="0.5"
-                    rz-slider-ceil="10.5"
-                    rz-slider-step="0.3"
-                    rz-slider-precision="1"
-                    rz-slider-model="slider_data.value"
-                    rz-slider-on-change="onChange()"></rzslider>
-        </article>
+        <rzslider
+                rz-slider-floor="0.5"
+                rz-slider-ceil="10.5"
+                rz-slider-step="0.3"
+                rz-slider-precision="1"
+                rz-slider-model="slider_data.value"
+                rz-slider-on-change="onChange()"></rzslider>
+    </article>
 
-        <article>
-            <h2>Min/max slider example</h2>
-            Value: <pre>{{ priceSlider | json }}</pre>
+    <article>
+        <h2>Min/max slider example</h2>
+        Value:
+        <pre>{{ priceSlider | json }}</pre>
 
-            <input type="text" ng-model="priceSlider.min"/><br/>
-            <input type="text" ng-model="priceSlider.max"/><br/>
+        <input type="text" ng-model="priceSlider.min"/><br/>
+        <input type="text" ng-model="priceSlider.max"/><br/>
 
-            <rzslider
+        <rzslider
                 rz-slider-floor="priceSlider.floor"
                 rz-slider-ceil="priceSlider.ceil"
                 rz-slider-model="priceSlider.min"
                 rz-slider-high="priceSlider.max"
                 rz-slider-step="6"
                 rz-slider-tpl-url="rzSliderTpl.html"></rzslider>
-        </article>
+    </article>
 
-        <article>
-            <h2>Currency slider example</h2>
+    <article>
+        <h2>Currency slider example</h2>
 
-            Value: {{ priceSlider2 | json }}
-            <rzslider
+        Value: {{ priceSlider2 | json }}
+        <rzslider
                 rz-slider-floor="0"
                 rz-slider-ceil="450"
                 rz-slider-model="priceSlider2"
                 rz-slider-translate="translate"
                 rz-slider-tpl-url="rzSliderTpl.html"></rzslider>
-        </article>
+    </article>
 
-        <article>
-            <h2>One value slider example</h2>
+    <article>
+        <h2>One value slider example</h2>
 
-            Value: {{ priceSlider3 | json }}
-            <rzslider rz-slider-model="priceSlider3"
-                rz-slider-floor="50"
-                rz-slider-ceil="450"
-                rz-slider-always-show-bar="true"
-                rz-slider-tpl-url="rzSliderTpl.html"></rzslider>
-        </article>
+        Value: {{ priceSlider3 | json }}
+        <rzslider rz-slider-model="priceSlider3"
+                  rz-slider-floor="50"
+                  rz-slider-ceil="450"
+                  rz-slider-always-show-bar="true"
+                  rz-slider-tpl-url="rzSliderTpl.html"></rzslider>
+    </article>
 
-        <article>
-            <h2>Alphabet slider example</h2>
-            Value: {{ alphabetTranslate(letter) }}
-            <rzslider
+    <article>
+        <h2>Alphabet slider example</h2>
+        Value: {{ alphabetTranslate(letter) }}
+        <rzslider
                 rz-slider-floor="0"
                 rz-slider-ceil="letterMax"
                 rz-slider-model="letter"
                 rz-slider-translate="alphabetTranslate"
                 rz-slider-tpl-url="rzSliderTpl.html"></rzslider>
-        </article>
+    </article>
 
-        <article>
-            <h2>Draggable range example</h2>
-            Value: <pre>{{ priceSlider | json }}</pre>
+    <article>
+        <h2>Draggable range example</h2>
+        Value:
+        <pre>{{ priceSlider | json }}</pre>
 
-            <input type="text" ng-model="priceSlider.min"/><br/>
-            <input type="text" ng-model="priceSlider.max"/><br/>
+        <input type="text" ng-model="priceSlider.min"/><br/>
+        <input type="text" ng-model="priceSlider.max"/><br/>
 
-            <rzslider
+        <rzslider
                 rz-slider-draggable-range="true"
                 rz-slider-floor="priceSlider.floor"
                 rz-slider-ceil="priceSlider.ceil"
@@ -96,9 +99,17 @@
                 rz-slider-high="priceSlider.max"
                 rz-slider-step="5"
                 rz-slider-tpl-url="rzSliderTpl.html"></rzslider>
-        </article>
+    </article>
 
-    </div>
+    <article>
+        <h2>Toggle slider example</h2>
+        <button ng-click="toggle()">Show</button>
+        <div ng-show="visible">
+            <rzslider rz-slider-model="toggleSlider.value" rz-slider-floor="toggleSlider.floor" rz-slider-ceil="toggleSlider.ceil"></rzslider>
+        </div>
+    </article>
+
+</div>
 </body>
 
 <script src="../bower_components/angular/angular.min.js"></script>
@@ -106,8 +117,7 @@
 <script>
     var app = angular.module('plunker', ['rzModule']);
 
-    app.controller('MainCtrl', function($scope)
-    {
+    app.controller('MainCtrl', function($scope, $timeout) {
         $scope.priceSlider = {
             min: 100,
             max: 400,
@@ -118,16 +128,14 @@
         $scope.priceSlider2 = 150;
         $scope.priceSlider3 = 250;
 
-        $scope.translate = function(value)
-        {
+        $scope.translate = function(value) {
             return '$' + value;
         };
 
         var alphabetArray = 'abcdefghijklmnopqrstuvwxyz'.split('');
         $scope.letter = 5;
         $scope.letterMax = alphabetArray.length - 1;
-        $scope.alphabetTranslate = function(value)
-        {
+        $scope.alphabetTranslate = function(value) {
             return alphabetArray[value].toUpperCase();
         };
 
@@ -135,8 +143,23 @@
         $scope.otherData = {value: 10};
 
         $scope.onChange = function() {
-          console.info('changed', $scope.slider_data.value);
-          $scope.otherData.value = $scope.slider_data.value * 10;
+            console.info('changed', $scope.slider_data.value);
+            $scope.otherData.value = $scope.slider_data.value * 10;
+        };
+
+        $scope.visible = false;
+
+        $scope.toggle = function() {
+            $scope.visible = !$scope.visible;
+            $timeout(function() {
+                $scope.$broadcast('rzSliderForceRender');
+            });
+        };
+
+        $scope.toggleSlider = {
+            value: 0,
+            ceil: 500,
+            floor: 0
         };
     });
 </script>
