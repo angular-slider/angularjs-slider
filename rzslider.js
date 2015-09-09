@@ -302,7 +302,7 @@ function throttle(func, wait, options) {
           self.updateCmbLabel();
         }
 
-      }, 350, { leading: false });
+      }, 350);
 
       thrHigh = throttle(function()
       {
@@ -310,7 +310,7 @@ function throttle(func, wait, options) {
         self.updateHighHandle(self.valueToOffset(self.scope.rzSliderHigh));
         self.updateSelectionBar();
         self.updateCmbLabel();
-      }, 350, { leading: false });
+      }, 350);
 
       this.scope.$on('rzSliderForceRender', function()
       {
