@@ -322,6 +322,13 @@ function throttle(func, wait, options) {
 
       // Watchers
 
+      unRegFn = this.scope.$watch('rzSliderStep', function(newValue, oldValue)
+      {
+        if(newValue === oldValue) return;
+        self.step = newValue;
+      });
+      this.deRegFuncs.push(unRegFn);
+
       unRegFn = this.scope.$watch('rzSliderModel', function(newValue, oldValue)
       {
         if(newValue === oldValue) { return; }
@@ -1252,7 +1259,7 @@ function throttle(func, wait, options) {
     scope: {
       rzSliderFloor: '=?',
       rzSliderCeil: '=?',
-      rzSliderStep: '@',
+      rzSliderStep: '=?',
       rzSliderPrecision: '@',
       rzSliderModel: '=?',
       rzSliderHigh: '=?',
