@@ -114,9 +114,17 @@ $scope.priceSlider = {
 
 > Custom translate function. Use this if you want to translate values displayed on the slider. For example if you want to display dollar amounts instead of just numbers do this:
 
+**rz-slider-on-start**
+
+> Function to be called when a slider update is started.
+
 **rz-slider-on-change**
 
 > Function to be called when rz-slider-model or rz-slider-high change.
+
+**rz-slider-on-end**
+
+> Function to be called when a slider update is ended.
 
 ```javascript
 // In your controller

@@ -29,7 +29,9 @@
                 rz-slider-step="0.3"
                 rz-slider-precision="1"
                 rz-slider-model="slider_data.value"
-                rz-slider-on-change="onChange()"></rzslider>
+                rz-slider-on-start="onStart()"
+                rz-slider-on-change="onChange()"
+                rz-slider-on-end="onEnd()"></rzslider>
     </article>
 
     <article>
@@ -142,9 +144,17 @@
         $scope.slider_data = {value: 1};
         $scope.otherData = {value: 10};
 
+        $scope.onStart = function() {
+            console.info('started', $scope.slider_data.value);
+        };
+
         $scope.onChange = function() {
             console.info('changed', $scope.slider_data.value);
             $scope.otherData.value = $scope.slider_data.value * 10;
+        };
+
+        $scope.onEnd = function() {
+            console.info('ended', $scope.slider_data.value);
         };
 
         $scope.visible = false;
@@ -157,7 +167,7 @@
         };
 
         $scope.toggleSlider = {
-            value: 0,
+            value: 1,
             ceil: 500,
             floor: 0
         };

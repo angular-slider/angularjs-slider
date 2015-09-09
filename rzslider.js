@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v0.1.28
+ * Version: v0.1.29
  *
  * Licensed under the MIT license
  */
@@ -590,6 +590,20 @@ function throttle(func, wait, options) {
     },
 
     /**
+     * Call the onStart callback if defined
+     *
+     * @returns {undefined}
+     */
+    callOnStart: function() {
+      if(this.scope.rzSliderOnStart) {
+        var self = this;
+        $timeout(function() {
+            self.scope.rzSliderOnStart();
+        });
+      }
+    },
+
+    /**
      * Call the onChange callback if defined
      *
      * @returns {undefined}
@@ -599,6 +613,20 @@ function throttle(func, wait, options) {
         var self = this;
         $timeout(function() {
             self.scope.rzSliderOnChange();
+        });
+      }
+    },
+
+    /**
+     * Call the onEnd callback if defined
+     *
+     * @returns {undefined}
+     */
+    callOnEnd: function() {
+      if(this.scope.rzSliderOnEnd) {
+        var self = this;
+        $timeout(function() {
+            self.scope.rzSliderOnEnd();
         });
       }
     },
@@ -991,6 +1019,7 @@ function throttle(func, wait, options) {
 
       $document.on(eventNames.moveEvent, ehMove);
       $document.one(eventNames.endEvent, ehEnd);
+      this.callOnStart();
     },
 
     /**
@@ -1182,6 +1211,7 @@ function throttle(func, wait, options) {
       this.tracking = '';
 
       this.dragging.active = false;
+      this.callOnEnd();
     },
 
     /**
@@ -1231,7 +1261,9 @@ function throttle(func, wait, options) {
       rzSliderHideLimitLabels: '=?',
       rzSliderAlwaysShowBar: '=?',
       rzSliderPresentOnly: '@',
-      rzSliderOnChange: '&'
+      rzSliderOnStart: '&',
+      rzSliderOnChange: '&',
+      rzSliderOnEnd: '&'
     },
 
     /**
