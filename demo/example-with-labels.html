@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html ng-app="plunker">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AngularJS Touch Slider</title>
+    <link rel="stylesheet" href="demo.css" />
+    <link rel="stylesheet" href="../dist/rzslider.css" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+</head>
+
+<body ng-controller="MainCtrl">
+
+    <div class="wrapper">
+        <header>
+            <h1>AngularJS Touch Slider</h1>
+        </header>
+
+
+
+        <article>
+            <rzslider
+                rz-slider-floor="0"
+                rz-slider-ceil="100000"
+                rz-slider-model="0"
+                rz-slider-high="600"
+                rz-slider-step="2000"
+                rz-slider-hide-limit-labels="true"
+                rz-show-labels="true"></rzslider>
+        </article>
+
+
+
+
+
+
+    </div>
+</body>
+
+<script src="../bower_components/angular/angular.min.js"></script>
+<script src="../rzslider.js"></script>
+<script>
+    var app = angular.module('plunker', ['rzModule']);
+
+    app.controller('MainCtrl', function($scope)
+    {
+        $scope.priceSlider = {
+            min: 100,
+            max: 400,
+            ceil: 500,
+            floor: 0
+        };
+    });
+</script>
+
+</html>
