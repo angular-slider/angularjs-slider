@@ -127,6 +127,10 @@ $scope.priceSlider = {
 
 > Function to be called when a slider update is ended.
 
+**rz-slider-show-ticks**
+
+> Display a tick for each value.
+
 ```javascript
 // In your controller
 
@@ -155,7 +159,8 @@ $scope.onSliderChange = function()
     rz-slider-model="priceSlider.min"
     rz-slider-high="priceSlider.max"
     rz-slider-translate="translate"
-    rz-slider-on-change="onSliderChange()"></rzslider>
+    rz-slider-on-change="onSliderChange()"
+    rz-slider-show-ticks="true"></rzslider>
 ```
 
 ## Slider events

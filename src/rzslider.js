@@ -212,6 +212,13 @@ function throttle(func, wait, options) {
     this.presentOnly = attributes.rzSliderPresentOnly === 'true';
 
     /**
+     * Display ticks on each possible value.
+     *
+     * @type {boolean}
+     */
+    this.showTicks = attributes.rzSliderShowTicks === 'true';
+
+    /**
      * The delta between min and max value
      *
      * @type {number}
@@ -249,6 +256,7 @@ function throttle(func, wait, options) {
     this.minLab =  null;  // Label above the low value
     this.maxLab = null;   // Label above the high value
     this.cmbLab = null;   // Combined label
+    this.ticks = null;  // The ticks
 
     // Initialize slider
     this.init();
@@ -281,6 +289,8 @@ function throttle(func, wait, options) {
         self.updateFloorLab();
         self.initHandles();
         if (!self.presentOnly) { self.bindEvents(); }
+        if(self.showTicks)
+          self.updateTicksScale();
       });
 
       // Recalculate slider view dimensions
@@ -359,6 +369,7 @@ function throttle(func, wait, options) {
         self.maxH.off();
         self.fullBar.off();
         self.selBar.off();
+        self.ticks.off();
         angular.element($window).off('resize', calcDimFn);
         self.deRegFuncs.map(function(unbind) { unbind(); });
       });
@@ -493,6 +504,7 @@ function throttle(func, wait, options) {
           case 6: this.minLab = jElem; break;
           case 7: this.maxLab = jElem; break;
           case 8: this.cmbLab = jElem; break;
+          case 9: this.ticks = jElem; break;
         }
 
       }, this);
@@ -506,6 +518,7 @@ function throttle(func, wait, options) {
       this.minLab.rzsl = 0;
       this.maxLab.rzsl = 0;
       this.cmbLab.rzsl = 0;
+      this.ticks.rzsl = 0;
 
       // Hide limit labels
       if(this.hideLimitLabels)
@@ -561,12 +574,32 @@ function throttle(func, wait, options) {
 
       this.getWidth(this.sliderElem);
       this.sliderElem.rzsl = this.sliderElem[0].getBoundingClientRect().left;
+      if(this.showTicks)
+        this.updateTicksScale();
 
       if(this.initHasRun)
       {
         this.updateCeilLab();
         this.initHandles();
       }
+    },
+
+    /**
+     * Update the ticks position
+     *
+     * @returns {undefined}
+     */
+    updateTicksScale: function() {
+        var positions = '';
+        for (var i = this.minValue; i < this.maxValue; i += this.step) {
+            positions += '<li></li>';
+        }
+        positions += '<li></li>';
+        this.ticks.html(positions);
+        this.ticks.css({
+          width: (this.barWidth - 2 * this.handleHalfWidth) + 'px',
+          left: this.handleHalfWidth + 'px'
+        });
     },
 
     /**
@@ -974,6 +1007,8 @@ function throttle(func, wait, options) {
       this.fullBar.on('mousedown', angular.bind(this, this.onMove, this.fullBar));
       this.selBar.on('mousedown', angular.bind(this, barStart, null, barTracking));
       this.selBar.on('mousedown', angular.bind(this, barMove, this.selBar));
+      this.ticks.on('mousedown', angular.bind(this, this.onStart, null, null));
+      this.ticks.on('mousedown', angular.bind(this, this.onMove, this.ticks));
 
       this.minH.on('touchstart', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
       if(this.range) { this.maxH.on('touchstart', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')); }
@@ -981,6 +1016,8 @@ function throttle(func, wait, options) {
       this.fullBar.on('touchstart', angular.bind(this, this.onMove, this.fullBar));
       this.selBar.on('touchstart', angular.bind(this, barStart, null, barTracking));
       this.selBar.on('touchstart', angular.bind(this, barMove, this.selBar));
+      this.ticks.on('touchstart', angular.bind(this, this.onStart, null, null));
+      this.ticks.on('touchstart', angular.bind(this, this.onMove, this.ticks));
     },
 
     /**
@@ -1266,7 +1303,8 @@ function throttle(func, wait, options) {
       rzSliderPresentOnly: '@',
       rzSliderOnStart: '&',
       rzSliderOnChange: '&',
-      rzSliderOnEnd: '&'
+      rzSliderOnEnd: '&',
+      rzSliderShowTicks: '@'
     },
 
     /**

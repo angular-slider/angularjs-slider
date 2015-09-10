@@ -86,6 +86,15 @@
     </article>
 
     <article>
+        <h2>Slider with ticks example</h2>
+        Value: {{ priceSlider4 | json }}
+        <rzslider rz-slider-model="priceSlider4"
+                  rz-slider-floor="0"
+                  rz-slider-ceil="10"
+                  rz-slider-show-ticks="true"></rzslider>
+    </article>
+
+    <article>
         <h2>Draggable range example</h2>
         Value:
         <pre>{{ priceSlider | json }}</pre>
@@ -131,6 +140,7 @@
 
     $scope.priceSlider2 = 150;
     $scope.priceSlider3 = 250;
+    $scope.priceSlider4 = 5;
 
     $scope.translate = function(value) {
       return '$' + value;
