@@ -13,9 +13,11 @@
   ],
   "devDependencies": {
     "grunt": "~0.4.2",
+    "grunt-angular-templates": "^0.5.7",
     "grunt-contrib-mincss": "~0.3.2",
     "grunt-contrib-uglify": "~0.2.2",
     "grunt-recess": "~0.4.0",
+    "grunt-replace": "^0.11.0",
     "recess": "~1.1.9"
   },
   "author": "Rafal Zajac <rzajac@gmail.com>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com>",

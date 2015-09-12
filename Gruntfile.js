@@ -37,18 +37,63 @@ module.exports = function (grunt)
       rzslider: {
         files: {
           'dist/rzslider.min.js': [
-            'src/rzslider.js'
+            'dist/rzslider.js'
           ]
         }
       }
+    },
+
+    ngtemplates:  {
+      app:        {
+        src:      'src/**.html',
+        dest:     'temp/templates.js',
+        options:  {
+          htmlmin: {
+            collapseBooleanAttributes:      true,
+            collapseWhitespace:             true,
+            removeAttributeQuotes:          true,
+            removeComments:                 true, // Only if you don't use comment directives!
+            removeEmptyAttributes:          true,
+            removeRedundantAttributes:      true,
+            removeScriptTypeAttributes:     true,
+            removeStyleLinkTypeAttributes:  true
+          },
+          module: 'rzModule',
+          url: function(url) {
+	        return url.replace('src/', '');
+          },
+	      bootstrap: function (module, script) {
+		    return 'module.run([\'$templateCache\', function($templateCache) {\n' + script + '\n}]);';
+	      }
+        }
+      }
+    },
+
+    replace: {
+      dist: {
+        options: {
+          patterns: [
+            {
+              match: /\/\*templateReplacement\*\//,
+              replacement: '<%= grunt.file.read("temp/templates.js") %>'
+            }
+          ]
+        },
+        files: [
+          {expand: true, flatten: true, src: ['src/rzslider.js'], dest: 'dist/'}
+        ]
+      }
     }
+    
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-recess');
+  grunt.loadNpmTasks('grunt-angular-templates');
+  grunt.loadNpmTasks('grunt-replace');
 
   grunt.registerTask('default', ['css', 'js']);
 
   grunt.registerTask('css', ['recess']);
-  grunt.registerTask('js', ['uglify']);
+  grunt.registerTask('js', ['ngtemplates','replace', 'uglify']);
 };
