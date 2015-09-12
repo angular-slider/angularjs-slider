@@ -1246,7 +1246,7 @@ function throttle(func, wait, options) {
   return Slider;
 }])
 
-.directive('rzslider', ['RzSlider', function(Slider)
+.directive('rzslider', ['RzSlider', function(RzSlider)
 {
   'use strict';
 
@@ -1283,7 +1283,7 @@ function throttle(func, wait, options) {
 
     link: function(scope, elem, attr)
     {
-      return new Slider(scope, elem, attr);
+      return new RzSlider(scope, elem, attr);
     }
   };
 }]);

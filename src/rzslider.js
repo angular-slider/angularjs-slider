@@ -76,7 +76,7 @@ function throttle(func, wait, options) {
   };
 })
 
-.factory('RzSlider', ['$timeout', '$document', '$window', 'throttle', function($timeout, $document, $window, throttle)
+.factory('RzSlider', function($timeout, $document, $window, throttle)
 {
   'use strict';
 
@@ -1244,9 +1244,9 @@ function throttle(func, wait, options) {
   };
 
   return Slider;
-}])
+})
 
-.directive('rzslider', ['RzSlider', function(Slider)
+.directive('rzslider', function(RzSlider)
 {
   'use strict';
 
@@ -1283,10 +1283,10 @@ function throttle(func, wait, options) {
 
     link: function(scope, elem, attr)
     {
-      return new Slider(scope, elem, attr);
+      return new RzSlider(scope, elem, attr);
     }
   };
-}]);
+});
 
 // IDE assist
 

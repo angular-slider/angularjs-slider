@@ -63,7 +63,7 @@ module.exports = function (grunt)
 	        return url.replace('src/', '');
           },
 	      bootstrap: function (module, script) {
-		    return 'module.run([\'$templateCache\', function($templateCache) {\n' + script + '\n}]);';
+		    return 'module.run(function($templateCache) {\n' + script + '\n});';
 	      }
         }
       }
@@ -83,17 +83,33 @@ module.exports = function (grunt)
           {expand: true, flatten: true, src: ['src/rzslider.js'], dest: 'dist/'}
         ]
       }
+    },
+
+    ngAnnotate: {
+      options: {
+        singleQuotes: true,
+      },
+      rzslider: {
+        files: [{
+            'dist/rzslider.js': 'dist/rzslider.js'
+          }, {
+            expand: true,
+            src: ['dist/rzslider.js']
+          }
+        ]
+      }
     }
-    
+
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-recess');
   grunt.loadNpmTasks('grunt-angular-templates');
   grunt.loadNpmTasks('grunt-replace');
+  grunt.loadNpmTasks('grunt-ng-annotate');
 
   grunt.registerTask('default', ['css', 'js']);
 
   grunt.registerTask('css', ['recess']);
-  grunt.registerTask('js', ['ngtemplates','replace', 'uglify']);
+  grunt.registerTask('js', ['ngtemplates','replace', 'ngAnnotate', 'uglify']);
 };
