@@ -15,7 +15,7 @@ module.exports = function (grunt)
       },
 
       slider: {
-        src: ['rzslider.less'],
+        src: ['src/rzslider.less'],
         dest: 'dist/rzslider.css'
       },
 
@@ -37,7 +37,7 @@ module.exports = function (grunt)
       rzslider: {
         files: {
           'dist/rzslider.min.js': [
-            'rzslider.js'
+            'src/rzslider.js'
           ]
         }
       }

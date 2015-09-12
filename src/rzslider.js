@@ -11,8 +11,25 @@
 
 /*jslint unparam: true */
 /*global angular: false, console: false */
+(function (root, factory) {
 
-angular.module('rzModule', [])
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(['angular', 'underscore'], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    // to support bundler like browserify
+    module.exports = factory(require('angular'));
+  } else {
+    // Browser globals (root is window)
+    factory(root.angular);
+  }
+
+}(this, function (angular) {
+
+var module = angular.module('rzModule', [])
 
 .run(['$templateCache', function($templateCache) {
   'use strict';
@@ -1317,3 +1334,6 @@ function throttle(func, wait, options) {
  * @property {bool} leading
  * @property {bool} trailing
  */
+
+  return module
+}));
