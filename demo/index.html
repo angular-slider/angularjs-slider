@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="plunker">
+<html ng-app="rzSliderDemo">
 
 <head>
     <meta charset="utf-8"/>
@@ -107,71 +107,76 @@
         <h2>Toggle slider example</h2>
         <button ng-click="toggle()">Show</button>
         <div ng-show="visible">
-            <rzslider rz-slider-model="toggleSlider.value" rz-slider-floor="toggleSlider.floor" rz-slider-ceil="toggleSlider.ceil"></rzslider>
+            <rzslider rz-slider-model="toggleSlider.value"
+                      rz-slider-floor="toggleSlider.floor"
+                      rz-slider-ceil="toggleSlider.ceil"></rzslider>
         </div>
     </article>
 
 </div>
-</body>
 
-<script src="../bower_components/angular/angular.min.js"></script>
+
+<script src="../bower_components/angular/angular.js"></script>
 <script src="../dist/rzslider.js"></script>
 <script>
-    var app = angular.module('plunker', ['rzModule']);
+  var app = angular.module('rzSliderDemo', ['rzModule']);
 
-    app.controller('MainCtrl', function($scope, $timeout) {
-        $scope.priceSlider = {
-            min: 100,
-            max: 400,
-            ceil: 500,
-            floor: 0
-        };
+  app.controller('MainCtrl', function($scope, $timeout) {
+    $scope.priceSlider = {
+      min: 100,
+      max: 400,
+      ceil: 500,
+      floor: 0
+    };
 
-        $scope.priceSlider2 = 150;
-        $scope.priceSlider3 = 250;
+    $scope.priceSlider2 = 150;
+    $scope.priceSlider3 = 250;
 
-        $scope.translate = function(value) {
-            return '$' + value;
-        };
+    $scope.translate = function(value) {
+      return '$' + value;
+    };
 
-        var alphabetArray = 'abcdefghijklmnopqrstuvwxyz'.split('');
-        $scope.letter = 5;
-        $scope.letterMax = alphabetArray.length - 1;
-        $scope.alphabetTranslate = function(value) {
-            return alphabetArray[value].toUpperCase();
-        };
+    var alphabetArray = 'abcdefghijklmnopqrstuvwxyz'.split('');
+    $scope.letter = 5;
+    $scope.letterMax = alphabetArray.length - 1;
+    $scope.alphabetTranslate = function(value) {
+      return alphabetArray[value].toUpperCase();
+    };
 
-        $scope.slider_data = {value: 1};
-        $scope.otherData = {value: 10};
+    $scope.slider_data = {value: 1};
+    $scope.otherData = {value: 10};
 
-        $scope.onStart = function() {
-            console.info('started', $scope.slider_data.value);
-        };
+    $scope.onStart = function() {
+      console.info('started', $scope.slider_data.value);
+    };
 
-        $scope.onChange = function() {
-            console.info('changed', $scope.slider_data.value);
-            $scope.otherData.value = $scope.slider_data.value * 10;
-        };
+    $scope.onChange = function() {
+      console.info('changed', $scope.slider_data.value);
+      $scope.otherData.value = $scope.slider_data.value * 10;
+    };
 
-        $scope.onEnd = function() {
-            console.info('ended', $scope.slider_data.value);
-        };
+    $scope.onEnd = function() {
+      console.info('ended', $scope.slider_data.value);
+    };
 
-        $scope.visible = false;
+    $scope.visible = false;
 
-        $scope.toggle = function() {
-            $scope.visible = !$scope.visible;
-            $timeout(function() {
-                $scope.$broadcast('rzSliderForceRender');
-            });
-        };
+    $scope.toggle = function() {
+      $scope.visible = !$scope.visible;
+      $timeout(function() {
+        $scope.$broadcast('rzSliderForceRender');
+      });
+    };
 
-        $scope.toggleSlider = {
-            value: 1,
-            ceil: 500,
-            floor: 0
-        };
-    });
+    $scope.toggleSlider = {
+      value: 1,
+      ceil: 500,
+      floor: 0
+    };
+  });
 </script>
+
+</body>
+
 
 </html>
