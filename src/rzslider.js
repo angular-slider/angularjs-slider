@@ -897,7 +897,7 @@ function throttle(func, wait, options) {
      */
     valueToOffset: function(val)
     {
-      return (val - this.minValue) * this.maxLeft / this.valueRange;
+      return (val - this.minValue) * this.maxLeft / this.valueRange || 0;
     },
 
     /**

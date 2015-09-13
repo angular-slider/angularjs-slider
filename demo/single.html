@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app="rzSliderDemo">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AngularJS Touch Slider</title>
+  <link rel="stylesheet" href="demo.css"/>
+  <link rel="stylesheet" href="../dist/rzslider.css"/>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+</head>
+
+<body ng-controller="MainCtrl">
+
+<div class="wrapper">
+  <header>
+    <h1>AngularJS Touch Slider Toggle case</h1>
+  </header>
+
+  <article>
+    <h2>Toggle slider example</h2>
+    <button ng-click="toggle()">Show</button>
+    <button ng-click="toggleCeil()">toggle ceil</button>
+    <div ng-show="visible">
+      <rzslider rz-slider-model="toggleSlider.value"
+                rz-slider-floor="toggleSlider.floor"
+                rz-slider-hide-limit-labels="true"
+                rz-slider-ceil="toggleSlider.ceil"></rzslider>
+    </div>
+  </article>
+
+</div>
+
+
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../dist/rzslider.js"></script>
+<script>
+  var app = angular.module('rzSliderDemo', ['rzModule']);
+
+  app.controller('MainCtrl', function($scope, $timeout) {
+
+
+    $scope.visible = false;
+
+    $scope.toggle = function() {
+      $scope.visible = !$scope.visible;
+      $timeout(function() {
+        $scope.$broadcast('rzSliderForceRender');
+      });
+    };
+
+    $scope.toggleCeil = function() {
+      $scope.toggleSlider.ceil = $scope.toggleSlider.ceil?0:500;
+      /*$timeout(function() {
+        $scope.$broadcast('rzSliderForceRender');
+      });*/
+    };
+
+    $scope.toggleSlider = {
+      value: 0,
+      ceil: 0,
+      floor: 0
+    };
+  });
+</script>
+
+</body>
+
+
+</html>
