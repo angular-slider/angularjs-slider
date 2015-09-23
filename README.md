@@ -10,7 +10,7 @@ Slider directive implementation for AngularJS, without any dependencies.
 - Compatibility with jQuery Lite, ie. with full jQuery ( Thanks Jusas! https://github.com/Jusas)
 
 ## Reporting issues
-Make sure the report is accompanied by a reproducible demo. The ideal demo is created by forking [our standard jsFiddle](http://jsfiddle.net/pq7yr6d6/), adding your own code and stripping it down to an absolute minimum needed to demonstrate the bug.
+Make sure the report is accompanied by a reproducible demo. The ideal demo is created by forking [our standard jsFiddle](http://jsfiddle.net/1ruqgnhk/), adding your own code and stripping it down to an absolute minimum needed to demonstrate the bug.
 
 
 ## Examples
