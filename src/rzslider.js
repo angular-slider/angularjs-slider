@@ -11,22 +11,25 @@
 
 /*jslint unparam: true */
 /*global angular: false, console: false */
+(function (root, factory) {
 
-angular.module('rzModule', [])
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(['angular', 'underscore'], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    // to support bundler like browserify
+    module.exports = factory(require('angular'));
+  } else {
+    // Browser globals (root is window)
+    factory(root.angular);
+  }
 
-.run(['$templateCache', function($templateCache) {
-  'use strict';
-  var template = '<span class="rz-bar-wrapper"><span class="rz-bar"></span></span>' + // 0 The slider bar
-              '<span class="rz-bar-wrapper"><span class="rz-bar rz-selection"></span></span>' + // 1 Highlight between two handles
-              '<span class="rz-pointer"></span>' + // 2 Left slider handle
-              '<span class="rz-pointer"></span>' + // 3 Right slider handle
-              '<span class="rz-bubble rz-limit"></span>' + // 4 Floor label
-              '<span class="rz-bubble rz-limit"></span>' + // 5 Ceiling label
-              '<span class="rz-bubble"></span>' + // 6 Label above left slider handle
-              '<span class="rz-bubble"></span>' + // 7 Label above right slider handle
-              '<span class="rz-bubble"></span>'; // 8 Range label when the slider handles are close ex. 15 - 17
-  $templateCache.put('rzSliderTpl.html', template);
-}])
+}(this, function (angular) {
+
+var module = angular.module('rzModule', [])
 
 .value('throttle',
   /**
@@ -73,7 +76,7 @@ function throttle(func, wait, options) {
   };
 })
 
-.factory('RzSlider', ['$timeout', '$document', '$window', 'throttle', function($timeout, $document, $window, throttle)
+.factory('RzSlider', function($timeout, $document, $window, throttle)
 {
   'use strict';
 
@@ -1241,9 +1244,9 @@ function throttle(func, wait, options) {
   };
 
   return Slider;
-}])
+})
 
-.directive('rzslider', ['RzSlider', function(Slider)
+.directive('rzslider', function(RzSlider)
 {
   'use strict';
 
@@ -1280,10 +1283,10 @@ function throttle(func, wait, options) {
 
     link: function(scope, elem, attr)
     {
-      return new Slider(scope, elem, attr);
+      return new RzSlider(scope, elem, attr);
     }
   };
-}]);
+});
 
 // IDE assist
 
@@ -1317,3 +1320,8 @@ function throttle(func, wait, options) {
  * @property {bool} leading
  * @property {bool} trailing
  */
+
+  /*templateReplacement*/
+
+  return module
+}));

@@ -15,7 +15,7 @@ module.exports = function (grunt)
       },
 
       slider: {
-        src: ['rzslider.less'],
+        src: ['src/rzslider.less'],
         dest: 'dist/rzslider.css'
       },
 
@@ -37,18 +37,79 @@ module.exports = function (grunt)
       rzslider: {
         files: {
           'dist/rzslider.min.js': [
-            'rzslider.js'
+            'dist/rzslider.js'
           ]
         }
       }
+    },
+
+    ngtemplates:  {
+      app:        {
+        src:      'src/**.html',
+        dest:     'temp/templates.js',
+        options:  {
+          htmlmin: {
+            collapseBooleanAttributes:      true,
+            collapseWhitespace:             true,
+            removeAttributeQuotes:          true,
+            removeComments:                 true, // Only if you don't use comment directives!
+            removeEmptyAttributes:          true,
+            removeRedundantAttributes:      true,
+            removeScriptTypeAttributes:     true,
+            removeStyleLinkTypeAttributes:  true
+          },
+          module: 'rzModule',
+          url: function(url) {
+	        return url.replace('src/', '');
+          },
+	      bootstrap: function (module, script) {
+		    return 'module.run(function($templateCache) {\n' + script + '\n});';
+	      }
+        }
+      }
+    },
+
+    replace: {
+      dist: {
+        options: {
+          patterns: [
+            {
+              match: /\/\*templateReplacement\*\//,
+              replacement: '<%= grunt.file.read("temp/templates.js") %>'
+            }
+          ]
+        },
+        files: [
+          {expand: true, flatten: true, src: ['src/rzslider.js'], dest: 'dist/'}
+        ]
+      }
+    },
+
+    ngAnnotate: {
+      options: {
+        singleQuotes: true,
+      },
+      rzslider: {
+        files: [{
+            'dist/rzslider.js': 'dist/rzslider.js'
+          }, {
+            expand: true,
+            src: ['dist/rzslider.js']
+          }
+        ]
+      }
     }
+
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-recess');
+  grunt.loadNpmTasks('grunt-angular-templates');
+  grunt.loadNpmTasks('grunt-replace');
+  grunt.loadNpmTasks('grunt-ng-annotate');
 
   grunt.registerTask('default', ['css', 'js']);
 
   grunt.registerTask('css', ['recess']);
-  grunt.registerTask('js', ['uglify']);
+  grunt.registerTask('js', ['ngtemplates','replace', 'ngAnnotate', 'uglify']);
 };
