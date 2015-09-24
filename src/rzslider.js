@@ -10,9 +10,9 @@
  */
 
 /*jslint unparam: true */
-/*global angular: false, console: false */
+/*global angular: false, console: false, define, module */
 (function (root, factory) {
-
+  'use strict';
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
     define(['angular'], factory);
@@ -28,7 +28,7 @@
   }
 
 }(this, function (angular) {
-
+  'use strict';
 var module = angular.module('rzModule', [])
 
 .value('throttle',
@@ -100,7 +100,7 @@ function throttle(func, wait, options) {
     /**
      * The slider attributes
      *
-     * @type {*}
+     * @type {Object}
      */
     this.attributes = attributes;
 
@@ -240,15 +240,15 @@ function throttle(func, wait, options) {
     this.deRegFuncs = [];
 
     // Slider DOM elements wrapped in jqLite
-    this.fullBar = null; // The whole slider bar
-    this.selBar = null;  // Highlight between two handles
-    this.minH = null;  // Left slider handle
-    this.maxH = null;  // Right slider handle
-    this.flrLab = null;  // Floor label
-    this.ceilLab = null; // Ceiling label
-    this.minLab =  null; // Label above the low value
-    this.maxLab = null; // Label above the high value
-    this.cmbLab = null;  // Combined label
+    this.fullBar = null;  // The whole slider bar
+    this.selBar = null;   // Highlight between two handles
+    this.minH = null;     // Left slider handle
+    this.maxH = null;     // Right slider handle
+    this.flrLab = null;   // Floor label
+    this.ceilLab = null;  // Ceiling label
+    this.minLab =  null;  // Label above the low value
+    this.maxLab = null;   // Label above the high value
+    this.cmbLab = null;   // Combined label
 
     // Initialize slider
     this.init();
@@ -413,14 +413,14 @@ function throttle(func, wait, options) {
      *
      * @param {number|string} value
      * @param {jqLite} label
-     * @param {bool?} useCustomTr
+     * @param {boolean} [useCustomTr]
      * @returns {undefined}
      */
     translateFn: function(value, label, useCustomTr)
     {
       useCustomTr = useCustomTr === undefined ? true : useCustomTr;
 
-      var valStr = String(useCustomTr ? this.customTrFn(value) : value),
+      var valStr = (useCustomTr ? this.customTrFn(value) : value).toString(),
           getWidth = false;
 
       if(label.rzsv === undefined || label.rzsv.length !== valStr.length || (label.rzsv.length > 0 && label.rzsw === 0))
@@ -457,7 +457,7 @@ function throttle(func, wait, options) {
       }
       else
       {
-        this.scope.rzSliderCeil = this.maxValue = this.range ? this.scope.rzSliderHigh : this.scope.rzSliderModel;
+        this.maxValue = this.scope.rzSliderCeil = this.range ? this.scope.rzSliderHigh : this.scope.rzSliderModel;
       }
 
       if(this.scope.rzSliderStep)
@@ -880,7 +880,7 @@ function throttle(func, wait, options) {
      *
      * @param {jqLite} elem  The jqLite wrapped DOM element
      * @param {number} width
-     * @returns {*}
+     * @returns {number}
      */
     setWidth: function(elem, width)
     {
@@ -897,7 +897,7 @@ function throttle(func, wait, options) {
      */
     valueToOffset: function(val)
     {
-      return (val - this.minValue) * this.maxLeft / this.valueRange;
+      return (val - this.minValue) * this.maxLeft / this.valueRange || 0;
     },
 
     /**
@@ -1272,8 +1272,8 @@ function throttle(func, wait, options) {
     /**
      * Return template URL
      *
-     * @param {*} elem
-     * @param {*} attrs
+     * @param {jqLite} elem
+     * @param {Object} attrs
      * @return {string}
      */
     templateUrl: function(elem, attrs) {
@@ -1301,9 +1301,9 @@ function throttle(func, wait, options) {
 /**
  * @name jqLite
  *
- * @property {number|undefined} rzsl
- * @property {number|undefined} rzsw
- * @property {string|undefined} rzsv
+ * @property {number|undefined} rzsl rzslider label left offset
+ * @property {number|undefined} rzsw rzslider element width
+ * @property {string|undefined} rzsv rzslider label value/text
  * @property {Function} css
  * @property {Function} text
  */
@@ -1317,8 +1317,8 @@ function throttle(func, wait, options) {
 /**
  * @name ThrottleOptions
  *
- * @property {bool} leading
- * @property {bool} trailing
+ * @property {boolean} leading
+ * @property {boolean} trailing
  */
 
   /*templateReplacement*/

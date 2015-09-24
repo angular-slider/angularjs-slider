@@ -60,11 +60,11 @@ module.exports = function (grunt)
           },
           module: 'rzModule',
           url: function(url) {
-	        return url.replace('src/', '');
+            return url.replace('src/', '');
           },
-	      bootstrap: function (module, script) {
-		    return 'module.run(function($templateCache) {\n' + script + '\n});';
-	      }
+          bootstrap: function (module, script) {
+            return 'module.run(function($templateCache) {\n' + script + '\n});';
+          }
         }
       }
     },
