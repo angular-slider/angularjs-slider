@@ -687,7 +687,8 @@ function throttle(func, wait, options) {
 
       this.setLeft(this.minH, newOffset);
       this.translateFn(this.scope.rzSliderModel, this.minLab);
-      this.setLeft(this.minLab, Math.max((newOffset - this.minLab.rzsw / 2 + this.handleHalfWidth),0));
+      var left = Math.min(Math.max(newOffset - this.minLab.rzsw / 2 + this.handleHalfWidth, 0), this.barWidth - this.ceilLab.rzsw);
+      this.setLeft(this.minLab, left);
 
       this.shFloorCeil();
     },
