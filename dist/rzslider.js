@@ -687,7 +687,8 @@ function throttle(func, wait, options) {
 
       this.setLeft(this.minH, newOffset);
       this.translateFn(this.scope.rzSliderModel, this.minLab);
-      this.setLeft(this.minLab, newOffset - this.minLab.rzsw / 2 + this.handleHalfWidth);
+      var left = Math.min(Math.max(newOffset - this.minLab.rzsw / 2 + this.handleHalfWidth, 0), this.barWidth - this.ceilLab.rzsw);
+      this.setLeft(this.minLab, left);
 
       this.shFloorCeil();
     },
@@ -702,7 +703,7 @@ function throttle(func, wait, options) {
     {
       this.setLeft(this.maxH, newOffset);
       this.translateFn(this.scope.rzSliderHigh, this.maxLab);
-      this.setLeft(this.maxLab, newOffset - this.maxLab.rzsw / 2 + this.handleHalfWidth);
+      this.setLeft(this.maxLab, Math.min((newOffset - this.maxLab.rzsw / 2 + this.handleHalfWidth),(this.barWidth - this.ceilLab.rzsw)));
 
       this.shFloorCeil();
     },
@@ -795,7 +796,8 @@ function throttle(func, wait, options) {
         }
 
         this.translateFn(lowTr + ' - ' + highTr, this.cmbLab, false);
-        this.setLeft(this.cmbLab, this.selBar.rzsl + this.selBar.rzsw / 2 - this.cmbLab.rzsw / 2);
+        var pos = Math.min(Math.max((this.selBar.rzsl + this.selBar.rzsw / 2 - this.cmbLab.rzsw / 2),0),(this.barWidth - this.cmbLab.rzsw));
+        this.setLeft(this.cmbLab, pos);
         this.hideEl(this.minLab);
         this.hideEl(this.maxLab);
         this.showEl(this.cmbLab);
