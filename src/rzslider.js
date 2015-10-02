@@ -212,6 +212,20 @@ function throttle(func, wait, options) {
     this.presentOnly = attributes.rzSliderPresentOnly === 'true';
 
     /**
+     * Display ticks on each possible value.
+     *
+     * @type {boolean}
+     */
+    this.showTicks = attributes.rzSliderShowTicks || attributes.rzSliderShowTicksValue;
+
+    /**
+     * Display the value on each tick.
+     *
+     * @type {boolean}
+     */
+    this.showTicksValue = attributes.rzSliderShowTicksValue;
+
+    /**
      * The delta between min and max value
      *
      * @type {number}
@@ -249,6 +263,7 @@ function throttle(func, wait, options) {
     this.minLab =  null;  // Label above the low value
     this.maxLab = null;   // Label above the high value
     this.cmbLab = null;   // Combined label
+    this.ticks = null;  // The ticks
 
     // Initialize slider
     this.init();
@@ -281,6 +296,8 @@ function throttle(func, wait, options) {
         self.updateFloorLab();
         self.initHandles();
         if (!self.presentOnly) { self.bindEvents(); }
+        if(self.showTicks)
+          self.updateTicksScale();
       });
 
       // Recalculate slider view dimensions
@@ -353,12 +370,27 @@ function throttle(func, wait, options) {
       });
       this.deRegFuncs.push(unRegFn);
 
+      unRegFn = this.scope.$watch('rzSliderShowTicks', function(newValue, oldValue)
+      {
+        if(newValue === oldValue) { return; }
+        self.resetSlider();
+      });
+      this.deRegFuncs.push(unRegFn);
+
+      unRegFn = this.scope.$watch('rzSliderShowTicksValue', function(newValue, oldValue)
+      {
+        if(newValue === oldValue) { return; }
+        self.resetSlider();
+      });
+      this.deRegFuncs.push(unRegFn);
+
       this.scope.$on('$destroy', function()
       {
         self.minH.off();
         self.maxH.off();
         self.fullBar.off();
         self.selBar.off();
+        self.ticks.off();
         angular.element($window).off('resize', calcDimFn);
         self.deRegFuncs.map(function(unbind) { unbind(); });
       });
@@ -493,6 +525,7 @@ function throttle(func, wait, options) {
           case 6: this.minLab = jElem; break;
           case 7: this.maxLab = jElem; break;
           case 8: this.cmbLab = jElem; break;
+          case 9: this.ticks = jElem; break;
         }
 
       }, this);
@@ -514,6 +547,17 @@ function throttle(func, wait, options) {
         this.ceilLab.rzAlwaysHide = true;
         this.hideEl(this.flrLab);
         this.hideEl(this.ceilLab);
+      }
+
+      if(this.showTicksValue) {
+        this.flrLab.rzAlwaysHide = true;
+        this.ceilLab.rzAlwaysHide = true;
+        this.minLab.rzAlwaysHide = true;
+        this.maxLab.rzAlwaysHide = true;
+        this.hideEl(this.flrLab);
+        this.hideEl(this.ceilLab);
+        this.hideEl(this.minLab);
+        this.hideEl(this.maxLab);
       }
 
       // Remove stuff not needed in single slider
@@ -561,12 +605,32 @@ function throttle(func, wait, options) {
 
       this.getWidth(this.sliderElem);
       this.sliderElem.rzsl = this.sliderElem[0].getBoundingClientRect().left;
+      if(this.showTicks)
+        this.updateTicksScale();
 
       if(this.initHasRun)
       {
         this.updateCeilLab();
         this.initHandles();
       }
+    },
+
+    /**
+     * Update the ticks position
+     *
+     * @returns {undefined}
+     */
+    updateTicksScale: function() {
+        if(!this.step) return; //if step is 0, the following loop will be endless.
+
+        var positions = '';
+        for (var i = this.minValue; i <= this.maxValue; i += this.step) {
+          positions += '<li class="tick">';
+          if(this.showTicksValue)
+            positions += '<span class="tick-value">'+ this.getDisplayValue(i) +'</span>';
+          positions += '</li>';
+        }
+        this.ticks.html(positions);
     },
 
     /**
@@ -783,16 +847,8 @@ function throttle(func, wait, options) {
 
       if(this.minLab.rzsl + this.minLab.rzsw + 10 >= this.maxLab.rzsl)
       {
-        if(this.customTrFn)
-        {
-          lowTr = this.customTrFn(this.scope.rzSliderModel);
-          highTr = this.customTrFn(this.scope.rzSliderHigh);
-        }
-        else
-        {
-          lowTr = this.scope.rzSliderModel;
-          highTr = this.scope.rzSliderHigh;
-        }
+        lowTr = this.getDisplayValue(this.scope.rzSliderModel);
+        highTr = this.getDisplayValue(this.scope.rzSliderHigh);
 
         this.translateFn(lowTr + ' - ' + highTr, this.cmbLab, false);
         this.setLeft(this.cmbLab, this.selBar.rzsl + this.selBar.rzsw / 2 - this.cmbLab.rzsw / 2);
@@ -806,6 +862,15 @@ function throttle(func, wait, options) {
         this.showEl(this.minLab);
         this.hideEl(this.cmbLab);
       }
+    },
+
+    /**
+     * Return the translated value if a translate function is provided else the original value
+     * @param value
+     * @returns {*}
+     */
+    getDisplayValue: function(value) {
+      return  this.customTrFn ? this.customTrFn(value): value;
     },
 
     /**
@@ -974,6 +1039,8 @@ function throttle(func, wait, options) {
       this.fullBar.on('mousedown', angular.bind(this, this.onMove, this.fullBar));
       this.selBar.on('mousedown', angular.bind(this, barStart, null, barTracking));
       this.selBar.on('mousedown', angular.bind(this, barMove, this.selBar));
+      this.ticks.on('mousedown', angular.bind(this, this.onStart, null, null));
+      this.ticks.on('mousedown', angular.bind(this, this.onMove, this.ticks));
 
       this.minH.on('touchstart', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
       if(this.range) { this.maxH.on('touchstart', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh')); }
@@ -981,6 +1048,8 @@ function throttle(func, wait, options) {
       this.fullBar.on('touchstart', angular.bind(this, this.onMove, this.fullBar));
       this.selBar.on('touchstart', angular.bind(this, barStart, null, barTracking));
       this.selBar.on('touchstart', angular.bind(this, barMove, this.selBar));
+      this.ticks.on('touchstart', angular.bind(this, this.onStart, null, null));
+      this.ticks.on('touchstart', angular.bind(this, this.onMove, this.ticks));
     },
 
     /**
@@ -1266,7 +1335,9 @@ function throttle(func, wait, options) {
       rzSliderPresentOnly: '@',
       rzSliderOnStart: '&',
       rzSliderOnChange: '&',
-      rzSliderOnEnd: '&'
+      rzSliderOnEnd: '&',
+      rzSliderShowTicks: '=?',
+      rzSliderShowTicksValue: '=?'
     },
 
     /**
