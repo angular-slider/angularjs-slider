@@ -15,7 +15,7 @@ Make sure the report is accompanied by a reproducible demo. The ideal demo is cr
 
 ## Examples
 
-- **Various examples:** [http://rzajac.github.io/angularjs-slider/](http://rzajac.github.io/angularjs-slider/)
+- **Various examples:** [http://rzajac.github.io/angularjs-slider/index.html](http://rzajac.github.io/angularjs-slider/)
 - **Slider inside Angular UI tabs:** http://jsfiddle.net/7w755fLv/
 
 ### Single slider
