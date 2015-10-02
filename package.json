@@ -19,6 +19,8 @@
     "grunt-ng-annotate": "^1.0.1",
     "grunt-recess": "~0.4.0",
     "grunt-replace": "^0.11.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-serve": "^0.1.6",
     "recess": "~1.1.9"
   },
   "author": "Rafal Zajac <rzajac@gmail.com>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com>",
