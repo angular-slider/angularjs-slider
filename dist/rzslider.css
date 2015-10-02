@@ -112,18 +112,28 @@ rzslider span.rz-bubble.rz-limit {
 rzslider .rz-ticks {
   position: absolute;
   top: -3px;
+  left: 0;
   z-index: 1;
   display: flex;
-  padding: 0;
+  width: 100%;
+  padding: 0 11px;
   margin: 0;
   list-style: none;
+  box-sizing: border-box;
   justify-content: space-between;
 }
 
-rzslider .rz-ticks li {
+rzslider .rz-ticks .tick {
   width: 10px;
   height: 10px;
+  text-align: center;
   cursor: pointer;
   background: #666666;
   border-radius: 50%;
+}
+
+rzslider .rz-ticks .tick .tick-value {
+  position: absolute;
+  top: -30px;
+  transform: translate(-50%, 0);
 }

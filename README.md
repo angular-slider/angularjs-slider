@@ -131,6 +131,10 @@ $scope.priceSlider = {
 
 > Display a tick for each value.
 
+**rz-slider-show-ticks-value**
+
+> Display a tick for each value and the value of the tick.
+
 ```javascript
 // In your controller
 

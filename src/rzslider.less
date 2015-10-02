@@ -23,6 +23,9 @@
 @barFillColor: @handleBgColor;
 @barNormalColor: #d8e0f3;
 @ticksColor: #666;
+@ticksWidth: 10px;
+@ticksHeight: 10px;
+@ticksValuePosition: -30px;
 
 /* Slider size parameters */
 @handleSize: 32px;
@@ -84,10 +87,10 @@ rzslider span.rz-pointer {
   background-color: @handleBgColor;
   z-index: 3;
   .rounded(@handleSize/2);
-//  -webkit-transition:all linear 0.15s;
-//  -moz-transition:all linear 0.15s;
-//  -o-transition:all linear 0.15s;
-//  transition:all linear 0.15s;
+  //  -webkit-transition:all linear 0.15s;
+  //  -moz-transition:all linear 0.15s;
+  //  -o-transition:all linear 0.15s;
+  //  transition:all linear 0.15s;
 }
 
 rzslider span.rz-pointer:after {
@@ -125,20 +128,29 @@ rzslider span.rz-bubble.rz-limit {
 }
 
 rzslider .rz-ticks {
+  box-sizing: border-box;
+  width: 100%;
   position: absolute;
-  padding: 0;
+  left: 0;
+  top: -(@ticksHeight - @barHeight) / 2;
   margin: 0;
+  padding: 0 (@handleSize - @ticksWidth) / 2;
   z-index: 1;
   list-style: none;
   display: flex;
   justify-content: space-between;
-  top: -3px;
 
-  li {
-    width: 10px;
-    height: 10px;
+  .tick {
+    text-align: center;
+    cursor: pointer;
+    width: @ticksWidth;
+    height: @ticksHeight;
     background: @ticksColor;
     border-radius: 50%;
-    cursor: pointer;
+    .tick-value {
+      position: absolute;
+      top: @ticksValuePosition;
+      transform: translate(-50%, 0);
+    }
   }
 }

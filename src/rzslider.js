@@ -216,7 +216,14 @@ function throttle(func, wait, options) {
      *
      * @type {boolean}
      */
-    this.showTicks = attributes.rzSliderShowTicks === 'true';
+    this.showTicks = attributes.rzSliderShowTicks || attributes.rzSliderShowTicksValue;
+
+    /**
+     * Display the value on each tick.
+     *
+     * @type {boolean}
+     */
+    this.showTicksValue = attributes.rzSliderShowTicksValue;
 
     /**
      * The delta between min and max value
@@ -357,6 +364,20 @@ function throttle(func, wait, options) {
       this.deRegFuncs.push(unRegFn);
 
       unRegFn = this.scope.$watch('rzSliderCeil', function(newValue, oldValue)
+      {
+        if(newValue === oldValue) { return; }
+        self.resetSlider();
+      });
+      this.deRegFuncs.push(unRegFn);
+
+      unRegFn = this.scope.$watch('rzSliderShowTicks', function(newValue, oldValue)
+      {
+        if(newValue === oldValue) { return; }
+        self.resetSlider();
+      });
+      this.deRegFuncs.push(unRegFn);
+
+      unRegFn = this.scope.$watch('rzSliderShowTicksValue', function(newValue, oldValue)
       {
         if(newValue === oldValue) { return; }
         self.resetSlider();
@@ -518,7 +539,6 @@ function throttle(func, wait, options) {
       this.minLab.rzsl = 0;
       this.maxLab.rzsl = 0;
       this.cmbLab.rzsl = 0;
-      this.ticks.rzsl = 0;
 
       // Hide limit labels
       if(this.hideLimitLabels)
@@ -527,6 +547,17 @@ function throttle(func, wait, options) {
         this.ceilLab.rzAlwaysHide = true;
         this.hideEl(this.flrLab);
         this.hideEl(this.ceilLab);
+      }
+
+      if(this.showTicksValue) {
+        this.flrLab.rzAlwaysHide = true;
+        this.ceilLab.rzAlwaysHide = true;
+        this.minLab.rzAlwaysHide = true;
+        this.maxLab.rzAlwaysHide = true;
+        this.hideEl(this.flrLab);
+        this.hideEl(this.ceilLab);
+        this.hideEl(this.minLab);
+        this.hideEl(this.maxLab);
       }
 
       // Remove stuff not needed in single slider
@@ -590,16 +621,16 @@ function throttle(func, wait, options) {
      * @returns {undefined}
      */
     updateTicksScale: function() {
+        if(!this.step) return; //if step is 0, the following loop will be endless.
+
         var positions = '';
-        for (var i = this.minValue; i < this.maxValue; i += this.step) {
-            positions += '<li></li>';
+        for (var i = this.minValue; i <= this.maxValue; i += this.step) {
+          positions += '<li class="tick">';
+          if(this.showTicksValue)
+            positions += '<span class="tick-value">'+ this.getDisplayValue(i) +'</span>';
+          positions += '</li>';
         }
-        positions += '<li></li>';
         this.ticks.html(positions);
-        this.ticks.css({
-          width: (this.barWidth - 2 * this.handleHalfWidth) + 'px',
-          left: this.handleHalfWidth + 'px'
-        });
     },
 
     /**
@@ -816,16 +847,8 @@ function throttle(func, wait, options) {
 
       if(this.minLab.rzsl + this.minLab.rzsw + 10 >= this.maxLab.rzsl)
       {
-        if(this.customTrFn)
-        {
-          lowTr = this.customTrFn(this.scope.rzSliderModel);
-          highTr = this.customTrFn(this.scope.rzSliderHigh);
-        }
-        else
-        {
-          lowTr = this.scope.rzSliderModel;
-          highTr = this.scope.rzSliderHigh;
-        }
+        lowTr = this.getDisplayValue(this.scope.rzSliderModel);
+        highTr = this.getDisplayValue(this.scope.rzSliderHigh);
 
         this.translateFn(lowTr + ' - ' + highTr, this.cmbLab, false);
         this.setLeft(this.cmbLab, this.selBar.rzsl + this.selBar.rzsw / 2 - this.cmbLab.rzsw / 2);
@@ -839,6 +862,15 @@ function throttle(func, wait, options) {
         this.showEl(this.minLab);
         this.hideEl(this.cmbLab);
       }
+    },
+
+    /**
+     * Return the translated value if a translate function is provided else the original value
+     * @param value
+     * @returns {*}
+     */
+    getDisplayValue: function(value) {
+      return  this.customTrFn ? this.customTrFn(value): value;
     },
 
     /**
@@ -1304,7 +1336,8 @@ function throttle(func, wait, options) {
       rzSliderOnStart: '&',
       rzSliderOnChange: '&',
       rzSliderOnEnd: '&',
-      rzSliderShowTicks: '@'
+      rzSliderShowTicks: '=?',
+      rzSliderShowTicksValue: '=?'
     },
 
     /**
