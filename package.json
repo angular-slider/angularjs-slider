@@ -1,6 +1,6 @@
 {
   "name": "jusas-angularjs-slider",
-  "version": "0.1.32",
+  "version": "0.1.33",
   "description": "AngularJS slider directive with no external dependencies. Mobile friendly!.",
   "main": "dist/rzslider.js",
   "repository": {
@@ -23,7 +23,7 @@
     "grunt-serve": "^0.1.6",
     "recess": "~1.1.9"
   },
-  "author": "Rafal Zajac <rzajac@gmail.com>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com>",
+  "author": "Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com>",
   "license": "MIT",
   "readmeFilename": "README.md"
 }
