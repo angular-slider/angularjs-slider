@@ -22,7 +22,9 @@
 @limitLabelTextColor: @labelTextColor;
 @barFillColor: @handleBgColor;
 @barNormalColor: #d8e0f3;
-@ticksColor: #666;
+
+@ticksColor: @barNormalColor;
+@selectedTicksColor: @barFillColor;
 @ticksWidth: 10px;
 @ticksHeight: 10px;
 @ticksValuePosition: -30px;
@@ -147,6 +149,9 @@ rzslider .rz-ticks {
     height: @ticksHeight;
     background: @ticksColor;
     border-radius: 50%;
+    &.selected {
+      background: @selectedTicksColor;
+    }
     .tick-value {
       position: absolute;
       top: @ticksValuePosition;

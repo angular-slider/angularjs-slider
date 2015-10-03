@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v0.1.33
+ * Version: v0.1.34
  *
  * Licensed under the MIT license
  */
@@ -296,8 +296,6 @@ function throttle(func, wait, options) {
         self.updateFloorLab();
         self.initHandles();
         if (!self.presentOnly) { self.bindEvents(); }
-        if(self.showTicks)
-          self.updateTicksScale();
       });
 
       // Recalculate slider view dimensions
@@ -316,6 +314,7 @@ function throttle(func, wait, options) {
         self.setMinAndMax();
         self.updateLowHandle(self.valueToOffset(self.scope.rzSliderModel));
         self.updateSelectionBar();
+        self.updateTicksScale();
 
         if(self.range)
         {
@@ -329,6 +328,7 @@ function throttle(func, wait, options) {
         self.setMinAndMax();
         self.updateHighHandle(self.valueToOffset(self.scope.rzSliderHigh));
         self.updateSelectionBar();
+        self.updateTicksScale();
         self.updateCmbLabel();
       }, 350, { leading: false });
 
@@ -438,6 +438,7 @@ function throttle(func, wait, options) {
       }
 
       this.updateSelectionBar();
+      this.updateTicksScale();
     },
 
     /**
@@ -605,8 +606,6 @@ function throttle(func, wait, options) {
 
       this.getWidth(this.sliderElem);
       this.sliderElem.rzsl = this.sliderElem[0].getBoundingClientRect().left;
-      if(this.showTicks)
-        this.updateTicksScale();
 
       if(this.initHasRun)
       {
@@ -621,16 +620,27 @@ function throttle(func, wait, options) {
      * @returns {undefined}
      */
     updateTicksScale: function() {
-        if(!this.step) return; //if step is 0, the following loop will be endless.
+      if(!this.showTicks) return;
+      if(!this.step) return; //if step is 0, the following loop will be endless.
 
-        var positions = '';
-        for (var i = this.minValue; i <= this.maxValue; i += this.step) {
-          positions += '<li class="tick">';
-          if(this.showTicksValue)
-            positions += '<span class="tick-value">'+ this.getDisplayValue(i) +'</span>';
-          positions += '</li>';
-        }
-        this.ticks.html(positions);
+      var positions = '';
+      for (var i = this.minValue; i <= this.maxValue; i += this.step) {
+        var selectedClass = this.isTickSelected(i) ? 'selected': false;
+        positions += '<li class="tick '+ selectedClass +'">';
+        if(this.showTicksValue)
+          positions += '<span class="tick-value">'+ this.getDisplayValue(i) +'</span>';
+        positions += '</li>';
+      }
+      this.ticks.html(positions);
+    },
+
+    isTickSelected: function(value) {
+      var tickLeft = this.valueToOffset(value);
+      if(!this.range && this.alwaysShowBar && value <= this.scope.rzSliderModel)
+        return true;
+      if(this.range && value >= this.scope.rzSliderModel && value <= this.scope.rzSliderHigh)
+        return true;
+      return false;
     },
 
     /**
@@ -710,6 +720,7 @@ function throttle(func, wait, options) {
       {
         this.updateLowHandle(newOffset);
         this.updateSelectionBar();
+        this.updateTicksScale();
 
         if(this.range)
         {
@@ -722,6 +733,7 @@ function throttle(func, wait, options) {
       {
         this.updateHighHandle(newOffset);
         this.updateSelectionBar();
+        this.updateTicksScale();
 
         if(this.range)
         {
@@ -734,6 +746,7 @@ function throttle(func, wait, options) {
       this.updateLowHandle(newOffset);
       this.updateHighHandle(newOffset);
       this.updateSelectionBar();
+      this.updateTicksScale();
       this.updateCmbLabel();
     },
 

@@ -128,8 +128,12 @@ rzslider .rz-ticks .tick {
   height: 10px;
   text-align: center;
   cursor: pointer;
-  background: #666666;
+  background: #d8e0f3;
   border-radius: 50%;
+}
+
+rzslider .rz-ticks .tick.selected {
+  background: #0db9f0;
 }
 
 rzslider .rz-ticks .tick .tick-value {
