@@ -66,23 +66,41 @@
         </article>
 
         <article>
-            <h2>Slider with ticks example</h2>
-            Value: {{ priceSlider4 }}
-            <rzslider
-                rz-slider-floor="0"
-                rz-slider-ceil="10"
-                rz-slider-model="priceSlider4"
-                rz-slider-show-ticks="true"></rzslider>
+        <h2>Slider with ticks example</h2>
+            Value: {{ priceSlider4 | json }}
+            <rzslider rz-slider-model="priceSlider4"
+                      rz-slider-floor="0"
+                      rz-slider-ceil="10"
+                      rz-slider-show-ticks="true"></rzslider>
         </article>
 
         <article>
-            <h2>Slider with ticks and step values example</h2>
-            Value: {{ priceSlider5 }}
-            <rzslider
-                rz-slider-floor="0"
-                rz-slider-ceil="10"
-                rz-slider-model="priceSlider5"
-                rz-slider-show-ticks-value="true"></rzslider>
+            <h2>Slider with ticks value example</h2>
+            Value: {{ priceSlider5 | json }}
+            <rzslider rz-slider-model="priceSlider5"
+                      rz-slider-floor="0"
+                      rz-slider-ceil="10"
+                      rz-slider-show-ticks-value="true"></rzslider>
+        </article>
+
+        <article>
+            <h2>Slider with ticks value and visible bar example</h2>
+            Value: {{ priceSlider6 | json }}
+            <rzslider rz-slider-model="priceSlider6"
+                      rz-slider-floor="0"
+                      rz-slider-ceil="10"
+                      rz-slider-always-show-bar="true"
+                      rz-slider-show-ticks-value="true"></rzslider>
+        </article>
+
+        <article>
+            <h2>Range Slider with ticks value example</h2>
+            Value: {{ priceSlider6 | json }}
+            <rzslider rz-slider-model="priceSlider7.min"
+                      rz-slider-high="priceSlider7.max"
+                      rz-slider-floor="0"
+                      rz-slider-ceil="10"
+                      rz-slider-show-ticks-value="true"></rzslider>
         </article>
 
         <article>
@@ -116,6 +134,11 @@
         $scope.priceSlider3 = 250;
         $scope.priceSlider4 = 5;
         $scope.priceSlider5 = 5;
+        $scope.priceSlider6 = 5;
+        $scope.priceSlider7 = {
+          min: 2,
+          max: 8
+        };
 
         $scope.translate = function(value)
         {
