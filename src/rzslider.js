@@ -284,6 +284,7 @@ function throttle(func, wait, options) {
         self = this;
 
       this.initElemHandles();
+      this.addAccessibility();
       this.calcViewDimensions();
       this.setMinAndMax();
 
@@ -586,6 +587,18 @@ function throttle(func, wait, options) {
         this.selBar.css('cursor', 'move');
         this.selBar.addClass('rz-draggable');
       }
+    },
+    
+    /**
+     * Adds accessibility atributes
+     *
+     * Run only once during initialization
+     *
+     * @returns {undefined}
+     */
+    addAccessibility: function ()
+    {
+      this.sliderElem.attr("role", "slider");
     },
 
     /**
