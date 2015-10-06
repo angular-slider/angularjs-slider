@@ -12,6 +12,17 @@ Slider directive implementation for AngularJS, without any dependencies.
 ## Reporting issues
 Make sure the report is accompanied by a reproducible demo. The ideal demo is created by forking [our standard jsFiddle](http://jsfiddle.net/1ruqgnhk/), adding your own code and stripping it down to an absolute minimum needed to demonstrate the bug.
 
+## Installation
+
+### Bower
+```
+$ bower install --save angularjs-slider
+```
+
+### Module
+```javascript
+angular.module('', ['rzModule']);
+```
 
 ## Examples
 
