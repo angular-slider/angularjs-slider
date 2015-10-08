@@ -19,6 +19,7 @@
 @labelTextColor: #55637d;
 @handleBgColor: #0db9f0;
 @handleInnerColor: #fff;
+@handleDisabledColor: #d8e0f3;
 @limitLabelTextColor: @labelTextColor;
 @barFillColor: @handleBgColor;
 @barNormalColor: #d8e0f3;
@@ -36,12 +37,25 @@
 @barHeight: 4px;
 
 rzslider {
+
   display: inline-block;
   position: relative;
   height: @barHeight;
   width: 100%;
   margin: 30px 0 15px 0;
   vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  &[disabled] {
+    cursor: not-allowed;
+    span.rz-pointer {
+      cursor: not-allowed;
+      background-color: @handleDisabledColor;
+    }
+  }
 }
 
 rzslider span {

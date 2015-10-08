@@ -146,6 +146,10 @@ $scope.priceSlider = {
 
 > Display a tick for each value and the value of the tick.
 
+**rz-slider-disabled**
+
+> Disable the slider (apply a special style and unbind events)
+
 ```javascript
 // In your controller
 

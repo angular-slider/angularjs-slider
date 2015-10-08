@@ -18,6 +18,19 @@ rzslider {
   height: 4px;
   margin: 30px 0 15px 0;
   vertical-align: middle;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+rzslider[disabled] {
+  cursor: not-allowed;
+}
+
+rzslider[disabled] span.rz-pointer {
+  cursor: not-allowed;
+  background-color: #d8e0f3;
 }
 
 rzslider span {

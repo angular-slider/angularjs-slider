@@ -151,6 +151,15 @@
         </div>
     </article>
 
+    <article>
+        <h2>Disabled slider example</h2>
+        <label>Disable slider <input type="checkbox" ng-model="disableSlider"></label>
+        <rzslider rz-slider-model="priceSlider8"
+                  rz-slider-floor="0"
+                  rz-slider-ceil="10"
+                  rz-slider-disabled="disableSlider"></rzslider>
+    </article>
+
 </div>
 
 
@@ -176,6 +185,9 @@
       min: 2,
       max: 8
     };
+    $scope.priceSlider8 = 5;
+
+      $scope.disableSlider = true;
 
     $scope.translate = function(value) {
       return '$' + value;

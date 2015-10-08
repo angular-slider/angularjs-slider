@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v0.1.34
+ * Version: v0.1.35
  *
  * Licensed under the MIT license
  */
@@ -226,6 +226,13 @@ function throttle(func, wait, options) {
     this.showTicksValue = attributes.rzSliderShowTicksValue;
 
     /**
+     * Disable the slider
+     *
+     * @type {boolean}
+     */
+    this.disabled = this.scope.rzSliderDisabled;
+
+    /**
      * The delta between min and max value
      *
      * @type {number}
@@ -285,6 +292,7 @@ function throttle(func, wait, options) {
 
       this.initElemHandles();
       this.addAccessibility();
+      this.setDisabledState();
       this.calcViewDimensions();
       this.setMinAndMax();
 
@@ -296,7 +304,7 @@ function throttle(func, wait, options) {
         self.updateCeilLab();
         self.updateFloorLab();
         self.initHandles();
-        if (!self.presentOnly) { self.bindEvents(); }
+        self.bindEvents();
       });
 
       // Recalculate slider view dimensions
@@ -385,13 +393,20 @@ function throttle(func, wait, options) {
       });
       this.deRegFuncs.push(unRegFn);
 
+      unRegFn = this.scope.$watch('rzSliderDisabled', function(newValue, oldValue)
+      {
+        if(newValue === oldValue) { return; }
+        self.resetSlider();
+        if(self.disabled)
+          self.unbindEvents();
+        else
+          self.bindEvents();
+      });
+      this.deRegFuncs.push(unRegFn);
+
       this.scope.$on('$destroy', function()
       {
-        self.minH.off();
-        self.maxH.off();
-        self.fullBar.off();
-        self.selBar.off();
-        self.ticks.off();
+        self.unbindEvents();
         angular.element($window).off('resize', calcDimFn);
         self.deRegFuncs.map(function(unbind) { unbind(); });
       });
@@ -407,7 +422,25 @@ function throttle(func, wait, options) {
       this.setMinAndMax();
       this.updateCeilLab();
       this.updateFloorLab();
+      this.setDisabledState();
       this.calcViewDimensions();
+    },
+
+    /**
+     * Set the disabled state based on rzSliderDisabled
+     *
+     * @returns {undefined}
+     */
+    setDisabledState: function()
+    {
+      this.disabled = this.scope.rzSliderDisabled;
+      if(this.disabled) {
+        this.sliderElem.attr('disabled', 'disabled');
+      }
+      else {
+        this.sliderElem.attr('disabled', null);
+      }
+
     },
 
     /**
@@ -1044,6 +1077,7 @@ function throttle(func, wait, options) {
      */
     bindEvents: function()
     {
+      if(this.presentOnly || this.disabled) return;
       var barTracking, barStart, barMove;
 
       if (this.dragRange)
@@ -1076,6 +1110,20 @@ function throttle(func, wait, options) {
       this.selBar.on('touchstart', angular.bind(this, barMove, this.selBar));
       this.ticks.on('touchstart', angular.bind(this, this.onStart, null, null));
       this.ticks.on('touchstart', angular.bind(this, this.onMove, this.ticks));
+    },
+
+    /**
+     * Unbind mouse and touch events to slider handles
+     *
+     * @returns {undefined}
+     */
+    unbindEvents: function()
+    {
+      this.minH.off();
+      this.maxH.off();
+      this.fullBar.off();
+      this.selBar.off();
+      this.ticks.off();
     },
 
     /**
@@ -1363,7 +1411,8 @@ function throttle(func, wait, options) {
       rzSliderOnChange: '&',
       rzSliderOnEnd: '&',
       rzSliderShowTicks: '=?',
-      rzSliderShowTicksValue: '=?'
+      rzSliderShowTicksValue: '=?',
+      rzSliderDisabled: '=?',
     },
 
     /**
