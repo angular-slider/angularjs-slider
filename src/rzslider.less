@@ -57,12 +57,12 @@ rzslider {
       z-index: 1;
       background: @barNormalColor;
       .rounded(@barHeight/2);
-    }
 
-    &.rz-bar.rz-selection {
-      z-index: 2;
-      background: @barFillColor;
-      .rounded(@barHeight/2);
+      &.rz-selection {
+        z-index: 2;
+        background: @barFillColor;
+        .rounded(@barHeight/2);
+      }
     }
 
     &.rz-pointer {
@@ -77,25 +77,23 @@ rzslider {
       //  -moz-transition:all linear 0.15s;
       //  -o-transition:all linear 0.15s;
       //  transition:all linear 0.15s;
-    }
 
-    &.rz-pointer:after {
-      content: '';
-      width: @handlePointerSize;
-      height: @handlePointerSize;
-      position: absolute;
-      top: @handleSize/2 - @handlePointerSize/2;
-      left: @handleSize/2 - @handlePointerSize/2;
-      .rounded(@handlePointerSize/2);
-      background: @handleInnerColor;
-    }
-
-    &.rz-pointer:hover:after {
-      background-color: @handleHoverColor;
-    }
-
-    &.rz-pointer.rz-active:after {
-      background-color: @handleActiveColor;
+      &:after {
+        content: '';
+        width: @handlePointerSize;
+        height: @handlePointerSize;
+        position: absolute;
+        top: @handleSize/2 - @handlePointerSize/2;
+        left: @handleSize/2 - @handlePointerSize/2;
+        .rounded(@handlePointerSize/2);
+        background: @handleInnerColor;
+      }
+      &:hover:after {
+        background-color: @handleHoverColor;
+      }
+      &.rz-active:after {
+        background-color: @handleActiveColor;
+      }
     }
 
     &.rz-bubble {
@@ -103,14 +101,12 @@ rzslider {
       bottom: @handleSize/2;
       padding: @bubblePadding;
       color: @labelTextColor;
-    }
-
-    &.rz-bubble.rz-selection {
-      top: @handleSize/2;
-    }
-
-    &.rz-bubble.rz-limit {
-      color: @limitLabelTextColor;
+      &.rz-selection {
+        top: @handleSize/2;
+      }
+      &.rz-limit {
+        color: @limitLabelTextColor;
+      }
     }
   }
 
