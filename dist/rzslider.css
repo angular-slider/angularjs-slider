@@ -108,7 +108,7 @@ rzslider span.rz-pointer.rz-active:after {
 }
 
 rzslider span.rz-bubble {
-  top: -32px;
+  bottom: 16px;
   padding: 1px 3px;
   color: #55637d;
   cursor: default;
