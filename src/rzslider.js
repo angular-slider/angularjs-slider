@@ -669,8 +669,9 @@ function throttle(func, wait, options) {
       if(!this.showTicks) return;
       if(!this.step) return; //if step is 0, the following loop will be endless.
 
-      var positions = '';
-      for (var i = this.minValue; i <= this.maxValue; i += this.step) {
+      var positions = '',
+          ticksCount = Math.round((this.maxValue - this.minValue) / this.step) + 1;
+      for (var i = 0; i < ticksCount; i++) {
         var selectedClass = this.isTickSelected(i) ? 'selected': '';
         positions += '<li class="tick '+ selectedClass +'">';
         if(this.showTicksValue)
