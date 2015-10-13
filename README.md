@@ -14,6 +14,11 @@ Make sure the report is accompanied by a reproducible demo. The ideal demo is cr
 
 ## Installation
 
+### NPM
+```
+npm i angularjs-slider
+```
+or
 ### Bower
 ```
 $ bower install --save angularjs-slider
