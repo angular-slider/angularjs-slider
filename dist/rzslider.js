@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v0.1.36
+ * Version: v1.0.0
  *
  * Licensed under the MIT license
  */
