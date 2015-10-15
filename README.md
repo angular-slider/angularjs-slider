@@ -155,6 +155,10 @@ $scope.priceSlider = {
 
 > Disable the slider (apply a special style and unbind events)
 
+**rz-slider-interval**
+
+> The interval (in ms) at which the slider DOM element updates when rz-slider-model or rz-slider-high change from outside the slider. Defaults to 350.
+
 ```javascript
 // In your controller
 
