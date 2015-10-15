@@ -233,11 +233,12 @@ function throttle(func, wait, options) {
     this.disabled = this.scope.rzSliderDisabled;
 
     /**
-     * Set the speed at which the slider updates
+     * The interval at which the slider updates when the model/high values
+     * are altered from outside the slider
      *
      * @type {number}
      */
-    this.interval = this.scope.rzSliderInterval || 350;
+    this.interval = this.scope.rzSliderInterval !== null ? this.scope.rzSliderInterval : 350;
 
     /**
      * The delta between min and max value
@@ -337,7 +338,7 @@ function throttle(func, wait, options) {
           self.updateCmbLabel();
         }
 
-      }, self.interval, { leading: false });
+      }, self.interval);
 
       thrHigh = throttle(function()
       {
@@ -346,7 +347,7 @@ function throttle(func, wait, options) {
         self.updateSelectionBar();
         self.updateTicksScale();
         self.updateCmbLabel();
-      }, self.interval, { leading: false });
+      }, self.interval);
 
       this.scope.$on('rzSliderForceRender', function()
       {
@@ -1421,7 +1422,7 @@ function throttle(func, wait, options) {
       rzSliderShowTicks: '=?',
       rzSliderShowTicksValue: '=?',
       rzSliderDisabled: '=?',
-      rzSliderInterval: '@',
+      rzSliderInterval: '=?',
     },
 
     /**
