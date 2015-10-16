@@ -663,6 +663,7 @@ function throttle(func, wait, options) {
 
       if(this.initHasRun)
       {
+        this.updateFloorLab();
         this.updateCeilLab();
         this.initHandles();
       }
