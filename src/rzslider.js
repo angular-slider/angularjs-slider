@@ -680,10 +680,11 @@ function throttle(func, wait, options) {
       var positions = '',
           ticksCount = Math.round((this.maxValue - this.minValue) / this.step) + 1;
       for (var i = 0; i < ticksCount; i++) {
-        var selectedClass = this.isTickSelected(i) ? 'selected': '';
+        var value = this.roundStep(this.minValue + i * this.step);
+        var selectedClass = this.isTickSelected(value) ? 'selected': '';
         positions += '<li class="tick '+ selectedClass +'">';
         if(this.showTicksValue)
-          positions += '<span class="tick-value">'+ this.getDisplayValue(i) +'</span>';
+          positions += '<span class="tick-value">'+ this.getDisplayValue(value) +'</span>';
         positions += '</li>';
       }
       this.ticks.html(positions);

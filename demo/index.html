@@ -107,15 +107,17 @@
         <h2>Slider with ticks value and visible bar example</h2>
         Value: {{ priceSlider6 | json }}
         <rzslider rz-slider-model="priceSlider6"
-                  rz-slider-floor="0"
-                  rz-slider-ceil="10"
+                  rz-slider-floor="0.5"
+                  rz-slider-ceil="1.5"
+                  rz-slider-step="0.1"
+                  rz-slider-precision="1"
                   rz-slider-always-show-bar="true"
                   rz-slider-show-ticks-value="true"></rzslider>
     </article>
 
     <article>
         <h2>Range Slider with ticks value example</h2>
-        Value: {{ priceSlider6 | json }}
+        Value: {{ priceSlider7 | json }}
         <rzslider rz-slider-model="priceSlider7.min"
                   rz-slider-high="priceSlider7.max"
                   rz-slider-floor="0"
@@ -180,7 +182,7 @@
     $scope.priceSlider3 = 250;
     $scope.priceSlider4 = 5;
     $scope.priceSlider5 = 5;
-    $scope.priceSlider6 = 5;
+    $scope.priceSlider6 = 1;
     $scope.priceSlider7 = {
       min: 2,
       max: 8
