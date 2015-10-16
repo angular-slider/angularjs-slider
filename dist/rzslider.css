@@ -28,7 +28,7 @@ rzslider[disabled] {
   cursor: not-allowed;
 }
 
-rzslider[disabled] span.rz-pointer {
+rzslider[disabled] .rz-pointer {
   cursor: not-allowed;
   background-color: #d8e0f3;
 }
@@ -39,13 +39,13 @@ rzslider span {
   white-space: nowrap;
 }
 
-rzslider span.rz-base {
+rzslider .rz-base {
   width: 100%;
   height: 100%;
   padding: 0;
 }
 
-rzslider span.rz-bar-wrapper {
+rzslider .rz-bar-wrapper {
   left: 0;
   z-index: 1;
   width: 100%;
@@ -55,7 +55,7 @@ rzslider span.rz-bar-wrapper {
   box-sizing: border-box;
 }
 
-rzslider span.rz-bar {
+rzslider .rz-bar {
   left: 0;
   z-index: 1;
   width: 100%;
@@ -66,7 +66,7 @@ rzslider span.rz-bar {
           border-radius: 2px;
 }
 
-rzslider span.rz-bar.rz-selection {
+rzslider .rz-bar.rz-selection {
   z-index: 2;
   background: #0db9f0;
   -webkit-border-radius: 2px;
@@ -74,7 +74,7 @@ rzslider span.rz-bar.rz-selection {
           border-radius: 2px;
 }
 
-rzslider span.rz-pointer {
+rzslider .rz-pointer {
   top: -14px;
   z-index: 3;
   width: 32px;
@@ -86,7 +86,7 @@ rzslider span.rz-pointer {
           border-radius: 16px;
 }
 
-rzslider span.rz-pointer:after {
+rzslider .rz-pointer:after {
   position: absolute;
   top: 12px;
   left: 12px;
@@ -99,26 +99,26 @@ rzslider span.rz-pointer:after {
   content: '';
 }
 
-rzslider span.rz-pointer:hover:after {
+rzslider .rz-pointer:hover:after {
   background-color: #ffffff;
 }
 
-rzslider span.rz-pointer.rz-active:after {
+rzslider .rz-pointer.rz-active:after {
   background-color: #451aff;
 }
 
-rzslider span.rz-bubble {
+rzslider .rz-bubble {
   bottom: 16px;
   padding: 1px 3px;
   color: #55637d;
   cursor: default;
 }
 
-rzslider span.rz-bubble.rz-selection {
+rzslider .rz-bubble.rz-selection {
   top: 16px;
 }
 
-rzslider span.rz-bubble.rz-limit {
+rzslider .rz-bubble.rz-limit {
   color: #55637d;
 }
 

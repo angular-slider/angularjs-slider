@@ -23,7 +23,7 @@ rzslider {
 
   &[disabled] {
     cursor: not-allowed;
-    span.rz-pointer {
+    .rz-pointer {
       cursor: not-allowed;
       background-color: @handleDisabledColor;
     }
@@ -33,80 +33,80 @@ rzslider {
     white-space: nowrap;
     position: absolute;
     display: inline-block;
+  }
 
-    &.rz-base {
-      width: 100%;
-      height: 100%;
-      padding: 0;
-    }
+  .rz-base {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+  }
 
-    &.rz-bar-wrapper {
-      left: 0;
-      box-sizing: border-box;
-      margin-top: -@handleSize / 2;
-      padding-top: @handleSize / 2;
-      width: 100%;
-      height: @handleSize;
-      z-index: 1;
-    }
+  .rz-bar-wrapper {
+    left: 0;
+    box-sizing: border-box;
+    margin-top: -@handleSize / 2;
+    padding-top: @handleSize / 2;
+    width: 100%;
+    height: @handleSize;
+    z-index: 1;
+  }
 
-    &.rz-bar {
-      left: 0;
-      width: 100%;
-      height: @barHeight;
-      z-index: 1;
-      background: @barNormalColor;
+  .rz-bar {
+    left: 0;
+    width: 100%;
+    height: @barHeight;
+    z-index: 1;
+    background: @barNormalColor;
+    .rounded(@barHeight/2);
+
+    &.rz-selection {
+      z-index: 2;
+      background: @barFillColor;
       .rounded(@barHeight/2);
-
-      &.rz-selection {
-        z-index: 2;
-        background: @barFillColor;
-        .rounded(@barHeight/2);
-      }
     }
+  }
 
-    &.rz-pointer {
-      cursor: pointer;
-      width: @handleSize;
-      height: @handleSize;
-      top: -@handleSize/2 + @barHeight/2;
-      background-color: @handleBgColor;
-      z-index: 3;
-      .rounded(@handleSize/2);
-      //  -webkit-transition:all linear 0.15s;
-      //  -moz-transition:all linear 0.15s;
-      //  -o-transition:all linear 0.15s;
-      //  transition:all linear 0.15s;
+  .rz-pointer {
+    cursor: pointer;
+    width: @handleSize;
+    height: @handleSize;
+    top: -@handleSize/2 + @barHeight/2;
+    background-color: @handleBgColor;
+    z-index: 3;
+    .rounded(@handleSize/2);
+    //  -webkit-transition:all linear 0.15s;
+    //  -moz-transition:all linear 0.15s;
+    //  -o-transition:all linear 0.15s;
+    //  transition:all linear 0.15s;
 
-      &:after {
-        content: '';
-        width: @handlePointerSize;
-        height: @handlePointerSize;
-        position: absolute;
-        top: @handleSize/2 - @handlePointerSize/2;
-        left: @handleSize/2 - @handlePointerSize/2;
-        .rounded(@handlePointerSize/2);
-        background: @handleInnerColor;
-      }
-      &:hover:after {
-        background-color: @handleHoverColor;
-      }
-      &.rz-active:after {
-        background-color: @handleActiveColor;
-      }
+    &:after {
+      content: '';
+      width: @handlePointerSize;
+      height: @handlePointerSize;
+      position: absolute;
+      top: @handleSize/2 - @handlePointerSize/2;
+      left: @handleSize/2 - @handlePointerSize/2;
+      .rounded(@handlePointerSize/2);
+      background: @handleInnerColor;
     }
+    &:hover:after {
+      background-color: @handleHoverColor;
+    }
+    &.rz-active:after {
+      background-color: @handleActiveColor;
+    }
+  }
 
-    &.rz-bubble {
-      cursor: default;
-      bottom: @handleSize/2;
-      padding: @bubblePadding;
-      color: @labelTextColor;
-      &.rz-selection {
-        top: @handleSize/2;
-      }
-      &.rz-limit {
-        color: @limitLabelTextColor;
-      }
+  .rz-bubble {
+    cursor: default;
+    bottom: @handleSize/2;
+    padding: @bubblePadding;
+    color: @labelTextColor;
+    &.rz-selection {
+      top: @handleSize/2;
+    }
+    &.rz-limit {
+      color: @limitLabelTextColor;
     }
   }
 
