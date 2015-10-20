@@ -473,13 +473,16 @@ function throttle(func, wait, options) {
     {
       this.updateLowHandle(this.valueToOffset(this.scope.rzSliderModel));
 
+      /*
+      the order here is important since the selection bar should be
+      updated after the high handle but before the combined label
+       */
       if(this.range)
-      {
         this.updateHighHandle(this.valueToOffset(this.scope.rzSliderHigh));
-        this.updateCmbLabel();
-      }
-
       this.updateSelectionBar();
+      if(this.range)
+        this.updateCmbLabel();
+
       this.updateTicksScale();
     },
 
@@ -597,10 +600,12 @@ function throttle(func, wait, options) {
         this.ceilLab.rzAlwaysHide = true;
         this.minLab.rzAlwaysHide = true;
         this.maxLab.rzAlwaysHide = true;
+        this.cmbLab.rzAlwaysHide = true;
         this.hideEl(this.flrLab);
         this.hideEl(this.ceilLab);
         this.hideEl(this.minLab);
         this.hideEl(this.maxLab);
+        this.hideEl(this.cmbLab);
       }
 
       // Remove stuff not needed in single slider
