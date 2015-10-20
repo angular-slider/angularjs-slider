@@ -473,7 +473,7 @@ function throttle(func, wait, options) {
     {
       this.updateLowHandle(this.valueToOffset(this.scope.rzSliderModel));
 
-      /* 
+      /*
       the order here is important since the selection bar should be
       updated after the high handle but before the combined label
        */
@@ -820,10 +820,6 @@ function throttle(func, wait, options) {
      */
     updateLowHandle: function(newOffset)
     {
-      var delta = Math.abs(this.minH.rzsl - newOffset);
-
-      if(this.minLab.rzsv && delta < 1) { return; }
-
       this.setLeft(this.minH, newOffset);
       this.translateFn(this.scope.rzSliderModel, this.minLab);
       this.setLeft(this.minLab, newOffset - this.minLab.rzsw / 2 + this.handleHalfWidth);

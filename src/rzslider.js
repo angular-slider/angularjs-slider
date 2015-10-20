@@ -820,10 +820,6 @@ function throttle(func, wait, options) {
      */
     updateLowHandle: function(newOffset)
     {
-      var delta = Math.abs(this.minH.rzsl - newOffset);
-
-      if(this.minLab.rzsv && delta < 1) { return; }
-
       this.setLeft(this.minH, newOffset);
       this.translateFn(this.scope.rzSliderModel, this.minLab);
       this.setLeft(this.minLab, newOffset - this.minLab.rzsw / 2 + this.handleHalfWidth);
