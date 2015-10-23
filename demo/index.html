@@ -5,8 +5,10 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AngularJS Touch Slider</title>
-  <link rel="stylesheet" href="demo.css"/>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <link rel="stylesheet" href="../dist/rzslider.css"/>
+  <link rel="stylesheet" href="demo.css"/>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
 </head>
 
@@ -142,11 +144,63 @@
     </div>
   </article>
 
+  <article>
+    <h2>Sliders inside a modal</h2>
+    Normal slider value: {{percentages.normal.low}}%
+    </br>
+    Range slider values: {{percentages.range.low}}% and {{percentages.range.high}}%
+    </br>
+    <button type="button" ng-click="openModal()" class="btn btn-default btn-lg">Open Modal!</button>
+  </article>
 
+  <article>
+    <h2>Sliders inside tabs</h2>
+    <p>Price 1: {{tabSliders.slider1.value}}</p>
+    <p>Price 2: {{tabSliders.slider2.value}}</p>
+    <tabset>
+      <tab heading="Slider 1" select="refreshSlider()">
+        <rzslider rz-slider-model="tabSliders.slider1.value"></rzslider>
+      </tab>
+      <tab heading="Slider 2" select="refreshSlider()">
+        <rzslider rz-slider-model="tabSliders.slider2.value"></rzslider>
+      </tab>
+    </tabset>
+  </article>
+
+  <article>
+    <h2>Slider with all options demo</h2>
+    <div class="row all-options">
+      <div class="col-md-4">
+        <label class="field-title">Min Value: </label><input type="number" ng-model="slider_all_options.minValue"/><br/>
+        <label class="field-title"><input type="checkbox" ng-click="toggleHighValue()"> Max Value: </label>
+        <input type="number" ng-model="slider_all_options.maxValue" ng-disabled="slider_all_options.maxValue == null"/><br/>
+        <label class="field-title">Floor: </label><input type="number" ng-model="slider_all_options.options.floor"/><br/>
+        <label class="field-title">Ceil: </label><input type="number" ng-model="slider_all_options.options.ceil"/><br/>
+      </div>
+      <div class="col-md-4">
+        <label class="field-title">Step: </label><input type="number" ng-model="slider_all_options.options.step"/><br/>
+        <label class="field-title">Precision: </label><input type="number" ng-model="slider_all_options.options.precision"/><br/>
+        <label>Hide limits <input type="checkbox" ng-model="slider_all_options.options.hideLimitLabels"></label><br/>
+        <label>Draggable range <input type="checkbox" ng-model="slider_all_options.options.draggableRange"></label>
+      </div>
+      <div class="col-md-4">
+        <label>Show ticks <input type="checkbox" ng-model="slider_all_options.options.showTicks"></label><br/>
+        <label>Show ticks values <input type="checkbox" ng-model="slider_all_options.options.showTicksValues"></label><br/>
+        <label>Disabled <input type="checkbox" ng-model="slider_all_options.options.disabled"></label><br/>
+        <label>Read-Only <input type="checkbox" ng-model="slider_all_options.options.readOnly"></label>
+      </div>
+    </div>
+    <rzslider
+      rz-slider-model="slider_all_options.minValue"
+      rz-slider-high="slider_all_options.maxValue"
+      rz-slider-options="slider_all_options.options"
+      ></rzslider>
+  </article>
 </div>
 
 </body>
 <script src="../bower_components/angular/angular.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.js"></script>
 <script src="../dist/rzslider.js"></script>
 <script src="demo.js"></script>
 </html>

@@ -1,6 +1,6 @@
-var app = angular.module('rzSliderDemo', ['rzModule']);
+var app = angular.module('rzSliderDemo', ['rzModule', 'ui.bootstrap']);
 
-app.controller('MainCtrl', function($scope, $timeout) {
+app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
   //Minimal slider config
   $scope.minSlider = {
     value: 10
@@ -142,15 +142,8 @@ app.controller('MainCtrl', function($scope, $timeout) {
     }
   };
 
+  // Slider inside ng-show
   $scope.visible = false;
-
-  $scope.toggle = function() {
-    $scope.visible = !$scope.visible;
-    $timeout(function() {
-      $scope.$broadcast('rzSliderForceRender');
-    });
-  };
-
   $scope.slider_toggle = {
     value: 5,
     options: {
@@ -158,4 +151,106 @@ app.controller('MainCtrl', function($scope, $timeout) {
       floor: 0
     }
   };
+  $scope.toggle = function() {
+    $scope.visible = !$scope.visible;
+    $timeout(function() {
+      $scope.$broadcast('rzSliderForceRender');
+    });
+  };
+
+  //Slider inside modal
+  $scope.percentages = {
+    normal: {
+      low: 15
+    },
+    range: {
+      low: 10,
+      high: 50
+    }
+  };
+  $scope.openModal = function() {
+    var modalInstance = $modal.open({
+      templateUrl: 'sliderModal.html',
+      controller: function($scope, $modalInstance, values) {
+        $scope.percentages = JSON.parse(JSON.stringify(values)); //Copy of the object in order to keep original values in $scope.percentages in parent controller.
+
+
+        var formatToPercentage = function(value) {
+          return value + '%';
+        };
+
+        $scope.percentages.normal.options = {
+          floor: 0,
+          ceil: 100,
+          translate: formatToPercentage,
+          showSelectionBar: true
+        };
+        $scope.percentages.range.options = {
+          floor: 0,
+          ceil: 100,
+          translate: formatToPercentage
+        };
+        $scope.ok = function() {
+          $modalInstance.close($scope.percentages);
+        };
+        $scope.cancel = function() {
+          $modalInstance.dismiss();
+        };
+      },
+      resolve: {
+        values: function() {
+          return $scope.percentages;
+        }
+      }
+    });
+    modalInstance.result.then(function(percentages) {
+      $scope.percentages = percentages;
+    });
+    modalInstance.rendered.then(function() {
+      $rootScope.$broadcast('rzSliderForceRender');//Force refresh sliders on render. Otherwise bullets are aligned at left side.
+    });
+  };
+
+
+  //Slider inside tabs
+  $scope.tabSliders = {
+    slider1: {
+      value: 100
+    },
+    slider2: {
+      value: 200
+    }
+  };
+  $scope.refreshSlider = function() {
+    $timeout(function() {
+      $scope.$broadcast('rzSliderForceRender');
+    });
+  };
+
+
+  //Slider with draggable range
+  $scope.slider_all_options = {
+    minValue: 2,
+    options: {
+      floor: 0,
+      ceil: 10,
+      step: 1,
+      precision: 0,
+      draggableRange: false,
+      showSelectionBar: false,
+      hideLimitLabels: false,
+      readOnly: false,
+      disabled: false,
+      showTicks: false,
+      showTicksValues: false
+    }
+  };
+  $scope.toggleHighValue = function() {
+    if($scope.slider_all_options.maxValue != null) {
+      $scope.slider_all_options.maxValue = undefined;
+    }
+    else {
+      $scope.slider_all_options.maxValue = 8;
+    }
+  }
 });

@@ -207,13 +207,6 @@
          */
         this.initHasRun = false;
 
-
-        /** If the slider events are already bound to the slider
-         *
-         * @type {boolean}
-         */
-        this.eventsBound = false;
-
         // Slider DOM elements wrapped in jqLite
         this.fullBar = null;  // The whole slider bar
         this.selBar = null;   // Highlight between two handles
@@ -245,6 +238,7 @@
 
           this.applyOptions();
           this.initElemHandles();
+          this.manageElementsStyle();
           this.addAccessibility();
           this.manageEventsBindings();
           this.setDisabledState();
@@ -307,7 +301,12 @@
           this.scope.$watch('rzSliderHigh', function(newValue, oldValue) {
             if (newValue === oldValue)
               return;
-            thrHigh();
+            if (newValue != null)
+              thrHigh();
+            if (self.range && newValue == null || !self.range && newValue != null) {
+              self.applyOptions();
+              self.resetSlider();
+            }
           });
 
           this.scope.$watch('rzSliderOptions', function(newValue, oldValue) {
@@ -335,6 +334,9 @@
             else
               this.options[option_name] = userOpts[option_name];
           }
+          if (this.options.step <= 0)
+            this.options.step = 1;
+          this.range = this.scope.rzSliderModel !== undefined && this.scope.rzSliderHigh !== undefined;
           this.options.draggableRange = this.range && this.options.draggableRange;
           this.options.showTicks = this.options.showTicks || this.options.showTicksValues;
           if (this.options.translate)
@@ -351,12 +353,106 @@
          * @returns {undefined}
          */
         resetSlider: function() {
+          this.manageElementsStyle();
           this.setMinAndMax();
           this.updateCeilLab();
           this.updateFloorLab();
+          this.unbindEvents();
           this.manageEventsBindings();
           this.setDisabledState();
           this.calcViewDimensions();
+        },
+
+        /**
+         * Set the slider children to variables for easy access
+         *
+         * Run only once during initialization
+         *
+         * @returns {undefined}
+         */
+        initElemHandles: function() {
+          // Assign all slider elements to object properties for easy access
+          angular.forEach(this.sliderElem.children(), function(elem, index) {
+            var jElem = angular.element(elem);
+
+            switch (index) {
+              case 0:
+                this.fullBar = jElem;
+                break;
+              case 1:
+                this.selBar = jElem;
+                break;
+              case 2:
+                this.minH = jElem;
+                break;
+              case 3:
+                this.maxH = jElem;
+                break;
+              case 4:
+                this.flrLab = jElem;
+                break;
+              case 5:
+                this.ceilLab = jElem;
+                break;
+              case 6:
+                this.minLab = jElem;
+                break;
+              case 7:
+                this.maxLab = jElem;
+                break;
+              case 8:
+                this.cmbLab = jElem;
+                break;
+              case 9:
+                this.ticks = jElem;
+                break;
+            }
+
+          }, this);
+
+          // Initialize offset cache properties
+          this.selBar.rzsl = 0;
+          this.minH.rzsl = 0;
+          this.maxH.rzsl = 0;
+          this.flrLab.rzsl = 0;
+          this.ceilLab.rzsl = 0;
+          this.minLab.rzsl = 0;
+          this.maxLab.rzsl = 0;
+          this.cmbLab.rzsl = 0;
+        },
+
+        /** Update each elements style based on options
+         *
+         */
+        manageElementsStyle: function() {
+
+          if (!this.range)
+            this.maxH.css('display', 'none');
+          else
+            this.maxH.css('display', null);
+
+          this.alwaysHide(this.flrLab, this.options.showTicksValues || this.options.hideLimitLabels);
+          this.alwaysHide(this.ceilLab, this.options.showTicksValues || this.options.hideLimitLabels);
+          this.alwaysHide(this.minLab, this.options.showTicksValues);
+          this.alwaysHide(this.maxLab, this.options.showTicksValues || !this.range);
+          this.alwaysHide(this.cmbLab, this.options.showTicksValues || !this.range);
+          this.alwaysHide(this.selBar, !this.range && !this.options.showSelectionBar);
+
+          if (!this.options.showTicks)
+            this.ticks.html('');
+
+          if (this.options.draggableRange)
+            this.selBar.addClass('rz-draggable');
+          else
+            this.selBar.removeClass('rz-draggable');
+        },
+
+        alwaysHide: function(el, hide) {
+          el.rzAlwaysHide = hide;
+          if (hide)
+            this.hideEl(el);
+          else
+            this.showEl(el)
         },
 
         /**
@@ -365,9 +461,9 @@
          * @returns {undefined}
          */
         manageEventsBindings: function() {
-          if ((this.options.disabled || this.options.readOnly) && this.eventsBound)
+          if (this.options.disabled || this.options.readOnly)
             this.unbindEvents();
-          else if ((!this.options.disabled || !this.options.readOnly) && !this.eventsBound)
+          else if (!this.options.disabled || !this.options.readOnly)
             this.bindEvents();
         },
 
@@ -383,10 +479,6 @@
           else {
             this.sliderElem.attr('disabled', null);
           }
-          if (this.options.disabled && this.eventsBound)
-            this.unbindEvents();
-          else if (!this.options.disabled && !this.eventsBound)
-            this.bindEvents();
         },
 
         /**
@@ -462,14 +554,14 @@
           if (this.range)
             this.scope.rzSliderHigh = this.roundStep(this.scope.rzSliderHigh);
 
-          this.minValue = +this.options.floor;
+          this.minValue = this.roundStep(+this.options.floor);
           if (this.scope.rzSliderModel < this.minValue)
             this.scope.rzSliderModel = this.minValue;
           if (this.range && this.scope.rzSliderHigh < this.minValue)
             this.scope.rzSliderHigh = this.minValue;
 
           if (this.options.ceil) {
-            this.maxValue = +this.options.ceil;
+            this.maxValue = this.roundStep(+this.options.ceil);
             if (this.scope.rzSliderModel > this.maxValue)
               this.scope.rzSliderModel = this.maxValue;
             if (this.range && this.scope.rzSliderHigh > this.maxValue)
@@ -479,108 +571,6 @@
             this.maxValue = this.options.ceil = this.range ? this.scope.rzSliderHigh : this.scope.rzSliderModel;
 
           this.valueRange = this.maxValue - this.minValue;
-        },
-
-        /**
-         * Set the slider children to variables for easy access
-         *
-         * Run only once during initialization
-         *
-         * @returns {undefined}
-         */
-        initElemHandles: function() {
-          // Assign all slider elements to object properties for easy access
-          angular.forEach(this.sliderElem.children(), function(elem, index) {
-            var jElem = angular.element(elem);
-
-            switch (index) {
-              case 0:
-                this.fullBar = jElem;
-                break;
-              case 1:
-                this.selBar = jElem;
-                break;
-              case 2:
-                this.minH = jElem;
-                break;
-              case 3:
-                this.maxH = jElem;
-                break;
-              case 4:
-                this.flrLab = jElem;
-                break;
-              case 5:
-                this.ceilLab = jElem;
-                break;
-              case 6:
-                this.minLab = jElem;
-                break;
-              case 7:
-                this.maxLab = jElem;
-                break;
-              case 8:
-                this.cmbLab = jElem;
-                break;
-              case 9:
-                this.ticks = jElem;
-                break;
-            }
-
-          }, this);
-
-          // Initialize offset cache properties
-          this.selBar.rzsl = 0;
-          this.minH.rzsl = 0;
-          this.maxH.rzsl = 0;
-          this.flrLab.rzsl = 0;
-          this.ceilLab.rzsl = 0;
-          this.minLab.rzsl = 0;
-          this.maxLab.rzsl = 0;
-          this.cmbLab.rzsl = 0;
-
-          // Hide limit labels
-          if (this.options.hideLimitLabels) {
-            this.flrLab.rzAlwaysHide = true;
-            this.ceilLab.rzAlwaysHide = true;
-            this.hideEl(this.flrLab);
-            this.hideEl(this.ceilLab);
-          }
-
-          if (this.options.showTicksValues) {
-            this.flrLab.rzAlwaysHide = true;
-            this.ceilLab.rzAlwaysHide = true;
-            this.minLab.rzAlwaysHide = true;
-            this.maxLab.rzAlwaysHide = true;
-            this.cmbLab.rzAlwaysHide = true;
-            this.hideEl(this.flrLab);
-            this.hideEl(this.ceilLab);
-            this.hideEl(this.minLab);
-            this.hideEl(this.maxLab);
-            this.hideEl(this.cmbLab);
-          }
-
-          // Remove stuff not needed in single slider
-          if (this.range === false) {
-            this.cmbLab.remove();
-            this.maxLab.remove();
-
-            // Hide max handle
-            this.maxH.rzAlwaysHide = true;
-            this.maxH[0].style.zIndex = '-1000';
-            this.hideEl(this.maxH);
-          }
-
-          // Show selection bar for single slider or not
-          if (this.range === false && this.options.showSelectionBar === false) {
-            this.maxH.remove();
-            this.selBar.remove();
-          }
-
-          // If using draggable range, use appropriate cursor for this.selBar.
-          if (this.options.draggableRange) {
-            this.selBar.css('cursor', 'move');
-            this.selBar.addClass('rz-draggable');
-          }
         },
 
         /**
@@ -1037,8 +1027,6 @@
           this.selBar.on('touchstart', angular.bind(this, barMove, this.selBar));
           this.ticks.on('touchstart', angular.bind(this, this.onStart, null, null));
           this.ticks.on('touchstart', angular.bind(this, this.onMove, this.ticks));
-
-          this.eventsBound = true;
         },
 
         /**
@@ -1052,7 +1040,6 @@
           this.fullBar.off();
           this.selBar.off();
           this.ticks.off();
-          this.eventsBound = false;
         },
 
         /**
