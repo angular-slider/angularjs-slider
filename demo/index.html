@@ -2,240 +2,151 @@
 <html ng-app="rzSliderDemo">
 
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AngularJS Touch Slider</title>
-    <link rel="stylesheet" href="demo.css"/>
-    <link rel="stylesheet" href="../dist/rzslider.css"/>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AngularJS Touch Slider</title>
+  <link rel="stylesheet" href="demo.css"/>
+  <link rel="stylesheet" href="../dist/rzslider.css"/>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
 </head>
 
 <body ng-controller="MainCtrl">
 
 <div class="wrapper">
-    <header>
-        <h1>AngularJS Touch Slider</h1>
-    </header>
+  <header>
+    <h1>AngularJS Touch Slider</h1>
+  </header>
 
-    <article>
-        <h2>Min/max slider example</h2>
-        Value:
-        <pre>{{ slider_data | json }}</pre>
-        <p>Value linked on change: {{ otherData.value }}</p>
+  <article>
+    <h2>Simple slider</h2>
+    Model: <input type="number" ng-model="minSlider.value"/><br/>
+    <rzslider rz-slider-model="minSlider.value"></rzslider>
+  </article>
 
-        <rzslider
-                rz-slider-floor="0.5"
-                rz-slider-ceil="10.5"
-                rz-slider-step="0.3"
-                rz-slider-precision="1"
-                rz-slider-model="slider_data.value"
-                rz-slider-on-start="onStart()"
-                rz-slider-on-change="onChange()"
-                rz-slider-on-end="onEnd()"></rzslider>
-    </article>
+  <article>
+    <h2>Range slider</h2>
+    Min Value: <input type="number" ng-model="minRangeSlider.minValue"/><br/>
+    Max Value: <input type="number" ng-model="minRangeSlider.maxValue"/><br/>
+    <rzslider
+      rz-slider-model="minRangeSlider.minValue"
+      rz-slider-high="minRangeSlider.maxValue"
+      rz-slider-options="minRangeSlider.options"
+      ></rzslider>
+  </article>
 
-    <article>
-        <h2>Min/max slider example</h2>
-        Value:
-        <pre>{{ priceSlider | json }}</pre>
+  <article>
+    <h2>Slider with visible selection bar</h2>
+    <rzslider
+      rz-slider-model="slider_visible_bar.value"
+      rz-slider-options="slider_visible_bar.options"
+      ></rzslider>
+  </article>
 
-        <input type="text" ng-model="priceSlider.min"/><br/>
-        <input type="text" ng-model="priceSlider.max"/><br/>
+  <article>
+    <h2>Slider with custom floor/ceil/step</h2>
+    <rzslider
+      rz-slider-model="slider_floor_ceil.value"
+      rz-slider-options="slider_floor_ceil.options"
+      ></rzslider>
+  </article>
 
-        <rzslider
-                rz-slider-floor="priceSlider.floor"
-                rz-slider-ceil="priceSlider.ceil"
-                rz-slider-model="priceSlider.min"
-                rz-slider-high="priceSlider.max"
-                rz-slider-step="6"
-                rz-slider-tpl-url="rzSliderTpl.html"></rzslider>
-    </article>
+  <article>
+    <h2>Slider with callbacks on start, change and end</h2>
+    <p>Value linked on start: {{ otherData.start }}</p>
+    <p>Value linked on change: {{ otherData.change }}</p>
+    <p>Value linked on end: {{ otherData.end }}</p>
 
-    <article>
-        <h2>Currency slider example</h2>
+    <rzslider
+      rz-slider-model="slider_callbacks.value"
+      rz-slider-options="slider_callbacks.options"
+      ></rzslider>
+  </article>
 
-        Value: {{ priceSlider2 | json }}
-        <rzslider
-                rz-slider-floor="0"
-                rz-slider-ceil="450"
-                rz-slider-model="priceSlider2"
-                rz-slider-translate="translate"
-                rz-slider-tpl-url="rzSliderTpl.html"></rzslider>
-    </article>
+  <article>
+    <h2>Slider with custom display function</h2>
+    <rzslider
+      rz-slider-model="slider_translate.minValue"
+      rz-slider-high="slider_translate.maxValue"
+      rz-slider-options="slider_translate.options"
+      ></rzslider>
+  </article>
 
-    <article>
-        <h2>One value slider example</h2>
+  <article>
+    <h2>Slider with Alphabet</h2>
+    <rzslider
+      rz-slider-model="slider_alphabet.value"
+      rz-slider-options="slider_alphabet.options"
+      ></rzslider>
+  </article>
 
-        Value: {{ priceSlider3 | json }}
-        <rzslider rz-slider-model="priceSlider3"
-                  rz-slider-floor="50"
-                  rz-slider-ceil="450"
-                  rz-slider-always-show-bar="true"
-                  rz-slider-tpl-url="rzSliderTpl.html"></rzslider>
-    </article>
+  <article>
+    <h2>Slider with ticks</h2>
+    <rzslider
+      rz-slider-model="slider_ticks.value"
+      rz-slider-options="slider_ticks.options"
+      ></rzslider>
+  </article>
 
-    <article>
-        <h2>Alphabet slider example</h2>
-        Value: {{ alphabetTranslate(letter) }}
-        <rzslider
-                rz-slider-floor="0"
-                rz-slider-ceil="letterMax"
-                rz-slider-model="letter"
-                rz-slider-translate="alphabetTranslate"
-                rz-slider-tpl-url="rzSliderTpl.html"></rzslider>
-    </article>
+  <article>
+    <h2>Slider with ticks and values</h2>
+    <rzslider
+      rz-slider-model="slider_ticks_values.value"
+      rz-slider-options="slider_ticks_values.options"
+      ></rzslider>
+  </article>
 
-    <article>
-        <h2>Slider with ticks example</h2>
-        Value: {{ priceSlider4 | json }}
-        <rzslider rz-slider-model="priceSlider4"
-                  rz-slider-floor="0"
-                  rz-slider-ceil="10"
-                  rz-slider-show-ticks="true"></rzslider>
-    </article>
+  <article>
+    <h2>Range slider with ticks and values</h2>
+    <rzslider
+      rz-slider-model="range_slider_ticks_values.minValue"
+      rz-slider-high="range_slider_ticks_values.maxValue"
+      rz-slider-options="range_slider_ticks_values.options"
+      ></rzslider>
+  </article>
 
-    <article>
-        <h2>Slider with ticks value example</h2>
-        Value: {{ priceSlider5 | json }}
-        <rzslider rz-slider-model="priceSlider5"
-                  rz-slider-floor="0"
-                  rz-slider-ceil="10"
-                  rz-slider-show-ticks-value="true"></rzslider>
-    </article>
+  <article>
+    <h2>Slider with draggable range</h2>
+    <rzslider
+      rz-slider-model="slider_draggable_range.minValue"
+      rz-slider-high="slider_draggable_range.maxValue"
+      rz-slider-options="slider_draggable_range.options"
+      ></rzslider>
+  </article>
 
-    <article>
-        <h2>Slider with ticks value and visible bar example</h2>
-        Value: {{ priceSlider6 | json }}
-        <rzslider rz-slider-model="priceSlider6"
-                  rz-slider-floor="0.5"
-                  rz-slider-ceil="1.5"
-                  rz-slider-step="0.1"
-                  rz-slider-precision="1"
-                  rz-slider-always-show-bar="true"
-                  rz-slider-show-ticks-value="true"></rzslider>
-    </article>
+  <article>
+    <h2>Disabled slider</h2>
+    <label>Disabled <input type="checkbox" ng-model="disabled_slider.options.disabled"></label>
+    <rzslider
+      rz-slider-model="disabled_slider.value"
+      rz-slider-options="disabled_slider.options"
+      ></rzslider>
+  </article>
 
-    <article>
-        <h2>Range Slider with ticks value example</h2>
-        Value: {{ priceSlider7 | json }}
-        <rzslider rz-slider-model="priceSlider7.min"
-                  rz-slider-high="priceSlider7.max"
-                  rz-slider-floor="0"
-                  rz-slider-ceil="10"
-                  rz-slider-show-ticks-value="true"></rzslider>
-    </article>
+  <article>
+    <h2>Read-only slider</h2>
+    <label>Read-only <input type="checkbox" ng-model="read_only_slider.options.readOnly"></label>
+    <rzslider
+      rz-slider-model="read_only_slider.value"
+      rz-slider-options="read_only_slider.options"
+      ></rzslider>
+  </article>
 
-    <article>
-        <h2>Draggable range example</h2>
-        Value:
-        <pre>{{ priceSlider | json }}</pre>
+  <article>
+    <h2>Toggle slider example</h2>
+    <button ng-click="toggle()">{{ visible ? 'Hide' : 'Show' }}</button>
+    <br/>
+    <div ng-show="visible">
+      <rzslider
+        rz-slider-model="slider_toggle.value"
+        rz-slider-options="slider_toggle.options"></rzslider>
+    </div>
+  </article>
 
-        <input type="text" ng-model="priceSlider.min"/><br/>
-        <input type="text" ng-model="priceSlider.max"/><br/>
-
-        <rzslider
-                rz-slider-draggable-range="true"
-                rz-slider-floor="priceSlider.floor"
-                rz-slider-ceil="priceSlider.ceil"
-                rz-slider-model="priceSlider.min"
-                rz-slider-high="priceSlider.max"
-                rz-slider-step="5"
-                rz-slider-tpl-url="rzSliderTpl.html"></rzslider>
-    </article>
-
-    <article>
-        <h2>Toggle slider example</h2>
-        <button ng-click="toggle()">Show</button>
-        <div ng-show="visible">
-            <rzslider rz-slider-model="toggleSlider.value"
-                      rz-slider-floor="toggleSlider.floor"
-                      rz-slider-ceil="toggleSlider.ceil"></rzslider>
-        </div>
-    </article>
-
-    <article>
-        <h2>Disabled slider example</h2>
-        <label>Disable slider <input type="checkbox" ng-model="disableSlider"></label>
-        <rzslider rz-slider-model="priceSlider8"
-                  rz-slider-floor="0"
-                  rz-slider-ceil="10"
-                  rz-slider-disabled="disableSlider"></rzslider>
-    </article>
 
 </div>
 
-
+</body>
 <script src="../bower_components/angular/angular.js"></script>
 <script src="../dist/rzslider.js"></script>
-<script>
-  var app = angular.module('rzSliderDemo', ['rzModule']);
-
-  app.controller('MainCtrl', function($scope, $timeout) {
-    $scope.priceSlider = {
-      min: 100,
-      max: 400,
-      ceil: 500,
-      floor: 0
-    };
-
-    $scope.priceSlider2 = 150;
-    $scope.priceSlider3 = 250;
-    $scope.priceSlider4 = 5;
-    $scope.priceSlider5 = 5;
-    $scope.priceSlider6 = 1;
-    $scope.priceSlider7 = {
-      min: 2,
-      max: 8
-    };
-    $scope.priceSlider8 = 5;
-
-      $scope.disableSlider = true;
-
-    $scope.translate = function(value) {
-      return '$' + value;
-    };
-
-    var alphabetArray = 'abcdefghijklmnopqrstuvwxyz'.split('');
-    $scope.letter = 5;
-    $scope.letterMax = alphabetArray.length - 1;
-    $scope.alphabetTranslate = function(value) {
-      return alphabetArray[value].toUpperCase();
-    };
-
-    $scope.slider_data = {value: 1};
-    $scope.otherData = {value: 10};
-
-    $scope.onStart = function() {
-      console.info('started', $scope.slider_data.value);
-    };
-
-    $scope.onChange = function() {
-      console.info('changed', $scope.slider_data.value);
-      $scope.otherData.value = $scope.slider_data.value * 10;
-    };
-
-    $scope.onEnd = function() {
-      console.info('ended', $scope.slider_data.value);
-    };
-
-    $scope.visible = false;
-
-    $scope.toggle = function() {
-      $scope.visible = !$scope.visible;
-      $timeout(function() {
-        $scope.$broadcast('rzSliderForceRender');
-      });
-    };
-
-    $scope.toggleSlider = {
-      value: 1,
-      ceil: 500,
-      floor: 0
-    };
-  });
-</script>
-
-</body>
-
-
+<script src="demo.js"></script>
 </html>

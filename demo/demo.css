@@ -2,6 +2,7 @@
 body { font-family: 'Open Sans', sans-serif; color: #1f2636; font-size: 14px; }
 header { background: #0db9f0; color: #fff; margin: -40px; margin-bottom: 40px; text-align: center; padding: 40px 0; }
 h1 { font-weight: 300; }
+h2 {margin-bottom:10px;}
 .wrapper { background: #fff; padding: 40px; }
 article { margin-bottom: 40px; }
 
