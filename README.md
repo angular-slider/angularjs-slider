@@ -1,5 +1,7 @@
 ## AngularJS slider directive with no external dependencies
 
+> **A refactoring is on-going, any feedback is welcome:** #158
+
 Slider directive implementation for AngularJS, without any dependencies.
 
 - Mobile friendly
