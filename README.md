@@ -1,6 +1,6 @@
 ## AngularJS slider directive with no external dependencies
 
-> **A refactoring is on-going, any feedback is welcome:** #158
+> **A refactoring is on-going, any feedback is welcome:** https://github.com/rzajac/angularjs-slider/pull/158
 
 Slider directive implementation for AngularJS, without any dependencies.
 
