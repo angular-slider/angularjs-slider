@@ -31,23 +31,47 @@
   'use strict';
   var module = angular.module('rzModule', [])
 
-    .value('defaultOptions', {
-      floor: 0,
-      ceil: null, //defaults to rz-slider-model
-      step: 1,
-      precision: 0,
-      translate: null,
-      draggableRange: false,
-      showSelectionBar: false,
-      hideLimitLabels: false,
-      readOnly: false,
-      disabled: false,
-      interval: 350,
-      showTicks: false,
-      showTicksValues: false,
-      onStart: null,
-      onChange: null,
-      onEnd: null
+    .factory('RzSliderOptions', function() {
+      var defaultOptions = {
+        floor: 0,
+        ceil: null, //defaults to rz-slider-model
+        step: 1,
+        precision: 0,
+        translate: null,
+        draggableRange: false,
+        showSelectionBar: false,
+        hideLimitLabels: false,
+        readOnly: false,
+        disabled: false,
+        interval: 350,
+        showTicks: false,
+        showTicksValues: false,
+        scale: 1,
+        onStart: null,
+        onChange: null,
+        onEnd: null
+      };
+      var globalOptions = {};
+
+      var factory = {};
+      /**
+       * `options({})` allows global configuration of all sliders in the
+       * application.
+       *
+       *   var app = angular.module( 'App', ['rzModule'], function( RzSliderOptions ) {
+       *     // show ticks for all sliders
+       *     RzSliderOptions.options( { showTicks: true } );
+       *   });
+       */
+      factory.options = function(value) {
+        angular.extend(globalOptions, value);
+      };
+
+      factory.getOptions = function(options) {
+        return angular.extend({}, defaultOptions, globalOptions, options);
+      };
+
+      return factory;
     })
 
     .value('throttle',
@@ -97,7 +121,7 @@
       };
     })
 
-    .factory('RzSlider', ['$timeout', '$document', '$window', 'defaultOptions', 'throttle', function($timeout, $document, $window, defaultOptions, throttle) {
+    .factory('RzSlider', ['$timeout', '$document', '$window', 'RzSliderOptions', 'throttle', function($timeout, $document, $window, RzSliderOptions, throttle) {
       'use strict';
 
       /**
@@ -326,14 +350,8 @@
          * Read the user options and apply them to the slider model
          */
         applyOptions: function() {
-          var userOpts = this.scope.rzSliderOptions;
-          this.options = {};
-          for (var option_name in defaultOptions) {
-            if (!userOpts || userOpts[option_name] === undefined)
-              this.options[option_name] = defaultOptions[option_name];
-            else
-              this.options[option_name] = userOpts[option_name];
-          }
+          this.options = RzSliderOptions.getOptions(this.scope.rzSliderOptions);
+
           if (this.options.step <= 0)
             this.options.step = 1;
           this.range = this.scope.rzSliderModel !== undefined && this.scope.rzSliderHigh !== undefined;
@@ -915,7 +933,7 @@
          */
         getWidth: function(elem) {
           var val = elem[0].getBoundingClientRect();
-          elem.rzsw = val.right - val.left;
+          elem.rzsw = (val.right - val.left) * this.options.scale;
           return elem.rzsw;
         },
 
@@ -982,7 +1000,7 @@
           if (!this.range) {
             return this.minH;
           }
-          var offset = this.getEventX(event) - this.sliderElem.rzsl - this.handleHalfWidth;
+          var offset = (this.getEventX(event) - this.sliderElem.rzsl - this.handleHalfWidth) * this.options.scale;
           return Math.abs(offset - this.minH.rzsl) < Math.abs(offset - this.maxH.rzsl) ? this.minH : this.maxH;
         },
 
@@ -1095,7 +1113,7 @@
             sliderLO, newOffset, newValue;
 
           sliderLO = this.sliderElem.rzsl;
-          newOffset = eventX - sliderLO - this.handleHalfWidth;
+          newOffset = (eventX - sliderLO - this.handleHalfWidth) * this.options.scale;
 
           if (newOffset <= 0) {
             if (pointer.rzsl === 0)
