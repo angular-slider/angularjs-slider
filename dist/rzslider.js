@@ -568,23 +568,15 @@
 
           this.step = +this.options.step;
           this.precision = +this.options.precision;
+
           this.scope.rzSliderModel = this.roundStep(this.scope.rzSliderModel);
           if (this.range)
             this.scope.rzSliderHigh = this.roundStep(this.scope.rzSliderHigh);
 
           this.minValue = this.roundStep(+this.options.floor);
-          if (this.scope.rzSliderModel < this.minValue)
-            this.scope.rzSliderModel = this.minValue;
-          if (this.range && this.scope.rzSliderHigh < this.minValue)
-            this.scope.rzSliderHigh = this.minValue;
 
-          if (this.options.ceil) {
+          if (this.options.ceil)
             this.maxValue = this.roundStep(+this.options.ceil);
-            if (this.scope.rzSliderModel > this.maxValue)
-              this.scope.rzSliderModel = this.maxValue;
-            if (this.range && this.scope.rzSliderHigh > this.maxValue)
-              this.scope.rzSliderHigh = this.maxValue;
-          }
           else
             this.maxValue = this.options.ceil = this.range ? this.scope.rzSliderHigh : this.scope.rzSliderModel;
 
@@ -957,7 +949,18 @@
          * @returns {number}
          */
         valueToOffset: function(val) {
-          return (val - this.minValue) * this.maxLeft / this.valueRange || 0;
+          return (this.sanitizeOffsetValue(val) - this.minValue) * this.maxLeft / this.valueRange || 0;
+        },
+
+         /**
+         * Ensure that the position rendered is within the slider bounds, even if the value is not
+         *
+         * @param {number} val
+         * @returns {number}
+         */
+        sanitizeOffsetValue: function(val)
+        {
+          return Math.min(Math.max(val, this.minValue), this.maxValue);
         },
 
         /**
