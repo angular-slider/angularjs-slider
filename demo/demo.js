@@ -65,18 +65,11 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     }
   };
 
-  //Slider config with custom display function displaying letters
-  var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  //Slider config with steps array of letters
   $scope.slider_alphabet = {
     value: 0,
     options: {
-      ceil: alphabet.length - 1,
-      floor: 0,
-      translate: function(value) {
-        if (value >= 0 && value < alphabet.length)
-          return alphabet[value];
-        return '';
-      }
+      stepsArray:'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
     }
   };
 

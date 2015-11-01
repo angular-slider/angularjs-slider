@@ -38,6 +38,7 @@
         step: 1,
         precision: 0,
         translate: null,
+        stepsArray: null,
         draggableRange: false,
         showSelectionBar: false,
         hideLimitLabels: false,
@@ -357,7 +358,16 @@
           this.range = this.scope.rzSliderModel !== undefined && this.scope.rzSliderHigh !== undefined;
           this.options.draggableRange = this.range && this.options.draggableRange;
           this.options.showTicks = this.options.showTicks || this.options.showTicksValues;
-          if (this.options.translate)
+          
+          if(this.options.stepsArray) {
+            this.options.floor = 0;
+            this.options.ceil = this.options.stepsArray.length -1;
+            this.options.step = 1;
+            this.customTrFn = function(value) {
+              return this.options.stepsArray[value];
+            };
+          }
+          else if (this.options.translate)
             this.customTrFn = this.options.translate;
           else
             this.customTrFn = function(value) {
