@@ -37,9 +37,10 @@
         ceil: null, //defaults to rz-slider-model
         step: 1,
         precision: 0,
+        id: null,
         translate: null,
         stepsArray: null,
-        draggableRange: false,
+        draggableRange: false, 
         showSelectionBar: false,
         hideLimitLabels: false,
         readOnly: false,
@@ -553,7 +554,7 @@
         translateFn: function(value, label, useCustomTr) {
           useCustomTr = useCustomTr === undefined ? true : useCustomTr;
 
-          var valStr = String((useCustomTr ? this.customTrFn(value) : value)),
+          var valStr = String((useCustomTr ? this.customTrFn(value, this.options.id) : value)),
             getWidth = false;
 
           if (label.rzsv === undefined || label.rzsv.length !== valStr.length || (label.rzsv.length > 0 && label.rzsw === 0)) {
@@ -872,7 +873,7 @@
          * @returns {*}
          */
         getDisplayValue: function(value) {
-          return this.customTrFn(value);
+          return this.customTrFn(value, this.options.id);
         },
 
         /**
