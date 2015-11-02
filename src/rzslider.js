@@ -737,7 +737,7 @@ function throttle(func, wait, options) {
       if(this.scope.rzSliderOnStart) {
         var self = this;
         $timeout(function() {
-            self.scope.rzSliderOnStart(pointer, ref, event);
+            self.scope.rzSliderOnStart()(pointer, ref, event);
         });
       }
     },
@@ -1176,7 +1176,7 @@ function throttle(func, wait, options) {
       ehEnd = angular.bind(this, this.onEnd, ehMove);
 
       $document.on(eventNames.moveEvent, ehMove);
-      $document.one(eventNames.endEvent, ehEnd);
+      $document.on(eventNames.endEvent, ehEnd);
       this.callOnStart(pointer, ref, event);
     },
 
