@@ -634,7 +634,7 @@ function throttle(func, wait, options) {
         this.selBar.addClass('rz-draggable');
       }
     },
-    
+
     /**
      * Adds accessibility atributes
      *
@@ -733,11 +733,11 @@ function throttle(func, wait, options) {
      *
      * @returns {undefined}
      */
-    callOnStart: function() {
+    callOnStart: function(pointer, ref, event) {
       if(this.scope.rzSliderOnStart) {
         var self = this;
         $timeout(function() {
-            self.scope.rzSliderOnStart();
+            self.scope.rzSliderOnStart(pointer, ref, event);
         });
       }
     },
@@ -1177,7 +1177,7 @@ function throttle(func, wait, options) {
 
       $document.on(eventNames.moveEvent, ehMove);
       $document.one(eventNames.endEvent, ehEnd);
-      this.callOnStart();
+      this.callOnStart(pointer, ref, event);
     },
 
     /**
