@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v2.0.0
+ * Version: v1.0.0
  *
  * Licensed under the MIT license
  */
@@ -298,7 +298,7 @@
               self.updateCmbLabel();
             }
 
-          }, self.interval);
+          }, self.options.interval);
 
           thrHigh = rzThrottle(function() {
             self.setMinAndMax();
@@ -306,7 +306,7 @@
             self.updateSelectionBar();
             self.updateTicksScale();
             self.updateCmbLabel();
-          }, self.interval);
+          }, self.options.interval);
 
           this.scope.$on('rzSliderForceRender', function() {
             self.resetLabelsValue();
