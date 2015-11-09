@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v1.1.0
+ * Version: v2.0.0
  *
  * Licensed under the MIT license
  */
@@ -40,7 +40,7 @@
         id: null,
         translate: null,
         stepsArray: null,
-        draggableRange: false, 
+        draggableRange: false,
         showSelectionBar: false,
         hideLimitLabels: false,
         readOnly: false,
@@ -359,7 +359,7 @@
           this.range = this.scope.rzSliderModel !== undefined && this.scope.rzSliderHigh !== undefined;
           this.options.draggableRange = this.range && this.options.draggableRange;
           this.options.showTicks = this.options.showTicks || this.options.showTicksValues;
-          
+
           if(this.options.stepsArray) {
             this.options.floor = 0;
             this.options.ceil = this.options.stepsArray.length -1;
