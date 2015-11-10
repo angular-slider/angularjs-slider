@@ -48,6 +48,7 @@
         interval: 350,
         showTicks: false,
         showTicksValues: false,
+        ticksValuesTooltip: null,
         scale: 1,
         onStart: null,
         onChange: null,
@@ -123,7 +124,7 @@
       };
     })
 
-    .factory('RzSlider', function($timeout, $document, $window, RzSliderOptions, rzThrottle) {
+    .factory('RzSlider', function($timeout, $document, $window, $compile, RzSliderOptions, rzThrottle) {
       'use strict';
 
       /**
@@ -360,9 +361,9 @@
           this.options.draggableRange = this.range && this.options.draggableRange;
           this.options.showTicks = this.options.showTicks || this.options.showTicksValues;
 
-          if(this.options.stepsArray) {
+          if (this.options.stepsArray) {
             this.options.floor = 0;
-            this.options.ceil = this.options.stepsArray.length -1;
+            this.options.ceil = this.options.stepsArray.length - 1;
             this.options.step = 1;
             this.customTrFn = function(value) {
               return this.options.stepsArray[value];
@@ -645,11 +646,18 @@
             var value = this.roundStep(this.minValue + i * this.step);
             var selectedClass = this.isTickSelected(value) ? 'selected' : '';
             positions += '<li class="tick ' + selectedClass + '">';
-            if (this.options.showTicksValues)
-              positions += '<span class="tick-value">' + this.getDisplayValue(value) + '</span>';
+            if (this.options.showTicksValues) {
+              var tooltip = '';
+              if (this.options.ticksValuesTooltip) {
+                tooltip = 'uib-tooltip="' + this.options.ticksValuesTooltip(value) + '"';
+              }
+              positions += '<span ' + tooltip + ' class="tick-value">' + this.getDisplayValue(value) + '</span>';
+            }
             positions += '</li>';
           }
           this.ticks.html(positions);
+          if (this.options.ticksValuesTooltip)
+            $compile(this.ticks.contents())(this.scope);
         },
 
         isTickSelected: function(value) {
@@ -963,14 +971,13 @@
           return (this.sanitizeOffsetValue(val) - this.minValue) * this.maxLeft / this.valueRange || 0;
         },
 
-         /**
+        /**
          * Ensure that the position rendered is within the slider bounds, even if the value is not
          *
          * @param {number} val
          * @returns {number}
          */
-        sanitizeOffsetValue: function(val)
-        {
+        sanitizeOffsetValue: function(val) {
           return Math.min(Math.max(val, this.minValue), this.maxValue);
         },
 

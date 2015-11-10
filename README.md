@@ -122,7 +122,7 @@ The default options are:
     translate: null,
     id: null,
     stepsArray: null,
-    draggableRange: false, 
+    draggableRange: false,
     showSelectionBar: false,
     hideLimitLabels: false,
     readOnly: false,
@@ -186,6 +186,8 @@ $scope.slider = {
 
 **showTicksValues** - _Boolean (defaults to false)_: Set to true to display a tick and  the step value for each step of the slider.
 
+**ticksValuesTooltip** - _Function(value) (defaults to null)_: (requires angular-ui bootstrap) Used to display a tooltip when a tick value is hovered. Set to a function that returns the tooltip content for a given value.
+
 **scale** - _Number (defaults to 1)_: If you display the slider in an element that uses `transform: scale(0.5)`, set the `scale` value to 2 so that the slider is rendered properly and the events are handled correctly.
 
 **onStart** - _Function()_: Function to be called when a slider update is started.
@@ -210,11 +212,11 @@ To force slider to recalculate dimensions, broadcast **reCalcViewDimensions** ev
 
 You can also force redraw with **rzSliderForceRender** event.
 
-At the end of each "slide" slider emits `slideEnded` event. 
+At the end of each "slide" slider emits `slideEnded` event.
 
 ```javascript
 $scope.$on("slideEnded", function() {
-     // user finished sliding a handle 
+     // user finished sliding a handle
 });
 ```
 

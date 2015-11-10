@@ -8,6 +8,7 @@
 - Add a `scale` option to fix sliders displayed in an element that uses `transform: scale(0.5)`.
 - Add a `stepsArray` option (#163)
 - Add an `id` option that is passed to the translate function as second arg (#161)
+- Add a `ticksValuesTooltip` option that is used to display a tooltip on the ticks values (requires angular-ui bootstrap).
 
 # 1.1.0 (2015-11-07)
 ## Features

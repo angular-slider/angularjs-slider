@@ -89,7 +89,10 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     options: {
       ceil: 10,
       floor: 0,
-      showTicksValues: true
+      showTicksValues: true,
+      ticksValuesTooltip: function(v) {
+        return 'Tooltip for ' + v;
+      }
     }
   };
 
