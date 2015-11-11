@@ -1202,7 +1202,7 @@
             }
             newMinValue = this.minValue;
             newMinOffset = 0;
-            newMaxValue = this.dragging.difference;
+            newMaxValue = this.minValue + this.dragging.difference;
             newMaxOffset = this.valueToOffset(newMaxValue);
           }
           else if (newOffset >= this.maxLeft - this.dragging.highDist) {

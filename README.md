@@ -170,7 +170,7 @@ $scope.slider = {
 
 **stepsArray** - _Array_: If you want to display a slider with non linear/number steps. Just pass an array with each slider value and that's it; the floor, ceil and step settings of the slider will be computed automatically. The `rz-slider-model` value will be the index of the selected item in the stepsArray.
 
-**draggableRange** - _Boolean (defaults to false)_: When set to true and using a range slider, the range can be dragged by the selection bar.
+**draggableRange** - _Boolean (defaults to false)_: When set to true and using a range slider, the range can be dragged by the selection bar. _This doesn't work when ticks are shown._
 
 **showSelectionBar** - _Boolean (defaults to false)_: Set to true to always show the selection bar.
 
