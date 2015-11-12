@@ -14,7 +14,7 @@ rzslider {
   position: relative;
   height: @barHeight;
   width: 100%;
-  margin: 30px 0 15px 0;
+  margin: 35px 0 15px 0;
   vertical-align: middle;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -49,6 +49,9 @@ rzslider {
     width: 100%;
     height: @handleSize;
     z-index: 1;
+    &.rz-draggable {
+      cursor: move;
+    }
   }
 
   .rz-bar {

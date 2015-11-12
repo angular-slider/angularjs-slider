@@ -16,7 +16,7 @@ rzslider {
   display: inline-block;
   width: 100%;
   height: 4px;
-  margin: 30px 0 15px 0;
+  margin: 35px 0 15px 0;
   vertical-align: middle;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -53,6 +53,10 @@ rzslider .rz-bar-wrapper {
   padding-top: 16px;
   margin-top: -16px;
   box-sizing: border-box;
+}
+
+rzslider .rz-bar-wrapper.rz-draggable {
+  cursor: move;
 }
 
 rzslider .rz-bar {

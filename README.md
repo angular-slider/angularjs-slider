@@ -1,7 +1,5 @@
 ## AngularJS slider directive with no external dependencies
 
-> **A refactoring is on-going, any feedback is welcome:** https://github.com/rzajac/angularjs-slider/pull/158
-
 Slider directive implementation for AngularJS, without any dependencies.
 
 - Mobile friendly
@@ -14,7 +12,6 @@ Slider directive implementation for AngularJS, without any dependencies.
 ## Examples
 
 - **Various examples:** [http://rzajac.github.io/angularjs-slider/](http://rzajac.github.io/angularjs-slider/index.html)
-- **Slider inside Angular UI tabs:** http://jsfiddle.net/7w755fLv/
 
 ## Reporting issues
 Make sure the report is accompanied by a reproducible demo. The ideal demo is created by forking [our standard jsFiddle](http://jsfiddle.net/1ruqgnhk/), adding your own code and stripping it down to an absolute minimum needed to demonstrate the bug.
@@ -33,7 +30,7 @@ $ bower install --save angularjs-slider
 
 ### Module
 ```javascript
-angular.module('', ['rzModule']);
+angular.module('yourApp', ['rzModule']);
 ```
 
 ### Single slider
@@ -49,42 +46,56 @@ $scope.priceSlider = 150;
 </div>
 ```
 
-Above example would render a slider from 0 to 150. If you need floor and ceiling values use `rz-slider-floor` and `rz-slider-ceil` attributes.
+Above example would render a slider from 0 to 150. If you need floor and ceiling values use `rz-slider-options` attribute and provide an object with `floor`and `ceil`.
 
 ```html
 <div>
     <rzslider
-         rz-slider-model="priceSlider"
-         rz-slider-ceil="450"></rzslider>
-
-    <!-- OR -->
-
-    <rzslider
-         rz-slider-model="priceSlider"
-         rz-slider-floor="0"
-         rz-slider-ceil="450"></rzslider>
-
+         rz-slider-model="slider.value"
+         rz-slider-options="slider.options"></rzslider>
 </div>
+```
+```js
+$scope.slider = {
+  value: 150,
+  options: {
+    floor: 0,
+    ceil: 450
+  }
+};
+```
+
+If you don't want to bother with an object set in your javascript file, you can pass an anonymous object literal to the slider options:
+```html
+<div>
+    <rzslider
+         rz-slider-model="value"
+         rz-slider-options="{floor: 0, ceil: 450}"></rzslider>
+</div>
+```
+```js
+$scope.value = 150;
 ```
 
 ### Range slider
 
 ```javascript
 // In your controller
-$scope.priceSlider = {
-    min: 100,
-    max: 180,
-    ceil: 500,
-    floor: 0
+$scope.slider = {
+  min: 100,
+  max: 180,
+  options: {
+    floor: 0,
+    ceil: 450
+  }
 };
 ```
 
 ```html
 <rzslider
-    rz-slider-floor="priceSlider.floor"
-    rz-slider-ceil="priceSlider.ceil"
-    rz-slider-model="priceSlider.min"
-    rz-slider-high="priceSlider.max"></rzslider>
+    rz-slider-model="slider.min"
+    rz-slider-high="slider.max"
+    rz-slider-options="slider.options"></rzslider>
 ```
 
 ## Directive attributes
@@ -95,115 +106,117 @@ $scope.priceSlider = {
 
 **rz-slider-high**
 
-> Model for high value slider. Providing both _rz-slider-high_ and _rz-slider-model_ will render range slider.
+> Model for high value slider. Providing both _rz-slider-model_ and _rz-slider-high_ will render range slider.
 
-**rz-slider-floor**
+**rz-slider-options**
 
-> Minimum value for a slider.
+> An object with all the other options of the slider. Each option can be updated at runtime and the slider will automatically be re-rendered.
 
-**rz-slider-ceil**
+The default options are:
+```js
+{
+    floor: 0,
+    ceil: null, //defaults to rz-slider-model
+    step: 1,
+    precision: 0,
+    translate: null,
+    id: null,
+    stepsArray: null,
+    draggableRange: false,
+    showSelectionBar: false,
+    hideLimitLabels: false,
+    readOnly: false,
+    disabled: false,
+    interval: 350,
+    showTicks: false,
+    showTicksValues: false,
+    scale: 1,
+    onStart: null,
+    onChange: null,
+    onEnd: null
+}
+````
 
-> Maximum value for a slider.
+**floor** - _Number (defaults to 0)_: Minimum value for a slider.
 
-**rz-slider-step**
+**ceil** - _Number (defaults to `rz-slider-model`value)_: Maximum value for a slider.
 
-> slider step.
+**step** - _Number (defaults to 1)_: Step between each value.
 
-**rz-slider-precision**
+**precision** - _Number (defaults to 0)_: The precision to display values with. The `toFixed()` is used internally for this.
 
-> The precision to display values with. The `toFixed()` is used internally for this.
-
-**rz-slider-hide-limit-labels**
-
-> Set to true to hide min / max labels
-
-**rz-slider-always-show-bar**
-
-> Set to true to always show selection bar
-
-**rz-slider-present-only**
-
-> When set to true slider is used in presentation mode. No handle dragging. 
-
-**rz-slider-draggable-range**
-
-> When set to true and using a range slider, the range can be dragged by the selection bar.
-
-**rz-slider-translate**
-
-> Custom translate function. Use this if you want to translate values displayed on the slider. For example if you want to display dollar amounts instead of just numbers do this:
-
-**rz-slider-on-start**
-
-> Function to be called when a slider update is started.
-
-**rz-slider-on-change**
-
-> Function to be called when rz-slider-model or rz-slider-high change.
-
-**rz-slider-on-end**
-
-> Function to be called when a slider update is ended.
-
-**rz-slider-show-ticks**
-
-> Display a tick for each value.
-
-**rz-slider-show-ticks-value**
-
-> Display a tick for each value and the value of the tick.
-
-**rz-slider-disabled**
-
-> Disable the slider (apply a special style and unbind events)
-
-**rz-slider-interval**
-
-> The interval (in ms) at which the slider DOM element updates when rz-slider-model or rz-slider-high change from outside the slider. Defaults to 350.
-
-```javascript
-// In your controller
-
-$scope.priceSlider = {
-    min: 100,
-    max: 180,
-    ceil: 500,
-    floor: 0
+**translate** - _Function(value, sliderId)_: Custom translate function. Use this if you want to translate values displayed on the slider. For example if you want to display dollar amounts instead of just numbers:
+```html
+<div>
+    <rzslider
+         rz-slider-model="slider.value"
+         rz-slider-options="slider.options"></rzslider>
+</div>
+```
+```js
+$scope.slider = {
+  value: 0,
+  options: {
+    floor: 0,
+    ceil: 100,
+    translate: function(value) {
+      return '$' + value;
+    }
+  }
 };
-
-$scope.translate = function(value)
-{
-    return '$' + value;
-}
-
-$scope.onSliderChange = function()
-{
-    console.log('changed', $scope.priceSlider);
-}
 ```
 
-```html
-<rzslider
-    rz-slider-floor="priceSlider.floor"
-    rz-slider-ceil="priceSlider.ceil"
-    rz-slider-model="priceSlider.min"
-    rz-slider-high="priceSlider.max"
-    rz-slider-translate="translate"
-    rz-slider-on-change="onSliderChange()"
-    rz-slider-show-ticks="true"></rzslider>
+**id** - _Any (defaults to null)_: If you want to use the same `translate` function for several sliders, just set the `id` to anything you want, and it will be passed to the `translate(value, sliderId)` function as a second argument.
+
+**stepsArray** - _Array_: If you want to display a slider with non linear/number steps. Just pass an array with each slider value and that's it; the floor, ceil and step settings of the slider will be computed automatically. The `rz-slider-model` value will be the index of the selected item in the stepsArray.
+
+**draggableRange** - _Boolean (defaults to false)_: When set to true and using a range slider, the range can be dragged by the selection bar. _This doesn't work when ticks are shown._
+
+**showSelectionBar** - _Boolean (defaults to false)_: Set to true to always show the selection bar.
+
+**hideLimitLabels** - _Boolean (defaults to false)_: Set to true to hide min / max labels
+
+**readOnly** - _Boolean (defaults to false)_: Set to true to make the slider read-only.
+
+**disabled** - _Boolean (defaults to false)_: Set to true to disable the slider.
+
+**interval** - _Number in ms (defaults to 350)_: Internally, a `throttle` function (See http://underscorejs.org/#throttle) is used when the model or high values of the slider are changed from outside the slider. This is to prevent from re-rendering the slider too many times in a row. `interval` is the number of milliseconds to wait between two updates of the slider.
+
+**showTicks** - _Boolean (defaults to false)_: Set to true to display a tick for each step of the slider.
+
+**showTicksValues** - _Boolean (defaults to false)_: Set to true to display a tick and  the step value for each step of the slider.
+
+**ticksValuesTooltip** - _Function(value) (defaults to null)_: (requires angular-ui bootstrap) Used to display a tooltip when a tick value is hovered. Set to a function that returns the tooltip content for a given value.
+
+**scale** - _Number (defaults to 1)_: If you display the slider in an element that uses `transform: scale(0.5)`, set the `scale` value to 2 so that the slider is rendered properly and the events are handled correctly.
+
+**onStart** - _Function()_: Function to be called when a slider update is started.
+
+**onChange** - _Function()_: Function to be called when rz-slider-model or rz-slider-high change.
+
+**onEnd** - _Function()_: Function to be called when a slider update is ended.
+
+## Change default options
+If you want the change the default options for all the sliders displayed in your application, you can set them using the `RzSliderOptions.options()` method:
+```js
+angular.module('App', ['rzModule'])
+	.run(function( RzSliderOptions ) {
+		// show ticks for all sliders
+		RzSliderOptions.options( { showTicks: true } );
+	});
 ```
 
 ## Slider events
 
-To force slider to recalculate dimensions broadcast **reCalcViewDimensions** event from parent scope. This is useful for example when you use slider inside a widget where the content is hidden at start - see the "Sliders into modal" example [on the demo site](http://rzajac.github.io/angularjs-slider/).
+To force slider to recalculate dimensions, broadcast **reCalcViewDimensions** event from parent scope. This is useful for example when you use slider inside a widget where the content is hidden at start - see the "Sliders into modal" example [on the demo site](http://rzajac.github.io/angularjs-slider/).
 
 You can also force redraw with **rzSliderForceRender** event.
 
-At the end of each "slide" slider emits `slideEnded` event. 
+At the end of each "slide" slider emits `slideEnded` event.
 
 ```javascript
 $scope.$on("slideEnded", function() {
-     // user finished sliding a handle 
+     // user finished sliding a handle
 });
 ```
 
@@ -220,13 +233,12 @@ $scope.$on("slideEnded", function() {
 
 ## Browser support
 
-I use Slider on couple of my projects and it's being tested on desktop versions of Chrome, Firefox, Safari, IE 9/10.
+I use Slider on couple of my projects and it's being tested on desktop versions of Chrome, Firefox, Safari, IE 9/10 (Ticks are displayed using flex display so they don't work on IE9).
 Slider is also tested on Android and iPhone using all browsers available on those platforms.
 
 ## Disclaimer
 
-This project is based on [https://github.com/prajwalkman/angular-slider](https://github.com/prajwalkman/angular-slider). It has been rewritten from scratch in JavaScript
- (the original source was written in CoffeeScript).
+This project is based on [https://github.com/prajwalkman/angular-slider](https://github.com/prajwalkman/angular-slider). It has been rewritten from scratch in JavaScript (the original source was written in CoffeeScript).
 
 ## License
 
