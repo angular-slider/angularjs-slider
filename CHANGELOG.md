@@ -1,4 +1,4 @@
-# 2.0.0 (2015-11-XX)
+# 2.0.0 (2015-11-12)
 ## Breaking changes
 - All attributes except `rzSliderModel` and `rzSliderHigh` are moved to `rzSliderOptions`. (See the new documentation in ReadMe)
 
