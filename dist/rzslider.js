@@ -585,7 +585,7 @@
 
         this.minValue = this.roundStep(+this.options.floor);
 
-        if (this.options.ceil)
+        if (this.options.ceil != null)
           this.maxValue = this.roundStep(+this.options.ceil);
         else
           this.maxValue = this.options.ceil = this.range ? this.scope.rzSliderHigh : this.scope.rzSliderModel;
