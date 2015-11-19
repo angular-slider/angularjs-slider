@@ -226,6 +226,7 @@ $scope.$on("slideEnded", function() {
 ## Project integration
 
 ```html
+    <link rel="stylesheet" type="text/css" href="/path/to/slider/rzslider.css"/>
     <script src="/path/to/angularjs/angular.min.js"></script>
     <script src="/path/to/slider/rzslider.min.js"></script>
 
