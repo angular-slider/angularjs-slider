@@ -696,7 +696,7 @@
           if (this.options.onStart) {
             var self = this;
             $timeout(function() {
-              self.options.onStart();
+              self.options.onStart(self.options.id);
             });
           }
         },
@@ -710,7 +710,7 @@
           if (this.options.onChange) {
             var self = this;
             $timeout(function() {
-              self.options.onChange();
+              self.options.onChange(self.options.id);
             });
           }
         },
@@ -724,7 +724,7 @@
           if (this.options.onEnd) {
             var self = this;
             $timeout(function() {
-              self.options.onEnd();
+              self.options.onEnd(self.options.id);
             });
           }
         },

@@ -193,11 +193,11 @@ $scope.slider = {
 
 **scale** - _Number (defaults to 1)_: If you display the slider in an element that uses `transform: scale(0.5)`, set the `scale` value to 2 so that the slider is rendered properly and the events are handled correctly.
 
-**onStart** - _Function()_: Function to be called when a slider update is started.
+**onStart** - _Function(sliderId)_: Function to be called when a slider update is started. If an id was set in the options, then it's passed to this callback.
 
-**onChange** - _Function()_: Function to be called when rz-slider-model or rz-slider-high change.
+**onChange** - _Function(sliderId)_: Function to be called when rz-slider-model or rz-slider-high change. If an id was set in the options, then it's passed to this callback.
 
-**onEnd** - _Function()_: Function to be called when a slider update is ended.
+**onEnd** - _Function(sliderId)_: Function to be called when a slider update is ended. If an id was set in the options, then it's passed to this callback.
 
 ## Change default options
 If you want the change the default options for all the sliders displayed in your application, you can set them using the `RzSliderOptions.options()` method:
