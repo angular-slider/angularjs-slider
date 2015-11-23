@@ -131,12 +131,16 @@ rzslider .rz-ticks {
   top: -3px;
   left: 0;
   z-index: 1;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
   width: 100%;
   padding: 0 11px;
   margin: 0;
   list-style: none;
   box-sizing: border-box;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
   justify-content: space-between;
 }
 

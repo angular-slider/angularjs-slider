@@ -123,7 +123,11 @@ rzslider {
     padding: 0 (@handleSize - @ticksWidth) / 2;
     z-index: 1;
     list-style: none;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
     justify-content: space-between;
 
     .tick {
