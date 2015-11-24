@@ -1,5 +1,10 @@
 ## AngularJS slider directive with no external dependencies
 
+Status:
+[![npm version](https://img.shields.io/npm/v/angularjs-slider.svg?style=flat-square)](https://www.npmjs.com/package/angularjs-slider)
+[![npm downloads](https://img.shields.io/npm/dm/angularjs-slider.svg?style=flat-square)](http://npm-stat.com/charts.html?package=angularjs-slider&from=2015-01-01)
+
+Links:
 [![Join the chat at https://gitter.im/rzajac/angularjs-slider](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/rzajac/angularjs-slider?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Slider directive implementation for AngularJS, without any dependencies.
