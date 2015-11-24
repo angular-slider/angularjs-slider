@@ -49,6 +49,7 @@
         showTicks: false,
         showTicksValues: false,
         ticksValuesTooltip: null,
+        vertical: false,
         scale: 1,
         onStart: null,
         onChange: null,
@@ -171,18 +172,30 @@
         };
 
         /**
-         * Half of the width of the slider handles
-         *
-         * @type {number}
+         * property that handle position (defaults to left for horizontal)
+         * @type {string}
          */
-        this.handleHalfWidth = 0;
+        this.positionProperty = 'left';
 
         /**
-         * Maximum left the slider handle can have
+         * property that handle dimension (defaults to width for horizontal)
+         * @type {string}
+         */
+        this.dimensionProperty = 'width';
+
+        /**
+         * Half of the width or height of the slider handles
          *
          * @type {number}
          */
-        this.maxLeft = 0;
+        this.handleHalfDim = 0;
+
+        /**
+         * Maximum position the slider handle can have
+         *
+         * @type {number}
+         */
+        this.maxPos = 0;
 
         /**
          * Precision
@@ -285,6 +298,9 @@
           // Recalculate stuff if view port dimensions have changed
           angular.element($window).on('resize', calcDimFn);
 
+          if (this.options.vertical)
+            this.sliderElem.addClass('vertical');
+
           this.initHasRun = true;
 
           // Watch for changes to the model
@@ -368,12 +384,18 @@
             this.customTrFn = function(value) {
               return this.options.stepsArray[value];
             };
-          } else if (this.options.translate)
+          }
+          else if (this.options.translate)
             this.customTrFn = this.options.translate;
           else
             this.customTrFn = function(value) {
               return String(value);
             };
+
+          if (this.options.vertical) {
+            this.positionProperty = 'bottom';
+            this.dimensionProperty = 'height';
+          }
         },
 
         /**
@@ -440,14 +462,14 @@
           }, this);
 
           // Initialize offset cache properties
-          this.selBar.rzsl = 0;
-          this.minH.rzsl = 0;
-          this.maxH.rzsl = 0;
-          this.flrLab.rzsl = 0;
-          this.ceilLab.rzsl = 0;
-          this.minLab.rzsl = 0;
-          this.maxLab.rzsl = 0;
-          this.cmbLab.rzsl = 0;
+          this.selBar.rzsp = 0;
+          this.minH.rzsp = 0;
+          this.maxH.rzsp = 0;
+          this.flrLab.rzsp = 0;
+          this.ceilLab.rzsp = 0;
+          this.minLab.rzsp = 0;
+          this.maxLab.rzsp = 0;
+          this.cmbLab.rzsp = 0;
         },
 
         /** Update each elements style based on options
@@ -554,18 +576,18 @@
           useCustomTr = useCustomTr === undefined ? true : useCustomTr;
 
           var valStr = String((useCustomTr ? this.customTrFn(value, this.options.id) : value)),
-            getWidth = false;
+            getDimension = false;
 
-          if (label.rzsv === undefined || label.rzsv.length !== valStr.length || (label.rzsv.length > 0 && label.rzsw === 0)) {
-            getWidth = true;
+          if (label.rzsv === undefined || label.rzsv.length !== valStr.length || (label.rzsv.length > 0 && label.rzsd === 0)) {
+            getDimension = true;
             label.rzsv = valStr;
           }
 
           label.text(valStr);
 
           // Update width only when length of the label have changed
-          if (getWidth) {
-            this.getWidth(label);
+          if (getDimension) {
+            this.getDimension(label);
           }
         },
 
@@ -612,15 +634,15 @@
          * @returns {undefined}
          */
         calcViewDimensions: function() {
-          var handleWidth = this.getWidth(this.minH);
+          var handleWidth = this.getDimension(this.minH);
 
-          this.handleHalfWidth = handleWidth / 2;
-          this.barWidth = this.getWidth(this.fullBar);
+          this.handleHalfDim = handleWidth / 2;
+          this.barDimension = this.getDimension(this.fullBar);
 
-          this.maxLeft = this.barWidth - handleWidth;
+          this.maxPos = this.barDimension - handleWidth;
 
-          this.getWidth(this.sliderElem);
-          this.sliderElem.rzsl = this.sliderElem[0].getBoundingClientRect().left;
+          this.getDimension(this.sliderElem);
+          this.sliderElem.rzsp = this.sliderElem[0].getBoundingClientRect()[this.positionProperty];
 
           if (this.initHasRun) {
             this.updateFloorLab();
@@ -648,6 +670,8 @@
               var tooltip = '';
               if (this.options.ticksValuesTooltip) {
                 tooltip = 'uib-tooltip="' + this.options.ticksValuesTooltip(value) + '"';
+                if(this.options.vertical)
+                  tooltip += ' tooltip-placement="right"'
               }
               positions += '<span ' + tooltip + ' class="tick-value">' + this.getDisplayValue(value) + '</span>';
             }
@@ -673,8 +697,8 @@
          */
         updateCeilLab: function() {
           this.translateFn(this.maxValue, this.ceilLab);
-          this.setLeft(this.ceilLab, this.barWidth - this.ceilLab.rzsw);
-          this.getWidth(this.ceilLab);
+          this.setPosition(this.ceilLab, this.barDimension - this.ceilLab.rzsd);
+          this.getDimension(this.ceilLab);
         },
 
         /**
@@ -684,7 +708,7 @@
          */
         updateFloorLab: function() {
           this.translateFn(this.minValue, this.flrLab);
-          this.getWidth(this.flrLab);
+          this.getDimension(this.flrLab);
         },
 
         /**
@@ -773,10 +797,10 @@
          * @returns {undefined}
          */
         updateLowHandle: function(newOffset) {
-          this.setLeft(this.minH, newOffset);
+          this.setPosition(this.minH, newOffset);
           this.translateFn(this.scope.rzSliderModel, this.minLab);
-          var left = Math.min(Math.max(newOffset - this.minLab.rzsw / 2 + this.handleHalfWidth, 0), this.barWidth - this.ceilLab.rzsw);
-          this.setLeft(this.minLab, left);
+          var pos = Math.min(Math.max(newOffset - this.minLab.rzsd / 2 + this.handleHalfDim, 0), this.barDimension - this.ceilLab.rzsd);
+          this.setPosition(this.minLab, pos);
 
           this.shFloorCeil();
         },
@@ -788,10 +812,10 @@
          * @returns {undefined}
          */
         updateHighHandle: function(newOffset) {
-          this.setLeft(this.maxH, newOffset);
+          this.setPosition(this.maxH, newOffset);
           this.translateFn(this.scope.rzSliderHigh, this.maxLab);
-          var left = Math.min((newOffset - this.maxLab.rzsw / 2 + this.handleHalfWidth), (this.barWidth - this.ceilLab.rzsw));
-          this.setLeft(this.maxLab, left);
+          var pos = Math.min((newOffset - this.maxLab.rzsd / 2 + this.handleHalfDim), (this.barDimension - this.ceilLab.rzsd));
+          this.setPosition(this.maxLab, pos);
 
           this.shFloorCeil();
         },
@@ -805,7 +829,7 @@
           var flHidden = false,
             clHidden = false;
 
-          if (this.minLab.rzsl <= this.flrLab.rzsl + this.flrLab.rzsw + 5) {
+          if (this.minLab.rzsp <= this.flrLab.rzsp + this.flrLab.rzsd + 5) {
             flHidden = true;
             this.hideEl(this.flrLab);
           } else {
@@ -813,7 +837,7 @@
             this.showEl(this.flrLab);
           }
 
-          if (this.minLab.rzsl + this.minLab.rzsw >= this.ceilLab.rzsl - this.handleHalfWidth - 10) {
+          if (this.minLab.rzsp + this.minLab.rzsd >= this.ceilLab.rzsp - this.handleHalfDim - 10) {
             clHidden = true;
             this.hideEl(this.ceilLab);
           } else {
@@ -822,14 +846,14 @@
           }
 
           if (this.range) {
-            if (this.maxLab.rzsl + this.maxLab.rzsw >= this.ceilLab.rzsl - 10) {
+            if (this.maxLab.rzsp + this.maxLab.rzsd >= this.ceilLab.rzsp - 10) {
               this.hideEl(this.ceilLab);
             } else if (!clHidden) {
               this.showEl(this.ceilLab);
             }
 
             // Hide or show floor label
-            if (this.maxLab.rzsl <= this.flrLab.rzsl + this.flrLab.rzsw + this.handleHalfWidth) {
+            if (this.maxLab.rzsp <= this.flrLab.rzsp + this.flrLab.rzsd + this.handleHalfDim) {
               this.hideEl(this.flrLab);
             } else if (!flHidden) {
               this.showEl(this.flrLab);
@@ -843,8 +867,8 @@
          * @returns {undefined}
          */
         updateSelectionBar: function() {
-          this.setWidth(this.selBar, Math.abs(this.maxH.rzsl - this.minH.rzsl) + this.handleHalfWidth);
-          this.setLeft(this.selBar, this.range ? this.minH.rzsl + this.handleHalfWidth : 0);
+          this.setDimension(this.selBar, Math.abs(this.maxH.rzsp - this.minH.rzsp) + this.handleHalfDim);
+          this.setPosition(this.selBar, this.range ? this.minH.rzsp + this.handleHalfDim : 0);
         },
 
         /**
@@ -855,13 +879,13 @@
         updateCmbLabel: function() {
           var lowTr, highTr;
 
-          if (this.minLab.rzsl + this.minLab.rzsw + 10 >= this.maxLab.rzsl) {
+          if (this.minLab.rzsp + this.minLab.rzsd + 10 >= this.maxLab.rzsp) {
             lowTr = this.getDisplayValue(this.scope.rzSliderModel);
             highTr = this.getDisplayValue(this.scope.rzSliderHigh);
 
             this.translateFn(lowTr + ' - ' + highTr, this.cmbLab, false);
-            var left = Math.min(Math.max((this.selBar.rzsl + this.selBar.rzsw / 2 - this.cmbLab.rzsw / 2),0),(this.barWidth - this.cmbLab.rzsw));
-            this.setLeft(this.cmbLab, left);
+            var pos = Math.min(Math.max((this.selBar.rzsp + this.selBar.rzsd / 2 - this.cmbLab.rzsd / 2), 0), (this.barDimension - this.cmbLab.rzsd));
+            this.setPosition(this.cmbLab, pos);
             this.hideEl(this.minLab);
             this.hideEl(this.maxLab);
             this.showEl(this.cmbLab);
@@ -925,45 +949,48 @@
         },
 
         /**
-         * Set element left offset
+         * Set element left/top offset depending on whether slider is horizontal or vertical
          *
          * @param {jqLite} elem The jqLite wrapped DOM element
-         * @param {number} left
+         * @param {number} pos
          * @returns {number}
          */
-        setLeft: function(elem, left) {
-          elem.rzsl = left;
-          elem.css({
-            left: left + 'px'
-          });
-          return left;
+        setPosition: function(elem, pos) {
+          elem.rzsp = pos;
+          var css = {};
+          css[this.positionProperty] = pos + 'px';
+          elem.css(css);
+          return pos;
         },
 
         /**
-         * Get element width
+         * Get element width/height depending on whether slider is horizontal or vertical
          *
          * @param {jqLite} elem The jqLite wrapped DOM element
          * @returns {number}
          */
-        getWidth: function(elem) {
+        getDimension: function(elem) {
           var val = elem[0].getBoundingClientRect();
-          elem.rzsw = (val.right - val.left) * this.options.scale;
-          return elem.rzsw;
+          if (this.options.vertical)
+            elem.rzsd = (val.bottom - val.top) * this.options.scale;
+          else
+            elem.rzsd = (val.right - val.left) * this.options.scale;
+          return elem.rzsd;
         },
 
         /**
-         * Set element width
+         * Set element width/height depending on whether slider is horizontal or vertical
          *
          * @param {jqLite} elem  The jqLite wrapped DOM element
-         * @param {number} width
+         * @param {number} dim
          * @returns {number}
          */
-        setWidth: function(elem, width) {
-          elem.rzsw = width;
-          elem.css({
-            width: width + 'px'
-          });
-          return width;
+        setDimension: function(elem, dim) {
+          elem.rzsd = dim;
+          var css = {};
+          css[this.dimensionProperty] = dim + 'px';
+          elem.css(css);
+          return dim;
         },
 
         /**
@@ -973,7 +1000,7 @@
          * @returns {number}
          */
         valueToOffset: function(val) {
-          return (this.sanitizeOffsetValue(val) - this.minValue) * this.maxLeft / this.valueRange || 0;
+          return (this.sanitizeOffsetValue(val) - this.minValue) * this.maxPos / this.valueRange || 0;
         },
 
         /**
@@ -993,26 +1020,42 @@
          * @returns {number}
          */
         offsetToValue: function(offset) {
-          return (offset / this.maxLeft) * this.valueRange + this.minValue;
+          return (offset / this.maxPos) * this.valueRange + this.minValue;
         },
 
         // Events
 
         /**
-         * Get the X-coordinate of an event
+         * Get the X-coordinate or Y-coordinate of an event
          *
          * @param {Object} event  The event
          * @returns {number}
          */
-        getEventX: function(event) {
+        getEventXY: function(event) {
           /* http://stackoverflow.com/a/12336075/282882 */
           //noinspection JSLint
-          if ('clientX' in event) {
-            return event.clientX;
+          var clientXY = this.options.vertical ? 'clientY' : 'clientX';
+          if (clientXY in event) {
+            return event[clientXY];
           }
 
           return event.originalEvent === undefined ?
-            event.touches[0].clientX : event.originalEvent.touches[0].clientX;
+            event.touches[0][clientXY] : event.originalEvent.touches[0][clientXY];
+        },
+
+        /**
+         * Compute the event position depending on whether the slider is horizontal or vertical
+         * @param event
+         * @returns {number}
+         */
+        getEventPosition: function(event) {
+          var sliderPos = this.sliderElem.rzsp,
+            eventPos = 0;
+          if (this.options.vertical)
+            eventPos = -this.getEventXY(event) + sliderPos;
+          else
+            eventPos = this.getEventXY(event) - sliderPos;
+          return (eventPos - this.handleHalfDim) * this.options.scale;
         },
 
         /**
@@ -1025,8 +1068,8 @@
           if (!this.range) {
             return this.minH;
           }
-          var offset = (this.getEventX(event) - this.sliderElem.rzsl - this.handleHalfWidth) * this.options.scale;
-          return Math.abs(offset - this.minH.rzsl) < Math.abs(offset - this.maxH.rzsl) ? this.minH : this.maxH;
+          var offset = this.getEventPosition(event);
+          return Math.abs(offset - this.minH.rzsp) < Math.abs(offset - this.maxH.rzsp) ? this.minH : this.maxH;
         },
 
         /**
@@ -1132,22 +1175,19 @@
          * @returns {undefined}
          */
         onMove: function(pointer, event) {
-          var eventX = this.getEventX(event),
-            sliderLO, newOffset, newValue;
-
-          sliderLO = this.sliderElem.rzsl;
-          newOffset = (eventX - sliderLO - this.handleHalfWidth) * this.options.scale;
+          var newOffset = this.getEventPosition(event),
+            newValue;
 
           if (newOffset <= 0) {
-            if (pointer.rzsl === 0)
+            if (pointer.rzsp === 0)
               return;
             newValue = this.minValue;
             newOffset = 0;
-          } else if (newOffset >= this.maxLeft) {
-            if (pointer.rzsl === this.maxLeft)
+          } else if (newOffset >= this.maxPos) {
+            if (pointer.rzsp === this.maxPos)
               return;
             newValue = this.maxValue;
-            newOffset = this.maxLeft;
+            newOffset = this.maxPos;
           } else {
             newValue = this.offsetToValue(newOffset);
             newValue = this.roundStep(newValue);
@@ -1167,14 +1207,14 @@
          * @returns {undefined}
          */
         onDragStart: function(pointer, ref, event) {
-          var offset = this.getEventX(event) - this.sliderElem.rzsl - this.handleHalfWidth;
+          var offset = this.getEventPosition(event);
           this.dragging = {
             active: true,
             value: this.offsetToValue(offset),
             difference: this.scope.rzSliderHigh - this.scope.rzSliderModel,
             offset: offset,
-            lowDist: offset - this.minH.rzsl,
-            highDist: this.maxH.rzsl - offset
+            lowDist: offset - this.minH.rzsp,
+            highDist: this.maxH.rzsp - offset
           };
           this.minH.addClass('rz-active');
           this.maxH.addClass('rz-active');
@@ -1192,24 +1232,24 @@
          * @returns {undefined}
          */
         onDragMove: function(pointer, event) {
-          var newOffset = this.getEventX(event) - this.sliderElem.rzsl - this.handleHalfWidth,
+          var newOffset = this.getEventPosition(event),
             newMinOffset, newMaxOffset,
             newMinValue, newMaxValue;
 
           if (newOffset <= this.dragging.lowDist) {
-            if (pointer.rzsl === this.dragging.lowDist) {
+            if (pointer.rzsp === this.dragging.lowDist) {
               return;
             }
             newMinValue = this.minValue;
             newMinOffset = 0;
             newMaxValue = this.minValue + this.dragging.difference;
             newMaxOffset = this.valueToOffset(newMaxValue);
-          } else if (newOffset >= this.maxLeft - this.dragging.highDist) {
-            if (pointer.rzsl === this.dragging.highDist) {
+          } else if (newOffset >= this.maxPos - this.dragging.highDist) {
+            if (pointer.rzsp === this.dragging.highDist) {
               return;
             }
             newMaxValue = this.maxValue;
-            newMaxOffset = this.maxLeft;
+            newMaxOffset = this.maxPos;
             newMinValue = this.maxValue - this.dragging.difference;
             newMinOffset = this.valueToOffset(newMinValue);
           } else {
@@ -1251,7 +1291,7 @@
             /* This is to check if we need to switch the min and max handles*/
             if (this.tracking === 'rzSliderModel' && newValue >= this.scope.rzSliderHigh) {
               this.scope[this.tracking] = this.scope.rzSliderHigh;
-              this.updateHandles(this.tracking, this.maxH.rzsl);
+              this.updateHandles(this.tracking, this.maxH.rzsp);
               this.tracking = 'rzSliderHigh';
               this.minH.removeClass('rz-active');
               this.maxH.addClass('rz-active');
@@ -1260,7 +1300,7 @@
               this.callOnChange();
             } else if (this.tracking === 'rzSliderHigh' && newValue <= this.scope.rzSliderModel) {
               this.scope[this.tracking] = this.scope.rzSliderModel;
-              this.updateHandles(this.tracking, this.minH.rzsl);
+              this.updateHandles(this.tracking, this.minH.rzsp);
               this.tracking = 'rzSliderModel';
               this.maxH.removeClass('rz-active');
               this.minH.addClass('rz-active');
@@ -1371,8 +1411,8 @@
   /**
    * @name jqLite
    *
-   * @property {number|undefined} rzsl rzslider label left offset
-   * @property {number|undefined} rzsw rzslider element width
+   * @property {number|undefined} rzsp rzslider label position offset
+   * @property {number|undefined} rzsd rzslider element dimension
    * @property {string|undefined} rzsv rzslider label value/text
    * @property {Function} css
    * @property {Function} text

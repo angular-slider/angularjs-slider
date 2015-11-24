@@ -9,10 +9,9 @@
 @import 'variables.less';
 
 rzslider {
-
   display: inline-block;
   position: relative;
-  height: @barHeight;
+  height: @barDimension;
   width: 100%;
   margin: 35px 0 15px 0;
   vertical-align: middle;
@@ -57,15 +56,15 @@ rzslider {
   .rz-bar {
     left: 0;
     width: 100%;
-    height: @barHeight;
+    height: @barDimension;
     z-index: 1;
     background: @barNormalColor;
-    .rounded(@barHeight/2);
+    .rounded(@barDimension/2);
 
     &.rz-selection {
       z-index: 2;
       background: @barFillColor;
-      .rounded(@barHeight/2);
+      .rounded(@barDimension/2);
     }
   }
 
@@ -73,7 +72,7 @@ rzslider {
     cursor: pointer;
     width: @handleSize;
     height: @handleSize;
-    top: -@handleSize/2 + @barHeight/2;
+    top: -@handleSize/2 + @barDimension/2;
     background-color: @handleBgColor;
     z-index: 3;
     .rounded(@handleSize/2);
@@ -118,7 +117,7 @@ rzslider {
     width: 100%;
     position: absolute;
     left: 0;
-    top: -(@ticksHeight - @barHeight) / 2;
+    top: -(@ticksHeight - @barDimension) / 2;
     margin: 0;
     padding: 0 (@handleSize - @ticksWidth) / 2;
     z-index: 1;
@@ -144,6 +143,74 @@ rzslider {
         position: absolute;
         top: @ticksValuePosition;
         transform: translate(-50%, 0);
+      }
+    }
+  }
+
+  &.vertical {
+    position: relative;
+    width: @barDimension;
+    height: 100%;
+    margin: 0 20px;
+    padding: 0;
+    vertical-align: baseline;
+
+    .rz-base {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+    }
+
+    .rz-bar-wrapper {
+      top: auto;
+      left: 0;
+      margin: 0 0 0 -@handleSize / 2;
+      padding: 0 0 0 @handleSize / 2;
+      height: 100%;
+      width: @handleSize;
+    }
+
+    .rz-bar {
+      bottom: 0;
+      left: initial;
+      width: @barDimension;
+      height: 100%;
+    }
+
+    .rz-pointer {
+      left: -@handleSize/2 + @barDimension/2 !important;
+      top: auto;
+      bottom: 0;
+    }
+
+    .rz-bubble {
+      left: @handleSize/2 !important;
+      margin-left: 3px;
+      bottom: 0;
+      &.rz-selection {
+        left: @handleSize/2 !important;
+        top: auto;
+      }
+    }
+
+    .rz-ticks {
+      height: 100%;
+      width: auto;
+      left: -(@ticksHeight - @barDimension) / 2;
+      top: 0;
+      padding: (@handleSize - @ticksWidth) / 2 0;
+      z-index: 1;
+      -webkit-flex-direction: column-reverse;
+      -ms-flex-direction: column-reverse;
+      flex-direction: column-reverse;
+
+      .tick {
+        vertical-align: middle;
+        .tick-value {
+          right: @ticksValuePosition;
+          top: auto;
+          transform: translate(0, -28%);
+        }
       }
     }
   }
