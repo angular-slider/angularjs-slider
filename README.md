@@ -133,6 +133,7 @@ The default options are:
     interval: 350,
     showTicks: false,
     showTicksValues: false,
+    vertical: false,
     scale: 1,
     onStart: null,
     onChange: null,
@@ -198,6 +199,9 @@ $scope.slider = {
 **onChange** - _Function(sliderId)_: Function to be called when rz-slider-model or rz-slider-high change. If an id was set in the options, then it's passed to this callback.
 
 **onEnd** - _Function(sliderId)_: Function to be called when a slider update is ended. If an id was set in the options, then it's passed to this callback.
+
+**vertical** - _Boolean (defaults to false)_: Set to true to display the slider vertically. The slider will take the full height of its parent.
+_Changing this value at runtime is not currently supported._
 
 ## Change default options
 If you want the change the default options for all the sliders displayed in your application, you can set them using the `RzSliderOptions.options()` method:
