@@ -11,6 +11,11 @@ Slider directive implementation for AngularJS, without any dependencies.
 - Simple to use
 - Compatibility with jQuery Lite, ie. with full jQuery ( Thanks Jusas! https://github.com/Jusas)
 
+**Horizontal**
+![image](https://cloud.githubusercontent.com/assets/2678610/11419158/d51cee88-9425-11e5-9d3f-3f7d97a31c6f.png)
+**Vertical**
+![image](https://cloud.githubusercontent.com/assets/2678610/11419099/7f4c0e76-9425-11e5-98c6-615412291df1.png)
+
 ## Examples
 
 - **Various examples:** [http://rzajac.github.io/angularjs-slider/](http://rzajac.github.io/angularjs-slider/index.html)
