@@ -7,7 +7,7 @@ Status:
 Links:
 [![Join the chat at https://gitter.im/rzajac/angularjs-slider](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/rzajac/angularjs-slider?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Slider directive implementation for AngularJS, without any dependencies.
+Slider directive implementation for AngularJS, without any dependencies: [http://rzajac.github.io/angularjs-slider](http://rzajac.github.io/angularjs-slider/index.html).
 
 - Mobile friendly
 - Fast
@@ -26,8 +26,8 @@ Slider directive implementation for AngularJS, without any dependencies.
 
 ## Examples
 
-- **Various examples:** [http://rzajac.github.io/angularjs-slider/](http://rzajac.github.io/angularjs-slider/index.html)
-- **Same examples with code:** https://jsfiddle.net/nrdmtzjm/
+- **Various examples:** [http://rzajac.github.io/angularjs-slider](http://rzajac.github.io/angularjs-slider/index.html)
+- **Same examples with code:** https://jsfiddle.net/juhbf3dz/
 
 ## Reporting issues
 Make sure the report is accompanied by a reproducible demo. The ideal demo is created by forking [our standard jsFiddle](http://jsfiddle.net/cwhgLcjv/), adding your own code and stripping it down to an absolute minimum needed to demonstrate the bug.
