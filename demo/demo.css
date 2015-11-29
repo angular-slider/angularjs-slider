@@ -11,3 +11,10 @@ article { margin-bottom: 10px; }
 .field-title {
   width: 100px;
 }
+
+.vertical-sliders {
+  margin: 0;
+}
+.vertical-sliders > div {
+  height: 250px;
+}

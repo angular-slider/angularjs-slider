@@ -16,6 +16,14 @@ Slider directive implementation for AngularJS, without any dependencies.
 - Simple to use
 - Compatibility with jQuery Lite, ie. with full jQuery ( Thanks Jusas! https://github.com/Jusas)
 
+**Horizontal**
+
+![image](https://cloud.githubusercontent.com/assets/2678610/11419158/d51cee88-9425-11e5-9d3f-3f7d97a31c6f.png)
+
+**Vertical**
+
+![image](https://cloud.githubusercontent.com/assets/2678610/11419099/7f4c0e76-9425-11e5-98c6-615412291df1.png)
+
 ## Examples
 
 - **Various examples:** [http://rzajac.github.io/angularjs-slider/](http://rzajac.github.io/angularjs-slider/index.html)
@@ -138,6 +146,7 @@ The default options are:
     interval: 350,
     showTicks: false,
     showTicksValues: false,
+    vertical: false,
     scale: 1,
     onStart: null,
     onChange: null,
@@ -203,6 +212,9 @@ $scope.slider = {
 **onChange** - _Function(sliderId)_: Function to be called when rz-slider-model or rz-slider-high change. If an id was set in the options, then it's passed to this callback.
 
 **onEnd** - _Function(sliderId)_: Function to be called when a slider update is ended. If an id was set in the options, then it's passed to this callback.
+
+**vertical** - _Boolean (defaults to false)_: Set to true to display the slider vertically. The slider will take the full height of its parent.
+_Changing this value at runtime is not currently supported._
 
 ## Change default options
 If you want the change the default options for all the sliders displayed in your application, you can set them using the `RzSliderOptions.options()` method:

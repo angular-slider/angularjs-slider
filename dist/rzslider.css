@@ -162,3 +162,73 @@ rzslider .rz-ticks .tick .tick-value {
   top: -30px;
   transform: translate(-50%, 0);
 }
+
+rzslider.vertical {
+  position: relative;
+  width: 4px;
+  height: 100%;
+  padding: 0;
+  margin: 0 20px;
+  vertical-align: baseline;
+}
+
+rzslider.vertical .rz-base {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+rzslider.vertical .rz-bar-wrapper {
+  top: auto;
+  left: 0;
+  width: 32px;
+  height: 100%;
+  padding: 0 0 0 16px;
+  margin: 0 0 0 -16px;
+}
+
+rzslider.vertical .rz-bar {
+  bottom: 0;
+  left: auto;
+  width: 4px;
+  height: 100%;
+}
+
+rzslider.vertical .rz-pointer {
+  top: auto;
+  bottom: 0;
+  left: -14px !important;
+}
+
+rzslider.vertical .rz-bubble {
+  bottom: 0;
+  left: 16px !important;
+  margin-left: 3px;
+}
+
+rzslider.vertical .rz-bubble.rz-selection {
+  top: auto;
+  left: 16px !important;
+}
+
+rzslider.vertical .rz-ticks {
+  top: 0;
+  left: -3px;
+  z-index: 1;
+  width: auto;
+  height: 100%;
+  padding: 11px 0;
+  -webkit-flex-direction: column-reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
+}
+
+rzslider.vertical .rz-ticks .tick {
+  vertical-align: middle;
+}
+
+rzslider.vertical .rz-ticks .tick .tick-value {
+  top: auto;
+  right: -30px;
+  transform: translate(0, -28%);
+}
