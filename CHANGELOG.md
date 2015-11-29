@@ -1,3 +1,12 @@
+# 2.1.0 (2015-11-29)
+## Features
+- Add a `vertical` options to display vertical sliders (#185).
+- Pass the options.id to the onStart, onChange and onEnd callbacks (#182).
+- Force labels to stay contained within element containing slider (#175).
+
+## Bug fixes
+- add vendor-prefix to `display: flex` used by ticks (#160).
+
 # 2.0.0 (2015-11-12)
 ## Breaking changes
 - All attributes except `rzSliderModel` and `rzSliderHigh` are moved to `rzSliderOptions`. (See the new documentation in ReadMe)
