@@ -32,6 +32,24 @@ Slider directive implementation for AngularJS, without any dependencies: [http:/
 ## Reporting issues
 Make sure the report is accompanied by a reproducible demo. The ideal demo is created by forking [our standard jsFiddle](http://jsfiddle.net/cwhgLcjv/), adding your own code and stripping it down to an absolute minimum needed to demonstrate the bug.
 
+## Common issues
+### My slider is not rendered correctly on load
+If the slider's parent element is not visible during slider initialization, the slider can't know when its parent becomes visible. 
+For instance, when displaying a slider inside an element which visibility is toggled using ng-show, you need to send an event to force it to redraw when you set your ng-show to true.
+
+Here's an example of `refreshSlider` method that you should call whenever the slider becomes visible.
+```js
+vm.refreshSlider = function () {
+    $timeout(function () {
+        $scope.$broadcast('rzSliderForceRender');
+    });
+};
+```
+**ng-show-example**: http://jsfiddle.net/3jjye1cL/
+
+**UI-Boostrap tabs example**: http://jsfiddle.net/0f7sd7dw/
+
+
 ## Installation
 
 ### NPM
