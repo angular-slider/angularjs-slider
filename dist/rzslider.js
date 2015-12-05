@@ -999,16 +999,16 @@
        * @returns {number}
        */
       valueToOffset: function(val) {
-        return (this.sanitizeOffsetValue(val) - this.minValue) * this.maxPos / this.valueRange || 0;
+        return (this.sanitizeValue(val) - this.minValue) * this.maxPos / this.valueRange || 0;
       },
 
       /**
-       * Ensure that the position rendered is within the slider bounds, even if the value is not
+       * Returns a value that is within slider range
        *
        * @param {number} val
        * @returns {number}
        */
-      sanitizeOffsetValue: function(val) {
+      sanitizeValue: function(val) {
         return Math.min(Math.max(val, this.minValue), this.maxValue);
       },
 
@@ -1111,6 +1111,11 @@
         this.selBar.on('touchstart', angular.bind(this, barMove, this.selBar));
         this.ticks.on('touchstart', angular.bind(this, this.onStart, null, null));
         this.ticks.on('touchstart', angular.bind(this, this.onMove, this.ticks));
+
+        this.minH.on('focus', angular.bind(this, this.onPointerFocus, this.minH, 'rzSliderModel'))
+        if (this.range) {
+          this.maxH.on('focus', angular.bind(this, this.onPointerFocus, this.maxH, 'rzSliderHigh'));
+        }
       },
 
       /**
@@ -1140,10 +1145,6 @@
 
         event.stopPropagation();
         event.preventDefault();
-
-        if (this.tracking !== '') {
-          return;
-        }
 
         // We have to do this in case the HTML where the sliders are on
         // have been animated into view.
@@ -1193,6 +1194,49 @@
           newOffset = this.valueToOffset(newValue);
         }
         this.positionTrackingHandle(newValue, newOffset);
+      },
+
+      onPointerFocus: function(pointer, ref, event) {
+        this.tracking = ref;
+        pointer.one('blur', angular.bind(this, this.onPointerBlur, pointer));
+        pointer.on('keydown', angular.bind(this, this.onKeyboardEvent));
+        pointer.addClass('rz-active');
+      },
+
+      onPointerBlur: function(pointer, event) {
+        this.tracking = '';
+        pointer.off('keydown');
+        pointer.removeClass('rz-active');
+      },
+
+      onKeyboardEvent: function(event) {
+        var keyCode = event.keyCode || event.which,
+          keys = {
+            38: 'UP',
+            40: 'DOWN',
+            37: 'LEFT',
+            39: 'RIGHT'
+          },
+          actions = {
+            UP: 5,
+            DOWN: -5,
+            LEFT: -1,
+            RIGHT: 1
+          },
+          key = keys[keyCode],
+          action = actions[key];
+
+        if (!key || !this.tracking) return;
+        event.preventDefault();
+
+        var value = this.scope[this.tracking],
+          newValue = this.roundStep(this.sanitizeValue(value + action)),
+          newOffset = this.valueToOffset(newValue);
+        var switched = this.positionTrackingHandle(newValue, newOffset);
+        if (switched) {
+          var pointer = this.tracking === 'rzSliderModel' ? this.minH : this.maxH;
+          pointer[0].focus(); //to focus the correct pointer
+        }
       },
 
       /**
@@ -1284,11 +1328,14 @@
        *
        * @param {number} newValue new model value
        * @param {number} newOffset new offset value
+       * @returns {Boolean} flag that indicates if min and max pointers have been switched.
        */
       positionTrackingHandle: function(newValue, newOffset) {
+        var switched = false;
         if (this.range) {
           /* This is to check if we need to switch the min and max handles*/
           if (this.tracking === 'rzSliderModel' && newValue >= this.scope.rzSliderHigh) {
+            switched = true;
             this.scope[this.tracking] = this.scope.rzSliderHigh;
             this.updateHandles(this.tracking, this.maxH.rzsp);
             this.tracking = 'rzSliderHigh';
@@ -1298,6 +1345,7 @@
             this.scope.$apply();
             this.callOnChange();
           } else if (this.tracking === 'rzSliderHigh' && newValue <= this.scope.rzSliderModel) {
+            switched = true;
             this.scope[this.tracking] = this.scope.rzSliderModel;
             this.updateHandles(this.tracking, this.minH.rzsp);
             this.tracking = 'rzSliderModel';
@@ -1315,6 +1363,7 @@
           this.scope.$apply();
           this.callOnChange();
         }
+        return switched;
       },
 
       /**
@@ -1434,7 +1483,7 @@
   'use strict';
 
   $templateCache.put('rzSliderTpl.html',
-    "<span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\"></span></span> <span class=rz-pointer></span> <span class=rz-pointer></span> <span class=\"rz-bubble rz-limit\"></span> <span class=\"rz-bubble rz-limit\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul class=rz-ticks></ul>"
+    "<span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\"></span></span> <span class=rz-pointer tabindex=0></span> <span class=rz-pointer tabindex=0></span> <span class=\"rz-bubble rz-limit\"></span> <span class=\"rz-bubble rz-limit\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul class=rz-ticks></ul>"
   );
 
 }]);
