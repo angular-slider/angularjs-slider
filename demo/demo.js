@@ -50,7 +50,11 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
       }
     }
   };
-  $scope.otherData = {start: 0, change: 0, end: 0};
+  $scope.otherData = {
+    start: 0,
+    change: 0,
+    end: 0
+  };
 
   //Slider config with custom display function
   $scope.slider_translate = {
@@ -69,7 +73,7 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
   $scope.slider_alphabet = {
     value: 0,
     options: {
-      stepsArray:'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
+      stepsArray: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
     }
   };
 
@@ -263,7 +267,7 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
       $scope.percentages = percentages;
     });
     modalInstance.rendered.then(function() {
-      $rootScope.$broadcast('rzSliderForceRender');//Force refresh sliders on render. Otherwise bullets are aligned at left side.
+      $rootScope.$broadcast('rzSliderForceRender'); //Force refresh sliders on render. Otherwise bullets are aligned at left side.
     });
   };
 
@@ -302,10 +306,9 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     }
   };
   $scope.toggleHighValue = function() {
-    if($scope.slider_all_options.maxValue != null) {
+    if ($scope.slider_all_options.maxValue != null) {
       $scope.slider_all_options.maxValue = undefined;
-    }
-    else {
+    } else {
       $scope.slider_all_options.maxValue = 8;
     }
   }
