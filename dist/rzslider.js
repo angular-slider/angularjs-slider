@@ -281,7 +281,6 @@
         this.initElemHandles();
         this.manageElementsStyle();
         this.addAccessibility();
-        this.manageEventsBindings();
         this.setDisabledState();
         this.calcViewDimensions();
         this.setMinAndMax();
@@ -290,7 +289,7 @@
           self.updateCeilLab();
           self.updateFloorLab();
           self.initHandles();
-          self.bindEvents();
+          self.manageEventsBindings();
         });
 
         // Recalculate slider view dimensions
@@ -1244,7 +1243,7 @@
       },
 
       onPointerBlur: function(pointer, event) {
-        console.info('focused', this.tracking);
+        console.info('blured', this.tracking);
         pointer.off('keydown');
         this.tracking = '';
         pointer.removeClass('rz-active');
