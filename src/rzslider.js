@@ -1173,6 +1173,7 @@
         }
 
         pointer.addClass('rz-active');
+        pointer[0].focus();
 
         ehMove = angular.bind(this, this.dragging.active ? this.onDragMove : this.onMove, pointer);
         ehEnd = angular.bind(this, this.onEnd, ehMove);
@@ -1211,41 +1212,73 @@
         this.positionTrackingHandle(newValue, newOffset);
       },
 
+      /**
+       * onEnd event handler
+       *
+       * @param {Event}    event    The event
+       * @param {Function} ehMove   The the bound move event handler
+       * @returns {undefined}
+       */
+      onEnd: function(ehMove, event) {
+        var moveEventName = this.getEventNames(event).moveEvent;
+
+        //this.minH.removeClass('rz-active');
+        //this.maxH.removeClass('rz-active');
+
+        $document.off(moveEventName, ehMove);
+
+        this.scope.$emit('slideEnded');
+        //this.tracking = '';
+
+        this.dragging.active = false;
+        this.callOnEnd();
+      },
+
       onPointerFocus: function(pointer, ref, event) {
+        //if (this.tracking === ref) return;
         this.tracking = ref;
+        console.info('focused', ref);
         pointer.one('blur', angular.bind(this, this.onPointerBlur, pointer));
         pointer.on('keydown', angular.bind(this, this.onKeyboardEvent));
         pointer.addClass('rz-active');
       },
 
       onPointerBlur: function(pointer, event) {
-        this.tracking = '';
+        console.info('focused', this.tracking);
         pointer.off('keydown');
+        this.tracking = '';
         pointer.removeClass('rz-active');
       },
 
       onKeyboardEvent: function(event) {
-        var keyCode = event.keyCode || event.which,
+        var currentValue = this.scope[this.tracking],
+          keyCode = event.keyCode || event.which,
           keys = {
             38: 'UP',
             40: 'DOWN',
             37: 'LEFT',
-            39: 'RIGHT'
+            39: 'RIGHT',
+            33: 'PAGEUP',
+            34: 'PAGEDOWN',
+            36: 'HOME',
+            35: 'END'
           },
           actions = {
-            UP: 5,
-            DOWN: -5,
-            LEFT: -1,
-            RIGHT: 1
+            UP: currentValue + this.step,
+            DOWN: currentValue - this.step,
+            LEFT: currentValue - this.step,
+            RIGHT: currentValue + this.step,
+            PAGEUP: currentValue + this.valueRange / 10,
+            PAGEDOWN: currentValue - this.valueRange / 10,
+            HOME: this.minValue,
+            END: this.maxValue
           },
           key = keys[keyCode],
           action = actions[key];
-
-        if (!key || !this.tracking) return;
+        if (action == null || this.tracking === '') return;
         event.preventDefault();
 
-        var value = this.scope[this.tracking],
-          newValue = this.roundStep(this.sanitizeValue(value + action)),
+        var newValue = this.roundStep(this.sanitizeValue(action)),
           newOffset = this.valueToOffset(newValue);
         var switched = this.positionTrackingHandle(newValue, newOffset);
         if (switched) {
@@ -1380,28 +1413,6 @@
           this.callOnChange();
         }
         return switched;
-      },
-
-      /**
-       * onEnd event handler
-       *
-       * @param {Event}    event    The event
-       * @param {Function} ehMove   The the bound move event handler
-       * @returns {undefined}
-       */
-      onEnd: function(ehMove, event) {
-        var moveEventName = this.getEventNames(event).moveEvent;
-
-        this.minH.removeClass('rz-active');
-        this.maxH.removeClass('rz-active');
-
-        $document.off(moveEventName, ehMove);
-
-        this.scope.$emit('slideEnded');
-        this.tracking = '';
-
-        this.dragging.active = false;
-        this.callOnEnd();
       },
 
       /**
