@@ -911,10 +911,7 @@
        * @returns {number}
        */
       roundStep: function(value) {
-        var step = this.step,
-          remainder = +((value - this.minValue) % step).toFixed(3),
-          steppedValue = remainder > (step / 2) ? value + step - remainder : value - remainder;
-
+        var steppedValue = Math.round(value / this.step) * this.step;
         steppedValue = steppedValue.toFixed(this.precision);
         return +steppedValue;
       },
