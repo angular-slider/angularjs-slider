@@ -50,6 +50,7 @@
       showTicksValues: false,
       ticksValuesTooltip: null,
       vertical: false,
+      selectionBarColor: null,
       scale: 1,
       onStart: null,
       onChange: null,
@@ -432,6 +433,7 @@
               break;
             case 1:
               this.selBar = jElem;
+              this.selBarChild = this.selBar.children('rz-selection');
               break;
             case 2:
               this.minH = jElem;
@@ -863,6 +865,10 @@
       updateSelectionBar: function() {
         this.setDimension(this.selBar, Math.abs(this.maxH.rzsp - this.minH.rzsp) + this.handleHalfDim);
         this.setPosition(this.selBar, this.range ? this.minH.rzsp + this.handleHalfDim : 0);
+        if(this.options.getSelectionBarColor) {
+          var color = this.options.getSelectionBarColor();
+          this.selBarChild.css({backgroundColor: color});
+        }
       },
 
       /**

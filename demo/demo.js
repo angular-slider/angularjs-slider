@@ -25,6 +25,25 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     }
   };
 
+
+  //Slider with selection bar
+  $scope.color_slider_bar = {
+    value: 12,
+    options: {
+      showSelectionBar: true,
+      getSelectionBarColor: function() {
+        var currentValue = $scope.color_slider_bar.value;
+        if (currentValue <= 3)
+          return 'red';
+        if (currentValue <= 6)
+          return 'orange';
+        if (currentValue <= 9)
+          return 'yellow';
+        return '#2AE02A';
+      }
+    }
+  };
+
   //Slider config with floor, ceil and step
   $scope.slider_floor_ceil = {
     value: 12,
