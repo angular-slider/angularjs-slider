@@ -1283,6 +1283,8 @@
        * @param {number} newOffset new offset value
        */
       positionTrackingHandle: function(newValue, newOffset) {
+        var valueChanged = false;
+
         if (this.range) {
           /* This is to check if we need to switch the min and max handles*/
           if (this.tracking === 'rzSliderModel' && newValue >= this.scope.rzSliderHigh) {
@@ -1291,24 +1293,24 @@
             this.tracking = 'rzSliderHigh';
             this.minH.removeClass('rz-active');
             this.maxH.addClass('rz-active');
-            /* We need to apply here because we are not sure that we will enter the next block */
-            this.scope.$apply();
-            this.callOnChange();
+            valueChanged = true;
           } else if (this.tracking === 'rzSliderHigh' && newValue <= this.scope.rzSliderModel) {
             this.scope[this.tracking] = this.scope.rzSliderModel;
             this.updateHandles(this.tracking, this.minH.rzsp);
             this.tracking = 'rzSliderModel';
             this.maxH.removeClass('rz-active');
             this.minH.addClass('rz-active');
-            /* We need to apply here because we are not sure that we will enter the next block */
-            this.scope.$apply();
-            this.callOnChange();
+            valueChanged = true;
           }
         }
 
         if (this.scope[this.tracking] !== newValue) {
           this.scope[this.tracking] = newValue;
           this.updateHandles(this.tracking, newOffset);
+          valueChanged = true;
+        }
+
+        if(valueChanged) {
           this.scope.$apply();
           this.callOnChange();
         }
