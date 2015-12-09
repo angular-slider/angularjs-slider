@@ -25,7 +25,6 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     }
   };
 
-
   //Slider with selection bar
   $scope.color_slider_bar = {
     value: 12,
