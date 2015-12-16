@@ -1451,7 +1451,7 @@
   'use strict';
 
   $templateCache.put('rzSliderTpl.html',
-    "<span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span> <span class=rz-pointer></span> <span class=rz-pointer></span> <span class=\"rz-bubble rz-limit\"></span> <span class=\"rz-bubble rz-limit\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul ng-show=showTicks class=rz-ticks><li ng-repeat=\"t in ticks\" class=tick ng-class=\"{selected: t.selected}\" ng-style=t.style><span ng-if=\"t.value != null && t.tooltip == null\" class=tick-value>{{ t.value }}</span> <span ng-if=\"t.value != null && t.tooltip != null\" class=tick-value uib-tooltip=\"{{ t.tooltip }}\" tooltip-placement={{t.tooltipPlacement}}>{{ t.value }}</span></li></ul>"
+    "<span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span> <span class=rz-pointer></span> <span class=rz-pointer></span> <span class=\"rz-bubble rz-limit\"></span> <span class=\"rz-bubble rz-limit\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul ng-show=showTicks class=rz-ticks><li ng-repeat=\"t in ticks track by $index\" class=tick ng-class=\"{selected: t.selected}\" ng-style=t.style><span ng-if=\"t.value != null && t.tooltip == null\" class=tick-value>{{ t.value }}</span> <span ng-if=\"t.value != null && t.tooltip != null\" class=tick-value uib-tooltip=\"{{ t.tooltip }}\" tooltip-placement={{t.tooltipPlacement}}>{{ t.value }}</span></li></ul>"
   );
 
 }]);
