@@ -1,7 +1,7 @@
 /*! angularjs-slider - v2.3.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2015-12-22 */
+ 2015-12-23 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -74,7 +74,7 @@
     return factory;
   })
 
-  .value('rzThrottle',
+  .factory('rzThrottle', ['$timeout', function($timeout) {
     /**
      * rzThrottle
      *
@@ -85,7 +85,7 @@
      * @param {ThrottleOptions} options
      * @returns {Function}
      */
-    function throttle(func, wait, options) {
+    return function(func, wait, options) {
       'use strict';
       var getTime = (Date.now || function() {
         return new Date().getTime();
@@ -109,17 +109,18 @@
         context = this;
         args = arguments;
         if (remaining <= 0) {
-          clearTimeout(timeout);
+          $timeout.cancel(timeout);
           timeout = null;
           previous = now;
           result = func.apply(context, args);
           context = args = null;
         } else if (!timeout && options.trailing !== false) {
-          timeout = setTimeout(later, remaining);
+          timeout = $timeout(later, remaining);
         }
         return result;
       };
-    })
+    }
+  }])
 
   .factory('RzSlider', ['$timeout', '$document', '$window', '$compile', 'RzSliderOptions', 'rzThrottle', function($timeout, $document, $window, $compile, RzSliderOptions, rzThrottle) {
     'use strict';
@@ -344,7 +345,7 @@
         }, true);
 
         this.scope.$watch('rzSliderModel', function(newValue, oldValue) {
-          if(self.internalChange)
+          if (self.internalChange)
             return;
           if (newValue === oldValue)
             return;
@@ -352,7 +353,7 @@
         });
 
         this.scope.$watch('rzSliderHigh', function(newValue, oldValue) {
-          if(self.internalChange)
+          if (self.internalChange)
             return;
           if (newValue === oldValue)
             return;
@@ -492,7 +493,7 @@
         if (!this.range)
           this.maxH.css('display', 'none');
         else
-          this.maxH.css('display', null);
+          this.maxH.css('display', '');
 
         this.alwaysHide(this.flrLab, this.options.showTicksValues || this.options.hideLimitLabels);
         this.alwaysHide(this.ceilLab, this.options.showTicksValues || this.options.hideLimitLabels);
@@ -1345,7 +1346,7 @@
             HOME: this.minValue,
             END: this.maxValue
           },
-          key = keys[keyCode], 
+          key = keys[keyCode],
           action = actions[key];
         if (action == null || this.tracking === '') return;
         event.preventDefault();
@@ -1570,7 +1571,7 @@
       },
 
       link: function(scope, elem) {
-        return new RzSlider(scope, elem);
+        scope.slider = new RzSlider(scope, elem); //attach on scope so we can test it
       }
     };
   }]);

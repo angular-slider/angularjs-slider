@@ -497,7 +497,7 @@
         if (!this.range)
           this.maxH.css('display', 'none');
         else
-          this.maxH.css('display', null);
+          this.maxH.css('display', '');
 
         this.alwaysHide(this.flrLab, this.options.showTicksValues || this.options.hideLimitLabels);
         this.alwaysHide(this.ceilLab, this.options.showTicksValues || this.options.hideLimitLabels);
