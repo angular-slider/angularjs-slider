@@ -30,13 +30,12 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     value: 12,
     options: {
       showSelectionBar: true,
-      getSelectionBarColor: function() {
-        var currentValue = $scope.color_slider_bar.value;
-        if (currentValue <= 3)
+      getSelectionBarColor: function(value) {
+        if (value <= 3)
           return 'red';
-        if (currentValue <= 6)
+        if (value <= 6)
           return 'orange';
-        if (currentValue <= 9)
+        if (value <= 9)
           return 'yellow';
         return '#2AE02A';
       }

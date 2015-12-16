@@ -377,6 +377,7 @@
         this.range = this.scope.rzSliderModel !== undefined && this.scope.rzSliderHigh !== undefined;
         this.options.draggableRange = this.range && this.options.draggableRange;
         this.options.showTicks = this.options.showTicks || this.options.showTicksValues;
+        this.scope.showTicks = this.options.showTicks; //scope is used in the template
 
         if (this.options.stepsArray) {
           this.options.floor = 0;
@@ -473,8 +474,8 @@
         this.cmbLab.rzsp = 0;
       },
 
-      /** Update each elements style based on options
-       *
+      /**
+       * Update each elements style based on options
        */
       manageElementsStyle: function() {
 
@@ -489,9 +490,6 @@
         this.alwaysHide(this.maxLab, this.options.showTicksValues || !this.range);
         this.alwaysHide(this.cmbLab, this.options.showTicksValues || !this.range);
         this.alwaysHide(this.selBar, !this.range && !this.options.showSelectionBar);
-
-        if (!this.options.showTicks)
-          this.ticks.html('');
 
         if (this.options.draggableRange)
           this.selBar.addClass('rz-draggable');
@@ -659,34 +657,30 @@
        */
       updateTicksScale: function() {
         if (!this.options.showTicks) return;
-        if (!this.step) return; //if step is 0, the following loop will be endless.
+        if (!this.step) return; //if step is 0, we'll get a zero division
 
         var positions = '',
           ticksCount = Math.round((this.maxValue - this.minValue) / this.step) + 1;
+        this.scope.ticks = [];
         for (var i = 0; i < ticksCount; i++) {
-          var value = this.roundStep(this.minValue + i * this.step),
-              selected = this.isTickSelected(value),
-              selectedClass = selected ? 'selected' : '',
-              customStyle = '';
-          if (selected && this.options.getSelectionBarColor) {
-            var color = this.options.getSelectionBarColor();
-            customStyle = 'style="background-color: ' + color + '"';
+          var value = this.roundStep(this.minValue + i * this.step);
+          var tick =   {
+            selected: this.isTickSelected(value)
+          };
+          if (tick.selected && this.options.getSelectionBarColor) {
+            tick.style = {
+              'background-color': this.getSelectionBarColor()
+            };
           }
-          positions += '<li class="tick ' + selectedClass + '" ' + customStyle + '>';
           if (this.options.showTicksValues) {
-            var tooltip = '';
+            tick.value = this.getDisplayValue(value);
             if (this.options.ticksValuesTooltip) {
-              tooltip = 'uib-tooltip="' + this.options.ticksValuesTooltip(value) + '"';
-              if (this.options.vertical)
-                tooltip += ' tooltip-placement="right"'
+              tick.tooltip = this.options.ticksValuesTooltip(value);
+              tick.tooltipPlacement = this.options.vertical ? 'right' : 'top';
             }
-            positions += '<span ' + tooltip + ' class="tick-value">' + this.getDisplayValue(value) + '</span>';
           }
-          positions += '</li>';
+          this.scope.ticks.push(tick);
         }
-        this.ticks.html(positions);
-        if (this.options.ticksValuesTooltip)
-          $compile(this.ticks.contents())(this.scope);
       },
 
       isTickSelected: function(value) {
@@ -877,9 +871,21 @@
         this.setDimension(this.selBar, Math.abs(this.maxH.rzsp - this.minH.rzsp) + this.handleHalfDim);
         this.setPosition(this.selBar, this.range ? this.minH.rzsp + this.handleHalfDim : 0);
         if (this.options.getSelectionBarColor) {
-          var color = this.options.getSelectionBarColor();
-          this.selBarChild.css({backgroundColor: color});
+          var color = this.getSelectionBarColor();
+          this.scope.barStyle = {
+            backgroundColor: color
+          };
         }
+      },
+
+      /**
+       * Wrapper around the getSelectionBarColor of the user to pass to
+       * correct parameters
+       */
+      getSelectionBarColor: function() {
+        if (this.range)
+          return this.options.getSelectionBarColor(this.scope.rzSliderModel, this.scope.rzSliderHigh);
+        return this.options.getSelectionBarColor(this.scope.rzSliderModel);
       },
 
       /**
@@ -1322,7 +1328,7 @@
           valueChanged = true;
         }
 
-        if(valueChanged) {
+        if (valueChanged) {
           this.scope.$apply();
           this.callOnChange();
         }
@@ -1445,7 +1451,7 @@
   'use strict';
 
   $templateCache.put('rzSliderTpl.html',
-    "<span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\"></span></span> <span class=rz-pointer></span> <span class=rz-pointer></span> <span class=\"rz-bubble rz-limit\"></span> <span class=\"rz-bubble rz-limit\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul class=rz-ticks></ul>"
+    "<span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span> <span class=rz-pointer></span> <span class=rz-pointer></span> <span class=\"rz-bubble rz-limit\"></span> <span class=\"rz-bubble rz-limit\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul ng-show=showTicks class=rz-ticks><li ng-repeat=\"t in ticks\" class=tick ng-class=\"{selected: t.selected}\" ng-style=t.style><span ng-if=\"t.value != null && t.tooltip == null\" class=tick-value>{{ t.value }}</span> <span ng-if=\"t.value != null && t.tooltip != null\" class=tick-value uib-tooltip=\"{{ t.tooltip }}\" tooltip-placement={{t.tooltipPlacement}}>{{ t.value }}</span></li></ul>"
   );
 
 }]);

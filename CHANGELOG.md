@@ -1,3 +1,7 @@
+# 2.2.0 (not released yet)
+## Features
+- Add a `getSelectionBarColor` options to dynamically change the selection bar color (#197).
+
 # 2.1.0 (2015-11-29)
 ## Features
 - Add a `vertical` options to display vertical sliders (#185).
