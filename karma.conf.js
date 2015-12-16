@@ -8,9 +8,12 @@ module.exports = function (config) {
     // testing framework to use (jasmine/mocha/qunit/...)
     frameworks: ['mocha', 'chai', 'chai-things', 'chai-as-promised'],
 
+    reporters: ['progress', 'coverage'],
+
     // list of files / patterns to load in the browser
     files: [
       'bower_components/angular/angular.js',
+      'bower_components/jquery/dist/jquery.js',
       'node_modules/angular-mocks/angular-mocks.js',
       'src/*.js',
       'tests/spec/*.js',
@@ -22,6 +25,7 @@ module.exports = function (config) {
 
     // preprocess matching files before serving them to the browser
     preprocessors: {
+      "src/*.js": ['coverage'],
       "src/*Tpl.html": 'ng-html2js'
     },
 
@@ -40,6 +44,11 @@ module.exports = function (config) {
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: false,
+
+    coverageReporter: {
+      type: 'html',
+      dir: 'tests/coverage'
+    },
 
 
     // Start these browsers, currently available:
