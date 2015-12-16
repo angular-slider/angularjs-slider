@@ -139,6 +139,17 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     }
   };
 
+  //Slider with draggable range only
+  $scope.slider_draggable_range_only = {
+    minValue: 4,
+    maxValue: 6,
+    options: {
+      ceil: 10,
+      floor: 0,
+      draggableRangeOnly: true
+    }
+  };
+
   //Vertical sliders
   $scope.verticalSlider1 = {
     value: 0,
