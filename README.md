@@ -27,7 +27,7 @@ Slider directive implementation for AngularJS, without any dependencies: [http:/
 ## Examples
 
 - **Various examples:** [http://rzajac.github.io/angularjs-slider](http://rzajac.github.io/angularjs-slider/index.html)
-- **Same examples with code:** https://jsfiddle.net/juhbf3dz/
+- **Same examples with code:** https://jsfiddle.net/ValentinH/954eve2L/
 
 ## Reporting issues
 Make sure the report is accompanied by a reproducible demo. The ideal demo is created by forking [our standard jsFiddle](http://jsfiddle.net/cwhgLcjv/), adding your own code and stripping it down to an absolute minimum needed to demonstrate the bug.
