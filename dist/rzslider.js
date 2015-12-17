@@ -1159,7 +1159,7 @@
         this.ticks.on('touchstart', angular.bind(this, this.onMove, this.ticks));
 
         if (this.options.keyboardSupport) {
-          this.minH.on('focus', angular.bind(this, this.onPointerFocus, this.minH, 'rzSliderModel'))
+          this.minH.on('focus', angular.bind(this, this.onPointerFocus, this.minH, 'rzSliderModel'));
           if (this.range) {
             this.maxH.on('focus', angular.bind(this, this.onPointerFocus, this.maxH, 'rzSliderHigh'));
           }
@@ -1269,14 +1269,14 @@
         this.callOnEnd();
       },
 
-      onPointerFocus: function(pointer, ref, event) {
+      onPointerFocus: function(pointer, ref) {
         this.tracking = ref;
         pointer.one('blur', angular.bind(this, this.onPointerBlur, pointer));
         pointer.on('keydown', angular.bind(this, this.onKeyboardEvent));
         pointer.addClass('rz-active');
       },
 
-      onPointerBlur: function(pointer, event) {
+      onPointerBlur: function(pointer) {
         pointer.off('keydown');
         this.tracking = '';
         pointer.removeClass('rz-active');
@@ -1312,11 +1312,7 @@
 
         var newValue = this.roundStep(this.sanitizeValue(action)),
           newOffset = this.valueToOffset(newValue);
-        var switched = this.positionTrackingHandle(newValue, newOffset);
-        if (switched) {
-          var pointer = this.tracking === 'rzSliderModel' ? this.minH : this.maxH;
-          pointer[0].focus(); //to focus the correct pointer
-        }
+        this.positionTrackingHandle(newValue, newOffset);
       },
 
       /**
@@ -1423,6 +1419,8 @@
             this.tracking = 'rzSliderHigh';
             this.minH.removeClass('rz-active');
             this.maxH.addClass('rz-active');
+            if (this.options.keyboardSupport)
+              this.maxH[0].focus();
             valueChanged = true;
           } else if (this.tracking === 'rzSliderHigh' && newValue <= this.scope.rzSliderModel) {
             switched = true;
@@ -1432,6 +1430,8 @@
             this.tracking = 'rzSliderModel';
             this.maxH.removeClass('rz-active');
             this.minH.addClass('rz-active');
+            if (this.options.keyboardSupport)
+              this.minH[0].focus();
             valueChanged = true;
           }
         }
