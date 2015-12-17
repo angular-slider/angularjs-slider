@@ -2,11 +2,11 @@
 
 git checkout master -- .gitignore
 
-git checkout master -- demo/*
+#git checkout master -- demo/*
 git checkout master -- dist/rzslider.css
 git checkout master -- dist/rzslider.js
 
-mv demo/* ./
+#mv demo/* ./
 
 # cp bower_components/angular/angular.min.js angular.min.js
 
