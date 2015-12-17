@@ -30,18 +30,20 @@ describe('rzslider api', function () {
     expect(element.find('span')).to.have.length(11);
   });
 
-  it('should trigger a left arrow', function () {
+  it('should trigger a left arrow', function (done) {
     var service = new RzSlider(scope, element);
     var event = pressLeftArrow();
     service.onPointerFocus(element, 'rzSliderModel', event);
     service.onKeyboardEvent(event);
     expect(scope.rzSliderModel).to.equal(9);
+    done();
   });
 
   function pressLeftArrow() {
-    var event = jQuery.Event("keydown");
-    event.which = 37;
-    return event;
+    var evt = document.createEvent('CustomEvent');  // MUST be 'CustomEvent'
+    evt.initCustomEvent('yourCustomEventName', false, false, null);
+    evt.which = 37;
+    return evt;
   }
 
   function compileHtml() {
