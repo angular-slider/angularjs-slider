@@ -34,7 +34,7 @@ Make sure the report is accompanied by a reproducible demo. The ideal demo is cr
 
 ## Common issues
 ### My slider is not rendered correctly on load
-If the slider's parent element is not visible during slider initialization, the slider can't know when its parent becomes visible. 
+If the slider's parent element is not visible during slider initialization, the slider can't know when its parent becomes visible.
 For instance, when displaying a slider inside an element which visibility is toggled using ng-show, you need to send an event to force it to redraw when you set your ng-show to true.
 
 Here's an example of `refreshSlider` method that you should call whenever the slider becomes visible.
@@ -208,6 +208,8 @@ $scope.slider = {
 **draggableRange** - _Boolean (defaults to false)_: When set to true and using a range slider, the range can be dragged by the selection bar. _This doesn't work when ticks are shown._
 
 **showSelectionBar** - _Boolean (defaults to false)_: Set to true to always show the selection bar.
+
+**getSelectionBarColor** - _Function(value) or Function(minVal, maxVal) (defaults to null)_: Function that returns the current color of the selection bar. If the returned color depends on a model value (either `rzScopeModel`or `'rzSliderHigh`), you should use the argument passed to the function. Indeed, when the function is called, there is no certainty that the model has already been updated.
 
 **hideLimitLabels** - _Boolean (defaults to false)_: Set to true to hide min / max labels
 

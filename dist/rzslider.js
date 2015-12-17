@@ -50,6 +50,7 @@
       showTicksValues: false,
       ticksValuesTooltip: null,
       vertical: false,
+      selectionBarColor: null,
       scale: 1,
       onStart: null,
       onChange: null,
@@ -432,6 +433,7 @@
               break;
             case 1:
               this.selBar = jElem;
+              this.selBarChild = this.selBar.children('rz-selection');
               break;
             case 2:
               this.minH = jElem;
@@ -472,8 +474,8 @@
         this.cmbLab.rzsp = 0;
       },
 
-      /** Update each elements style based on options
-       *
+      /**
+       * Update each elements style based on options
        */
       manageElementsStyle: function() {
 
@@ -662,9 +664,14 @@
         this.scope.ticks = [];
         for (var i = 0; i < ticksCount; i++) {
           var value = this.roundStep(this.minValue + i * this.step);
-          var tick = {
+          var tick =   {
             selected: this.isTickSelected(value)
           };
+          if (tick.selected && this.options.getSelectionBarColor) {
+            tick.style = {
+              'background-color': this.getSelectionBarColor()
+            };
+          }
           if (this.options.showTicksValues) {
             tick.value = this.getDisplayValue(value);
             if (this.options.ticksValuesTooltip) {
@@ -863,6 +870,22 @@
       updateSelectionBar: function() {
         this.setDimension(this.selBar, Math.abs(this.maxH.rzsp - this.minH.rzsp) + this.handleHalfDim);
         this.setPosition(this.selBar, this.range ? this.minH.rzsp + this.handleHalfDim : 0);
+        if (this.options.getSelectionBarColor) {
+          var color = this.getSelectionBarColor();
+          this.scope.barStyle = {
+            backgroundColor: color
+          };
+        }
+      },
+
+      /**
+       * Wrapper around the getSelectionBarColor of the user to pass to
+       * correct parameters
+       */
+      getSelectionBarColor: function() {
+        if (this.range)
+          return this.options.getSelectionBarColor(this.scope.rzSliderModel, this.scope.rzSliderHigh);
+        return this.options.getSelectionBarColor(this.scope.rzSliderModel);
       },
 
       /**
@@ -1305,7 +1328,7 @@
           valueChanged = true;
         }
 
-        if(valueChanged) {
+        if (valueChanged) {
           this.scope.$apply();
           this.callOnChange();
         }
@@ -1428,7 +1451,7 @@
   'use strict';
 
   $templateCache.put('rzSliderTpl.html',
-    "<span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\"></span></span> <span class=rz-pointer></span> <span class=rz-pointer></span> <span class=\"rz-bubble rz-limit\"></span> <span class=\"rz-bubble rz-limit\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul ng-show=showTicks class=rz-ticks><li ng-repeat=\"t in ticks\" class=tick ng-class=\"{selected: t.selected}\"><span ng-if=\"t.value != null && t.tooltip == null\" class=tick-value>{{ t.value }}</span> <span ng-if=\"t.value != null && t.tooltip != null\" class=tick-value uib-tooltip=\"{{ t.tooltip }}\" tooltip-placement={{t.tooltipPlacement}}>{{ t.value }}</span></li></ul>"
+    "<span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span> <span class=rz-pointer></span> <span class=rz-pointer></span> <span class=\"rz-bubble rz-limit\"></span> <span class=\"rz-bubble rz-limit\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul ng-show=showTicks class=rz-ticks><li ng-repeat=\"t in ticks track by $index\" class=tick ng-class=\"{selected: t.selected}\" ng-style=t.style><span ng-if=\"t.value != null && t.tooltip == null\" class=tick-value>{{ t.value }}</span> <span ng-if=\"t.value != null && t.tooltip != null\" class=tick-value uib-tooltip=\"{{ t.tooltip }}\" tooltip-placement={{t.tooltipPlacement}}>{{ t.value }}</span></li></ul>"
   );
 
 }]);

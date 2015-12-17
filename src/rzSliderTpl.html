@@ -1,5 +1,7 @@
 <span class="rz-bar-wrapper"><span class="rz-bar"></span></span> <!-- // 0 The slider bar -->
-<span class="rz-bar-wrapper"><span class="rz-bar rz-selection"></span></span> <!-- // 1 Highlight between two handles -->
+<span class="rz-bar-wrapper">
+  <span class="rz-bar rz-selection" ng-style="barStyle"></span>
+</span> <!-- // 1 Highlight between two handles -->
 <span class="rz-pointer"></span> <!-- // 2 Left slider handle -->
 <span class="rz-pointer"></span> <!-- // 3 Right slider handle -->
 <span class="rz-bubble rz-limit"></span> <!-- // 4 Floor label -->
@@ -8,7 +10,8 @@
 <span class="rz-bubble"></span> <!-- // 7 Label above right slider handle -->
 <span class="rz-bubble"></span> <!-- // 8 Range label when the slider handles are close ex. 15 - 17 -->
 <ul ng-show="showTicks" class="rz-ticks"> <!-- // 9 The ticks -->
-  <li ng-repeat="t in ticks" class="tick" ng-class="{selected: t.selected}">
+  <li ng-repeat="t in ticks track by $index" class="tick" ng-class="{selected: t.selected}"
+      ng-style="t.style">
     <span ng-if="t.value != null && t.tooltip == null" class="tick-value">{{ t.value }}</span>
     <span ng-if="t.value != null && t.tooltip != null" class="tick-value"
       uib-tooltip="{{ t.tooltip }}" tooltip-placement="{{t.tooltipPlacement}}">{{ t.value }}</span>
