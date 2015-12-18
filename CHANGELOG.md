@@ -1,3 +1,10 @@
+# 2.2.0 (2015-12-17)
+## Features
+- Add a `getSelectionBarColor` option to dynamically change the selection bar color (#197).
+
+## Bug fixes
+- Fix negative float values rendering (#190).
+
 # 2.1.0 (2015-11-29)
 ## Features
 - Add a `vertical` options to display vertical sliders (#185).

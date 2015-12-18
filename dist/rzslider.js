@@ -4,7 +4,7 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v2.1.0
+ * Version: v2.2.0
  *
  * Licensed under the MIT license
  */
@@ -50,6 +50,7 @@
       showTicksValues: false,
       ticksValuesTooltip: null,
       vertical: false,
+      selectionBarColor: null,
       keyboardSupport: true,
       scale: 1,
       onStart: null,
@@ -378,6 +379,7 @@
         this.range = this.scope.rzSliderModel !== undefined && this.scope.rzSliderHigh !== undefined;
         this.options.draggableRange = this.range && this.options.draggableRange;
         this.options.showTicks = this.options.showTicks || this.options.showTicksValues;
+        this.scope.showTicks = this.options.showTicks; //scope is used in the template
 
         if (this.options.stepsArray) {
           this.options.floor = 0;
@@ -433,6 +435,7 @@
               break;
             case 1:
               this.selBar = jElem;
+              this.selBarChild = this.selBar.children('rz-selection');
               break;
             case 2:
               this.minH = jElem;
@@ -473,8 +476,8 @@
         this.cmbLab.rzsp = 0;
       },
 
-      /** Update each elements style based on options
-       *
+      /**
+       * Update each elements style based on options
        */
       manageElementsStyle: function() {
 
@@ -489,9 +492,6 @@
         this.alwaysHide(this.maxLab, this.options.showTicksValues || !this.range);
         this.alwaysHide(this.cmbLab, this.options.showTicksValues || !this.range);
         this.alwaysHide(this.selBar, !this.range && !this.options.showSelectionBar);
-
-        if (!this.options.showTicks)
-          this.ticks.html('');
 
         if (this.options.draggableRange)
           this.selBar.addClass('rz-draggable');
@@ -688,28 +688,30 @@
        */
       updateTicksScale: function() {
         if (!this.options.showTicks) return;
-        if (!this.step) return; //if step is 0, the following loop will be endless.
+        if (!this.step) return; //if step is 0, we'll get a zero division
 
         var positions = '',
           ticksCount = Math.round((this.maxValue - this.minValue) / this.step) + 1;
+        this.scope.ticks = [];
         for (var i = 0; i < ticksCount; i++) {
           var value = this.roundStep(this.minValue + i * this.step);
-          var selectedClass = this.isTickSelected(value) ? 'selected' : '';
-          positions += '<li class="tick ' + selectedClass + '">';
-          if (this.options.showTicksValues) {
-            var tooltip = '';
-            if (this.options.ticksValuesTooltip) {
-              tooltip = 'uib-tooltip="' + this.options.ticksValuesTooltip(value) + '"';
-              if (this.options.vertical)
-                tooltip += ' tooltip-placement="right"'
-            }
-            positions += '<span ' + tooltip + ' class="tick-value">' + this.getDisplayValue(value) + '</span>';
+          var tick =   {
+            selected: this.isTickSelected(value)
+          };
+          if (tick.selected && this.options.getSelectionBarColor) {
+            tick.style = {
+              'background-color': this.getSelectionBarColor()
+            };
           }
-          positions += '</li>';
+          if (this.options.showTicksValues) {
+            tick.value = this.getDisplayValue(value);
+            if (this.options.ticksValuesTooltip) {
+              tick.tooltip = this.options.ticksValuesTooltip(value);
+              tick.tooltipPlacement = this.options.vertical ? 'right' : 'top';
+            }
+          }
+          this.scope.ticks.push(tick);
         }
-        this.ticks.html(positions);
-        if (this.options.ticksValuesTooltip)
-          $compile(this.ticks.contents())(this.scope);
       },
 
       isTickSelected: function(value) {
@@ -899,6 +901,22 @@
       updateSelectionBar: function() {
         this.setDimension(this.selBar, Math.abs(this.maxH.rzsp - this.minH.rzsp) + this.handleHalfDim);
         this.setPosition(this.selBar, this.range ? this.minH.rzsp + this.handleHalfDim : 0);
+        if (this.options.getSelectionBarColor) {
+          var color = this.getSelectionBarColor();
+          this.scope.barStyle = {
+            backgroundColor: color
+          };
+        }
+      },
+
+      /**
+       * Wrapper around the getSelectionBarColor of the user to pass to
+       * correct parameters
+       */
+      getSelectionBarColor: function() {
+        if (this.range)
+          return this.options.getSelectionBarColor(this.scope.rzSliderModel, this.scope.rzSliderHigh);
+        return this.options.getSelectionBarColor(this.scope.rzSliderModel);
       },
 
       /**
@@ -942,10 +960,7 @@
        * @returns {number}
        */
       roundStep: function(value) {
-        var step = this.step,
-          remainder = +((value - this.minValue) % step).toFixed(3),
-          steppedValue = remainder > (step / 2) ? value + step - remainder : value - remainder;
-
+        var steppedValue = Math.round(value / this.step) * this.step;
         steppedValue = steppedValue.toFixed(this.precision);
         return +steppedValue;
       },
@@ -1144,7 +1159,7 @@
         this.ticks.on('touchstart', angular.bind(this, this.onMove, this.ticks));
 
         if (this.options.keyboardSupport) {
-          this.minH.on('focus', angular.bind(this, this.onPointerFocus, this.minH, 'rzSliderModel'))
+          this.minH.on('focus', angular.bind(this, this.onPointerFocus, this.minH, 'rzSliderModel'));
           if (this.range) {
             this.maxH.on('focus', angular.bind(this, this.onPointerFocus, this.maxH, 'rzSliderHigh'));
           }
@@ -1254,14 +1269,14 @@
         this.callOnEnd();
       },
 
-      onPointerFocus: function(pointer, ref, event) {
+      onPointerFocus: function(pointer, ref) {
         this.tracking = ref;
         pointer.one('blur', angular.bind(this, this.onPointerBlur, pointer));
         pointer.on('keydown', angular.bind(this, this.onKeyboardEvent));
         pointer.addClass('rz-active');
       },
 
-      onPointerBlur: function(pointer, event) {
+      onPointerBlur: function(pointer) {
         pointer.off('keydown');
         this.tracking = '';
         pointer.removeClass('rz-active');
@@ -1297,11 +1312,7 @@
 
         var newValue = this.roundStep(this.sanitizeValue(action)),
           newOffset = this.valueToOffset(newValue);
-        var switched = this.positionTrackingHandle(newValue, newOffset);
-        if (switched) {
-          var pointer = this.tracking === 'rzSliderModel' ? this.minH : this.maxH;
-          pointer[0].focus(); //to focus the correct pointer
-        }
+        this.positionTrackingHandle(newValue, newOffset);
       },
 
       /**
@@ -1393,34 +1404,32 @@
        *
        * @param {number} newValue new model value
        * @param {number} newOffset new offset value
-       * @returns {Boolean} flag that indicates if min and max pointers have been switched.
        */
       positionTrackingHandle: function(newValue, newOffset) {
-        var switched = false;
+        var valueChanged = false;
+
         if (this.range) {
           /* This is to check if we need to switch the min and max handles*/
           if (this.tracking === 'rzSliderModel' && newValue >= this.scope.rzSliderHigh) {
-            switched = true;
             this.scope[this.tracking] = this.scope.rzSliderHigh;
             this.updateHandles(this.tracking, this.maxH.rzsp);
             this.updateAriaAttributes();
             this.tracking = 'rzSliderHigh';
             this.minH.removeClass('rz-active');
             this.maxH.addClass('rz-active');
-            /* We need to apply here because we are not sure that we will enter the next block */
-            this.scope.$apply();
-            this.callOnChange();
+            if (this.options.keyboardSupport)
+              this.maxH[0].focus();
+            valueChanged = true;
           } else if (this.tracking === 'rzSliderHigh' && newValue <= this.scope.rzSliderModel) {
-            switched = true;
             this.scope[this.tracking] = this.scope.rzSliderModel;
             this.updateHandles(this.tracking, this.minH.rzsp);
             this.updateAriaAttributes();
             this.tracking = 'rzSliderModel';
             this.maxH.removeClass('rz-active');
             this.minH.addClass('rz-active');
-            /* We need to apply here because we are not sure that we will enter the next block */
-            this.scope.$apply();
-            this.callOnChange();
+            if (this.options.keyboardSupport)
+              this.minH[0].focus();
+            valueChanged = true;
           }
         }
 
@@ -1428,10 +1437,13 @@
           this.scope[this.tracking] = newValue;
           this.updateHandles(this.tracking, newOffset);
           this.updateAriaAttributes();
+          valueChanged = true;
+        }
+
+        if (valueChanged) {
           this.scope.$apply();
           this.callOnChange();
         }
-        return switched;
       },
 
       /**
@@ -1529,7 +1541,7 @@
   'use strict';
 
   $templateCache.put('rzSliderTpl.html',
-    "<span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\"></span></span> <span class=rz-pointer></span> <span class=rz-pointer></span> <span class=\"rz-bubble rz-limit\"></span> <span class=\"rz-bubble rz-limit\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul class=rz-ticks></ul>"
+    "<span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span> <span class=rz-pointer></span> <span class=rz-pointer></span> <span class=\"rz-bubble rz-limit\"></span> <span class=\"rz-bubble rz-limit\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul ng-show=showTicks class=rz-ticks><li ng-repeat=\"t in ticks track by $index\" class=tick ng-class=\"{selected: t.selected}\" ng-style=t.style><span ng-if=\"t.value != null && t.tooltip == null\" class=tick-value>{{ t.value }}</span> <span ng-if=\"t.value != null && t.tooltip != null\" class=tick-value uib-tooltip=\"{{ t.tooltip }}\" tooltip-placement={{t.tooltipPlacement}}>{{ t.value }}</span></li></ul>"
   );
 
 }]);
