@@ -45,7 +45,7 @@ describe('rzslider api', function () {
 
   function pressLeftArrow() {
     var evt = document.createEvent('CustomEvent');  // MUST be 'CustomEvent'
-    evt.initCustomEvent('yourCustomEventName', false, false, null);
+    evt.initCustomEvent('keydown', false, false, null);
     evt.which = 37;
     return evt;
   }
