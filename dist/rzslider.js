@@ -644,15 +644,19 @@
        * Updates aria attributes according to current values
        */
       updateAriaAttributes: function() {
-        this.minH.attr('aria-valuenow', this.scope.rzSliderModel);
-        this.minH.attr('aria-valuetext', this.customTrFn(this.scope.rzSliderModel));
-        this.minH.attr('aria-valuemin', this.minValue);
-        this.minH.attr('aria-valuemax', this.maxValue);
+        this.minH.attr({
+          'aria-valuenow': this.scope.rzSliderModel,
+          'aria-valuetext': this.customTrFn(this.scope.rzSliderModel),
+          'aria-valuemin': this.minValue,
+          'aria-valuemax': this.maxValue
+        });
         if (this.range) {
-          this.maxH.attr('aria-valuenow', this.scope.rzSliderHigh);
-          this.maxH.attr('aria-valuetext', this.customTrFn(this.scope.rzSliderHigh));
-          this.maxH.attr('aria-valuemin', this.minValue);
-          this.maxH.attr('aria-valuemax', this.maxValue);
+          this.maxH.attr({
+            'aria-valuenow': this.scope.rzSliderHigh,
+            'aria-valuetext': this.customTrFn(this.scope.rzSliderHigh),
+            'aria-valuemin': this.minValue,
+            'aria-valuemax': this.maxValue
+          });
         }
       },
 
@@ -1118,6 +1122,16 @@
       },
 
       /**
+       * Wrapper function to focus an angular element
+       *
+       * @param el {AngularElement} the element to focus
+       */
+      focusElement: function(el) {
+        var DOM_ELEMENT = 0;
+        el[DOM_ELEMENT].focus();
+      },
+
+      /**
        * Bind mouse and touch events to slider handles
        *
        * @returns {undefined}
@@ -1208,7 +1222,7 @@
         pointer.addClass('rz-active');
 
         if (this.options.keyboardSupport)
-          pointer[0].focus();
+          this.focusElement(pointer);
 
         ehMove = angular.bind(this, this.dragging.active ? this.onDragMove : this.onMove, pointer);
         ehEnd = angular.bind(this, this.onEnd, ehMove);
@@ -1420,7 +1434,7 @@
             this.minH.removeClass('rz-active');
             this.maxH.addClass('rz-active');
             if (this.options.keyboardSupport)
-              this.maxH[0].focus();
+              this.focusElement(this.maxH);
             valueChanged = true;
           } else if (this.tracking === 'rzSliderHigh' && newValue <= this.scope.rzSliderModel) {
             switched = true;
@@ -1431,7 +1445,7 @@
             this.maxH.removeClass('rz-active');
             this.minH.addClass('rz-active');
             if (this.options.keyboardSupport)
-              this.minH[0].focus();
+              this.focusElement(this.minH);
             valueChanged = true;
           }
         }
