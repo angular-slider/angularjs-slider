@@ -1,12 +1,12 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   // Project configuration.
   grunt.initConfig({
 
     pkg: grunt.file.readJSON('package.json'),
 
     minBanner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-      '(c) <%= pkg.author %>, <%= pkg.repository.url %> - ' +
-      '<%= grunt.template.today("yyyy-mm-dd") %> */\n',
+    '(c) <%= pkg.author %>, <%= pkg.repository.url %> - ' +
+    '<%= grunt.template.today("yyyy-mm-dd") %> */\n',
 
     recess: {
       options: {
@@ -58,10 +58,10 @@ module.exports = function(grunt) {
             removeStyleLinkTypeAttributes: true
           },
           module: 'rzModule',
-          url: function(url) {
+          url: function (url) {
             return url.replace('src/', '');
           },
-          bootstrap: function(module, script) {
+          bootstrap: function (module, script) {
             return 'module.run(function($templateCache) {\n' + script + '\n});';
           }
         }
@@ -118,8 +118,13 @@ module.exports = function(grunt) {
       options: {
         port: 9000
       }
+    },
+    karma: {
+      unit: {
+        configFile: 'karma.conf.js',
+        singleRun: true
+      }
     }
-
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -129,8 +134,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-ng-annotate');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-serve');
+  grunt.loadNpmTasks('grunt-karma');
 
   grunt.registerTask('default', ['css', 'js']);
+  grunt.registerTask('test', ['karma']);
 
   grunt.registerTask('css', ['recess']);
   grunt.registerTask('js', ['ngtemplates', 'replace', 'ngAnnotate', 'uglify']);
