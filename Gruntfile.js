@@ -1,12 +1,16 @@
-module.exports = function (grunt) {
+module.exports = function(grunt) {
+  var banner = '/*! <%= pkg.name %> - v<%= pkg.version %> - \n' +
+    ' (c) <%= pkg.author %> - \n'+
+    ' <%= pkg.repository.url %> - \n' +
+    ' <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+    minBanner = banner.replace(/\n/g, '') + '\n';
+
   // Project configuration.
   grunt.initConfig({
 
     pkg: grunt.file.readJSON('package.json'),
 
-    minBanner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-    '(c) <%= pkg.author %>, <%= pkg.repository.url %> - ' +
-    '<%= grunt.template.today("yyyy-mm-dd") %> */\n',
+    minBanner: minBanner,
 
     recess: {
       options: {
@@ -58,10 +62,10 @@ module.exports = function (grunt) {
             removeStyleLinkTypeAttributes: true
           },
           module: 'rzModule',
-          url: function (url) {
+          url: function(url) {
             return url.replace('src/', '');
           },
-          bootstrap: function (module, script) {
+          bootstrap: function(module, script) {
             return 'module.run(function($templateCache) {\n' + script + '\n});';
           }
         }
@@ -83,6 +87,21 @@ module.exports = function (grunt) {
           dest: 'dist/'
         }]
       }
+    },
+
+    concat: {
+      options: {
+        stripBanners: true,
+        banner: banner
+      },
+      js: {
+        src: ['dist/rzslider.js'],
+        dest: 'dist/rzslider.js',
+      },
+      css: {
+        src: ['dist/rzslider.css'],
+        dest: 'dist/rzslider.css',
+      },
     },
 
     ngAnnotate: {
@@ -131,6 +150,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-recess');
   grunt.loadNpmTasks('grunt-angular-templates');
   grunt.loadNpmTasks('grunt-replace');
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-ng-annotate');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-serve');
@@ -140,5 +160,5 @@ module.exports = function (grunt) {
   grunt.registerTask('test', ['karma']);
 
   grunt.registerTask('css', ['recess']);
-  grunt.registerTask('js', ['ngtemplates', 'replace', 'ngAnnotate', 'uglify']);
+  grunt.registerTask('js', ['ngtemplates', 'replace','concat', 'ngAnnotate', 'uglify']);
 };

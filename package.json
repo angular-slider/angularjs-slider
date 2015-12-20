@@ -18,6 +18,7 @@
     "chai-things": "^0.2.0",
     "grunt": "~0.4.2",
     "grunt-angular-templates": "^0.5.7",
+    "grunt-contrib-concat": "^0.5.1",
     "grunt-contrib-mincss": "~0.3.2",
     "grunt-contrib-uglify": "~0.2.2",
     "grunt-contrib-watch": "^0.6.1",

@@ -1,16 +1,7 @@
-/**
- * Angular JS slider directive
- *
- * (c) Rafal Zajac <rzajac@gmail.com>
- * http://github.com/rzajac/angularjs-slider
- *
- * Licensed under the MIT license
- */
-
-/* Slider colors */
-
-/* Slider size parameters */
-
+/*! angularjs-slider - v2.2.0 - 
+ (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
+ https://github.com/rzajac/angularjs-slider.git - 
+ 2015-12-20 */
 rzslider {
   position: relative;
   display: inline-block;

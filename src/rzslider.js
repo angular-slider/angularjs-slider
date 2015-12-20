@@ -4,11 +4,8 @@
  * (c) Rafal Zajac <rzajac@gmail.com>
  * http://github.com/rzajac/angularjs-slider
  *
- * Version: v2.2.0
- *
  * Licensed under the MIT license
  */
-
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
