@@ -11,11 +11,16 @@
     "angular",
     "slider"
   ],
+  "scripts": {
+    "commit": "git-cz"
+  },
   "devDependencies": {
     "angular-mocks": "^1.4.8",
     "chai": "^3.4.1",
     "chai-as-promised": "^5.1.0",
     "chai-things": "^0.2.0",
+    "commitizen": "^2.4.6",
+    "cz-conventional-changelog": "^1.1.5",
     "grunt": "~0.4.2",
     "grunt-angular-templates": "^0.5.7",
     "grunt-contrib-concat": "^0.5.1",
@@ -40,5 +45,8 @@
   },
   "author": "Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com>",
   "license": "MIT",
-  "readmeFilename": "README.md"
+  "readmeFilename": "README.md",
+  "czConfig": {
+    "path": "node_modules/cz-conventional-changelog"
+  }
 }
