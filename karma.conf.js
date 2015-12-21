@@ -45,8 +45,10 @@ module.exports = function (config) {
     autoWatch: false,
 
     coverageReporter: {
-      type: 'html',
-      dir: 'tests/coverage'
+      // specify a common output directory
+      dir: 'tests/coverage',
+      type: 'lcov',
+      subdir: '.'
     },
 
 

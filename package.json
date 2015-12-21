@@ -14,7 +14,8 @@
   "scripts": {
     "commit": "git-cz",
     "build": "grunt",
-    "test": "grunt test"
+    "test": "grunt test",
+    "report-coverage": "cat ./tests/coverage/lcov.info | codecov"
   },
   "peerDependencies": {
     "angular": "^1.2.x"
@@ -25,6 +26,7 @@
     "chai": "^3.4.1",
     "chai-as-promised": "^5.1.0",
     "chai-things": "^0.2.0",
+    "codecov.io": "^0.1.6",
     "commitizen": "^2.4.6",
     "cz-conventional-changelog": "^1.1.5",
     "grunt": "~0.4.2",
