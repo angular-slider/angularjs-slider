@@ -16,7 +16,11 @@
     "build": "grunt",
     "test": "grunt test"
   },
+  "peerDependencies": {
+    "angular": "^1.2.x"
+  },
   "devDependencies": {
+    "angular": "1.4.7",
     "angular-mocks": "^1.4.8",
     "chai": "^3.4.1",
     "chai-as-promised": "^5.1.0",
