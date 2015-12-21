@@ -4,6 +4,8 @@ node_js:
 cache:
   directories:
     - node_modules
+notifications:
+  email: false
 before_install:
   - npm i -g npm@^2.0.0
   - npm install -g grunt-cli
