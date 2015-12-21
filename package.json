@@ -12,7 +12,9 @@
     "slider"
   ],
   "scripts": {
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "build": "grunt",
+    "test": "grunt test"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.8",
