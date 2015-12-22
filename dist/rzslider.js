@@ -1345,7 +1345,7 @@
             HOME: this.minValue,
             END: this.maxValue
           },
-          key = keys[keyCode],
+          key = keys[keyCode], 
           action = actions[key];
         if (action == null || this.tracking === '') return;
         event.preventDefault();

@@ -1574,7 +1574,7 @@
       },
 
       link: function(scope, elem) {
-        return new RzSlider(scope, elem);
+        scope.service = new RzSlider(scope, elem); //attach on scope so we can test it
       }
     };
   });

@@ -125,12 +125,16 @@ module.exports = function(grunt) {
         }
       },
       js: {
-        files: ['src/*js', 'src/*.html'],
+        files: ['src/*.js', 'src/*.html'],
         tasks: ['js']
       },
       less: {
         files: ['src/*.less'],
         tasks: ['css']
+      },
+      test: {
+        files: ['src/*.js', 'tests/spec/*.js'],
+        tasks: ['test']
       }
     },
     serve: {
