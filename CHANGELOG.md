@@ -1,3 +1,8 @@
+# 2.3.0 (2015-12-22)
+## Features
+- Add keyboard support (activated by default with `keyboardSupport` set to true) (#191).
+- Add a `draggableRangeOnly` options (#203).
+
 # 2.2.0 (2015-12-17)
 ## Features
 - Add a `getSelectionBarColor` option to dynamically change the selection bar color (#197).

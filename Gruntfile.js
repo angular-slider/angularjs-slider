@@ -96,17 +96,17 @@ module.exports = function(grunt) {
       },
       js: {
         src: ['dist/rzslider.js'],
-        dest: 'dist/rzslider.js',
+        dest: 'dist/rzslider.js'
       },
       css: {
         src: ['dist/rzslider.css'],
-        dest: 'dist/rzslider.css',
-      },
+        dest: 'dist/rzslider.css'
+      }
     },
 
     ngAnnotate: {
       options: {
-        singleQuotes: true,
+        singleQuotes: true
       },
       rzslider: {
         files: [{
@@ -159,6 +159,6 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['css', 'js']);
   grunt.registerTask('test', ['karma']);
 
-  grunt.registerTask('css', ['recess']);
-  grunt.registerTask('js', ['ngtemplates', 'replace','concat', 'ngAnnotate', 'uglify']);
+  grunt.registerTask('css', ['recess','concat:css']);
+  grunt.registerTask('js', ['ngtemplates', 'replace','concat:js', 'ngAnnotate', 'uglify']);
 };

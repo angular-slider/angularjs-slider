@@ -154,10 +154,11 @@ The default options are:
     ceil: null, //defaults to rz-slider-model
     step: 1,
     precision: 0,
-    translate: null,
     id: null,
+    translate: null,
     stepsArray: null,
     draggableRange: false,
+    draggableRangeOnly: false,
     showSelectionBar: false,
     hideLimitLabels: false,
     readOnly: false,
@@ -165,7 +166,10 @@ The default options are:
     interval: 350,
     showTicks: false,
     showTicksValues: false,
+    ticksValuesTooltip: null,
     vertical: false,
+    selectionBarColor: null,
+    keyboardSupport: true,
     scale: 1,
     onStart: null,
     onChange: null,
@@ -238,6 +242,14 @@ $scope.slider = {
 
 **vertical** - _Boolean (defaults to false)_: Set to true to display the slider vertically. The slider will take the full height of its parent.
 _Changing this value at runtime is not currently supported._
+
+**keyboardSupport** - _Boolean (defaults to true)_: Handles are focusable (on click or with tab) and can be modified using the following keyboard controls:
+  - Left/bottom arrows: -1
+  - Right/top arrows: +1
+  - Page-down: -10%
+  - Page-up: +10%
+  - Home: minimum value
+  - End: maximum value
 
 ## Change default options
 If you want the change the default options for all the sliders displayed in your application, you can set them using the `RzSliderOptions.options()` method:
