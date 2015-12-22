@@ -1,7 +1,12 @@
-/*! angularjs-slider - v2.2.0 - 
- (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
- https://github.com/angular-slider/angularjs-slider - 
- 2015-12-21 */
+/**
+ * Angular JS slider directive
+ *
+ * (c) Rafal Zajac <rzajac@gmail.com>
+ * http://github.com/rzajac/angularjs-slider
+ *
+ * Licensed under the MIT license
+ */
+
 rzslider {
   position: relative;
   display: inline-block;
@@ -126,6 +131,7 @@ rzslider .rz-ticks {
   display: -ms-flexbox;
   display: flex;
   width: 100%;
+  height: 0;
   padding: 0 11px;
   margin: 0;
   list-style: none;
@@ -206,7 +212,7 @@ rzslider.vertical .rz-ticks {
   top: 0;
   left: -3px;
   z-index: 1;
-  width: auto;
+  width: 0;
   height: 100%;
   padding: 11px 0;
   -webkit-flex-direction: column-reverse;

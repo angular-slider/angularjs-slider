@@ -115,6 +115,7 @@ rzslider {
   .rz-ticks {
     box-sizing: border-box;
     width: 100%;
+    height: 0;
     position: absolute;
     left: 0;
     top: -(@ticksHeight - @barDimension) / 2;
@@ -195,7 +196,7 @@ rzslider {
 
     .rz-ticks {
       height: 100%;
-      width: auto;
+      width: 0;
       left: -(@ticksHeight - @barDimension) / 2;
       top: 0;
       padding: (@handleSize - @ticksWidth) / 2 0;
