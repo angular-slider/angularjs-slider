@@ -247,6 +247,12 @@
        */
       this.initHasRun = false;
 
+      /**
+       * Internal flag to prevent watchers to be called when the sliders value are modified internally.
+       * @type {boolean}
+       */
+      this.internalChange = false;
+
       // Slider DOM elements wrapped in jqLite
       this.fullBar = null; // The whole slider bar
       this.selBar = null; // Highlight between two handles
@@ -332,14 +338,26 @@
           self.resetSlider();
         });
 
-        // Watchers
+        // Watchers (order is important because in case of simultaneous change,
+        // watchers will be called in the same order)
+        this.scope.$watch('rzSliderOptions', function(newValue, oldValue) {
+          if (newValue === oldValue)
+            return;
+          self.applyOptions();
+          self.resetSlider();
+        }, true);
+
         this.scope.$watch('rzSliderModel', function(newValue, oldValue) {
+          if(self.internalChange)
+            return;
           if (newValue === oldValue)
             return;
           thrLow();
         });
 
         this.scope.$watch('rzSliderHigh', function(newValue, oldValue) {
+          if(self.internalChange)
+            return;
           if (newValue === oldValue)
             return;
           if (newValue != null)
@@ -349,13 +367,6 @@
             self.resetSlider();
           }
         });
-
-        this.scope.$watch('rzSliderOptions', function(newValue, oldValue) {
-          if (newValue === oldValue)
-            return;
-          self.applyOptions();
-          self.resetSlider();
-        }, true);
 
         this.scope.$on('$destroy', function() {
           self.unbindEvents();
@@ -1446,8 +1457,7 @@
         this.scope.rzSliderHigh = newMaxValue;
         this.updateHandles('rzSliderModel', newMinOffset);
         this.updateHandles('rzSliderHigh', newMaxOffset);
-        this.scope.$apply();
-        this.callOnChange();
+        this.applyModel();
       },
 
       /**
@@ -1495,8 +1505,7 @@
         }
 
         if (valueChanged) {
-          this.scope.$apply();
-          this.callOnChange();
+          this.applyModel();
         }
         return switched;
       },
@@ -1523,6 +1532,17 @@
         }
 
         return eventNames;
+      },
+
+      /**
+       * Apply the model values using scope.$apply.
+       * We wrap it with the internalChange flag to avoid the watchers to be called
+       */
+      applyModel: function() {
+        this.internalChange = true;
+        this.scope.$apply();
+        this.callOnChange();
+        this.internalChange = false;
       }
     };
 
