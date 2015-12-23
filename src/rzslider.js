@@ -422,6 +422,7 @@
        */
       resetSlider: function() {
         this.manageElementsStyle();
+        this.addAccessibility();
         this.setMinAndMax();
         this.updateCeilLab();
         this.updateFloorLab();
@@ -532,7 +533,7 @@
       manageEventsBindings: function() {
         if (this.options.disabled || this.options.readOnly)
           this.unbindEvents();
-        else if (!this.options.disabled || !this.options.readOnly)
+        else
           this.bindEvents();
       },
 
@@ -649,15 +650,19 @@
       addAccessibility: function() {
         this.minH.attr('role', 'slider');
         this.updateAriaAttributes();
-        if (this.options.keyboardSupport)
+        if (this.options.keyboardSupport && !(this.options.readOnly || this.options.disabled))
           this.minH.attr('tabindex', '0');
+        else
+          this.minH.attr('tabindex', '');
         if (this.options.vertical)
           this.minH.attr('aria-orientation', 'vertical');
 
         if (this.range) {
           this.maxH.attr('role', 'slider');
-          if (this.options.keyboardSupport)
+          if (this.options.keyboardSupport && !(this.options.readOnly || this.options.disabled))
             this.maxH.attr('tabindex', '0');
+          else
+            this.maxH.attr('tabindex', '');
           if (this.options.vertical)
             this.maxH.attr('aria-orientation', 'vertical');
         }
@@ -1374,13 +1379,21 @@
             newMinValue = newValue;
             newMinOffset = newOffset;
             newMaxValue = newValue + difference;
-            if (newMaxValue > this.maxValue) return;
+            if (newMaxValue > this.maxValue) {
+              newMaxValue = this.maxValue;
+              newMinValue = newMaxValue - difference;
+              newMinOffset = this.valueToOffset(newMinValue);
+            }
             newMaxOffset = this.valueToOffset(newMaxValue);
           } else {
             newMaxValue = newValue;
             newMaxOffset = newOffset;
             newMinValue = newValue - difference;
-            if (newMinValue < this.minValue) return;
+            if (newMinValue < this.minValue) {
+              newMinValue = this.minValue;
+              newMaxValue = newMinValue + difference;
+              newMaxOffset = this.valueToOffset(newMaxValue);
+            }
             newMinOffset = this.valueToOffset(newMinValue);
           }
           this.positionTrackingBar(newMinValue, newMaxValue, newMinOffset, newMaxOffset);
