@@ -104,6 +104,19 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     }
   };
 
+  //Slider with ticks and tooltip
+  $scope.slider_ticks_tooltip = {
+    value: 5,
+    options: {
+      ceil: 10,
+      floor: 0,
+      showTicks: true,
+      ticksTooltip: function(v) {
+        return 'Tooltip for ' + v;
+      }
+    }
+  };
+
   //Slider with ticks and values
   $scope.slider_ticks_values = {
     value: 5,
