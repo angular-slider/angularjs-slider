@@ -46,6 +46,7 @@
       interval: 350,
       showTicks: false,
       showTicksValues: false,
+      ticksTooltip: null,
       ticksValuesTooltip: null,
       vertical: false,
       selectionBarColor: null,
@@ -735,11 +736,15 @@
               'background-color': this.getSelectionBarColor()
             };
           }
+          if (this.options.ticksTooltip) {
+            tick.tooltip = this.options.ticksTooltip(value);
+            tick.tooltipPlacement = this.options.vertical ? 'right' : 'top';
+          }
           if (this.options.showTicksValues) {
             tick.value = this.getDisplayValue(value);
             if (this.options.ticksValuesTooltip) {
-              tick.tooltip = this.options.ticksValuesTooltip(value);
-              tick.tooltipPlacement = this.options.vertical ? 'right' : 'top';
+              tick.valueTooltip = this.options.ticksValuesTooltip(value);
+              tick.valueTooltipPlacement = this.options.vertical ? 'right' : 'top';
             }
           }
           this.scope.ticks.push(tick);

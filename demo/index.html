@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AngularJS Touch Slider</title>
   <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./lib/bootstrap.min.css">
   <link rel="stylesheet" href="../dist/rzslider.css"/>
   <link rel="stylesheet" href="demo.css"/>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
@@ -94,6 +94,14 @@
     <rzslider
       rz-slider-model="slider_ticks.value"
       rz-slider-options="slider_ticks.options"
+    ></rzslider>
+  </article>
+
+  <article>
+    <h2>Slider with ticks and tooltips</h2>
+    <rzslider
+      rz-slider-model="slider_ticks_tooltip.value"
+      rz-slider-options="slider_ticks_tooltip.options"
     ></rzslider>
   </article>
 
@@ -243,7 +251,7 @@
 
 </body>
 <script src="../node_modules/angular/angular.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
+<script src="./lib/ui-bootstrap-tpls.js"></script>
 <script src="../dist/rzslider.js"></script>
 <script src="demo.js"></script>
 </html>

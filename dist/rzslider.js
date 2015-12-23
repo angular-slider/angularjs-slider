@@ -42,6 +42,7 @@
       interval: 350,
       showTicks: false,
       showTicksValues: false,
+      ticksTooltip: null,
       ticksValuesTooltip: null,
       vertical: false,
       selectionBarColor: null,
@@ -529,7 +530,7 @@
       manageEventsBindings: function() {
         if (this.options.disabled || this.options.readOnly)
           this.unbindEvents();
-        else if (!this.options.disabled || !this.options.readOnly)
+        else
           this.bindEvents();
       },
 
@@ -731,11 +732,15 @@
               'background-color': this.getSelectionBarColor()
             };
           }
+          if (this.options.ticksTooltip) {
+            tick.tooltip = this.options.ticksTooltip(value);
+            tick.tooltipPlacement = this.options.vertical ? 'right' : 'top';
+          }
           if (this.options.showTicksValues) {
             tick.value = this.getDisplayValue(value);
             if (this.options.ticksValuesTooltip) {
-              tick.tooltip = this.options.ticksValuesTooltip(value);
-              tick.tooltipPlacement = this.options.vertical ? 'right' : 'top';
+              tick.valueTooltip = this.options.ticksValuesTooltip(value);
+              tick.valueTooltipPlacement = this.options.vertical ? 'right' : 'top';
             }
           }
           this.scope.ticks.push(tick);
@@ -1633,7 +1638,7 @@
   'use strict';
 
   $templateCache.put('rzSliderTpl.html',
-    "<span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span> <span class=rz-pointer></span> <span class=rz-pointer></span> <span class=\"rz-bubble rz-limit\"></span> <span class=\"rz-bubble rz-limit\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul ng-show=showTicks class=rz-ticks><li ng-repeat=\"t in ticks track by $index\" class=tick ng-class=\"{selected: t.selected}\" ng-style=t.style><span ng-if=\"t.value != null && t.tooltip == null\" class=tick-value>{{ t.value }}</span> <span ng-if=\"t.value != null && t.tooltip != null\" class=tick-value uib-tooltip=\"{{ t.tooltip }}\" tooltip-placement={{t.tooltipPlacement}}>{{ t.value }}</span></li></ul>"
+    "<span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span> <span class=rz-pointer></span> <span class=rz-pointer></span> <span class=\"rz-bubble rz-limit\"></span> <span class=\"rz-bubble rz-limit\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul ng-show=showTicks class=rz-ticks><li ng-repeat=\"t in ticks track by $index\" class=tick ng-class=\"{selected: t.selected}\" ng-style=t.style ng-attr-uib-tooltip=\"{{ t.tooltip }}\" ng-attr-tooltip-placement={{t.tooltipPlacement}}><span ng-if=\"t.value != null\" class=tick-value ng-attr-uib-tooltip=\"{{ t.valueTooltip }}\" ng-attr-tooltip-placement={{t.valueTooltipPlacement}}>{{ t.value }}</span></li></ul>"
   );
 
 }]);
