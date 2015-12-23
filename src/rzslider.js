@@ -78,7 +78,7 @@
     return factory;
   })
 
-  .value('rzThrottle',
+  .factory('rzThrottle', function($timeout) {
     /**
      * rzThrottle
      *
@@ -89,7 +89,7 @@
      * @param {ThrottleOptions} options
      * @returns {Function}
      */
-    function throttle(func, wait, options) {
+    return function(func, wait, options) {
       'use strict';
       var getTime = (Date.now || function() {
         return new Date().getTime();
@@ -113,17 +113,18 @@
         context = this;
         args = arguments;
         if (remaining <= 0) {
-          clearTimeout(timeout);
+          $timeout.cancel(timeout);
           timeout = null;
           previous = now;
           result = func.apply(context, args);
           context = args = null;
         } else if (!timeout && options.trailing !== false) {
-          timeout = setTimeout(later, remaining);
+          timeout = $timeout(later, remaining);
         }
         return result;
       };
-    })
+    }
+  })
 
   .factory('RzSlider', function($timeout, $document, $window, $compile, RzSliderOptions, rzThrottle) {
     'use strict';
@@ -348,7 +349,7 @@
         }, true);
 
         this.scope.$watch('rzSliderModel', function(newValue, oldValue) {
-          if(self.internalChange)
+          if (self.internalChange)
             return;
           if (newValue === oldValue)
             return;
@@ -356,7 +357,7 @@
         });
 
         this.scope.$watch('rzSliderHigh', function(newValue, oldValue) {
-          if(self.internalChange)
+          if (self.internalChange)
             return;
           if (newValue === oldValue)
             return;
@@ -1574,7 +1575,7 @@
       },
 
       link: function(scope, elem) {
-        scope.service = new RzSlider(scope, elem); //attach on scope so we can test it
+        scope.slider = new RzSlider(scope, elem); //attach on scope so we can test it
       }
     };
   });
