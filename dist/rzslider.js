@@ -47,6 +47,7 @@
       selectionBarColor: null,
       keyboardSupport: true,
       scale: 1,
+      enforceRange: false,
       onStart: null,
       onChange: null,
       onEnd: null
@@ -624,6 +625,12 @@
           this.maxValue = this.roundStep(+this.options.ceil);
         else
           this.maxValue = this.options.ceil = this.range ? this.scope.rzSliderHigh : this.scope.rzSliderModel;
+
+        if (this.options.enforceRange) {
+          this.scope.rzSliderModel = this.sanitizeValue(this.scope.rzSliderModel);
+          if (this.range)
+            this.scope.rzSliderHigh = this.sanitizeValue(this.scope.rzSliderHigh);
+        }
 
         this.valueRange = this.maxValue - this.minValue;
       },
