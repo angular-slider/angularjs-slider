@@ -167,6 +167,7 @@ The default options are:
     interval: 350,
     showTicks: false,
     showTicksValues: false,
+    ticksTooltip: null,
     ticksValuesTooltip: null,
     vertical: false,
     selectionBarColor: null,
