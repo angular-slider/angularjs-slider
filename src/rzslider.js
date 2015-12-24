@@ -366,8 +366,8 @@
       },
 
       /*
-      * Reflow the slider when the low handle changes (called with throttle)
-      */
+       * Reflow the slider when the low handle changes (called with throttle)
+       */
       onLowHandleChange: function() {
         this.setMinAndMax();
         this.updateLowHandle(this.valueToOffset(this.scope.rzSliderModel));
@@ -380,8 +380,8 @@
       },
 
       /*
-      * Reflow the slider when the high handle changes (called with throttle)
-      */
+       * Reflow the slider when the high handle changes (called with throttle)
+       */
       onHighHandleChange: function() {
         this.setMinAndMax();
         this.updateHighHandle(this.valueToOffset(this.scope.rzSliderHigh));

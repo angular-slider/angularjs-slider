@@ -9,6 +9,7 @@ describe('rzslider - ', function() {
     $timeout,
     $window,
     element,
+    parent,
     slider;
   beforeEach(module('rzModule'));
   beforeEach(module('appTemplates'));
@@ -21,6 +22,42 @@ describe('rzslider - ', function() {
     $timeout = _$timeout_;
     $window = _$window_;
   }));
+
+  afterEach(function() {
+    //clean the element we append at each test
+    parent.remove();
+  });
+
+  function createSlider(sliderObj) {
+    var template = '';
+    if (sliderObj.options)
+      template = '<rzslider rz-slider-model="slider.value" rz-slider-options="slider.options"></rzslider>';
+    else
+      template = '<rzslider rz-slider-model="slider.value"></rzslider>';
+    initSlider(sliderObj, template);
+  }
+
+  function createRangeSlider(sliderObj) {
+    var template = '';
+    if (sliderObj.options)
+      template = '<rzslider rz-slider-model="slider.min" rz-slider-high="slider.max"' +
+      'rz-slider-options="slider.options"></rzslider>';
+    else
+      template = '<rzslider rz-slider-model="slider.min" rz-slider-high="slider.max"></rzslider>';
+    initSlider(sliderObj, template);
+  }
+
+  function initSlider(sliderObj, template) {
+    scope = $rootScope.$new();
+    scope.slider = sliderObj;
+    parent = angular.element('<div style="width: 1000px; height:1000px;"></div>');
+    element = $compile(template)(scope);
+    parent.append(element);
+    angular.element(document).find('body').append(parent);
+    scope.$digest();
+    slider = element.isolateScope().slider;
+    $timeout.flush();
+  }
 
   /*
   ******************************************************************************
@@ -40,8 +77,26 @@ describe('rzslider - ', function() {
       createSlider(sliderConf);
     });
 
-    it('should exist compiled', function() {
+    it('should exist compiled and with correct config', function() {
       expect(element.find('span')).to.have.length(11);
+      expect(slider.range).to.be.false;
+      expect(slider.valueRange).to.equal(100);
+    });
+
+    it('should watch rzSliderModel and reflow the slider accordingly', function() {
+      sinon.spy(slider, 'onLowHandleChange');
+      scope.slider.value = 54;
+      scope.$digest();
+      slider.onLowHandleChange.called.should.be.true;
+    });
+
+    it('should watch rzSliderOptions and reset the slider accordingly', function() {
+      sinon.spy(slider, 'applyOptions');
+      sinon.spy(slider, 'resetSlider');
+      scope.slider.options.showTicks = true;
+      scope.$digest();
+      slider.applyOptions.called.should.be.true;
+      slider.resetSlider.called.should.be.true;
     });
 
     it('should round the model value to the step', function() {
@@ -110,8 +165,41 @@ describe('rzslider - ', function() {
       createRangeSlider(sliderConf);
     });
 
-    it('should exist compiled', function() {
+    it('should exist compiled and with correct config', function() {
       expect(element.find('span')).to.have.length(11);
+      expect(slider.range).to.be.true;
+      expect(slider.valueRange).to.equal(100);
+    });
+
+    it('should watch rzSliderHigh and reflow the slider accordingly', function() {
+      sinon.spy(slider, 'onHighHandleChange');
+      scope.slider.max = 95;
+      scope.$digest();
+      slider.onHighHandleChange.called.should.be.true;
+    });
+
+    it('should switch to a single slider when rzSliderHigh is unset after init', function() {
+      sinon.spy(slider, 'onHighHandleChange');
+      sinon.spy(slider, 'applyOptions');
+      sinon.spy(slider, 'resetSlider');
+      scope.slider.max = undefined;
+      scope.$digest();
+      slider.onHighHandleChange.called.should.be.false;
+      slider.applyOptions.called.should.be.true;
+      slider.resetSlider.called.should.be.true;
+    });
+
+    it('should switch to a range slider when rzSliderHigh is set after init', function() {
+      scope.slider.max = undefined;
+      scope.$digest();
+      sinon.spy(slider, 'onHighHandleChange');
+      sinon.spy(slider, 'applyOptions');
+      sinon.spy(slider, 'resetSlider');
+      scope.slider.max = 100;
+      scope.$digest();
+      slider.onHighHandleChange.called.should.be.true;
+      slider.applyOptions.called.should.be.true;
+      slider.resetSlider.called.should.be.true;
     });
 
     it('should round the model value to the step', function() {
@@ -177,11 +265,187 @@ describe('rzslider - ', function() {
 
   /*
   ******************************************************************************
+    Options handling
+  ******************************************************************************
+  */
+  describe('options handling - ', function() {
+
+    describe('tests with same config', function() {
+      beforeEach(function() {
+        var sliderConf = {
+          value: 10,
+          options: {
+            floor: 0,
+            ceil: 100,
+            step: 10
+          }
+        };
+        createSlider(sliderConf);
+      });
+
+      it('horizontal slider should take the full width and get correct position/dimension properties', function() {
+        scope.$digest();
+        expect(element[0].getBoundingClientRect().width).to.equal(1000);
+        expect(slider.positionProperty).to.equal('left');
+        expect(slider.dimensionProperty).to.equal('width');
+      });
+
+      it('vertical slider should take the full height and get correct position/dimension properties', function() {
+        scope.$digest();
+        scope.slider.options.vertical = true;
+        scope.$digest();
+        expect(element[0].getBoundingClientRect().height).to.equal(1000);
+        expect(slider.positionProperty).to.equal('bottom');
+        expect(slider.dimensionProperty).to.equal('height');
+      });
+
+      it('should prevent invalid step', function() {
+        scope.slider.options.step = 0;
+        scope.$digest();
+        expect(slider.options.step).to.equal(1);
+
+        scope.slider.options.step = -1;
+        scope.$digest();
+        expect(slider.options.step).to.equal(1);
+      });
+
+      it('should set the showTicks scope flag to true when showTicks is true', function() {
+        scope.slider.options.showTicks = true;
+        scope.$digest();
+        expect(slider.scope.showTicks).to.be.true;
+      });
+
+      it('should set the showTicks scope flag to true when showTicksValues is true', function() {
+        scope.slider.options.showTicksValues = true;
+        scope.$digest();
+        expect(slider.scope.showTicks).to.be.true;
+      });
+
+      it('should set not accept draggableRange to true when slider is a single one', function() {
+        scope.slider.options.draggableRange = true;
+        scope.$digest();
+        expect(slider.options.draggableRange).to.be.false;
+      });
+
+      it('should set not accept draggableRangeOnly to true when slider is a single one', function() {
+        scope.slider.options.draggableRangeOnly = true;
+        scope.$digest();
+        expect(slider.options.draggableRange).to.be.false;
+        expect(slider.options.draggableRangeOnly).to.be.false;
+      });
+
+      it('should set correct step/floor/ceil and translate function when stepsArray is used', function() {
+        scope.slider.options.stepsArray = ['A', 'B', 'C', 'D', 'E'];
+        scope.$digest();
+        expect(slider.options.step).to.equal(1);
+        expect(slider.options.floor).to.equal(0);
+        expect(slider.options.ceil).to.equal(4);
+
+        expect(slider.customTrFn(0)).to.equal('A');
+        expect(slider.customTrFn(2)).to.equal('C');
+      });
+
+      it('should sanitize rzSliderModel between floor and ceil', function() {
+        scope.slider.options.enforceRange = true;
+        scope.slider.value = 1000;
+        scope.$digest();
+        expect(scope.slider.value).to.equal(100);
+
+        scope.slider.value = -1000;
+        scope.$digest();
+        $timeout.flush(); //to flush the throttle function
+        expect(scope.slider.value).to.equal(0);
+      });
+    });
+
+    describe('tests with specific config', function() {
+      it('should accept custom translate function', function() {
+        var sliderConf = {
+          value: 10,
+          options: {
+            floor: 0,
+            ceil: 100,
+            step: 10,
+            translate: function(v) {
+              return 'custom value';
+            }
+          }
+        };
+        createSlider(sliderConf);
+        expect(slider.customTrFn(0)).to.equal('custom value');
+        expect(slider.customTrFn(100)).to.equal('custom value');
+      });
+
+      it('should set maxValue to rzSliderModel if no ceil is set for a single slider', function() {
+        var sliderConf = {
+          value: 10
+        };
+        createSlider(sliderConf);
+        expect(slider.maxValue).to.equal(10);
+      });
+
+      it('should set maxValue to rzSliderHigh if no ceil is set for a range slider', function() {
+        var sliderConf = {
+          min: 10,
+          max: 100
+        };
+        createRangeSlider(sliderConf);
+        expect(slider.maxValue).to.equal(100);
+      });
+    });
+  });
+
+  describe('options handling (specific to range) - ', function() {
+    beforeEach(function() {
+      var sliderConf = {
+        min: 10,
+        max: 90,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10
+        }
+      };
+      createRangeSlider(sliderConf);
+    });
+
+    it('should set draggableRange to true when draggableRangeOnly is true', function() {
+      scope.slider.options.draggableRangeOnly = true;
+      scope.$digest();
+      expect(slider.options.draggableRange).to.be.true;
+    });
+
+    it('should sanitize rzSliderModel and rzSliderHigh between floor and ceil', function() {
+      scope.slider.options.enforceRange = true;
+      scope.slider.min = -1000;
+      scope.slider.max = 1000;
+      scope.$digest();
+      expect(scope.slider.min).to.equal(0);
+      expect(scope.slider.max).to.equal(100);
+    });
+  });
+
+  /*
+  ******************************************************************************
     Slider with ticks
   ******************************************************************************
   */
   describe('slider with ticks', function() {
-    beforeEach(function() {
+
+    it('should not create any tick if showTicks is false (default)', function() {
+      var sliderConf = {
+        value: 50,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10
+        }
+      };
+      createSlider(sliderConf);
+      expect(element[0].querySelectorAll('.tick')).to.have.length(0);
+    });
+
+    it('should create the correct number of ticks when showTicks is true', function() {
       var sliderConf = {
         value: 50,
         options: {
@@ -192,10 +456,136 @@ describe('rzslider - ', function() {
         }
       };
       createSlider(sliderConf);
+      expect(element[0].querySelectorAll('.tick')).to.have.length(11);
     });
 
-    it('should create the correct number of ticks', function() {
+    it('should create the correct number of ticks when showTicksValues is true', function() {
+      var sliderConf = {
+        value: 50,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          showTicksValues: true
+        }
+      };
+      createSlider(sliderConf);
       expect(element[0].querySelectorAll('.tick')).to.have.length(11);
+      expect(element[0].querySelectorAll('.tick-value')).to.have.length(11);
+      var firstTick = angular.element(element[0].querySelectorAll('.tick-value')[0]);
+      expect(firstTick.text()).to.equal('0');
+      var secondTick = angular.element(element[0].querySelectorAll('.tick-value')[1]);
+      expect(secondTick.text()).to.equal('10');
+    });
+
+    it('should set selected class to ticks below the model value if showSelectionBar is true', function() {
+      var sliderConf = {
+        value: 50,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          showTicks: true,
+          showSelectionBar: true
+        }
+      };
+      createSlider(sliderConf);
+      var firstTick = angular.element(element[0].querySelectorAll('.tick')[0]);
+      expect(firstTick.hasClass('selected')).to.be.true;
+      var sixthTick = angular.element(element[0].querySelectorAll('.tick')[5]);
+      expect(sixthTick.hasClass('selected')).to.be.true;
+      var seventhTick = angular.element(element[0].querySelectorAll('.tick')[6]);
+      expect(seventhTick.hasClass('selected')).to.be.false;
+      var lastTick = angular.element(element[0].querySelectorAll('.tick')[10]);
+      expect(lastTick.hasClass('selected')).to.be.false;
+    });
+
+    it('should set selected class to ticks between min/max if showSelectionBar is true on range slider', function() {
+      var sliderConf = {
+        min: 40,
+        max: 60,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          showTicks: true
+        }
+      };
+      createRangeSlider(sliderConf);
+      var firstTick = angular.element(element[0].querySelectorAll('.tick')[0]);
+      expect(firstTick.hasClass('selected')).to.be.false;
+      var sixthTick = angular.element(element[0].querySelectorAll('.tick')[5]);
+      expect(sixthTick.hasClass('selected')).to.be.true;
+      var seventhTick = angular.element(element[0].querySelectorAll('.tick')[6]);
+      expect(seventhTick.hasClass('selected')).to.be.true;
+      var lastTick = angular.element(element[0].querySelectorAll('.tick')[10]);
+      expect(lastTick.hasClass('selected')).to.be.false;
+    });
+
+    it('should set the correct color to ticks when getSelectionBarColor is defined', function() {
+      var sliderConf = {
+        value: 50,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          showTicks: true,
+          showSelectionBar: true,
+          getSelectionBarColor: function(value) {
+            if (value <= 50)
+              return 'red';
+            else
+              return 'green';
+          }
+        }
+      };
+      createSlider(sliderConf);
+      var firstTick = angular.element(element[0].querySelectorAll('.tick')[0]);
+      expect(firstTick.css('background-color')).to.equal('red');
+
+      scope.slider.value = 100;
+      scope.$digest();
+      expect(firstTick.css('background-color')).to.equal('green');
+    });
+
+    it('should set a tooltip attribute if ticksTooltip is defined', function() {
+      var sliderConf = {
+        value: 50,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          showTicks: true,
+          ticksTooltip: function(value) {
+            return 'tooltip for ' + value;
+          }
+        }
+      };
+      createSlider(sliderConf);
+      var firstTick = angular.element(element[0].querySelectorAll('.tick')[0]);
+      expect(firstTick.attr('uib-tooltip')).to.equal('tooltip for 0');
+      var secondTick = angular.element(element[0].querySelectorAll('.tick')[1]);
+      expect(secondTick.attr('uib-tooltip')).to.equal('tooltip for 10');
+    });
+
+    it('should set a tooltip attribute on tick-value if ticksValuesTooltip is defined', function() {
+      var sliderConf = {
+        value: 50,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          showTicksValues: true,
+          ticksValuesTooltip: function(value) {
+            return 'tooltip for ' + value;
+          }
+        }
+      };
+      createSlider(sliderConf);
+      var firstTick = angular.element(element[0].querySelectorAll('.tick-value')[0]);
+      expect(firstTick.attr('uib-tooltip')).to.equal('tooltip for 0');
+      var secondTick = angular.element(element[0].querySelectorAll('.tick-value')[1]);
+      expect(secondTick.attr('uib-tooltip')).to.equal('tooltip for 10');
     });
   });
 
@@ -655,35 +1045,4 @@ describe('rzslider - ', function() {
       element.triggerHandler(event);
     }
   });
-
-  function createSlider(sliderObj) {
-    var template = '';
-    if (sliderObj.options)
-      template = '<rzslider rz-slider-model="slider.value" rz-slider-options="slider.options"></rzslider>';
-    else
-      template = '<rzslider rz-slider-model="slider.value"></rzslider>';
-    initSlider(sliderObj, template);
-  }
-
-  function createRangeSlider(sliderObj) {
-    var template = '';
-    if (sliderObj.options)
-      template = '<rzslider rz-slider-model="slider.min" rz-slider-high="slider.max"' +
-      'rz-slider-options="slider.options"></rzslider>';
-    else
-      template = '<rzslider rz-slider-model="slider.value" rz-slider-high="slider.max"></rzslider>';
-    initSlider(sliderObj, template);
-  }
-
-  function initSlider(sliderObj, template) {
-    scope = $rootScope.$new();
-    scope.slider = sliderObj;
-    var parent = angular.element('<div style="width: 1000px"></div>');
-    element = $compile(template)(scope);
-    parent.append(element);
-    angular.element(document).find('body').append(parent);
-    scope.$apply();
-    slider = element.isolateScope().slider;
-    $timeout.flush();
-  }
 });
