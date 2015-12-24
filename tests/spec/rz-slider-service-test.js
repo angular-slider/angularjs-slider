@@ -2,20 +2,24 @@
 
 describe('rzslider - ', function() {
   var RzSlider,
+    RzSliderOptions,
     $rootScope,
     scope,
     $compile,
     $timeout,
+    $window,
     element,
     slider;
   beforeEach(module('rzModule'));
   beforeEach(module('appTemplates'));
 
-  beforeEach(inject(function(_RzSlider_, _$rootScope_, _$compile_, _$timeout_) {
+  beforeEach(inject(function(_RzSlider_, _RzSliderOptions_, _$rootScope_, _$compile_, _$timeout_, _$window_) {
     RzSlider = _RzSlider_;
+    RzSliderOptions = _RzSliderOptions_;
     $rootScope = _$rootScope_;
     $compile = _$compile_;
     $timeout = _$timeout_;
+    $window = _$window_;
   }));
 
   /*
@@ -50,7 +54,151 @@ describe('rzslider - ', function() {
       $timeout.flush(); //to flush the throttle function
       expect(scope.slider.value).to.equal(60);
     });
+
+    it('should call calcViewDimensions() on reCalcViewDimensions', function() {
+      sinon.spy(slider, 'calcViewDimensions');
+      scope.$broadcast('reCalcViewDimensions');
+      slider.calcViewDimensions.called.should.be.true;
+    });
+
+    it('should reset everything on rzSliderForceRender', function() {
+      sinon.spy(slider, 'resetLabelsValue');
+      sinon.spy(slider, 'resetSlider');
+      sinon.spy(slider, 'onLowHandleChange');
+
+      scope.$broadcast('rzSliderForceRender');
+
+      slider.resetLabelsValue.called.should.be.true;
+      slider.resetSlider.called.should.be.true;
+      slider.onLowHandleChange.called.should.be.true;
+    });
+
+    it('should call calcViewDimensions() on window resize event', function() {
+      sinon.spy(slider, 'calcViewDimensions');
+      angular.element($window).triggerHandler('resize');
+      slider.calcViewDimensions.called.should.be.true;
+    });
+
+    it('should unregister all dom events on $destroy', function() {
+      sinon.spy(slider, 'calcViewDimensions');
+      sinon.spy(slider, 'unbindEvents');
+
+      scope.$broadcast('$destroy');
+      angular.element($window).triggerHandler('resize');
+
+      slider.calcViewDimensions.called.should.be.false;
+      slider.unbindEvents.called.should.be.true;
+    });
   });
+
+  /*
+  ******************************************************************************
+    RANGE SLIDER INIT
+  ******************************************************************************
+  */
+  describe('range slider initialisation', function() {
+    beforeEach(function() {
+      var sliderConf = {
+        min: 10,
+        max: 90,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10
+        }
+      };
+      createRangeSlider(sliderConf);
+    });
+
+    it('should exist compiled', function() {
+      expect(element.find('span')).to.have.length(11);
+    });
+
+    it('should round the model value to the step', function() {
+      scope.slider.min = 13;
+      scope.slider.max = 94;
+      scope.$digest();
+      expect(scope.slider.min).to.equal(10);
+      expect(scope.slider.max).to.equal(90);
+
+      scope.slider.min = 15;
+      scope.slider.max = 95;
+      scope.$digest();
+      $timeout.flush(); //to flush the throttle function
+      expect(scope.slider.min).to.equal(20);
+      expect(scope.slider.max).to.equal(100);
+    });
+
+    it('should reset everything on rzSliderForceRender', function() {
+      sinon.spy(slider, 'resetLabelsValue');
+      sinon.spy(slider, 'resetSlider');
+      sinon.spy(slider, 'onLowHandleChange');
+      sinon.spy(slider, 'onHighHandleChange');
+
+      scope.$broadcast('rzSliderForceRender');
+
+      slider.resetLabelsValue.called.should.be.true;
+      slider.resetSlider.called.should.be.true;
+      slider.onLowHandleChange.called.should.be.true;
+      slider.onHighHandleChange.called.should.be.true;
+    });
+  });
+
+  /*
+  ******************************************************************************
+    RzSliderOptions
+  ******************************************************************************
+  */
+  describe('RzSliderOptions', function() {
+
+    it('should have a correct getOptions method that apply custom options', function() {
+      var defaultOpts = RzSliderOptions.getOptions();
+      var customOpts = {
+        showTicks: true
+      };
+
+      var expectedOpts = angular.extend({}, defaultOpts, customOpts);
+      var options = RzSliderOptions.getOptions(customOpts);
+      expect(options).to.deep.equal(expectedOpts);
+    });
+
+    it('should have a correct options method to update the global options', function() {
+      var defaultOpts = RzSliderOptions.getOptions();
+      var globalOpts = {
+        showTicks: true
+      };
+      RzSliderOptions.options(globalOpts);
+
+      var expectedOpts = angular.extend({}, defaultOpts, globalOpts);
+      var options = RzSliderOptions.getOptions();
+      expect(options).to.deep.equal(expectedOpts);
+    });
+  });
+
+  /*
+  ******************************************************************************
+    Slider with ticks
+  ******************************************************************************
+  */
+  describe('slider with ticks', function() {
+    beforeEach(function() {
+      var sliderConf = {
+        value: 50,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          showTicks: true
+        }
+      };
+      createSlider(sliderConf);
+    });
+
+    it('should create the correct number of ticks', function() {
+      expect(element[0].querySelectorAll('.tick')).to.have.length(11);
+    });
+  });
+
   /*
   ******************************************************************************
     KEYBOARD CONTROLS
@@ -530,7 +678,10 @@ describe('rzslider - ', function() {
   function initSlider(sliderObj, template) {
     scope = $rootScope.$new();
     scope.slider = sliderObj;
+    var parent = angular.element('<div style="width: 1000px"></div>');
     element = $compile(template)(scope);
+    parent.append(element);
+    angular.element(document).find('body').append(parent);
     scope.$apply();
     slider = element.isolateScope().slider;
     $timeout.flush();

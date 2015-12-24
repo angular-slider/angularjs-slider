@@ -6,7 +6,7 @@ module.exports = function (config) {
     basePath: '',
 
     // testing framework to use (jasmine/mocha/qunit/...)
-    frameworks: ['mocha', 'chai', 'chai-things', 'chai-as-promised'],
+    frameworks: ['mocha', 'sinon', 'chai'],
 
     reporters: ['dots', 'coverage'],
 
@@ -16,6 +16,7 @@ module.exports = function (config) {
       'node_modules/angular-mocks/angular-mocks.js',
       'src/*.js',
       'tests/spec/*.js',
+      'dist/rzslider.css',
       'src/*.html'
     ],
 
@@ -50,7 +51,6 @@ module.exports = function (config) {
       type: 'lcov',
       subdir: '.'
     },
-
 
     // Start these browsers, currently available:
     // - Chrome

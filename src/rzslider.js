@@ -282,8 +282,11 @@
        */
       init: function() {
         var thrLow, thrHigh,
-          calcDimFn = angular.bind(this, this.calcViewDimensions),
           self = this;
+
+        var calcDimFn = function() {
+          self.calcViewDimensions();
+        };
 
         this.applyOptions();
         this.initElemHandles();
@@ -309,27 +312,12 @@
         this.initHasRun = true;
 
         // Watch for changes to the model
-
         thrLow = rzThrottle(function() {
-          self.setMinAndMax();
-          self.updateLowHandle(self.valueToOffset(self.scope.rzSliderModel));
-          self.updateSelectionBar();
-          self.updateTicksScale();
-          self.updateAriaAttributes();
-
-          if (self.range) {
-            self.updateCmbLabel();
-          }
-
+          self.onLowHandleChange();
         }, self.options.interval);
 
         thrHigh = rzThrottle(function() {
-          self.setMinAndMax();
-          self.updateHighHandle(self.valueToOffset(self.scope.rzSliderHigh));
-          self.updateSelectionBar();
-          self.updateTicksScale();
-          self.updateCmbLabel();
-          self.updateAriaAttributes();
+          self.onHighHandleChange();
         }, self.options.interval);
 
         this.scope.$on('rzSliderForceRender', function() {
@@ -375,6 +363,32 @@
           self.unbindEvents();
           angular.element($window).off('resize', calcDimFn);
         });
+      },
+
+      /*
+      * Reflow the slider when the low handle changes (called with throttle)
+      */
+      onLowHandleChange: function() {
+        this.setMinAndMax();
+        this.updateLowHandle(this.valueToOffset(this.scope.rzSliderModel));
+        this.updateSelectionBar();
+        this.updateTicksScale();
+        this.updateAriaAttributes();
+        if (this.range) {
+          this.updateCmbLabel();
+        }
+      },
+
+      /*
+      * Reflow the slider when the high handle changes (called with throttle)
+      */
+      onHighHandleChange: function() {
+        this.setMinAndMax();
+        this.updateHighHandle(this.valueToOffset(this.scope.rzSliderHigh));
+        this.updateSelectionBar();
+        this.updateTicksScale();
+        this.updateCmbLabel();
+        this.updateAriaAttributes();
       },
 
       /**
