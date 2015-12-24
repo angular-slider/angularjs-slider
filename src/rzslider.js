@@ -53,6 +53,7 @@
       keyboardSupport: true,
       scale: 1,
       enforceRange: false,
+      enforceStep: true,
       onStart: null,
       onChange: null,
       onEnd: null
@@ -366,8 +367,8 @@
       },
 
       /*
-      * Reflow the slider when the low handle changes (called with throttle)
-      */
+       * Reflow the slider when the low handle changes (called with throttle)
+       */
       onLowHandleChange: function() {
         this.setMinAndMax();
         this.updateLowHandle(this.valueToOffset(this.scope.rzSliderModel));
@@ -380,8 +381,8 @@
       },
 
       /*
-      * Reflow the slider when the high handle changes (called with throttle)
-      */
+       * Reflow the slider when the high handle changes (called with throttle)
+       */
       onHighHandleChange: function() {
         this.setMinAndMax();
         this.updateHighHandle(this.valueToOffset(this.scope.rzSliderHigh));
@@ -635,9 +636,15 @@
         this.step = +this.options.step;
         this.precision = +this.options.precision;
 
-        this.scope.rzSliderModel = this.roundStep(this.scope.rzSliderModel);
-        if (this.range)
-          this.scope.rzSliderHigh = this.roundStep(this.scope.rzSliderHigh);
+        if (this.options.enforceStep) {
+          this.scope.rzSliderModel = this.roundStep(this.scope.rzSliderModel);
+          if (this.range)
+            this.scope.rzSliderHigh = this.roundStep(this.scope.rzSliderHigh);
+        } else {
+          this.scope.rzSliderModel = this.scope.rzSliderModel;
+          if (this.range)
+            this.scope.rzSliderHigh = this.scope.rzSliderHigh;
+        }
 
         this.minValue = this.roundStep(+this.options.floor);
 
