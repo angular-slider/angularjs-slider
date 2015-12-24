@@ -48,7 +48,8 @@
     "karma-sinon": "^1.0.4",
     "mocha": "^2.3.4",
     "phantomjs": "^1.9.19",
-    "recess": "~1.1.9"
+    "recess": "~1.1.9",
+    "sinon": "^1.17.2"
   },
   "author": "Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com>",
   "license": "MIT",

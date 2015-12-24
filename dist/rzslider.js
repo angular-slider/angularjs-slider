@@ -1,7 +1,7 @@
 /*! angularjs-slider - v2.3.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2015-12-23 */
+ 2015-12-24 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -278,8 +278,11 @@
        */
       init: function() {
         var thrLow, thrHigh,
-          calcDimFn = angular.bind(this, this.calcViewDimensions),
           self = this;
+
+        var calcDimFn = function() {
+          self.calcViewDimensions();
+        };
 
         this.applyOptions();
         this.initElemHandles();
@@ -305,27 +308,12 @@
         this.initHasRun = true;
 
         // Watch for changes to the model
-
         thrLow = rzThrottle(function() {
-          self.setMinAndMax();
-          self.updateLowHandle(self.valueToOffset(self.scope.rzSliderModel));
-          self.updateSelectionBar();
-          self.updateTicksScale();
-          self.updateAriaAttributes();
-
-          if (self.range) {
-            self.updateCmbLabel();
-          }
-
+          self.onLowHandleChange();
         }, self.options.interval);
 
         thrHigh = rzThrottle(function() {
-          self.setMinAndMax();
-          self.updateHighHandle(self.valueToOffset(self.scope.rzSliderHigh));
-          self.updateSelectionBar();
-          self.updateTicksScale();
-          self.updateCmbLabel();
-          self.updateAriaAttributes();
+          self.onHighHandleChange();
         }, self.options.interval);
 
         this.scope.$on('rzSliderForceRender', function() {
@@ -371,6 +359,32 @@
           self.unbindEvents();
           angular.element($window).off('resize', calcDimFn);
         });
+      },
+
+      /*
+       * Reflow the slider when the low handle changes (called with throttle)
+       */
+      onLowHandleChange: function() {
+        this.setMinAndMax();
+        this.updateLowHandle(this.valueToOffset(this.scope.rzSliderModel));
+        this.updateSelectionBar();
+        this.updateTicksScale();
+        this.updateAriaAttributes();
+        if (this.range) {
+          this.updateCmbLabel();
+        }
+      },
+
+      /*
+       * Reflow the slider when the high handle changes (called with throttle)
+       */
+      onHighHandleChange: function() {
+        this.setMinAndMax();
+        this.updateHighHandle(this.valueToOffset(this.scope.rzSliderHigh));
+        this.updateSelectionBar();
+        this.updateTicksScale();
+        this.updateCmbLabel();
+        this.updateAriaAttributes();
       },
 
       /**
@@ -1638,7 +1652,7 @@
   'use strict';
 
   $templateCache.put('rzSliderTpl.html',
-    "<span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span> <span class=rz-pointer></span> <span class=rz-pointer></span> <span class=\"rz-bubble rz-limit\"></span> <span class=\"rz-bubble rz-limit\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul ng-show=showTicks class=rz-ticks><li ng-repeat=\"t in ticks track by $index\" class=tick ng-class=\"{selected: t.selected}\" ng-style=t.style ng-attr-uib-tooltip=\"{{ t.tooltip }}\" ng-attr-tooltip-placement={{t.tooltipPlacement}}><span ng-if=\"t.value != null\" class=tick-value ng-attr-uib-tooltip=\"{{ t.valueTooltip }}\" ng-attr-tooltip-placement={{t.valueTooltipPlacement}}>{{ t.value }}</span></li></ul>"
+    "<span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span> <span class=rz-pointer></span> <span class=rz-pointer></span> <span class=\"rz-bubble rz-limit\"></span> <span class=\"rz-bubble rz-limit\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul ng-show=showTicks class=rz-ticks><li ng-repeat=\"t in ticks track by $index\" class=tick ng-class=\"{selected: t.selected}\" ng-style=t.style ng-attr-uib-tooltip=\"{{ t.tooltip }}\" ng-attr-tooltip-placement={{t.tooltipPlacement}} ng-attr-tooltip-append-to-body=\"{{ t.tooltip ? true : undefined}}\"><span ng-if=\"t.value != null\" class=tick-value ng-attr-uib-tooltip=\"{{ t.valueTooltip }}\" ng-attr-tooltip-placement={{t.valueTooltipPlacement}}>{{ t.value }}</span></li></ul>"
   );
 
 }]);
