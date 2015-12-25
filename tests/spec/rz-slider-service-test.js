@@ -81,6 +81,7 @@ describe('rzslider - ', function() {
       expect(element.find('span')).to.have.length(11);
       expect(slider.range).to.be.false;
       expect(slider.valueRange).to.equal(100);
+      expect(slider.maxH.css('display')).to.equal('none');
     });
 
     it('should watch rzSliderModel and reflow the slider accordingly', function() {
@@ -169,6 +170,7 @@ describe('rzslider - ', function() {
       expect(element.find('span')).to.have.length(11);
       expect(slider.range).to.be.true;
       expect(slider.valueRange).to.equal(100);
+      expect(slider.maxH.css('display')).to.equal('');
     });
 
     it('should watch rzSliderHigh and reflow the slider accordingly', function() {
@@ -288,6 +290,7 @@ describe('rzslider - ', function() {
         expect(element[0].getBoundingClientRect().width).to.equal(1000);
         expect(slider.positionProperty).to.equal('left');
         expect(slider.dimensionProperty).to.equal('width');
+        expect(slider.sliderElem.hasClass('vertical')).to.be.false;
       });
 
       it('vertical slider should take the full height and get correct position/dimension properties', function() {
@@ -297,6 +300,7 @@ describe('rzslider - ', function() {
         expect(element[0].getBoundingClientRect().height).to.equal(1000);
         expect(slider.positionProperty).to.equal('bottom');
         expect(slider.dimensionProperty).to.equal('height');
+        expect(slider.sliderElem.hasClass('vertical')).to.be.true;
       });
 
       it('should prevent invalid step', function() {
@@ -409,10 +413,17 @@ describe('rzslider - ', function() {
       createRangeSlider(sliderConf);
     });
 
+    it('should set the correct class to true when draggableRange is true', function() {
+      scope.slider.options.draggableRange = true;
+      scope.$digest();
+      expect(slider.selBar.hasClass('rz-draggable')).to.be.true;
+    });
+
     it('should set draggableRange to true when draggableRangeOnly is true', function() {
       scope.slider.options.draggableRangeOnly = true;
       scope.$digest();
       expect(slider.options.draggableRange).to.be.true;
+      expect(slider.selBar.hasClass('rz-draggable')).to.be.true;
     });
 
     it('should sanitize rzSliderModel and rzSliderHigh between floor and ceil', function() {
