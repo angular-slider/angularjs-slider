@@ -291,10 +291,10 @@
         this.applyOptions();
         this.initElemHandles();
         this.manageElementsStyle();
-        this.addAccessibility();
         this.setDisabledState();
         this.calcViewDimensions();
         this.setMinAndMax();
+        this.addAccessibility();
 
         $timeout(function() {
           self.updateCeilLab();
@@ -843,34 +843,15 @@
        * @param {number} newOffset
        */
       updateHandles: function(which, newOffset) {
-        if (which === 'rzSliderModel') {
+        if (which === 'rzSliderModel')
           this.updateLowHandle(newOffset);
-          this.updateSelectionBar();
-          this.updateTicksScale();
-
-          if (this.range) {
-            this.updateCmbLabel();
-          }
-          return;
-        }
-
-        if (which === 'rzSliderHigh') {
+        else if (which === 'rzSliderHigh')
           this.updateHighHandle(newOffset);
-          this.updateSelectionBar();
-          this.updateTicksScale();
 
-          if (this.range) {
-            this.updateCmbLabel();
-          }
-          return;
-        }
-
-        // Update both
-        this.updateLowHandle(newOffset);
-        this.updateHighHandle(newOffset);
         this.updateSelectionBar();
         this.updateTicksScale();
-        this.updateCmbLabel();
+        if (this.range)
+          this.updateCmbLabel();
       },
 
       /**

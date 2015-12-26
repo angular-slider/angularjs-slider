@@ -396,6 +396,51 @@ describe('rzslider - ', function() {
         createRangeSlider(sliderConf);
         expect(slider.maxValue).to.equal(100);
       });
+
+      it('should call the correct callback for onStart', function() {
+        var sliderConf = {
+          value: 10,
+          options: {
+            id: 'test',
+            onStart: sinon.spy()
+          }
+        };
+        createSlider(sliderConf);
+
+        slider.callOnStart();
+        $timeout.flush();
+        sliderConf.options.onStart.calledWith('test').should.be.true;
+      });
+
+      it('should call the correct callback for onChange', function() {
+        var sliderConf = {
+          value: 10,
+          options: {
+            id: 'test',
+            onChange: sinon.spy()
+          }
+        };
+        createSlider(sliderConf);
+
+        slider.callOnChange();
+        $timeout.flush();
+        sliderConf.options.onChange.calledWith('test').should.be.true;
+      });
+
+      it('should call the correct callback for onEnd', function() {
+        var sliderConf = {
+          value: 10,
+          options: {
+            id: 'test',
+            onEnd: sinon.spy()
+          }
+        };
+        createSlider(sliderConf);
+
+        slider.callOnEnd();
+        $timeout.flush();
+        sliderConf.options.onEnd.calledWith('test').should.be.true;
+      });
     });
   });
 
@@ -433,6 +478,216 @@ describe('rzslider - ', function() {
       scope.$digest();
       expect(scope.slider.min).to.equal(0);
       expect(scope.slider.max).to.equal(100);
+    });
+  });
+
+
+  /*
+  ******************************************************************************
+    Slider with ticks
+  ******************************************************************************
+  */
+  describe('accessibility - ', function() {
+    it('should have accessible horizontal single slider', function() {
+      var sliderConf = {
+        value: 10,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10
+        }
+      };
+      createSlider(sliderConf);
+      expect(slider.minH.attr('role')).to.equal('slider');
+      expect(slider.minH.attr('tabindex')).to.equal('0');
+      expect(slider.minH.attr('aria-valuenow')).to.equal('10');
+      expect(slider.minH.attr('aria-valuetext')).to.equal('10');
+      expect(slider.minH.attr('aria-valuemin')).to.equal('0');
+      expect(slider.minH.attr('aria-valuemax')).to.equal('100');
+
+      scope.slider.value = 20;
+      scope.$digest();
+      expect(slider.minH.attr('aria-valuenow')).to.equal('20');
+      expect(slider.minH.attr('aria-valuetext')).to.equal('20');
+    });
+
+    it('should have accessible vertical single slider', function() {
+      var sliderConf = {
+        value: 10,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          vertical: true
+        }
+      };
+      createSlider(sliderConf);
+      expect(slider.minH.attr('role')).to.equal('slider');
+      expect(slider.minH.attr('tabindex')).to.equal('0');
+      expect(slider.minH.attr('aria-orientation')).to.equal('vertical');
+      expect(slider.minH.attr('aria-valuenow')).to.equal('10');
+      expect(slider.minH.attr('aria-valuetext')).to.equal('10');
+      expect(slider.minH.attr('aria-valuemin')).to.equal('0');
+      expect(slider.minH.attr('aria-valuemax')).to.equal('100');
+
+      scope.slider.value = 20;
+      scope.$digest();
+      expect(slider.minH.attr('aria-valuenow')).to.equal('20');
+      expect(slider.minH.attr('aria-valuetext')).to.equal('20');
+    });
+
+    it('should have accessible horizontal range slider', function() {
+      var sliderConf = {
+        min: 10,
+        max: 90,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10
+        }
+      };
+      createRangeSlider(sliderConf);
+      expect(slider.minH.attr('role')).to.equal('slider');
+      expect(slider.minH.attr('tabindex')).to.equal('0');
+      expect(slider.minH.attr('aria-valuenow')).to.equal('10');
+      expect(slider.minH.attr('aria-valuetext')).to.equal('10');
+      expect(slider.minH.attr('aria-valuemin')).to.equal('0');
+      expect(slider.minH.attr('aria-valuemax')).to.equal('100');
+      expect(slider.maxH.attr('role')).to.equal('slider');
+      expect(slider.maxH.attr('tabindex')).to.equal('0');
+      expect(slider.maxH.attr('aria-valuenow')).to.equal('90');
+      expect(slider.maxH.attr('aria-valuetext')).to.equal('90');
+      expect(slider.maxH.attr('aria-valuemin')).to.equal('0');
+      expect(slider.maxH.attr('aria-valuemax')).to.equal('100');
+
+      scope.slider.min = 20;
+      scope.$digest();
+      expect(slider.minH.attr('aria-valuenow')).to.equal('20');
+      expect(slider.minH.attr('aria-valuetext')).to.equal('20');
+
+      scope.slider.max = 80;
+      scope.$digest();
+      expect(slider.maxH.attr('aria-valuenow')).to.equal('80');
+      expect(slider.maxH.attr('aria-valuetext')).to.equal('80');
+    });
+
+    it('should have accessible vertical range slider', function() {
+      var sliderConf = {
+        min: 10,
+        max: 90,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          vertical: true
+        }
+      };
+      createRangeSlider(sliderConf);
+      expect(slider.minH.attr('role')).to.equal('slider');
+      expect(slider.minH.attr('tabindex')).to.equal('0');
+      expect(slider.minH.attr('aria-orientation')).to.equal('vertical');
+      expect(slider.minH.attr('aria-valuenow')).to.equal('10');
+      expect(slider.minH.attr('aria-valuetext')).to.equal('10');
+      expect(slider.minH.attr('aria-valuemin')).to.equal('0');
+      expect(slider.minH.attr('aria-valuemax')).to.equal('100');
+      expect(slider.maxH.attr('role')).to.equal('slider');
+      expect(slider.maxH.attr('tabindex')).to.equal('0');
+      expect(slider.maxH.attr('aria-orientation')).to.equal('vertical');
+      expect(slider.maxH.attr('aria-valuenow')).to.equal('90');
+      expect(slider.maxH.attr('aria-valuetext')).to.equal('90');
+      expect(slider.maxH.attr('aria-valuemin')).to.equal('0');
+      expect(slider.maxH.attr('aria-valuemax')).to.equal('100');
+
+      scope.slider.min = 20;
+      scope.$digest();
+      expect(slider.minH.attr('aria-valuenow')).to.equal('20');
+      expect(slider.minH.attr('aria-valuetext')).to.equal('20');
+
+      scope.slider.max = 80;
+      scope.$digest();
+      expect(slider.maxH.attr('aria-valuenow')).to.equal('80');
+      expect(slider.maxH.attr('aria-valuetext')).to.equal('80');
+    });
+
+    it('should have accessible horizontal single slider when keyboardSupport is false', function() {
+      var sliderConf = {
+        value: 10,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          keyboardSupport: false
+        }
+      };
+      createSlider(sliderConf);
+      expect(slider.minH.attr('role')).to.equal('slider');
+      expect(slider.minH.attr('tabindex')).to.equal('');
+      expect(slider.minH.attr('aria-valuenow')).to.equal('10');
+      expect(slider.minH.attr('aria-valuetext')).to.equal('10');
+      expect(slider.minH.attr('aria-valuemin')).to.equal('0');
+      expect(slider.minH.attr('aria-valuemax')).to.equal('100');
+
+      scope.slider.value = 20;
+      scope.$digest();
+      expect(slider.minH.attr('aria-valuenow')).to.equal('20');
+      expect(slider.minH.attr('aria-valuetext')).to.equal('20');
+    });
+
+    it('should have accessible horizontal range slider when keyboardSupport is false', function() {
+      var sliderConf = {
+        min: 10,
+        max: 90,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          keyboardSupport: false
+        }
+      };
+      createRangeSlider(sliderConf);
+      expect(slider.minH.attr('role')).to.equal('slider');
+      expect(slider.minH.attr('tabindex')).to.equal('');
+      expect(slider.minH.attr('aria-valuenow')).to.equal('10');
+      expect(slider.minH.attr('aria-valuetext')).to.equal('10');
+      expect(slider.minH.attr('aria-valuemin')).to.equal('0');
+      expect(slider.minH.attr('aria-valuemax')).to.equal('100');
+      expect(slider.maxH.attr('role')).to.equal('slider');
+      expect(slider.maxH.attr('tabindex')).to.equal('');
+      expect(slider.maxH.attr('aria-valuenow')).to.equal('90');
+      expect(slider.maxH.attr('aria-valuetext')).to.equal('90');
+      expect(slider.maxH.attr('aria-valuemin')).to.equal('0');
+      expect(slider.maxH.attr('aria-valuemax')).to.equal('100');
+
+      scope.slider.min = 20;
+      scope.$digest();
+      expect(slider.minH.attr('aria-valuenow')).to.equal('20');
+      expect(slider.minH.attr('aria-valuetext')).to.equal('20');
+
+      scope.slider.max = 80;
+      scope.$digest();
+      expect(slider.maxH.attr('aria-valuenow')).to.equal('80');
+      expect(slider.maxH.attr('aria-valuetext')).to.equal('80');
+    });
+
+    it('should have accessible slider when values are text', function() {
+      var sliderConf = {
+        value: 1,
+        options: {
+          stepsArray: ['A', 'B', 'C']
+        }
+      };
+      createSlider(sliderConf);
+      expect(slider.minH.attr('role')).to.equal('slider');
+      expect(slider.minH.attr('tabindex')).to.equal('0');
+      expect(slider.minH.attr('aria-valuenow')).to.equal('1');
+      expect(slider.minH.attr('aria-valuetext')).to.equal('B');
+      expect(slider.minH.attr('aria-valuemin')).to.equal('0');
+      expect(slider.minH.attr('aria-valuemax')).to.equal('2');
+
+      scope.slider.value = 2;
+      scope.$digest();
+      expect(slider.minH.attr('aria-valuenow')).to.equal('2');
+      expect(slider.minH.attr('aria-valuetext')).to.equal('C');
     });
   });
 
