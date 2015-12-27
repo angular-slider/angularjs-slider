@@ -1509,5 +1509,191 @@ describe('rzslider - ', function() {
       expect(slider.sanitizeValue(101)).to.equal(100);
       expect(slider.sanitizeValue(110)).to.equal(100);
     });
+
+    it('should have a valid offsetToValue for positive sliders', function() {
+      slider.maxPos = 1000;
+      expect(slider.offsetToValue(0)).to.equal(0);
+      expect(slider.offsetToValue(1000)).to.equal(100);
+      expect(slider.offsetToValue(500)).to.equal(50);
+    });
+
+    it('should have a valid offsetToValue for for negative sliders', function() {
+      scope.slider.options.floor = -100;
+      scope.slider.options.ceil = 0;
+      scope.slider.value = -50;
+      scope.$digest();
+      slider.maxPos = 1000;
+
+      expect(slider.offsetToValue(0)).to.equal(-100);
+      expect(slider.offsetToValue(1000)).to.equal(0);
+      expect(slider.offsetToValue(500)).to.equal(-50);
+    });
+
+    it('should have a valid getEventXY for horizontal sliders on desktop browsers', function() {
+      var event = {
+        clientX: 12
+      };
+      expect(slider.getEventXY(event)).to.equal(12);
+    });
+
+    it('should have a valid getEventXY for vertical sliders on desktop browsers', function() {
+      scope.slider.options.vertical = true;
+      scope.$digest();
+      var event = {
+        clientY: 12
+      };
+      expect(slider.getEventXY(event)).to.equal(12);
+    });
+
+    it('should have a valid getEventXY for horizontal sliders on mobile browsers with no originalEvent', function() {
+      var event = {
+        touches: [{
+          clientX: 12
+        }]
+      };
+      expect(slider.getEventXY(event)).to.equal(12);
+    });
+
+    it('should have a valid getEventXY for horizontal sliders on mobile browsers with originalEvent', function() {
+      var event = {
+        originalEvent: {
+          touches: [{
+            clientX: 12
+          }]
+        }
+      };
+      expect(slider.getEventXY(event)).to.equal(12);
+    });
+
+    it('should have a valid getEventXY for vertical sliders on mobile browsers with no originalEvent', function() {
+      scope.slider.options.vertical = true;
+      scope.$digest();
+      var event = {
+        touches: [{
+          clientY: 12
+        }]
+      };
+      expect(slider.getEventXY(event)).to.equal(12);
+    });
+
+    it('should have a valid getEventXY for vertical sliders on mobile browsers with originalEvent', function() {
+      scope.slider.options.vertical = true;
+      scope.$digest();
+      var event = {
+        originalEvent: {
+          touches: [{
+            clientY: 12
+          }]
+        }
+      };
+      expect(slider.getEventXY(event)).to.equal(12);
+    });
+
+    it('should have a valid getEventPosition for horizontal sliders', function() {
+      sinon.stub(slider, 'getEventXY').returns(46);
+      var event = {};
+
+      //fake slider's dimension
+      slider.sliderElem.rzsp = 10;
+      slider.handleHalfDim = 16;
+
+      expect(slider.getEventPosition(event)).to.equal(20);
+    });
+
+    it('should have a valid getEventPosition for vertical sliders', function() {
+      scope.slider.options.vertical = true;
+      scope.$digest();
+      sinon.stub(slider, 'getEventXY').returns(46);
+      var event = {};
+
+      //fake slider's dimension
+      slider.sliderElem.rzsp = 10;
+      slider.handleHalfDim = 16;
+
+      expect(slider.getEventPosition(event)).to.equal(-52);
+    });
+
+    it('should have a valid getEventPosition for horizontal sliders with scale option', function() {
+      scope.slider.options.scale = 0.5;
+      scope.$digest();
+      sinon.stub(slider, 'getEventXY').returns(46);
+      var event = {};
+
+      //fake slider's dimension
+      slider.sliderElem.rzsp = 10;
+      slider.handleHalfDim = 16;
+
+      expect(slider.getEventPosition(event)).to.equal(10);
+    });
+
+    it('should have a valid getEventPosition for vertical sliders with scale option', function() {
+      scope.slider.options.scale = 0.5;
+      scope.slider.options.vertical = true;
+      scope.$digest();
+      sinon.stub(slider, 'getEventXY').returns(46);
+      var event = {};
+
+      //fake slider's dimension
+      slider.sliderElem.rzsp = 10;
+      slider.handleHalfDim = 16;
+
+      expect(slider.getEventPosition(event)).to.equal(-26);
+    });
+
+    it('should have a valid getNearestHandle for single sliders', function() {
+      sinon.stub(slider, 'getEventPosition').returns(46);
+      var event = {};
+      expect(slider.getNearestHandle(event)).to.equal(slider.minH);
+    });
+
+    it('should have a valid focusElement', function() {
+      var el = [{
+        focus: sinon.spy()
+      }];
+      slider.focusElement(el);
+      el[0].focus.called.should.be.true;
+    });
+  });
+
+  it('should have a valid getNearestHandle for range sliders when click is near minH', function() {
+    var sliderConf = {
+      min: 20,
+      max: 80,
+      options: {
+        floor: 0,
+        ceil: 100,
+        step: 10
+      }
+    };
+    createRangeSlider(sliderConf);
+    sinon.stub(slider, 'getEventPosition').returns(46);
+
+    //fake slider's dimension
+    slider.minH.rzsp = 0;
+    slider.maxH.rzsp = 100;
+
+    var event = {};
+    expect(slider.getNearestHandle(event)).to.equal(slider.minH);
+  });
+
+  it('should have a valid getNearestHandle for range sliders when click is near maxH', function() {
+    var sliderConf = {
+      min: 20,
+      max: 80,
+      options: {
+        floor: 0,
+        ceil: 100,
+        step: 10
+      }
+    };
+    createRangeSlider(sliderConf);
+    sinon.stub(slider, 'getEventPosition').returns(66);
+
+    //fake slider's dimension
+    slider.minH.rzsp = 0;
+    slider.maxH.rzsp = 100;
+
+    var event = {};
+    expect(slider.getNearestHandle(event)).to.equal(slider.maxH);
   });
 });

@@ -1165,7 +1165,6 @@
        * @returns {undefined}
        */
       bindEvents: function() {
-        if (this.options.readOnly || this.options.disabled) return;
         var barTracking, barStart, barMove;
 
         if (this.options.draggableRange) {
