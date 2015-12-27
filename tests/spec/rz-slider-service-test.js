@@ -397,6 +397,51 @@ describe('rzslider - ', function() {
         expect(slider.maxValue).to.equal(100);
       });
 
+      it('should set the correct background-color on selection bar for single slider', function() {
+        var sliderConf = {
+          value: 10,
+          options: {
+            floor: 0,
+            ceil: 10,
+            showSelectionBar: true,
+            getSelectionBarColor: function(v) {
+              if (v < 5) return 'red';
+              return 'green';
+            }
+          }
+        };
+        createSlider(sliderConf);
+        var selBarChild = angular.element(slider.selBar[0].querySelector('.rz-selection'));
+        expect(selBarChild.css('background-color')).to.equal('green');
+
+        scope.slider.value = 2;
+        scope.$digest();
+        expect(selBarChild.css('background-color')).to.equal('red');
+      });
+
+      it('should set the correct background-color on selection bar for range slider', function() {
+        var sliderConf = {
+          min: 2,
+          max: 8,
+          options: {
+            floor: 0,
+            ceil: 10,
+            getSelectionBarColor: function(min, max) {
+              if (max - min < 5) return 'red';
+              return 'green';
+            }
+          }
+        };
+        createRangeSlider(sliderConf);
+        var selBarChild = angular.element(slider.selBar[0].querySelector('.rz-selection'));
+        expect(selBarChild.css('background-color')).to.equal('green');
+
+        scope.slider.min = 4;
+        scope.slider.max = 6;
+        scope.$digest();
+        expect(selBarChild.css('background-color')).to.equal('red');
+      });
+
       it('should call the correct callback for onStart', function() {
         var sliderConf = {
           value: 10,
@@ -481,10 +526,9 @@ describe('rzslider - ', function() {
     });
   });
 
-
   /*
   ******************************************************************************
-    Slider with ticks
+    Accessibility
   ******************************************************************************
   */
   describe('accessibility - ', function() {
@@ -1310,5 +1354,160 @@ describe('rzslider - ', function() {
       else event.keyCode = keyCode;
       element.triggerHandler(event);
     }
+  });
+
+  /*
+  ******************************************************************************
+    HELPER FUNCTIONS
+  ******************************************************************************
+  */
+  describe('helper functions - ', function() {
+    beforeEach(function() {
+      var sliderConf = {
+        value: 50,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10
+        }
+      };
+      createSlider(sliderConf);
+    });
+
+    it('should have a valid roundStep for integer values', function() {
+      expect(slider.roundStep(10)).to.equal(10);
+      expect(slider.roundStep(9)).to.equal(10);
+      expect(slider.roundStep(11)).to.equal(10);
+      expect(slider.roundStep(15)).to.equal(20);
+      expect(slider.roundStep(14)).to.equal(10);
+      expect(slider.roundStep(-10)).to.equal(-10);
+      expect(slider.roundStep(-9)).to.equal(-10);
+      expect(slider.roundStep(-11)).to.equal(-10);
+      expect(slider.roundStep(-16)).to.equal(-20);
+      expect(slider.roundStep(-15)).to.equal(-10);
+      expect(slider.roundStep(-14)).to.equal(-10);
+    });
+
+    it('should have a valid roundStep for floating values', function() {
+      scope.slider.options.precision = 1;
+      scope.slider.options.step = 0.1;
+      scope.$digest();
+
+      expect(slider.roundStep(10)).to.equal(10);
+      expect(slider.roundStep(1.1)).to.equal(1.1);
+      expect(slider.roundStep(1.09)).to.equal(1.1);
+      expect(slider.roundStep(1.11)).to.equal(1.1);
+      expect(slider.roundStep(1.15)).to.equal(1.2);
+      expect(slider.roundStep(1.14)).to.equal(1.1);
+
+      expect(slider.roundStep(-10)).to.equal(-10);
+      expect(slider.roundStep(-1.1)).to.equal(-1.1);
+      expect(slider.roundStep(-1.09)).to.equal(-1.1);
+      expect(slider.roundStep(-1.11)).to.equal(-1.1);
+      expect(slider.roundStep(-1.16)).to.equal(-1.2);
+      expect(slider.roundStep(-1.15)).to.equal(-1.1);
+      expect(slider.roundStep(-1.14)).to.equal(-1.1);
+    });
+
+    it('should have a valid hideEl', function() {
+      var el = angular.element('<div></div>');
+      slider.hideEl(el);
+      expect(el.css('opacity')).to.equal('0');
+    });
+
+    it('should have a valid showEl when not rzAlwaysHide', function() {
+      var el = angular.element('<div></div>');
+      slider.showEl(el);
+      expect(el.css('opacity')).to.equal('1');
+    });
+
+    it('should have a valid showEl when rzAlwaysHide', function() {
+      var el = angular.element('<div></div>');
+      el.css('opacity', 0);
+      el.rzAlwaysHide = true;
+
+      slider.showEl(el);
+      expect(el.css('opacity')).to.equal('0');
+    });
+
+    it('should have a valid setPosition for horizontal sliders', function() {
+      var el = angular.element('<div></div>');
+      slider.setPosition(el, 12);
+      expect(el.css('left')).to.equal('12px');
+    });
+
+    it('should have a valid setPosition for vertical sliders', function() {
+      scope.slider.options.vertical = true;
+      scope.$digest();
+      var el = angular.element('<div></div>');
+      slider.setPosition(el, 12);
+      expect(el.css('bottom')).to.equal('12px');
+    });
+
+    it('should have a valid getDimension for horizontal sliders', function() {
+      expect(slider.getDimension(slider.sliderElem)).to.equal(1000);
+    });
+
+    it('should have a valid getDimension for horizontal sliders with custom scale', function() {
+      scope.slider.options.scale = 2;
+      scope.$digest();
+      expect(slider.getDimension(slider.sliderElem)).to.equal(2000);
+    });
+
+    it('should have a valid getDimension for vertical sliders', function() {
+      scope.slider.options.vertical = true;
+      scope.$digest();
+      expect(slider.getDimension(slider.sliderElem)).to.equal(1000);
+    });
+
+    it('should have a valid getDimension for vertical sliders with custom scale', function() {
+      scope.slider.options.scale = 2;
+      scope.slider.options.vertical = true;
+      scope.$digest();
+      expect(slider.getDimension(slider.sliderElem)).to.equal(2000);
+    });
+
+    it('should have a valid setDimension for horizontal sliders', function() {
+      var el = angular.element('<div></div>');
+      slider.setDimension(el, 12);
+      expect(el.css('width')).to.equal('12px');
+    });
+
+    it('should have a valid setDimension for vertical sliders', function() {
+      scope.slider.options.vertical = true;
+      scope.$digest();
+      var el = angular.element('<div></div>');
+      slider.setDimension(el, 12);
+      expect(el.css('height')).to.equal('12px');
+    });
+
+    it('should have a valid valueToOffset for positive sliders', function() {
+      slider.maxPos = 1000;
+      expect(slider.valueToOffset(0)).to.equal(0);
+      expect(slider.valueToOffset(50)).to.equal(500);
+      expect(slider.valueToOffset(100)).to.equal(1000);
+    });
+
+    it('should have a valid valueToOffset for negative sliders', function() {
+      scope.slider.options.floor = -100;
+      scope.slider.options.ceil = 0;
+      scope.slider.value = -50;
+      scope.$digest();
+
+      slider.maxPos = 1000;
+      expect(slider.valueToOffset(0)).to.equal(1000);
+      expect(slider.valueToOffset(-50)).to.equal(500);
+      expect(slider.valueToOffset(-100)).to.equal(0);
+    });
+
+    it('should have a valid sanitizeValue', function() {
+      expect(slider.sanitizeValue(0)).to.equal(0);
+      expect(slider.sanitizeValue(50)).to.equal(50);
+      expect(slider.sanitizeValue(100)).to.equal(100);
+      expect(slider.sanitizeValue(-1)).to.equal(0);
+      expect(slider.sanitizeValue(-10)).to.equal(0);
+      expect(slider.sanitizeValue(101)).to.equal(100);
+      expect(slider.sanitizeValue(110)).to.equal(100);
+    });
   });
 });

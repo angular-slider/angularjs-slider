@@ -465,7 +465,6 @@
               break;
             case 1:
               this.selBar = jElem;
-              this.selBarChild = this.selBar.children('rz-selection');
               break;
             case 2:
               this.minH = jElem;
@@ -992,7 +991,8 @@
        * @returns {number}
        */
       roundStep: function(value) {
-        var steppedValue = Math.round(value / this.step) * this.step;
+        var steppedValue = parseFloat(value / this.step).toPrecision(12)
+        steppedValue = Math.round(steppedValue) * this.step;
         steppedValue = steppedValue.toFixed(this.precision);
         return +steppedValue;
       },
