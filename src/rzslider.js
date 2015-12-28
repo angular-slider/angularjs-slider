@@ -1182,9 +1182,7 @@
 
         if (this.options.draggableRangeOnly) {
           this.minH.on('mousedown', angular.bind(this, barStart, null, barTracking));
-          if (this.range) {
-            this.maxH.on('mousedown', angular.bind(this, barStart, null, barTracking));
-          }
+          this.maxH.on('mousedown', angular.bind(this, barStart, null, barTracking));
         } else {
           this.minH.on('mousedown', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
           if (this.range) {
@@ -1200,9 +1198,7 @@
         this.selBar.on('touchstart', angular.bind(this, barMove, this.selBar));
         if (this.options.draggableRangeOnly) {
           this.minH.on('touchstart', angular.bind(this, barStart, null, barTracking));
-          if (this.range) {
-            this.maxH.on('touchstart', angular.bind(this, barStart, null, barTracking));
-          }
+          this.maxH.on('touchstart', angular.bind(this, barStart, null, barTracking));
         } else {
           this.minH.on('touchstart', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
           if (this.range) {
@@ -1284,7 +1280,6 @@
       onMove: function(pointer, event) {
         var newOffset = this.getEventPosition(event),
           newValue;
-
         if (newOffset <= 0) {
           if (pointer.rzsp === 0)
             return;

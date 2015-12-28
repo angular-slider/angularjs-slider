@@ -8,22 +8,27 @@ describe('rzslider - ', function() {
     $compile,
     $timeout,
     $window,
+    $document,
     element,
     parent,
     slider;
   beforeEach(module('rzModule'));
   beforeEach(module('appTemplates'));
 
-  beforeEach(inject(function(_RzSlider_, _RzSliderOptions_, _$rootScope_, _$compile_, _$timeout_, _$window_) {
+  beforeEach(inject(function(_RzSlider_, _RzSliderOptions_, _$rootScope_, _$compile_, _$timeout_, _$window_,
+    _$document_) {
     RzSlider = _RzSlider_;
     RzSliderOptions = _RzSliderOptions_;
     $rootScope = _$rootScope_;
     $compile = _$compile_;
     $timeout = _$timeout_;
     $window = _$window_;
+    $document = _$document_;
   }));
 
   afterEach(function() {
+    //simulate to $destroy event to clean everything
+    scope.$broadcast('$destroy');
     //clean the element we append at each test
     parent.remove();
   });
@@ -901,6 +906,708 @@ describe('rzslider - ', function() {
 
   /*
   ******************************************************************************
+    HELPER FUNCTIONS
+  ******************************************************************************
+  */
+  describe('helper functions - ', function() {
+    beforeEach(function() {
+      var sliderConf = {
+        value: 50,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10
+        }
+      };
+      createSlider(sliderConf);
+    });
+
+    it('should have a valid roundStep for integer values', function() {
+      expect(slider.roundStep(10)).to.equal(10);
+      expect(slider.roundStep(9)).to.equal(10);
+      expect(slider.roundStep(11)).to.equal(10);
+      expect(slider.roundStep(15)).to.equal(20);
+      expect(slider.roundStep(14)).to.equal(10);
+      expect(slider.roundStep(-10)).to.equal(-10);
+      expect(slider.roundStep(-9)).to.equal(-10);
+      expect(slider.roundStep(-11)).to.equal(-10);
+      expect(slider.roundStep(-16)).to.equal(-20);
+      expect(slider.roundStep(-15)).to.equal(-10);
+      expect(slider.roundStep(-14)).to.equal(-10);
+    });
+
+    it('should have a valid roundStep for floating values', function() {
+      scope.slider.options.precision = 1;
+      scope.slider.options.step = 0.1;
+      scope.$digest();
+
+      expect(slider.roundStep(10)).to.equal(10);
+      expect(slider.roundStep(1.1)).to.equal(1.1);
+      expect(slider.roundStep(1.09)).to.equal(1.1);
+      expect(slider.roundStep(1.11)).to.equal(1.1);
+      expect(slider.roundStep(1.15)).to.equal(1.2);
+      expect(slider.roundStep(1.14)).to.equal(1.1);
+
+      expect(slider.roundStep(-10)).to.equal(-10);
+      expect(slider.roundStep(-1.1)).to.equal(-1.1);
+      expect(slider.roundStep(-1.09)).to.equal(-1.1);
+      expect(slider.roundStep(-1.11)).to.equal(-1.1);
+      expect(slider.roundStep(-1.16)).to.equal(-1.2);
+      expect(slider.roundStep(-1.15)).to.equal(-1.1);
+      expect(slider.roundStep(-1.14)).to.equal(-1.1);
+    });
+
+    it('should have a valid hideEl', function() {
+      var el = angular.element('<div></div>');
+      slider.hideEl(el);
+      expect(el.css('opacity')).to.equal('0');
+    });
+
+    it('should have a valid showEl when not rzAlwaysHide', function() {
+      var el = angular.element('<div></div>');
+      slider.showEl(el);
+      expect(el.css('opacity')).to.equal('1');
+    });
+
+    it('should have a valid showEl when rzAlwaysHide', function() {
+      var el = angular.element('<div></div>');
+      el.css('opacity', 0);
+      el.rzAlwaysHide = true;
+
+      slider.showEl(el);
+      expect(el.css('opacity')).to.equal('0');
+    });
+
+    it('should have a valid setPosition for horizontal sliders', function() {
+      var el = angular.element('<div></div>');
+      slider.setPosition(el, 12);
+      expect(el.css('left')).to.equal('12px');
+    });
+
+    it('should have a valid setPosition for vertical sliders', function() {
+      scope.slider.options.vertical = true;
+      scope.$digest();
+      var el = angular.element('<div></div>');
+      slider.setPosition(el, 12);
+      expect(el.css('bottom')).to.equal('12px');
+    });
+
+    it('should have a valid getDimension for horizontal sliders', function() {
+      expect(slider.getDimension(slider.sliderElem)).to.equal(1000);
+    });
+
+    it('should have a valid getDimension for horizontal sliders with custom scale', function() {
+      scope.slider.options.scale = 2;
+      scope.$digest();
+      expect(slider.getDimension(slider.sliderElem)).to.equal(2000);
+    });
+
+    it('should have a valid getDimension for vertical sliders', function() {
+      scope.slider.options.vertical = true;
+      scope.$digest();
+      expect(slider.getDimension(slider.sliderElem)).to.equal(1000);
+    });
+
+    it('should have a valid getDimension for vertical sliders with custom scale', function() {
+      scope.slider.options.scale = 2;
+      scope.slider.options.vertical = true;
+      scope.$digest();
+      expect(slider.getDimension(slider.sliderElem)).to.equal(2000);
+    });
+
+    it('should have a valid setDimension for horizontal sliders', function() {
+      var el = angular.element('<div></div>');
+      slider.setDimension(el, 12);
+      expect(el.css('width')).to.equal('12px');
+    });
+
+    it('should have a valid setDimension for vertical sliders', function() {
+      scope.slider.options.vertical = true;
+      scope.$digest();
+      var el = angular.element('<div></div>');
+      slider.setDimension(el, 12);
+      expect(el.css('height')).to.equal('12px');
+    });
+
+    it('should have a valid valueToOffset for positive sliders', function() {
+      slider.maxPos = 1000;
+      expect(slider.valueToOffset(0)).to.equal(0);
+      expect(slider.valueToOffset(50)).to.equal(500);
+      expect(slider.valueToOffset(100)).to.equal(1000);
+    });
+
+    it('should have a valid valueToOffset for negative sliders', function() {
+      scope.slider.options.floor = -100;
+      scope.slider.options.ceil = 0;
+      scope.slider.value = -50;
+      scope.$digest();
+
+      slider.maxPos = 1000;
+      expect(slider.valueToOffset(0)).to.equal(1000);
+      expect(slider.valueToOffset(-50)).to.equal(500);
+      expect(slider.valueToOffset(-100)).to.equal(0);
+    });
+
+    it('should have a valid sanitizeValue', function() {
+      expect(slider.sanitizeValue(0)).to.equal(0);
+      expect(slider.sanitizeValue(50)).to.equal(50);
+      expect(slider.sanitizeValue(100)).to.equal(100);
+      expect(slider.sanitizeValue(-1)).to.equal(0);
+      expect(slider.sanitizeValue(-10)).to.equal(0);
+      expect(slider.sanitizeValue(101)).to.equal(100);
+      expect(slider.sanitizeValue(110)).to.equal(100);
+    });
+
+    it('should have a valid offsetToValue for positive sliders', function() {
+      slider.maxPos = 1000;
+      expect(slider.offsetToValue(0)).to.equal(0);
+      expect(slider.offsetToValue(1000)).to.equal(100);
+      expect(slider.offsetToValue(500)).to.equal(50);
+    });
+
+    it('should have a valid offsetToValue for for negative sliders', function() {
+      scope.slider.options.floor = -100;
+      scope.slider.options.ceil = 0;
+      scope.slider.value = -50;
+      scope.$digest();
+      slider.maxPos = 1000;
+
+      expect(slider.offsetToValue(0)).to.equal(-100);
+      expect(slider.offsetToValue(1000)).to.equal(0);
+      expect(slider.offsetToValue(500)).to.equal(-50);
+    });
+
+    it('should have a valid getEventXY for horizontal sliders on desktop browsers', function() {
+      var event = {
+        clientX: 12
+      };
+      expect(slider.getEventXY(event)).to.equal(12);
+    });
+
+    it('should have a valid getEventXY for vertical sliders on desktop browsers', function() {
+      scope.slider.options.vertical = true;
+      scope.$digest();
+      var event = {
+        clientY: 12
+      };
+      expect(slider.getEventXY(event)).to.equal(12);
+    });
+
+    it('should have a valid getEventXY for horizontal sliders on mobile browsers with no originalEvent', function() {
+      var event = {
+        touches: [{
+          clientX: 12
+        }]
+      };
+      expect(slider.getEventXY(event)).to.equal(12);
+    });
+
+    it('should have a valid getEventXY for horizontal sliders on mobile browsers with originalEvent', function() {
+      var event = {
+        originalEvent: {
+          touches: [{
+            clientX: 12
+          }]
+        }
+      };
+      expect(slider.getEventXY(event)).to.equal(12);
+    });
+
+    it('should have a valid getEventXY for vertical sliders on mobile browsers with no originalEvent', function() {
+      scope.slider.options.vertical = true;
+      scope.$digest();
+      var event = {
+        touches: [{
+          clientY: 12
+        }]
+      };
+      expect(slider.getEventXY(event)).to.equal(12);
+    });
+
+    it('should have a valid getEventXY for vertical sliders on mobile browsers with originalEvent', function() {
+      scope.slider.options.vertical = true;
+      scope.$digest();
+      var event = {
+        originalEvent: {
+          touches: [{
+            clientY: 12
+          }]
+        }
+      };
+      expect(slider.getEventXY(event)).to.equal(12);
+    });
+
+    it('should have a valid getEventPosition for horizontal sliders', function() {
+      sinon.stub(slider, 'getEventXY').returns(46);
+      var event = {};
+
+      //fake slider's dimension
+      slider.sliderElem.rzsp = 10;
+      slider.handleHalfDim = 16;
+
+      expect(slider.getEventPosition(event)).to.equal(20);
+    });
+
+    it('should have a valid getEventPosition for vertical sliders', function() {
+      scope.slider.options.vertical = true;
+      scope.$digest();
+      sinon.stub(slider, 'getEventXY').returns(46);
+      var event = {};
+
+      //fake slider's dimension
+      slider.sliderElem.rzsp = 10;
+      slider.handleHalfDim = 16;
+
+      expect(slider.getEventPosition(event)).to.equal(-52);
+    });
+
+    it('should have a valid getEventPosition for horizontal sliders with scale option', function() {
+      scope.slider.options.scale = 0.5;
+      scope.$digest();
+      sinon.stub(slider, 'getEventXY').returns(46);
+      var event = {};
+
+      //fake slider's dimension
+      slider.sliderElem.rzsp = 10;
+      slider.handleHalfDim = 16;
+
+      expect(slider.getEventPosition(event)).to.equal(10);
+    });
+
+    it('should have a valid getEventPosition for vertical sliders with scale option', function() {
+      scope.slider.options.scale = 0.5;
+      scope.slider.options.vertical = true;
+      scope.$digest();
+      sinon.stub(slider, 'getEventXY').returns(46);
+      var event = {};
+
+      //fake slider's dimension
+      slider.sliderElem.rzsp = 10;
+      slider.handleHalfDim = 16;
+
+      expect(slider.getEventPosition(event)).to.equal(-26);
+    });
+
+    it('should have a valid getNearestHandle for single sliders', function() {
+      sinon.stub(slider, 'getEventPosition').returns(46);
+      var event = {};
+      expect(slider.getNearestHandle(event)).to.equal(slider.minH);
+    });
+
+    it('should have a valid focusElement', function() {
+      var el = [{
+        focus: sinon.spy()
+      }];
+      slider.focusElement(el);
+      el[0].focus.called.should.be.true;
+    });
+  });
+
+  it('should have a valid getNearestHandle for range sliders when click is near minH', function() {
+    var sliderConf = {
+      min: 20,
+      max: 80,
+      options: {
+        floor: 0,
+        ceil: 100,
+        step: 10
+      }
+    };
+    createRangeSlider(sliderConf);
+    sinon.stub(slider, 'getEventPosition').returns(46);
+
+    //fake slider's dimension
+    slider.minH.rzsp = 0;
+    slider.maxH.rzsp = 100;
+
+    var event = {};
+    expect(slider.getNearestHandle(event)).to.equal(slider.minH);
+  });
+
+  it('should have a valid getNearestHandle for range sliders when click is near maxH', function() {
+    var sliderConf = {
+      min: 20,
+      max: 80,
+      options: {
+        floor: 0,
+        ceil: 100,
+        step: 10
+      }
+    };
+    createRangeSlider(sliderConf);
+    sinon.stub(slider, 'getEventPosition').returns(66);
+
+    //fake slider's dimension
+    slider.minH.rzsp = 0;
+    slider.maxH.rzsp = 100;
+
+    var event = {};
+    expect(slider.getNearestHandle(event)).to.equal(slider.maxH);
+  });
+
+  it('should have a bindEvents that bind correct events for single sliders on desktop', function() {
+    var sliderConf = {
+      value: 50,
+      options: {
+        floor: 0,
+        ceil: 100,
+        step: 10
+      }
+    };
+    createSlider(sliderConf);
+    slider.onStart = sinon.spy();
+    slider.onMove = sinon.spy();
+    slider.onPointerFocus = sinon.spy();
+
+    slider.unbindEvents(); //remove previously bound events
+    slider.bindEvents();
+
+    slider.selBar.triggerHandler('mousedown');
+    expect(slider.onStart.callCount).to.equal(1);
+    expect(slider.onMove.callCount).to.equal(1);
+
+    slider.minH.triggerHandler('mousedown');
+    expect(slider.onStart.callCount).to.equal(2);
+    expect(slider.onMove.callCount).to.equal(1);
+
+    slider.maxH.triggerHandler('mousedown');
+    expect(slider.onStart.callCount).to.equal(2);
+    expect(slider.onMove.callCount).to.equal(1);
+
+    slider.fullBar.triggerHandler('mousedown');
+    expect(slider.onStart.callCount).to.equal(3);
+    expect(slider.onMove.callCount).to.equal(2);
+
+    slider.ticks.triggerHandler('mousedown');
+    expect(slider.onStart.callCount).to.equal(4);
+    expect(slider.onMove.callCount).to.equal(3);
+
+    slider.minH.triggerHandler('focus');
+    expect(slider.onPointerFocus.callCount).to.equal(1);
+    slider.maxH.triggerHandler('focus');
+    expect(slider.onPointerFocus.callCount).to.equal(1);
+  });
+
+  it('should have a bindEvents that bind correct events for single sliders on mobile', function() {
+    var sliderConf = {
+      value: 50,
+      options: {
+        floor: 0,
+        ceil: 100,
+        step: 10
+      }
+    };
+    createSlider(sliderConf);
+    slider.onStart = sinon.spy();
+    slider.onMove = sinon.spy();
+    slider.onPointerFocus = sinon.spy();
+
+    slider.unbindEvents(); //remove previously bound events
+    slider.bindEvents();
+
+    slider.selBar.triggerHandler('touchstart');
+    expect(slider.onStart.callCount).to.equal(1);
+    expect(slider.onMove.callCount).to.equal(1);
+
+    slider.minH.triggerHandler('touchstart');
+    expect(slider.onStart.callCount).to.equal(2);
+    expect(slider.onMove.callCount).to.equal(1);
+
+    slider.maxH.triggerHandler('touchstart');
+    expect(slider.onStart.callCount).to.equal(2);
+    expect(slider.onMove.callCount).to.equal(1);
+
+    slider.fullBar.triggerHandler('touchstart');
+    expect(slider.onStart.callCount).to.equal(3);
+    expect(slider.onMove.callCount).to.equal(2);
+
+    slider.ticks.triggerHandler('touchstart');
+    expect(slider.onStart.callCount).to.equal(4);
+    expect(slider.onMove.callCount).to.equal(3);
+  });
+
+  it('should have a bindEvents that bind correct events for range sliders on desktop', function() {
+    var sliderConf = {
+      min: 20,
+      max: 80,
+      options: {
+        floor: 0,
+        ceil: 100,
+        step: 10
+      }
+    };
+    createRangeSlider(sliderConf);
+    slider.onStart = sinon.spy();
+    slider.onMove = sinon.spy();
+    slider.onPointerFocus = sinon.spy();
+
+    slider.unbindEvents(); //remove previously bound events
+    slider.bindEvents();
+
+    slider.selBar.triggerHandler('mousedown');
+    expect(slider.onStart.callCount).to.equal(1);
+    expect(slider.onMove.callCount).to.equal(1);
+
+    slider.minH.triggerHandler('mousedown');
+    expect(slider.onStart.callCount).to.equal(2);
+    expect(slider.onMove.callCount).to.equal(1);
+
+    slider.maxH.triggerHandler('mousedown');
+    expect(slider.onStart.callCount).to.equal(3);
+    expect(slider.onMove.callCount).to.equal(1);
+
+    slider.fullBar.triggerHandler('mousedown');
+    expect(slider.onStart.callCount).to.equal(4);
+    expect(slider.onMove.callCount).to.equal(2);
+
+    slider.ticks.triggerHandler('mousedown');
+    expect(slider.onStart.callCount).to.equal(5);
+    expect(slider.onMove.callCount).to.equal(3);
+
+    slider.minH.triggerHandler('focus');
+    expect(slider.onPointerFocus.callCount).to.equal(1);
+    slider.maxH.triggerHandler('focus');
+    expect(slider.onPointerFocus.callCount).to.equal(2);
+  });
+
+  it('should have a bindEvents that bind correct events for range sliders on mobile', function() {
+    var sliderConf = {
+      min: 20,
+      max: 80,
+      options: {
+        floor: 0,
+        ceil: 100,
+        step: 10
+      }
+    };
+    createRangeSlider(sliderConf);
+    slider.onStart = sinon.spy();
+    slider.onMove = sinon.spy();
+    slider.onPointerFocus = sinon.spy();
+
+    slider.unbindEvents(); //remove previously bound events
+    slider.bindEvents();
+
+    slider.selBar.triggerHandler('touchstart');
+    expect(slider.onStart.callCount).to.equal(1);
+    expect(slider.onMove.callCount).to.equal(1);
+
+    slider.minH.triggerHandler('touchstart');
+    expect(slider.onStart.callCount).to.equal(2);
+    expect(slider.onMove.callCount).to.equal(1);
+
+    slider.maxH.triggerHandler('touchstart');
+    expect(slider.onStart.callCount).to.equal(3);
+    expect(slider.onMove.callCount).to.equal(1);
+
+    slider.fullBar.triggerHandler('touchstart');
+    expect(slider.onStart.callCount).to.equal(4);
+    expect(slider.onMove.callCount).to.equal(2);
+
+    slider.ticks.triggerHandler('touchstart');
+    expect(slider.onStart.callCount).to.equal(5);
+    expect(slider.onMove.callCount).to.equal(3);
+  });
+
+  it('should have a unbindEvents that unbind all events', function() {
+    var sliderConf = {
+      min: 20,
+      max: 80,
+      options: {
+        floor: 0,
+        ceil: 100,
+        step: 10
+      }
+    };
+    createRangeSlider(sliderConf);
+    slider.onStart = sinon.spy();
+    slider.onMove = sinon.spy();
+    slider.onPointerFocus = sinon.spy();
+
+    slider.unbindEvents(); //remove previously bound events
+    slider.bindEvents();
+    slider.unbindEvents();
+
+    slider.selBar.triggerHandler('mousedown');
+    slider.minH.triggerHandler('mousedown');
+    slider.maxH.triggerHandler('mousedown');
+    slider.fullBar.triggerHandler('mousedown');
+    slider.ticks.triggerHandler('mousedown');
+    slider.minH.triggerHandler('focus');
+    expect(slider.onStart.callCount).to.equal(0);
+    expect(slider.onMove.callCount).to.equal(0);
+    expect(slider.onPointerFocus.callCount).to.equal(0);
+  });
+
+  /*
+  ******************************************************************************
+    MOUSE CONTROLS
+  ******************************************************************************
+  */
+  describe('mouse controls', function() {
+
+    describe('simple cases for single slider - ', function() {
+      beforeEach(function() {
+        var sliderConf = {
+          value: 0,
+          options: {
+            floor: 0,
+            ceil: 100
+          }
+        };
+        createSlider(sliderConf);
+      });
+
+      it('should handle mousedown on minH correctly', function() {
+        sinon.spy(slider, 'calcViewDimensions');
+        sinon.spy(slider, 'callOnStart');
+        sinon.spy(slider, 'focusElement');
+
+        var event = fireMousedown(slider.minH, 0);
+
+        slider.calcViewDimensions.called.should.be.true;
+        slider.callOnStart.called.should.be.true;
+        slider.focusElement.calledWith(slider.minH).should.be.true;
+        event.preventDefault.called.should.be.true;
+        event.stopPropagation.called.should.be.true;
+        expect(slider.tracking).to.equal('rzSliderModel');
+        expect(slider.minH.hasClass('rz-active')).to.be.true;
+        // to clean document listener
+        fireMouseup();
+      });
+
+      it('should handle click and drag on minH correctly when mouse is on the middle', function() {
+        sinon.spy(slider, 'positionTrackingHandle');
+        sinon.spy(slider, 'callOnChange');
+        var event = fireMousedown(slider.minH, 0);
+        //consider that slider coordinates start on 0
+        slider.sliderElem.rzsp = 0
+        var expectedValue = 50,
+          offset = slider.valueToOffset(expectedValue) + slider.handleHalfDim;
+        fireMousemove(offset);
+        expect(scope.slider.value).to.equal(expectedValue);
+        slider.positionTrackingHandle.called.should.be.true;
+        slider.callOnChange.called.should.be.true;
+      });
+
+      it('should handle click and drag on minH correctly when mouse is before the slider and previous value was already 0', function() {
+        sinon.spy(slider, 'positionTrackingHandle');
+        var event = fireMousedown(slider.minH, 0);
+        //consider that slider coordinates start on 0
+        slider.sliderElem.rzsp = 0
+        fireMousemove(-100);
+        expect(scope.slider.value).to.equal(0);
+        slider.positionTrackingHandle.called.should.be.false;
+
+        fireMouseup();
+      });
+
+      it('should handle click and drag on minH correctly when mouse is before the slider and previous value was different than 0', function() {
+        scope.slider.value = 50;
+        scope.$digest();
+
+        sinon.spy(slider, 'positionTrackingHandle');
+        var event = fireMousedown(slider.minH, 0);
+        //consider that slider coordinates start on 0
+        slider.sliderElem.rzsp = 0
+        fireMousemove(-100);
+        expect(scope.slider.value).to.equal(0);
+        slider.positionTrackingHandle.called.should.be.true;
+
+        fireMouseup();
+      });
+
+      it('should handle click and drag on minH correctly when mouse is after the slider and previous value was different than 100', function() {
+        sinon.spy(slider, 'positionTrackingHandle');
+        var event = fireMousedown(slider.minH, 0);
+        //consider that slider coordinates start on 0
+        slider.sliderElem.rzsp = 0
+        fireMousemove(slider.maxPos + 100);
+        expect(scope.slider.value).to.equal(100);
+        slider.positionTrackingHandle.called.should.be.true;
+
+        fireMouseup();
+      });
+
+      it('should handle click and drag on minH correctly when mouse is after the slider and previous value was already 100', function() {
+        scope.slider.value = 100;
+        scope.$digest();
+
+        sinon.spy(slider, 'positionTrackingHandle');
+        var event = fireMousedown(slider.minH, 0);
+        //consider that slider coordinates start on 0
+        slider.sliderElem.rzsp = 0
+        fireMousemove(slider.maxPos + 100);
+        expect(scope.slider.value).to.equal(100);
+        slider.positionTrackingHandle.called.should.be.false;
+
+        fireMouseup();
+      });
+
+      it('should call correct callbacks on slider end and keep handle focused when keyboardSupport is true', function() {
+        var event = fireMousedown(slider.minH, 0);
+
+        sinon.spy(slider, 'callOnEnd');
+        sinon.spy(slider.scope, '$emit');
+
+        fireMouseup();
+
+        expect(slider.tracking).to.equal('rzSliderModel');
+        expect(slider.minH.hasClass('rz-active')).to.be.true;
+        slider.callOnEnd.called.should.be.true;
+        slider.scope.$emit.calledWith('slideEnded').should.be.true;
+      });
+
+      it('should call correct callbacks on slider end and keep handle focused when keyboardSupport is true', function() {
+        scope.slider.options.keyboardSupport = false;
+        scope.$digest();
+        var event = fireMousedown(slider.minH, 0);
+
+        sinon.spy(slider, 'callOnEnd');
+        sinon.spy(slider.scope, '$emit');
+
+        fireMouseup();
+
+        expect(slider.tracking).to.equal('');
+        expect(slider.minH.hasClass('rz-active')).to.be.false;
+        slider.callOnEnd.called.should.be.true;
+        slider.scope.$emit.calledWith('slideEnded').should.be.true;
+      });
+    });
+
+    function fireMousedown(element, position, vertical) {
+      var positionProp = vertical ? 'clientY' : 'clientX';
+      var event = {
+        type: 'mousedown',
+        preventDefault: sinon.stub(),
+        stopPropagation: sinon.stub()
+      };
+      event[positionProp] = position;
+
+      element.triggerHandler(event);
+      return event;
+    }
+
+    function fireMousemove(position, vertical) {
+      var positionProp = vertical ? 'clientY' : 'clientX';
+      var event = {
+        type: 'mousemove'
+      };
+      event[positionProp] = position;
+
+      $document.triggerHandler(event);
+    }
+
+    function fireMouseup() {
+      var event = {
+        type: 'mouseup'
+      };
+      $document.triggerHandler(event);
+    }
+  });
+
+  /*
+  ******************************************************************************
     KEYBOARD CONTROLS
   ******************************************************************************
   */
@@ -1354,346 +2061,5 @@ describe('rzslider - ', function() {
       else event.keyCode = keyCode;
       element.triggerHandler(event);
     }
-  });
-
-  /*
-  ******************************************************************************
-    HELPER FUNCTIONS
-  ******************************************************************************
-  */
-  describe('helper functions - ', function() {
-    beforeEach(function() {
-      var sliderConf = {
-        value: 50,
-        options: {
-          floor: 0,
-          ceil: 100,
-          step: 10
-        }
-      };
-      createSlider(sliderConf);
-    });
-
-    it('should have a valid roundStep for integer values', function() {
-      expect(slider.roundStep(10)).to.equal(10);
-      expect(slider.roundStep(9)).to.equal(10);
-      expect(slider.roundStep(11)).to.equal(10);
-      expect(slider.roundStep(15)).to.equal(20);
-      expect(slider.roundStep(14)).to.equal(10);
-      expect(slider.roundStep(-10)).to.equal(-10);
-      expect(slider.roundStep(-9)).to.equal(-10);
-      expect(slider.roundStep(-11)).to.equal(-10);
-      expect(slider.roundStep(-16)).to.equal(-20);
-      expect(slider.roundStep(-15)).to.equal(-10);
-      expect(slider.roundStep(-14)).to.equal(-10);
-    });
-
-    it('should have a valid roundStep for floating values', function() {
-      scope.slider.options.precision = 1;
-      scope.slider.options.step = 0.1;
-      scope.$digest();
-
-      expect(slider.roundStep(10)).to.equal(10);
-      expect(slider.roundStep(1.1)).to.equal(1.1);
-      expect(slider.roundStep(1.09)).to.equal(1.1);
-      expect(slider.roundStep(1.11)).to.equal(1.1);
-      expect(slider.roundStep(1.15)).to.equal(1.2);
-      expect(slider.roundStep(1.14)).to.equal(1.1);
-
-      expect(slider.roundStep(-10)).to.equal(-10);
-      expect(slider.roundStep(-1.1)).to.equal(-1.1);
-      expect(slider.roundStep(-1.09)).to.equal(-1.1);
-      expect(slider.roundStep(-1.11)).to.equal(-1.1);
-      expect(slider.roundStep(-1.16)).to.equal(-1.2);
-      expect(slider.roundStep(-1.15)).to.equal(-1.1);
-      expect(slider.roundStep(-1.14)).to.equal(-1.1);
-    });
-
-    it('should have a valid hideEl', function() {
-      var el = angular.element('<div></div>');
-      slider.hideEl(el);
-      expect(el.css('opacity')).to.equal('0');
-    });
-
-    it('should have a valid showEl when not rzAlwaysHide', function() {
-      var el = angular.element('<div></div>');
-      slider.showEl(el);
-      expect(el.css('opacity')).to.equal('1');
-    });
-
-    it('should have a valid showEl when rzAlwaysHide', function() {
-      var el = angular.element('<div></div>');
-      el.css('opacity', 0);
-      el.rzAlwaysHide = true;
-
-      slider.showEl(el);
-      expect(el.css('opacity')).to.equal('0');
-    });
-
-    it('should have a valid setPosition for horizontal sliders', function() {
-      var el = angular.element('<div></div>');
-      slider.setPosition(el, 12);
-      expect(el.css('left')).to.equal('12px');
-    });
-
-    it('should have a valid setPosition for vertical sliders', function() {
-      scope.slider.options.vertical = true;
-      scope.$digest();
-      var el = angular.element('<div></div>');
-      slider.setPosition(el, 12);
-      expect(el.css('bottom')).to.equal('12px');
-    });
-
-    it('should have a valid getDimension for horizontal sliders', function() {
-      expect(slider.getDimension(slider.sliderElem)).to.equal(1000);
-    });
-
-    it('should have a valid getDimension for horizontal sliders with custom scale', function() {
-      scope.slider.options.scale = 2;
-      scope.$digest();
-      expect(slider.getDimension(slider.sliderElem)).to.equal(2000);
-    });
-
-    it('should have a valid getDimension for vertical sliders', function() {
-      scope.slider.options.vertical = true;
-      scope.$digest();
-      expect(slider.getDimension(slider.sliderElem)).to.equal(1000);
-    });
-
-    it('should have a valid getDimension for vertical sliders with custom scale', function() {
-      scope.slider.options.scale = 2;
-      scope.slider.options.vertical = true;
-      scope.$digest();
-      expect(slider.getDimension(slider.sliderElem)).to.equal(2000);
-    });
-
-    it('should have a valid setDimension for horizontal sliders', function() {
-      var el = angular.element('<div></div>');
-      slider.setDimension(el, 12);
-      expect(el.css('width')).to.equal('12px');
-    });
-
-    it('should have a valid setDimension for vertical sliders', function() {
-      scope.slider.options.vertical = true;
-      scope.$digest();
-      var el = angular.element('<div></div>');
-      slider.setDimension(el, 12);
-      expect(el.css('height')).to.equal('12px');
-    });
-
-    it('should have a valid valueToOffset for positive sliders', function() {
-      slider.maxPos = 1000;
-      expect(slider.valueToOffset(0)).to.equal(0);
-      expect(slider.valueToOffset(50)).to.equal(500);
-      expect(slider.valueToOffset(100)).to.equal(1000);
-    });
-
-    it('should have a valid valueToOffset for negative sliders', function() {
-      scope.slider.options.floor = -100;
-      scope.slider.options.ceil = 0;
-      scope.slider.value = -50;
-      scope.$digest();
-
-      slider.maxPos = 1000;
-      expect(slider.valueToOffset(0)).to.equal(1000);
-      expect(slider.valueToOffset(-50)).to.equal(500);
-      expect(slider.valueToOffset(-100)).to.equal(0);
-    });
-
-    it('should have a valid sanitizeValue', function() {
-      expect(slider.sanitizeValue(0)).to.equal(0);
-      expect(slider.sanitizeValue(50)).to.equal(50);
-      expect(slider.sanitizeValue(100)).to.equal(100);
-      expect(slider.sanitizeValue(-1)).to.equal(0);
-      expect(slider.sanitizeValue(-10)).to.equal(0);
-      expect(slider.sanitizeValue(101)).to.equal(100);
-      expect(slider.sanitizeValue(110)).to.equal(100);
-    });
-
-    it('should have a valid offsetToValue for positive sliders', function() {
-      slider.maxPos = 1000;
-      expect(slider.offsetToValue(0)).to.equal(0);
-      expect(slider.offsetToValue(1000)).to.equal(100);
-      expect(slider.offsetToValue(500)).to.equal(50);
-    });
-
-    it('should have a valid offsetToValue for for negative sliders', function() {
-      scope.slider.options.floor = -100;
-      scope.slider.options.ceil = 0;
-      scope.slider.value = -50;
-      scope.$digest();
-      slider.maxPos = 1000;
-
-      expect(slider.offsetToValue(0)).to.equal(-100);
-      expect(slider.offsetToValue(1000)).to.equal(0);
-      expect(slider.offsetToValue(500)).to.equal(-50);
-    });
-
-    it('should have a valid getEventXY for horizontal sliders on desktop browsers', function() {
-      var event = {
-        clientX: 12
-      };
-      expect(slider.getEventXY(event)).to.equal(12);
-    });
-
-    it('should have a valid getEventXY for vertical sliders on desktop browsers', function() {
-      scope.slider.options.vertical = true;
-      scope.$digest();
-      var event = {
-        clientY: 12
-      };
-      expect(slider.getEventXY(event)).to.equal(12);
-    });
-
-    it('should have a valid getEventXY for horizontal sliders on mobile browsers with no originalEvent', function() {
-      var event = {
-        touches: [{
-          clientX: 12
-        }]
-      };
-      expect(slider.getEventXY(event)).to.equal(12);
-    });
-
-    it('should have a valid getEventXY for horizontal sliders on mobile browsers with originalEvent', function() {
-      var event = {
-        originalEvent: {
-          touches: [{
-            clientX: 12
-          }]
-        }
-      };
-      expect(slider.getEventXY(event)).to.equal(12);
-    });
-
-    it('should have a valid getEventXY for vertical sliders on mobile browsers with no originalEvent', function() {
-      scope.slider.options.vertical = true;
-      scope.$digest();
-      var event = {
-        touches: [{
-          clientY: 12
-        }]
-      };
-      expect(slider.getEventXY(event)).to.equal(12);
-    });
-
-    it('should have a valid getEventXY for vertical sliders on mobile browsers with originalEvent', function() {
-      scope.slider.options.vertical = true;
-      scope.$digest();
-      var event = {
-        originalEvent: {
-          touches: [{
-            clientY: 12
-          }]
-        }
-      };
-      expect(slider.getEventXY(event)).to.equal(12);
-    });
-
-    it('should have a valid getEventPosition for horizontal sliders', function() {
-      sinon.stub(slider, 'getEventXY').returns(46);
-      var event = {};
-
-      //fake slider's dimension
-      slider.sliderElem.rzsp = 10;
-      slider.handleHalfDim = 16;
-
-      expect(slider.getEventPosition(event)).to.equal(20);
-    });
-
-    it('should have a valid getEventPosition for vertical sliders', function() {
-      scope.slider.options.vertical = true;
-      scope.$digest();
-      sinon.stub(slider, 'getEventXY').returns(46);
-      var event = {};
-
-      //fake slider's dimension
-      slider.sliderElem.rzsp = 10;
-      slider.handleHalfDim = 16;
-
-      expect(slider.getEventPosition(event)).to.equal(-52);
-    });
-
-    it('should have a valid getEventPosition for horizontal sliders with scale option', function() {
-      scope.slider.options.scale = 0.5;
-      scope.$digest();
-      sinon.stub(slider, 'getEventXY').returns(46);
-      var event = {};
-
-      //fake slider's dimension
-      slider.sliderElem.rzsp = 10;
-      slider.handleHalfDim = 16;
-
-      expect(slider.getEventPosition(event)).to.equal(10);
-    });
-
-    it('should have a valid getEventPosition for vertical sliders with scale option', function() {
-      scope.slider.options.scale = 0.5;
-      scope.slider.options.vertical = true;
-      scope.$digest();
-      sinon.stub(slider, 'getEventXY').returns(46);
-      var event = {};
-
-      //fake slider's dimension
-      slider.sliderElem.rzsp = 10;
-      slider.handleHalfDim = 16;
-
-      expect(slider.getEventPosition(event)).to.equal(-26);
-    });
-
-    it('should have a valid getNearestHandle for single sliders', function() {
-      sinon.stub(slider, 'getEventPosition').returns(46);
-      var event = {};
-      expect(slider.getNearestHandle(event)).to.equal(slider.minH);
-    });
-
-    it('should have a valid focusElement', function() {
-      var el = [{
-        focus: sinon.spy()
-      }];
-      slider.focusElement(el);
-      el[0].focus.called.should.be.true;
-    });
-  });
-
-  it('should have a valid getNearestHandle for range sliders when click is near minH', function() {
-    var sliderConf = {
-      min: 20,
-      max: 80,
-      options: {
-        floor: 0,
-        ceil: 100,
-        step: 10
-      }
-    };
-    createRangeSlider(sliderConf);
-    sinon.stub(slider, 'getEventPosition').returns(46);
-
-    //fake slider's dimension
-    slider.minH.rzsp = 0;
-    slider.maxH.rzsp = 100;
-
-    var event = {};
-    expect(slider.getNearestHandle(event)).to.equal(slider.minH);
-  });
-
-  it('should have a valid getNearestHandle for range sliders when click is near maxH', function() {
-    var sliderConf = {
-      min: 20,
-      max: 80,
-      options: {
-        floor: 0,
-        ceil: 100,
-        step: 10
-      }
-    };
-    createRangeSlider(sliderConf);
-    sinon.stub(slider, 'getEventPosition').returns(66);
-
-    //fake slider's dimension
-    slider.minH.rzsp = 0;
-    slider.maxH.rzsp = 100;
-
-    var event = {};
-    expect(slider.getNearestHandle(event)).to.equal(slider.maxH);
   });
 });
