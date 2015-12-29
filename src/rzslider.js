@@ -170,8 +170,8 @@
         value: 0,
         difference: 0,
         offset: 0,
-        lowDist: 0,
-        highDist: 0
+        lowLimit: 0,
+        highLimit: 0
       };
 
       /**
@@ -1136,6 +1136,30 @@
       },
 
       /**
+       * Get event names for move and event end
+       *
+       * @param {Event}    event    The event
+       *
+       * @return {{moveEvent: string, endEvent: string}}
+       */
+      getEventNames: function(event) {
+        var eventNames = {
+          moveEvent: '',
+          endEvent: ''
+        };
+
+        if (event.touches || (event.originalEvent !== undefined && event.originalEvent.touches)) {
+          eventNames.moveEvent = 'touchmove';
+          eventNames.endEvent = 'touchend';
+        } else {
+          eventNames.moveEvent = 'mousemove';
+          eventNames.endEvent = 'mouseup';
+        }
+
+        return eventNames;
+      },
+
+      /**
        * Get the handle closest to an event.
        *
        * @param event {Event} The event
@@ -1280,7 +1304,7 @@
       onMove: function(pointer, event) {
         var newOffset = this.getEventPosition(event),
           newValue;
-          
+
         if (newOffset <= 0) {
           if (pointer.rzsp === 0)
             return;
@@ -1411,9 +1435,8 @@
           active: true,
           value: this.offsetToValue(offset),
           difference: this.scope.rzSliderHigh - this.scope.rzSliderModel,
-          offset: offset,
-          lowDist: offset - this.minH.rzsp,
-          highDist: this.maxH.rzsp - offset
+          lowLimit: offset - this.minH.rzsp,
+          highLimit: this.maxH.rzsp - offset
         };
 
         this.onStart(pointer, ref, event);
@@ -1433,24 +1456,22 @@
           newMinOffset, newMaxOffset,
           newMinValue, newMaxValue;
 
-        if (newOffset <= this.dragging.lowDist) {
-          if (pointer.rzsp === this.dragging.lowDist) {
+        if (newOffset <= this.dragging.lowLimit) {
+          if (this.minH.rzsp === 0)
             return;
-          }
           newMinValue = this.minValue;
           newMinOffset = 0;
           newMaxValue = this.minValue + this.dragging.difference;
           newMaxOffset = this.valueToOffset(newMaxValue);
-        } else if (newOffset >= this.maxPos - this.dragging.highDist) {
-          if (pointer.rzsp === this.dragging.highDist) {
+        } else if (newOffset >= this.maxPos - this.dragging.highLimit) {
+          if (this.maxH.rzsp === this.maxPos)
             return;
-          }
           newMaxValue = this.maxValue;
           newMaxOffset = this.maxPos;
           newMinValue = this.maxValue - this.dragging.difference;
           newMinOffset = this.valueToOffset(newMinValue);
         } else {
-          newMinValue = this.offsetToValue(newOffset - this.dragging.lowDist);
+          newMinValue = this.offsetToValue(newOffset - this.dragging.lowLimit);
           newMinValue = this.roundStep(newMinValue);
           newMinOffset = this.valueToOffset(newMinValue);
           newMaxValue = newMinValue + this.dragging.difference;
@@ -1524,30 +1545,6 @@
           this.applyModel();
         }
         return switched;
-      },
-
-      /**
-       * Get event names for move and event end
-       *
-       * @param {Event}    event    The event
-       *
-       * @return {{moveEvent: string, endEvent: string}}
-       */
-      getEventNames: function(event) {
-        var eventNames = {
-          moveEvent: '',
-          endEvent: ''
-        };
-
-        if (event.touches || (event.originalEvent !== undefined && event.originalEvent.touches)) {
-          eventNames.moveEvent = 'touchmove';
-          eventNames.endEvent = 'touchend';
-        } else {
-          eventNames.moveEvent = 'mousemove';
-          eventNames.endEvent = 'mouseup';
-        }
-
-        return eventNames;
       },
 
       /**

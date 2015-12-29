@@ -1,7 +1,7 @@
 /*! angularjs-slider - v2.3.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2015-12-24 */
+ 2015-12-29 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -166,8 +166,8 @@
         value: 0,
         difference: 0,
         offset: 0,
-        lowDist: 0,
-        highDist: 0
+        lowLimit: 0,
+        highLimit: 0
       };
 
       /**
@@ -287,10 +287,10 @@
         this.applyOptions();
         this.initElemHandles();
         this.manageElementsStyle();
-        this.addAccessibility();
         this.setDisabledState();
         this.calcViewDimensions();
         this.setMinAndMax();
+        this.addAccessibility();
 
         $timeout(function() {
           self.updateCeilLab();
@@ -461,7 +461,6 @@
               break;
             case 1:
               this.selBar = jElem;
-              this.selBarChild = this.selBar.children('rz-selection');
               break;
             case 2:
               this.minH = jElem;
@@ -839,34 +838,15 @@
        * @param {number} newOffset
        */
       updateHandles: function(which, newOffset) {
-        if (which === 'rzSliderModel') {
+        if (which === 'rzSliderModel')
           this.updateLowHandle(newOffset);
-          this.updateSelectionBar();
-          this.updateTicksScale();
-
-          if (this.range) {
-            this.updateCmbLabel();
-          }
-          return;
-        }
-
-        if (which === 'rzSliderHigh') {
+        else if (which === 'rzSliderHigh')
           this.updateHighHandle(newOffset);
-          this.updateSelectionBar();
-          this.updateTicksScale();
 
-          if (this.range) {
-            this.updateCmbLabel();
-          }
-          return;
-        }
-
-        // Update both
-        this.updateLowHandle(newOffset);
-        this.updateHighHandle(newOffset);
         this.updateSelectionBar();
         this.updateTicksScale();
-        this.updateCmbLabel();
+        if (this.range)
+          this.updateCmbLabel();
       },
 
       /**
@@ -1007,7 +987,8 @@
        * @returns {number}
        */
       roundStep: function(value) {
-        var steppedValue = Math.round(value / this.step) * this.step;
+        var steppedValue = parseFloat(value / this.step).toPrecision(12)
+        steppedValue = Math.round(steppedValue) * this.step;
         steppedValue = steppedValue.toFixed(this.precision);
         return +steppedValue;
       },
@@ -1151,6 +1132,30 @@
       },
 
       /**
+       * Get event names for move and event end
+       *
+       * @param {Event}    event    The event
+       *
+       * @return {{moveEvent: string, endEvent: string}}
+       */
+      getEventNames: function(event) {
+        var eventNames = {
+          moveEvent: '',
+          endEvent: ''
+        };
+
+        if (event.touches || (event.originalEvent !== undefined && event.originalEvent.touches)) {
+          eventNames.moveEvent = 'touchmove';
+          eventNames.endEvent = 'touchend';
+        } else {
+          eventNames.moveEvent = 'mousemove';
+          eventNames.endEvent = 'mouseup';
+        }
+
+        return eventNames;
+      },
+
+      /**
        * Get the handle closest to an event.
        *
        * @param event {Event} The event
@@ -1180,7 +1185,6 @@
        * @returns {undefined}
        */
       bindEvents: function() {
-        if (this.options.readOnly || this.options.disabled) return;
         var barTracking, barStart, barMove;
 
         if (this.options.draggableRange) {
@@ -1198,9 +1202,7 @@
 
         if (this.options.draggableRangeOnly) {
           this.minH.on('mousedown', angular.bind(this, barStart, null, barTracking));
-          if (this.range) {
-            this.maxH.on('mousedown', angular.bind(this, barStart, null, barTracking));
-          }
+          this.maxH.on('mousedown', angular.bind(this, barStart, null, barTracking));
         } else {
           this.minH.on('mousedown', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
           if (this.range) {
@@ -1216,9 +1218,7 @@
         this.selBar.on('touchstart', angular.bind(this, barMove, this.selBar));
         if (this.options.draggableRangeOnly) {
           this.minH.on('touchstart', angular.bind(this, barStart, null, barTracking));
-          if (this.range) {
-            this.maxH.on('touchstart', angular.bind(this, barStart, null, barTracking));
-          }
+          this.maxH.on('touchstart', angular.bind(this, barStart, null, barTracking));
         } else {
           this.minH.on('touchstart', angular.bind(this, this.onStart, this.minH, 'rzSliderModel'));
           if (this.range) {
@@ -1431,9 +1431,8 @@
           active: true,
           value: this.offsetToValue(offset),
           difference: this.scope.rzSliderHigh - this.scope.rzSliderModel,
-          offset: offset,
-          lowDist: offset - this.minH.rzsp,
-          highDist: this.maxH.rzsp - offset
+          lowLimit: offset - this.minH.rzsp,
+          highLimit: this.maxH.rzsp - offset
         };
 
         this.onStart(pointer, ref, event);
@@ -1453,24 +1452,22 @@
           newMinOffset, newMaxOffset,
           newMinValue, newMaxValue;
 
-        if (newOffset <= this.dragging.lowDist) {
-          if (pointer.rzsp === this.dragging.lowDist) {
+        if (newOffset <= this.dragging.lowLimit) {
+          if (this.minH.rzsp === 0)
             return;
-          }
           newMinValue = this.minValue;
           newMinOffset = 0;
           newMaxValue = this.minValue + this.dragging.difference;
           newMaxOffset = this.valueToOffset(newMaxValue);
-        } else if (newOffset >= this.maxPos - this.dragging.highDist) {
-          if (pointer.rzsp === this.dragging.highDist) {
+        } else if (newOffset >= this.maxPos - this.dragging.highLimit) {
+          if (this.maxH.rzsp === this.maxPos)
             return;
-          }
           newMaxValue = this.maxValue;
           newMaxOffset = this.maxPos;
           newMinValue = this.maxValue - this.dragging.difference;
           newMinOffset = this.valueToOffset(newMinValue);
         } else {
-          newMinValue = this.offsetToValue(newOffset - this.dragging.lowDist);
+          newMinValue = this.offsetToValue(newOffset - this.dragging.lowLimit);
           newMinValue = this.roundStep(newMinValue);
           newMinOffset = this.valueToOffset(newMinValue);
           newMaxValue = newMinValue + this.dragging.difference;
@@ -1544,30 +1541,6 @@
           this.applyModel();
         }
         return switched;
-      },
-
-      /**
-       * Get event names for move and event end
-       *
-       * @param {Event}    event    The event
-       *
-       * @return {{moveEvent: string, endEvent: string}}
-       */
-      getEventNames: function(event) {
-        var eventNames = {
-          moveEvent: '',
-          endEvent: ''
-        };
-
-        if (event.touches || (event.originalEvent !== undefined && event.originalEvent.touches)) {
-          eventNames.moveEvent = 'touchmove';
-          eventNames.endEvent = 'touchend';
-        } else {
-          eventNames.moveEvent = 'mousemove';
-          eventNames.endEvent = 'mouseup';
-        }
-
-        return eventNames;
       },
 
       /**
