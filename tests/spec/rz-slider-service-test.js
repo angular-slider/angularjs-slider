@@ -2606,18 +2606,49 @@ describe('rzslider - ', function() {
       expect(scope.slider.max).to.equal(100);
       expect(slider.tracking).to.equal('rzSliderModel');
     });
+  });
 
-    it('should a working positionTrackingBar', function() {
-      var newMin = 50,
-        newMax = 90,
-        minOffset = slider.valueToOffset(newMin),
-        maxOffset = slider.valueToOffset(newMax);
-      slider.positionTrackingBar(newMin, newMax, minOffset, maxOffset);
+  describe('single horizontal slider - ', function() {
+    beforeEach(function() {
+      var sliderConf = {
+        value: 0,
+        options: {
+          floor: 0,
+          ceil: 100,
+          showTicks: true,
+          onlyBindHandles: true
+        }
+      };
+      createSlider(sliderConf);
+    });
+    afterEach(function() {
+      // to clean document listener
+      fireMouseup();
+    });
 
-      expect(scope.slider.min).to.equal(50);
-      expect(scope.slider.max).to.equal(90);
-      expect(slider.minH.css('left')).to.equal(minOffset + 'px');
-      expect(slider.maxH.css('left')).to.equal(maxOffset + 'px');
+    it('should handle click and drag on minH correctly when mouse is on the middle', function() {
+      sinon.spy(slider, 'positionTrackingHandle');
+      sinon.spy(slider, 'callOnChange');
+      var event = fireMousedown(slider.minH, 0);
+      var expectedValue = 50,
+        offset = slider.valueToOffset(expectedValue) + slider.handleHalfDim + slider.sliderElem.rzsp;
+      fireMousemove(offset);
+      expect(scope.slider.value).to.equal(expectedValue);
+      slider.positionTrackingHandle.called.should.be.true;
+      slider.callOnChange.called.should.be.true;
+    });
+
+    it('should do nothing when a click happen on another element than the handle', function() {
+      scope.slider.value = 100;
+      scope.$digest();
+
+      sinon.spy(slider, 'positionTrackingHandle');
+      fireMousedown(slider.selBar, 0);
+      fireMousedown(slider.fullBar, 0);
+      fireMousedown(slider.ticks, 0);
+
+      expect(scope.slider.value).to.equal(100);
+      slider.positionTrackingHandle.called.should.be.false;
     });
   });
 

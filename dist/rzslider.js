@@ -49,6 +49,7 @@
       keyboardSupport: true,
       scale: 1,
       enforceRange: false,
+      onlyBindHandles: false,
       onStart: null,
       onChange: null,
       onEnd: null
@@ -1197,8 +1198,10 @@
           barMove = this.onMove;
         }
 
-        this.selBar.on('mousedown', angular.bind(this, barStart, null, barTracking));
-        this.selBar.on('mousedown', angular.bind(this, barMove, this.selBar));
+        if (!this.options.onlyBindHandles) {
+          this.selBar.on('mousedown', angular.bind(this, barStart, null, barTracking));
+          this.selBar.on('mousedown', angular.bind(this, barMove, this.selBar));
+        }
 
         if (this.options.draggableRangeOnly) {
           this.minH.on('mousedown', angular.bind(this, barStart, null, barTracking));
@@ -1208,14 +1211,18 @@
           if (this.range) {
             this.maxH.on('mousedown', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh'));
           }
-          this.fullBar.on('mousedown', angular.bind(this, this.onStart, null, null));
-          this.fullBar.on('mousedown', angular.bind(this, this.onMove, this.fullBar));
-          this.ticks.on('mousedown', angular.bind(this, this.onStart, null, null));
-          this.ticks.on('mousedown', angular.bind(this, this.onMove, this.ticks));
+          if (!this.options.onlyBindHandles) {
+            this.fullBar.on('mousedown', angular.bind(this, this.onStart, null, null));
+            this.fullBar.on('mousedown', angular.bind(this, this.onMove, this.fullBar));
+            this.ticks.on('mousedown', angular.bind(this, this.onStart, null, null));
+            this.ticks.on('mousedown', angular.bind(this, this.onMove, this.ticks));
+          }
         }
 
-        this.selBar.on('touchstart', angular.bind(this, barStart, null, barTracking));
-        this.selBar.on('touchstart', angular.bind(this, barMove, this.selBar));
+        if (!this.options.onlyBindHandles) {
+          this.selBar.on('touchstart', angular.bind(this, barStart, null, barTracking));
+          this.selBar.on('touchstart', angular.bind(this, barMove, this.selBar));
+        }
         if (this.options.draggableRangeOnly) {
           this.minH.on('touchstart', angular.bind(this, barStart, null, barTracking));
           this.maxH.on('touchstart', angular.bind(this, barStart, null, barTracking));
@@ -1224,10 +1231,12 @@
           if (this.range) {
             this.maxH.on('touchstart', angular.bind(this, this.onStart, this.maxH, 'rzSliderHigh'));
           }
-          this.fullBar.on('touchstart', angular.bind(this, this.onStart, null, null));
-          this.fullBar.on('touchstart', angular.bind(this, this.onMove, this.fullBar));
-          this.ticks.on('touchstart', angular.bind(this, this.onStart, null, null));
-          this.ticks.on('touchstart', angular.bind(this, this.onMove, this.ticks));
+          if (!this.options.onlyBindHandles) {
+            this.fullBar.on('touchstart', angular.bind(this, this.onStart, null, null));
+            this.fullBar.on('touchstart', angular.bind(this, this.onMove, this.fullBar));
+            this.ticks.on('touchstart', angular.bind(this, this.onStart, null, null));
+            this.ticks.on('touchstart', angular.bind(this, this.onMove, this.ticks));
+          }
         }
 
         if (this.options.keyboardSupport) {
