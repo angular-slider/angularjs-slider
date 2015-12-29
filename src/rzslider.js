@@ -10,6 +10,7 @@
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
   'use strict';
+  /* istanbul ignore next */
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
     define(['angular'], factory);
@@ -94,6 +95,7 @@
      */
     return function(func, wait, options) {
       'use strict';
+      /* istanbul ignore next */
       var getTime = (Date.now || function() {
         return new Date().getTime();
       });
@@ -102,16 +104,13 @@
       var previous = 0;
       options = options || {};
       var later = function() {
-        previous = options.leading === false ? 0 : getTime();
+        previous = getTime();
         timeout = null;
         result = func.apply(context, args);
         context = args = null;
       };
       return function() {
         var now = getTime();
-        if (!previous && options.leading === false) {
-          previous = now;
-        }
         var remaining = wait - (now - previous);
         context = this;
         args = arguments;
@@ -213,7 +212,7 @@
        *
        * @type {number}
        */
-      this.step = 0;
+      this.step = 1;
 
       /**
        * The name of the handle we are currently tracking
@@ -735,7 +734,6 @@
        */
       updateTicksScale: function() {
         if (!this.options.showTicks) return;
-        if (!this.step) return; //if step is 0, we'll get a zero division
 
         var positions = '',
           ticksCount = Math.round((this.maxValue - this.minValue) / this.step) + 1;
