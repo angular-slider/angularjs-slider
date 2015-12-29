@@ -1280,6 +1280,7 @@
       onMove: function(pointer, event) {
         var newOffset = this.getEventPosition(event),
           newValue;
+          
         if (newOffset <= 0) {
           if (pointer.rzsp === 0)
             return;
