@@ -13,6 +13,14 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
       showSelectionBar: true
     }
   };
+  //Slider with selection bar end
+  $scope.slider_visible_bar_end = {
+    value: 10,
+    options: {
+      ceil: 100,
+      showSelectionBarEnd: true
+    }
+  };
 
   //Range slider config
   $scope.minRangeSlider = {

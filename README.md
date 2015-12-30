@@ -162,6 +162,7 @@ The default options are:
     draggableRange: false,
     draggableRangeOnly: false,
     showSelectionBar: false,
+    showSelectionBarEnd: false,
     hideLimitLabels: false,
     readOnly: false,
     disabled: false,
@@ -219,7 +220,9 @@ $scope.slider = {
 
 **draggableRangeOnly** - _Boolean (defaults to false)_: Same as draggableRange but the slider range can't be changed.
 
-**showSelectionBar** - _Boolean (defaults to false)_: Set to true to always show the selection bar.
+**showSelectionBar** - _Boolean (defaults to false)_: Set to true to always show the selection bar before the slider handle.
+
+**showSelectionBarEnd** - _Boolean (defaults to false)_: Set to true to always show the selection bar after the slider handle.
 
 **getSelectionBarColor** - _Function(value) or Function(minVal, maxVal) (defaults to null)_: Function that returns the current color of the selection bar. If the returned color depends on a model value (either `rzScopeModel`or `'rzSliderHigh`), you should use the argument passed to the function. Indeed, when the function is called, there is no certainty that the model has already been updated.
 

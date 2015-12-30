@@ -41,6 +41,7 @@
       draggableRange: false,
       draggableRangeOnly: false,
       showSelectionBar: false,
+      showSelectionBarEnd: false,
       hideLimitLabels: false,
       readOnly: false,
       disabled: false,
@@ -409,6 +410,8 @@
 
         this.options.showTicks = this.options.showTicks || this.options.showTicksValues;
         this.scope.showTicks = this.options.showTicks; //scope is used in the template
+
+        this.options.showSelectionBar = this.options.showSelectionBar || this.options.showSelectionBarEnd;
 
         if (this.options.stepsArray) {
           this.options.floor = 0;
@@ -929,8 +932,17 @@
        * @returns {undefined}
        */
       updateSelectionBar: function() {
-        this.setDimension(this.selBar, Math.abs(this.maxH.rzsp - this.minH.rzsp) + this.handleHalfDim);
-        this.setPosition(this.selBar, this.range ? this.minH.rzsp + this.handleHalfDim : 0);
+        var position = 0,
+          dimension = 0;
+        if (this.range || !this.options.showSelectionBarEnd) {
+          dimension = Math.abs(this.maxH.rzsp - this.minH.rzsp) + this.handleHalfDim
+          position = this.range ? this.minH.rzsp + this.handleHalfDim : 0;
+        } else {
+          dimension = Math.abs(this.maxPos - this.minH.rzsp) + this.handleHalfDim
+          position = this.minH.rzsp + this.handleHalfDim;
+        }
+        this.setDimension(this.selBar, dimension);
+        this.setPosition(this.selBar, position);
         if (this.options.getSelectionBarColor) {
           var color = this.getSelectionBarColor();
           this.scope.barStyle = {

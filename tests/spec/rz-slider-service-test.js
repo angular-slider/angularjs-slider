@@ -402,6 +402,37 @@ describe('rzslider - ', function() {
         expect(slider.maxValue).to.equal(100);
       });
 
+      it('should set the correct dimension/position for selection bar for single slider with showSelectionBar=true', function() {
+        var sliderConf = {
+          value: 2,
+          options: {
+            floor: 0,
+            ceil: 10,
+            showSelectionBar: true
+          }
+        };
+        createSlider(sliderConf);
+        var expectedDimension = slider.valueToOffset(2) + slider.handleHalfDim;
+        expect(slider.selBar.css('width')).to.equal(expectedDimension + 'px');
+        expect(slider.selBar.css('left')).to.equal('0px');
+      });
+
+      it('should set the correct dimension/position for selection bar for single slider with showSelectionBarEnd=true', function() {
+        var sliderConf = {
+          value: 2,
+          options: {
+            floor: 0,
+            ceil: 10,
+            showSelectionBarEnd: true
+          }
+        };
+        createSlider(sliderConf);
+        var expectedDimension = slider.valueToOffset(8) + slider.handleHalfDim,
+          expectedPosition = slider.valueToOffset(2) + slider.handleHalfDim;
+        expect(slider.selBar.css('width')).to.equal(expectedDimension + 'px');
+        expect(slider.selBar.css('left')).to.equal(expectedPosition + 'px');
+      });
+
       it('should set the correct background-color on selection bar for single slider', function() {
         var sliderConf = {
           value: 10,
@@ -422,6 +453,22 @@ describe('rzslider - ', function() {
         scope.slider.value = 2;
         scope.$digest();
         expect(selBarChild.css('background-color')).to.equal('red');
+      });
+
+      it('should set the correct dimension/position for selection bar for range slider', function() {
+        var sliderConf = {
+          min: 2,
+          max: 8,
+          options: {
+            floor: 0,
+            ceil: 10
+          }
+        };
+        createRangeSlider(sliderConf);
+        var expectedDimension = slider.valueToOffset(6) + slider.handleHalfDim,
+          expectedPosition = slider.valueToOffset(2) + slider.handleHalfDim;
+        expect(slider.selBar.css('width')).to.equal(expectedDimension + 'px');
+        expect(slider.selBar.css('left')).to.equal(expectedPosition + 'px');
       });
 
       it('should set the correct background-color on selection bar for range slider', function() {
