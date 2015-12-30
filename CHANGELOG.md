@@ -1,3 +1,14 @@
+# 2.4.0 (2015-12-30)
+## Features
+- Add an `enforceRange` options to round the `rzSliderModel` and `rzSliderHigh` to the slider range even when modified from outside the slider.(#208).
+- Add a `ticksTooltip` option used to display a tooltip when a tick is hovered (#209).
+- Add an `onlyBindHandles` option to only bind events on slider handles (#212).
+- Add a `showSelectionBarEnd` option to display the selection bar after the value (#214).
+
+## Bug fixes
+- Fix reset of maxH element (#204).
+- Change the watchers order to prevent unwanted model modifications (#207).
+
 # 2.3.0 (2015-12-22)
 ## Features
 - Add keyboard support (activated by default with `keyboardSupport` set to true) (#191).
