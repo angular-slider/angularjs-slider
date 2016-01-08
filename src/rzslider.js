@@ -54,6 +54,7 @@
       selectionBarColor: null,
       keyboardSupport: true,
       scale: 1,
+	  pointerColour: 'blue',
       enforceRange: false,
       onlyBindHandles: false,
       onStart: null,
@@ -430,6 +431,11 @@
         if (this.options.vertical) {
           this.positionProperty = 'bottom';
           this.dimensionProperty = 'height';
+        }
+        if (this.options.pointerColour) {
+          this.scope.pointerStyle = {
+            backgroundColor: this.options.pointerColour
+          };
         }
       },
 

@@ -173,6 +173,7 @@ The default options are:
     ticksValuesTooltip: null,
     vertical: false,
     selectionBarColor: null,
+    pointerColour: 'blue',
     keyboardSupport: true,
     scale: 1,
     enforceRange: false,
@@ -225,6 +226,8 @@ $scope.slider = {
 **showSelectionBarEnd** - _Boolean (defaults to false)_: Set to true to always show the selection bar after the slider handle.
 
 **getSelectionBarColor** - _Function(value) or Function(minVal, maxVal) (defaults to null)_: Function that returns the current color of the selection bar. If the returned color depends on a model value (either `rzScopeModel`or `'rzSliderHigh`), you should use the argument passed to the function. Indeed, when the function is called, there is no certainty that the model has already been updated.
+
+**pointerColour** - _String_: To change the default pointer colour, set this to any valid background-color CSS style.
 
 **hideLimitLabels** - _Boolean (defaults to false)_: Set to true to hide min / max labels
 
