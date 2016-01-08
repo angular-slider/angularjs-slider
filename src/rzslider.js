@@ -296,13 +296,10 @@
         this.calcViewDimensions();
         this.setMinAndMax();
         this.addAccessibility();
-
-        $timeout(function() {
-          self.updateCeilLab();
-          self.updateFloorLab();
-          self.initHandles();
-          self.manageEventsBindings();
-        });
+        this.updateCeilLab();
+        this.updateFloorLab();
+        this.initHandles();
+        this.manageEventsBindings();
 
         // Recalculate slider view dimensions
         this.scope.$on('reCalcViewDimensions', calcDimFn);

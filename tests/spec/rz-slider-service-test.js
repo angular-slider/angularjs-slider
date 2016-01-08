@@ -61,7 +61,6 @@ describe('rzslider - ', function() {
     angular.element(document).find('body').append(parent);
     scope.$digest();
     slider = element.isolateScope().slider;
-    $timeout.flush();
   }
 
   /*
