@@ -816,10 +816,7 @@
        */
       callOnChange: function() {
         if (this.options.onChange) {
-          var self = this;
-          $timeout(function() {
-            self.options.onChange(self.options.id);
-          });
+          this.options.onChange(this.options.id);
         }
       },
 

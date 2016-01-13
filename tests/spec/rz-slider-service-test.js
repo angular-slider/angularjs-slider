@@ -520,7 +520,6 @@ describe('rzslider - ', function() {
         createSlider(sliderConf);
 
         slider.callOnChange();
-        $timeout.flush();
         sliderConf.options.onChange.calledWith('test').should.be.true;
       });
 
