@@ -1,7 +1,7 @@
 /*! angularjs-slider - v2.4.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2015-12-30 */
+ 2016-01-13 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -812,10 +812,7 @@
        */
       callOnChange: function() {
         if (this.options.onChange) {
-          var self = this;
-          $timeout(function() {
-            self.options.onChange(self.options.id);
-          });
+          this.options.onChange(this.options.id);
         }
       },
 
