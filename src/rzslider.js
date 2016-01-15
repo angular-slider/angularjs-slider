@@ -799,10 +799,7 @@
        */
       callOnStart: function() {
         if (this.options.onStart) {
-          var self = this;
-          $timeout(function() {
-            self.options.onStart(self.options.id);
-          });
+          this.options.onStart(this.options.id);
         }
       },
 

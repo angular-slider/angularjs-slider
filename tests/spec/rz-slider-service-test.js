@@ -504,7 +504,6 @@ describe('rzslider - ', function() {
         createSlider(sliderConf);
 
         slider.callOnStart();
-        $timeout.flush();
         sliderConf.options.onStart.calledWith('test').should.be.true;
       });
 

@@ -248,7 +248,7 @@ $scope.slider = {
 
 **onlyBindHandles** - _Boolean (defaults to false)_: Set to true to only bind events on slider handles.
 
-**onStart** - _Function(sliderId)_: Function to be called when a slider update is started. If an id was set in the options, then it's passed to this callback.
+**onStart** - _Function(sliderId)_: Function to be called when a slider update is started. If an id was set in the options, then it's passed to this callback. This callback is called before any update on the model.
 
 **onChange** - _Function(sliderId)_: Function to be called when rz-slider-model or rz-slider-high change. If an id was set in the options, then it's passed to this callback.
 
