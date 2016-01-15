@@ -1,3 +1,9 @@
+# 2.4.1 (2016-01-15)
+## Performance improvements
+- Remove the $timeout call in the init method (#223).
+- Remove the $timeout call in the onStart callback.
+- Remove the $timeout call in the onChange callback (#229).
+
 # 2.4.0 (2015-12-30)
 ## Features
 - Add an `enforceRange` options to round the `rzSliderModel` and `rzSliderHigh` to the slider range even when modified from outside the slider.(#208).
