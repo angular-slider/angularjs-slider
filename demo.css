@@ -10,6 +10,11 @@ body {
     padding-bottom: 40px;
 }
 
+
+.code {
+ margin-top: 5px;
+}
+
 header {
     background: #0db9f0;
     color: #fff;
