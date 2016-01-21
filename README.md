@@ -17,6 +17,7 @@ Slider directive implementation for AngularJS, without any dependencies: [http:/
 - Well documented
 - Customizable
 - Simple to use
+- Keyboard support
 - Compatibility with jQuery Lite, ie. with full jQuery ( Thanks Jusas! https://github.com/Jusas)
 
 **Horizontal**
