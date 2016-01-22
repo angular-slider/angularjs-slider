@@ -1,3 +1,7 @@
+# 2.5.0 (not-released)
+## Features
+- Add a `minRange` option to set a minimal range (#231).
+
 # 2.4.1 (2016-01-15)
 ## Performance improvements
 - Remove the $timeout call in the init method (#223).

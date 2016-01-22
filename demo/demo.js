@@ -6,6 +6,29 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     value: 10
   };
 
+  //Range slider config
+  $scope.rangeSlider = {
+    minValue: 10,
+    maxValue: 90,
+    options: {
+      floor: 0,
+      ceil: 100,
+      step: 1
+    }
+  };
+
+  //Range slider with minRange config
+  $scope.minRangeSlider = {
+    minValue: 10,
+    maxValue: 90,
+    options: {
+      floor: 0,
+      ceil: 100,
+      step: 1,
+      minRange: 10
+    }
+  };
+
   //Slider with selection bar
   $scope.slider_visible_bar = {
     value: 10,
@@ -13,23 +36,13 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
       showSelectionBar: true
     }
   };
+
   //Slider with selection bar end
   $scope.slider_visible_bar_end = {
     value: 10,
     options: {
       ceil: 100,
       showSelectionBarEnd: true
-    }
-  };
-
-  //Range slider config
-  $scope.minRangeSlider = {
-    minValue: 10,
-    maxValue: 90,
-    options: {
-      floor: 0,
-      ceil: 100,
-      step: 1
     }
   };
 

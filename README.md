@@ -157,6 +157,7 @@ The default options are:
     ceil: null, //defaults to rz-slider-model
     step: 1,
     precision: 0,
+    minRange: 0,
     id: null,
     translate: null,
     stepsArray: null,
@@ -191,6 +192,8 @@ The default options are:
 **step** - _Number (defaults to 1)_: Step between each value.
 
 **precision** - _Number (defaults to 0)_: The precision to display values with. The `toFixed()` is used internally for this.
+
+**minRange** - _Number (defaults to 0)_: The minimum range authorized on the slider.
 
 **translate** - _Function(value, sliderId)_: Custom translate function. Use this if you want to translate values displayed on the slider. For example if you want to display dollar amounts instead of just numbers:
 ```html

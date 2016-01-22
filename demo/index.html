@@ -27,8 +27,17 @@
 
   <article>
     <h2>Range slider</h2>
-    Min Value: <input type="number" ng-model="minRangeSlider.minValue"/><br/>
-    Max Value: <input type="number" ng-model="minRangeSlider.maxValue"/><br/>
+    Min Value: <input type="number" ng-model="rangeSlider.minValue"/><br/>
+    Max Value: <input type="number" ng-model="rangeSlider.maxValue"/><br/>
+    <rzslider
+      rz-slider-model="rangeSlider.minValue"
+      rz-slider-high="rangeSlider.maxValue"
+      rz-slider-options="rangeSlider.options"
+    ></rzslider>
+  </article>
+
+  <article>
+    <h2>Range slider with minimum range of 10</h2>
     <rzslider
       rz-slider-model="minRangeSlider.minValue"
       rz-slider-high="minRangeSlider.maxValue"

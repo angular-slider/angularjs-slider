@@ -35,6 +35,7 @@
       ceil: null, //defaults to rz-slider-model
       step: 1,
       precision: 0,
+      minRange: 0,
       id: null,
       translate: null,
       stepsArray: null,
@@ -740,7 +741,7 @@
         this.scope.ticks = [];
         for (var i = 0; i < ticksCount; i++) {
           var value = this.roundStep(this.minValue + i * this.step);
-          var tick =   {
+          var tick = {
             selected: this.isTickSelected(value)
           };
           if (tick.selected && this.options.getSelectionBarColor) {
@@ -1518,7 +1519,9 @@
         var switched = false;
 
         if (this.range) {
-          /* This is to check if we need to switch the min and max handles*/
+          newValue = this.applyMinRange(newValue);
+          newOffset = this.valueToOffset(newValue);
+          /* This is to check if we need to switch the min and max handles */
           if (this.tracking === 'rzSliderModel' && newValue >= this.scope.rzSliderHigh) {
             switched = true;
             this.scope[this.tracking] = this.scope.rzSliderHigh;
@@ -1555,6 +1558,21 @@
           this.applyModel();
         }
         return switched;
+      },
+
+      applyMinRange: function(newValue) {
+        if (this.options.minRange !== 0) {
+          var oppositeValue = this.tracking === 'rzSliderModel' ? this.scope.rzSliderHigh : this.scope.rzSliderModel,
+            difference = Math.abs(newValue - oppositeValue);
+
+          if (difference < this.options.minRange) {
+            if (this.tracking === 'rzSliderModel')
+              return this.scope.rzSliderHigh - this.options.minRange;
+            else
+              return this.scope.rzSliderModel + this.options.minRange;
+          }
+        }
+        return newValue;
       },
 
       /**
