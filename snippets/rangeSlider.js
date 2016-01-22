@@ -4,7 +4,6 @@ $scope.slider = {
     options: {
         floor: 0,
         ceil: 100,
-        step: 1,
-        minRange: 10
+        step: 1
     }
 };
