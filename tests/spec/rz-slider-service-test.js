@@ -16,7 +16,7 @@ describe('rzslider - ', function() {
   beforeEach(module('appTemplates'));
 
   beforeEach(inject(function(_RzSlider_, _RzSliderOptions_, _$rootScope_, _$compile_, _$timeout_, _$window_,
-    _$document_) {
+                             _$document_) {
     RzSlider = _RzSlider_;
     RzSliderOptions = _RzSliderOptions_;
     $rootScope = _$rootScope_;
@@ -46,7 +46,7 @@ describe('rzslider - ', function() {
     var template = '';
     if (sliderObj.options)
       template = '<rzslider rz-slider-model="slider.min" rz-slider-high="slider.max"' +
-      'rz-slider-options="slider.options"></rzslider>';
+        'rz-slider-options="slider.options"></rzslider>';
     else
       template = '<rzslider rz-slider-model="slider.min" rz-slider-high="slider.max"></rzslider>';
     initSlider(sliderObj, template);
@@ -64,10 +64,10 @@ describe('rzslider - ', function() {
   }
 
   /*
-  ******************************************************************************
-    SINGLE SLIDER INIT
-  ******************************************************************************
-  */
+   ******************************************************************************
+   SINGLE SLIDER INIT
+   ******************************************************************************
+   */
   describe('single slider initialisation', function() {
     beforeEach(function() {
       var sliderConf = {
@@ -152,10 +152,10 @@ describe('rzslider - ', function() {
   });
 
   /*
-  ******************************************************************************
-    RANGE SLIDER INIT
-  ******************************************************************************
-  */
+   ******************************************************************************
+   RANGE SLIDER INIT
+   ******************************************************************************
+   */
   describe('range slider initialisation', function() {
     beforeEach(function() {
       var sliderConf = {
@@ -239,10 +239,10 @@ describe('rzslider - ', function() {
   });
 
   /*
-  ******************************************************************************
-    RzSliderOptions
-  ******************************************************************************
-  */
+   ******************************************************************************
+   RzSliderOptions
+   ******************************************************************************
+   */
   describe('RzSliderOptions', function() {
 
     it('should have a correct getOptions method that apply custom options', function() {
@@ -270,10 +270,10 @@ describe('rzslider - ', function() {
   });
 
   /*
-  ******************************************************************************
-    Options handling
-  ******************************************************************************
-  */
+   ******************************************************************************
+   Options handling
+   ******************************************************************************
+   */
   describe('options handling - ', function() {
 
     describe('tests with same config', function() {
@@ -576,10 +576,10 @@ describe('rzslider - ', function() {
   });
 
   /*
-  ******************************************************************************
-    Accessibility
-  ******************************************************************************
-  */
+   ******************************************************************************
+   Accessibility
+   ******************************************************************************
+   */
   describe('accessibility - ', function() {
     it('should have accessible horizontal single slider', function() {
       var sliderConf = {
@@ -785,10 +785,10 @@ describe('rzslider - ', function() {
   });
 
   /*
-  ******************************************************************************
-    Slider with ticks
-  ******************************************************************************
-  */
+   ******************************************************************************
+   Slider with ticks
+   ******************************************************************************
+   */
   describe('slider with ticks', function() {
 
     it('should not create any tick if showTicks is false (default)', function() {
@@ -949,10 +949,10 @@ describe('rzslider - ', function() {
   });
 
   /*
-  ******************************************************************************
-    HELPER FUNCTIONS
-  ******************************************************************************
-  */
+   ******************************************************************************
+   HELPER FUNCTIONS
+   ******************************************************************************
+   */
   describe('helper functions - ', function() {
     beforeEach(function() {
       var sliderConf = {
@@ -1526,10 +1526,10 @@ describe('rzslider - ', function() {
   });
 
   /*
-  ******************************************************************************
-    MOUSE CONTROLS
-  ******************************************************************************
-  */
+   ******************************************************************************
+   MOUSE CONTROLS
+   ******************************************************************************
+   */
   describe('mouse controls - ', function() {
 
     describe('single horizontal slider - ', function() {
@@ -2120,587 +2120,639 @@ describe('rzslider - ', function() {
         slider.callOnChange.called.should.be.true;
       });
     });
-  });
 
-  describe('range vertical slider - ', function() {
-    beforeEach(function() {
-      var sliderConf = {
-        min: 0,
-        max: 100,
-        options: {
-          floor: 0,
-          ceil: 100,
-          vertical: true
-        }
-      };
-      createRangeSlider(sliderConf);
-    });
-    afterEach(function() {
-      // to clean document listener
-      fireMouseup();
-    });
+    describe('range vertical slider - ', function() {
+      beforeEach(function() {
+        var sliderConf = {
+          min: 0,
+          max: 100,
+          options: {
+            floor: 0,
+            ceil: 100,
+            vertical: true
+          }
+        };
+        createRangeSlider(sliderConf);
+      });
+      afterEach(function() {
+        // to clean document listener
+        fireMouseup();
+      });
 
-    it('should handle mousedown on minH correctly when keyboardSupport is true', function() {
-      sinon.spy(slider, 'calcViewDimensions');
-      sinon.spy(slider, 'callOnStart');
-      sinon.spy(slider, 'focusElement');
+      it('should handle mousedown on minH correctly when keyboardSupport is true', function() {
+        sinon.spy(slider, 'calcViewDimensions');
+        sinon.spy(slider, 'callOnStart');
+        sinon.spy(slider, 'focusElement');
 
-      var event = fireMousedown(slider.minH, 0, true);
+        var event = fireMousedown(slider.minH, 0, true);
 
-      slider.calcViewDimensions.called.should.be.true;
-      slider.callOnStart.called.should.be.true;
-      slider.focusElement.calledWith(slider.minH).should.be.true;
-      event.preventDefault.called.should.be.true;
-      event.stopPropagation.called.should.be.true;
-      expect(slider.tracking).to.equal('rzSliderModel');
-      expect(slider.minH.hasClass('rz-active')).to.be.true;
-    });
+        slider.calcViewDimensions.called.should.be.true;
+        slider.callOnStart.called.should.be.true;
+        slider.focusElement.calledWith(slider.minH).should.be.true;
+        event.preventDefault.called.should.be.true;
+        event.stopPropagation.called.should.be.true;
+        expect(slider.tracking).to.equal('rzSliderModel');
+        expect(slider.minH.hasClass('rz-active')).to.be.true;
+      });
 
-    it('should handle mousedown on minH correctly when keyboardSupport is false', function() {
-      scope.slider.options.keyboardSupport = false;
-      scope.$digest();
+      it('should handle mousedown on minH correctly when keyboardSupport is false', function() {
+        scope.slider.options.keyboardSupport = false;
+        scope.$digest();
 
-      sinon.spy(slider, 'calcViewDimensions');
-      sinon.spy(slider, 'callOnStart');
-      sinon.spy(slider, 'focusElement');
+        sinon.spy(slider, 'calcViewDimensions');
+        sinon.spy(slider, 'callOnStart');
+        sinon.spy(slider, 'focusElement');
 
-      var event = fireMousedown(slider.minH, 0, true);
+        var event = fireMousedown(slider.minH, 0, true);
 
-      slider.calcViewDimensions.called.should.be.true;
-      slider.callOnStart.called.should.be.true;
-      slider.focusElement.called.should.be.false;
-      event.preventDefault.called.should.be.true;
-      event.stopPropagation.called.should.be.true;
-      expect(slider.tracking).to.equal('rzSliderModel');
-      expect(slider.minH.hasClass('rz-active')).to.be.true;
-    });
+        slider.calcViewDimensions.called.should.be.true;
+        slider.callOnStart.called.should.be.true;
+        slider.focusElement.called.should.be.false;
+        event.preventDefault.called.should.be.true;
+        event.stopPropagation.called.should.be.true;
+        expect(slider.tracking).to.equal('rzSliderModel');
+        expect(slider.minH.hasClass('rz-active')).to.be.true;
+      });
 
-    it('should handle mousedown on maxH correctly when keyboardSupport is true', function() {
-      sinon.spy(slider, 'calcViewDimensions');
-      sinon.spy(slider, 'callOnStart');
-      sinon.spy(slider, 'focusElement');
+      it('should handle mousedown on maxH correctly when keyboardSupport is true', function() {
+        sinon.spy(slider, 'calcViewDimensions');
+        sinon.spy(slider, 'callOnStart');
+        sinon.spy(slider, 'focusElement');
 
-      var event = fireMousedown(slider.maxH, 0, true);
+        var event = fireMousedown(slider.maxH, 0, true);
 
-      slider.calcViewDimensions.called.should.be.true;
-      slider.callOnStart.called.should.be.true;
-      slider.focusElement.calledWith(slider.maxH).should.be.true;
-      event.preventDefault.called.should.be.true;
-      event.stopPropagation.called.should.be.true;
-      expect(slider.tracking).to.equal('rzSliderHigh');
-      expect(slider.maxH.hasClass('rz-active')).to.be.true;
-    });
+        slider.calcViewDimensions.called.should.be.true;
+        slider.callOnStart.called.should.be.true;
+        slider.focusElement.calledWith(slider.maxH).should.be.true;
+        event.preventDefault.called.should.be.true;
+        event.stopPropagation.called.should.be.true;
+        expect(slider.tracking).to.equal('rzSliderHigh');
+        expect(slider.maxH.hasClass('rz-active')).to.be.true;
+      });
 
-    it('should handle mousedown on maxH correctly when keyboardSupport is false', function() {
-      scope.slider.options.keyboardSupport = false;
-      scope.$digest();
+      it('should handle mousedown on maxH correctly when keyboardSupport is false', function() {
+        scope.slider.options.keyboardSupport = false;
+        scope.$digest();
 
-      sinon.spy(slider, 'calcViewDimensions');
-      sinon.spy(slider, 'callOnStart');
-      sinon.spy(slider, 'focusElement');
+        sinon.spy(slider, 'calcViewDimensions');
+        sinon.spy(slider, 'callOnStart');
+        sinon.spy(slider, 'focusElement');
 
-      var event = fireMousedown(slider.maxH, 0, true);
+        var event = fireMousedown(slider.maxH, 0, true);
 
-      slider.calcViewDimensions.called.should.be.true;
-      slider.callOnStart.called.should.be.true;
-      slider.focusElement.called.should.be.false;
-      event.preventDefault.called.should.be.true;
-      event.stopPropagation.called.should.be.true;
-      expect(slider.tracking).to.equal('rzSliderHigh');
-      expect(slider.maxH.hasClass('rz-active')).to.be.true;
-    });
+        slider.calcViewDimensions.called.should.be.true;
+        slider.callOnStart.called.should.be.true;
+        slider.focusElement.called.should.be.false;
+        event.preventDefault.called.should.be.true;
+        event.stopPropagation.called.should.be.true;
+        expect(slider.tracking).to.equal('rzSliderHigh');
+        expect(slider.maxH.hasClass('rz-active')).to.be.true;
+      });
 
-    it('should handle click and drag on minH correctly when mouse is on the middle', function() {
-      sinon.spy(slider, 'positionTrackingHandle');
-      sinon.spy(slider, 'callOnChange');
-      var event = fireMousedown(slider.minH, 0, true);
-      var expectedValue = 50,
-        offset = slider.sliderElem.rzsp - slider.valueToOffset(expectedValue) - slider.handleHalfDim;
-      fireMousemove(offset, true);
-      expect(scope.slider.min).to.equal(expectedValue);
-      slider.positionTrackingHandle.called.should.be.true;
-      slider.callOnChange.called.should.be.true;
-    });
+      it('should handle click and drag on minH correctly when mouse is on the middle', function() {
+        sinon.spy(slider, 'positionTrackingHandle');
+        sinon.spy(slider, 'callOnChange');
+        var event = fireMousedown(slider.minH, 0, true);
+        var expectedValue = 50,
+          offset = slider.sliderElem.rzsp - slider.valueToOffset(expectedValue) - slider.handleHalfDim;
+        fireMousemove(offset, true);
+        expect(scope.slider.min).to.equal(expectedValue);
+        slider.positionTrackingHandle.called.should.be.true;
+        slider.callOnChange.called.should.be.true;
+      });
 
-    it('should handle click and drag on maxH correctly when mouse is on the middle', function() {
-      sinon.spy(slider, 'positionTrackingHandle');
-      sinon.spy(slider, 'callOnChange');
-      var event = fireMousedown(slider.maxH, 0, true);
-      var expectedValue = 50,
-        offset = slider.sliderElem.rzsp - slider.valueToOffset(expectedValue) - slider.handleHalfDim;
-      fireMousemove(offset, true);
-      expect(scope.slider.max).to.equal(expectedValue);
-      slider.positionTrackingHandle.called.should.be.true;
-      slider.callOnChange.called.should.be.true;
-    });
+      it('should handle click and drag on maxH correctly when mouse is on the middle', function() {
+        sinon.spy(slider, 'positionTrackingHandle');
+        sinon.spy(slider, 'callOnChange');
+        var event = fireMousedown(slider.maxH, 0, true);
+        var expectedValue = 50,
+          offset = slider.sliderElem.rzsp - slider.valueToOffset(expectedValue) - slider.handleHalfDim;
+        fireMousemove(offset, true);
+        expect(scope.slider.max).to.equal(expectedValue);
+        slider.positionTrackingHandle.called.should.be.true;
+        slider.callOnChange.called.should.be.true;
+      });
 
-    it('should handle click and drag on minH and switch min/max if needed', function() {
-      scope.slider.min = 40;
-      scope.slider.max = 60;
-      scope.$digest();
+      it('should handle click and drag on minH and switch min/max if needed', function() {
+        scope.slider.min = 40;
+        scope.slider.max = 60;
+        scope.$digest();
 
-      var event = fireMousedown(slider.minH, 0, true);
-      var expectedValue = 80,
-        offset = slider.sliderElem.rzsp - slider.valueToOffset(expectedValue) - slider.handleHalfDim;
-      fireMousemove(offset, true);
+        var event = fireMousedown(slider.minH, 0, true);
+        var expectedValue = 80,
+          offset = slider.sliderElem.rzsp - slider.valueToOffset(expectedValue) - slider.handleHalfDim;
+        fireMousemove(offset, true);
 
-      expect(scope.slider.min).to.equal(60);
-      expect(scope.slider.max).to.equal(80);
-    });
+        expect(scope.slider.min).to.equal(60);
+        expect(scope.slider.max).to.equal(80);
+      });
 
-    it('should handle click and drag on maxH and switch min/max if needed', function() {
-      scope.slider.min = 40;
-      scope.slider.max = 60;
-      scope.$digest();
+      it('should handle click and drag on maxH and switch min/max if needed', function() {
+        scope.slider.min = 40;
+        scope.slider.max = 60;
+        scope.$digest();
 
-      var event = fireMousedown(slider.maxH, 0, true);
-      var expectedValue = 20,
-        offset = slider.sliderElem.rzsp - slider.valueToOffset(expectedValue) - slider.handleHalfDim;
-      fireMousemove(offset, true);
+        var event = fireMousedown(slider.maxH, 0, true);
+        var expectedValue = 20,
+          offset = slider.sliderElem.rzsp - slider.valueToOffset(expectedValue) - slider.handleHalfDim;
+        fireMousemove(offset, true);
 
-      expect(scope.slider.min).to.equal(20);
-      expect(scope.slider.max).to.equal(40);
-    });
+        expect(scope.slider.min).to.equal(20);
+        expect(scope.slider.max).to.equal(40);
+      });
 
-    it('should handle click on fullbar and move minH when click pos is nearer to minH', function() {
-      sinon.spy(slider, 'positionTrackingHandle');
-      sinon.spy(slider, 'callOnStart');
-      sinon.spy(slider, 'callOnChange');
-      sinon.spy(slider, 'focusElement');
+      it('should handle click on fullbar and move minH when click pos is nearer to minH', function() {
+        sinon.spy(slider, 'positionTrackingHandle');
+        sinon.spy(slider, 'callOnStart');
+        sinon.spy(slider, 'callOnChange');
+        sinon.spy(slider, 'focusElement');
 
-      var expectedValue = 10,
-        offset = slider.sliderElem.rzsp - slider.valueToOffset(expectedValue) - slider.handleHalfDim;
+        var expectedValue = 10,
+          offset = slider.sliderElem.rzsp - slider.valueToOffset(expectedValue) - slider.handleHalfDim;
 
-      var event = fireMousedown(slider.fullBar, offset, true);
+        var event = fireMousedown(slider.fullBar, offset, true);
 
-      expect(scope.slider.min).to.equal(expectedValue);
-      expect(slider.tracking).to.equal('rzSliderModel');
-      slider.focusElement.calledWith(slider.minH).should.be.true;
-      slider.positionTrackingHandle.called.should.be.true;
-      slider.callOnStart.called.should.be.true;
-      slider.callOnChange.called.should.be.true;
-    });
+        expect(scope.slider.min).to.equal(expectedValue);
+        expect(slider.tracking).to.equal('rzSliderModel');
+        slider.focusElement.calledWith(slider.minH).should.be.true;
+        slider.positionTrackingHandle.called.should.be.true;
+        slider.callOnStart.called.should.be.true;
+        slider.callOnChange.called.should.be.true;
+      });
 
-    it('should handle click on fullbar and move maxH when click pos is nearer to maxH', function() {
-      sinon.spy(slider, 'positionTrackingHandle');
-      sinon.spy(slider, 'callOnStart');
-      sinon.spy(slider, 'callOnChange');
-      sinon.spy(slider, 'focusElement');
+      it('should handle click on fullbar and move maxH when click pos is nearer to maxH', function() {
+        sinon.spy(slider, 'positionTrackingHandle');
+        sinon.spy(slider, 'callOnStart');
+        sinon.spy(slider, 'callOnChange');
+        sinon.spy(slider, 'focusElement');
 
-      var expectedValue = 90,
-        offset = slider.sliderElem.rzsp - slider.valueToOffset(expectedValue) - slider.handleHalfDim;
+        var expectedValue = 90,
+          offset = slider.sliderElem.rzsp - slider.valueToOffset(expectedValue) - slider.handleHalfDim;
 
-      var event = fireMousedown(slider.fullBar, offset, true);
+        var event = fireMousedown(slider.fullBar, offset, true);
 
-      expect(scope.slider.max).to.equal(expectedValue);
-      expect(slider.tracking).to.equal('rzSliderHigh');
-      slider.focusElement.calledWith(slider.maxH).should.be.true;
-      slider.positionTrackingHandle.called.should.be.true;
-      slider.callOnStart.called.should.be.true;
-      slider.callOnChange.called.should.be.true;
-    });
+        expect(scope.slider.max).to.equal(expectedValue);
+        expect(slider.tracking).to.equal('rzSliderHigh');
+        slider.focusElement.calledWith(slider.maxH).should.be.true;
+        slider.positionTrackingHandle.called.should.be.true;
+        slider.callOnStart.called.should.be.true;
+        slider.callOnChange.called.should.be.true;
+      });
 
-    it('should handle click on selbar and move minH when click pos is nearer to minH', function() {
-      sinon.spy(slider, 'positionTrackingHandle');
-      sinon.spy(slider, 'callOnStart');
-      sinon.spy(slider, 'callOnChange');
-      sinon.spy(slider, 'focusElement');
+      it('should handle click on selbar and move minH when click pos is nearer to minH', function() {
+        sinon.spy(slider, 'positionTrackingHandle');
+        sinon.spy(slider, 'callOnStart');
+        sinon.spy(slider, 'callOnChange');
+        sinon.spy(slider, 'focusElement');
 
-      var expectedValue = 10,
-        offset = slider.sliderElem.rzsp - slider.valueToOffset(expectedValue) - slider.handleHalfDim;
+        var expectedValue = 10,
+          offset = slider.sliderElem.rzsp - slider.valueToOffset(expectedValue) - slider.handleHalfDim;
 
-      var event = fireMousedown(slider.selBar, offset, true);
+        var event = fireMousedown(slider.selBar, offset, true);
 
-      expect(scope.slider.min).to.equal(expectedValue);
-      expect(slider.tracking).to.equal('rzSliderModel');
-      slider.focusElement.calledWith(slider.minH).should.be.true;
-      slider.positionTrackingHandle.called.should.be.true;
-      slider.callOnStart.called.should.be.true;
-      slider.callOnChange.called.should.be.true;
-    });
+        expect(scope.slider.min).to.equal(expectedValue);
+        expect(slider.tracking).to.equal('rzSliderModel');
+        slider.focusElement.calledWith(slider.minH).should.be.true;
+        slider.positionTrackingHandle.called.should.be.true;
+        slider.callOnStart.called.should.be.true;
+        slider.callOnChange.called.should.be.true;
+      });
 
-    it('should handle click on selbar and move maxH when click pos is nearer to maxH', function() {
-      sinon.spy(slider, 'positionTrackingHandle');
-      sinon.spy(slider, 'callOnStart');
-      sinon.spy(slider, 'callOnChange');
-      sinon.spy(slider, 'focusElement');
+      it('should handle click on selbar and move maxH when click pos is nearer to maxH', function() {
+        sinon.spy(slider, 'positionTrackingHandle');
+        sinon.spy(slider, 'callOnStart');
+        sinon.spy(slider, 'callOnChange');
+        sinon.spy(slider, 'focusElement');
 
-      var expectedValue = 90,
-        offset = slider.sliderElem.rzsp - slider.valueToOffset(expectedValue) - slider.handleHalfDim;
+        var expectedValue = 90,
+          offset = slider.sliderElem.rzsp - slider.valueToOffset(expectedValue) - slider.handleHalfDim;
 
-      var event = fireMousedown(slider.selBar, offset, true);
+        var event = fireMousedown(slider.selBar, offset, true);
 
-      expect(scope.slider.max).to.equal(expectedValue);
-      expect(slider.tracking).to.equal('rzSliderHigh');
-      slider.focusElement.calledWith(slider.maxH).should.be.true;
-      slider.positionTrackingHandle.called.should.be.true;
-      slider.callOnStart.called.should.be.true;
-      slider.callOnChange.called.should.be.true;
-    });
-  });
-
-  describe('range horizontal slider with draggableRange - ', function() {
-    beforeEach(function() {
-      var sliderConf = {
-        min: 40,
-        max: 60,
-        options: {
-          floor: 0,
-          ceil: 100,
-          draggableRange: true
-        }
-      };
-      createRangeSlider(sliderConf);
-    });
-    afterEach(function() {
-      // to clean document listener
-      fireMouseup();
+        expect(scope.slider.max).to.equal(expectedValue);
+        expect(slider.tracking).to.equal('rzSliderHigh');
+        slider.focusElement.calledWith(slider.maxH).should.be.true;
+        slider.positionTrackingHandle.called.should.be.true;
+        slider.callOnStart.called.should.be.true;
+        slider.callOnChange.called.should.be.true;
+      });
     });
 
-    it('should handle click and drag on minH correctly when mouse is on the middle', function() {
-      sinon.spy(slider, 'positionTrackingHandle');
-      sinon.spy(slider, 'callOnChange');
-      var event = fireMousedown(slider.minH, 0);
-      var expectedValue = 50,
-        offset = slider.valueToOffset(expectedValue) + slider.handleHalfDim + slider.sliderElem.rzsp;
-      fireMousemove(offset);
-      expect(scope.slider.min).to.equal(expectedValue);
-      slider.positionTrackingHandle.called.should.be.true;
-      slider.callOnChange.called.should.be.true;
+    describe('range horizontal slider with draggableRange - ', function() {
+      beforeEach(function() {
+        var sliderConf = {
+          min: 40,
+          max: 60,
+          options: {
+            floor: 0,
+            ceil: 100,
+            draggableRange: true
+          }
+        };
+        createRangeSlider(sliderConf);
+      });
+      afterEach(function() {
+        // to clean document listener
+        fireMouseup();
+      });
+
+      it('should handle click and drag on minH correctly when mouse is on the middle', function() {
+        sinon.spy(slider, 'positionTrackingHandle');
+        sinon.spy(slider, 'callOnChange');
+        var event = fireMousedown(slider.minH, 0);
+        var expectedValue = 50,
+          offset = slider.valueToOffset(expectedValue) + slider.handleHalfDim + slider.sliderElem.rzsp;
+        fireMousemove(offset);
+        expect(scope.slider.min).to.equal(expectedValue);
+        slider.positionTrackingHandle.called.should.be.true;
+        slider.callOnChange.called.should.be.true;
+      });
+
+      it('should handle click and drag on maxH correctly when mouse is on the middle', function() {
+        sinon.spy(slider, 'positionTrackingHandle');
+        sinon.spy(slider, 'callOnChange');
+        var event = fireMousedown(slider.maxH, 0);
+        var expectedValue = 50,
+          offset = slider.valueToOffset(expectedValue) + slider.handleHalfDim + slider.sliderElem.rzsp;
+        fireMousemove(offset);
+        expect(scope.slider.max).to.equal(expectedValue);
+        slider.positionTrackingHandle.called.should.be.true;
+        slider.callOnChange.called.should.be.true;
+      });
+
+      it('should handle click and drag on minH and switch min/max if needed', function() {
+        var event = fireMousedown(slider.minH, 0);
+        var expectedValue = 80,
+          offset = slider.valueToOffset(expectedValue) + slider.handleHalfDim + slider.sliderElem.rzsp;
+        fireMousemove(offset);
+
+        expect(scope.slider.min).to.equal(60);
+        expect(scope.slider.max).to.equal(80);
+      });
+
+      it('should handle click and drag on maxH and switch min/max if needed', function() {
+        var event = fireMousedown(slider.maxH, 0);
+        var expectedValue = 20,
+          offset = slider.valueToOffset(expectedValue) + slider.handleHalfDim + slider.sliderElem.rzsp;
+        fireMousemove(offset);
+
+        expect(scope.slider.min).to.equal(20);
+        expect(scope.slider.max).to.equal(40);
+      });
+
+      it('should handle click on fullbar and move minH when click pos is nearer to minH', function() {
+        sinon.spy(slider, 'positionTrackingHandle');
+        sinon.spy(slider, 'callOnStart');
+        sinon.spy(slider, 'callOnChange');
+        sinon.spy(slider, 'focusElement');
+
+        var expectedValue = 10,
+          offset = slider.valueToOffset(expectedValue) + slider.handleHalfDim + slider.sliderElem.rzsp;
+
+        var event = fireMousedown(slider.fullBar, offset);
+
+        expect(scope.slider.min).to.equal(expectedValue);
+        expect(slider.tracking).to.equal('rzSliderModel');
+        slider.focusElement.calledWith(slider.minH).should.be.true;
+        slider.positionTrackingHandle.called.should.be.true;
+        slider.callOnStart.called.should.be.true;
+        slider.callOnChange.called.should.be.true;
+      });
+
+      it('should handle click on fullbar and move maxH when click pos is nearer to maxH', function() {
+        sinon.spy(slider, 'positionTrackingHandle');
+        sinon.spy(slider, 'callOnStart');
+        sinon.spy(slider, 'callOnChange');
+        sinon.spy(slider, 'focusElement');
+
+        var expectedValue = 90,
+          offset = slider.valueToOffset(expectedValue) + slider.handleHalfDim + slider.sliderElem.rzsp;
+
+        var event = fireMousedown(slider.fullBar, offset);
+
+        expect(scope.slider.max).to.equal(expectedValue);
+        expect(slider.tracking).to.equal('rzSliderHigh');
+        slider.focusElement.calledWith(slider.maxH).should.be.true;
+        slider.positionTrackingHandle.called.should.be.true;
+        slider.callOnStart.called.should.be.true;
+        slider.callOnChange.called.should.be.true;
+      });
+
+      it('should handle click on selbar and move whole range when moved within slider range', function() {
+        sinon.spy(slider, 'positionTrackingBar');
+        sinon.spy(slider, 'callOnStart');
+        sinon.spy(slider, 'callOnChange');
+        sinon.spy(slider, 'focusElement');
+
+        fireMousedown(slider.selBar, 0);
+
+        var moveValue = 10,
+          offset = slider.valueToOffset(moveValue);
+        fireMousemove(offset);
+
+        expect(scope.slider.min).to.equal(50);
+        expect(scope.slider.max).to.equal(70);
+        expect(slider.tracking).to.equal('rzSliderModel');
+        slider.focusElement.calledWith(slider.minH).should.be.true;
+        slider.positionTrackingBar.called.should.be.true;
+        slider.callOnStart.called.should.be.true;
+        slider.callOnChange.called.should.be.true;
+      });
+
+      it('should handle click on selbar and move move range when near 0 and moved left', function() {
+        scope.slider.min = 10;
+        scope.$digest();
+
+        fireMousedown(slider.selBar, 0);
+        fireMousemove(-1000);
+
+        expect(scope.slider.min).to.equal(0);
+        expect(scope.slider.max).to.equal(50);
+        expect(slider.tracking).to.equal('rzSliderModel');
+      });
+
+      it('should handle click on selbar and don\'t move range when already at 0 and moved left', function() {
+        scope.slider.min = 0;
+        scope.$digest();
+
+        fireMousedown(slider.selBar, 0);
+        fireMousemove(-100);
+
+        expect(scope.slider.min).to.equal(0);
+        expect(scope.slider.max).to.equal(60);
+        expect(slider.tracking).to.equal('rzSliderModel');
+      });
+
+      it('should handle click on selbar and move move range when near max and moved right', function() {
+        scope.slider.max = 90;
+        scope.$digest();
+
+        fireMousedown(slider.selBar, 0);
+        fireMousemove(slider.maxPos);
+
+        expect(scope.slider.min).to.equal(50);
+        expect(scope.slider.max).to.equal(100);
+        expect(slider.tracking).to.equal('rzSliderModel');
+      });
+
+      it('should handle click on selbar and don\'t move range when already at max and moved right', function() {
+        scope.slider.max = 100;
+        scope.$digest();
+
+        fireMousedown(slider.selBar, 0);
+        fireMousemove(slider.maxPos);
+
+        expect(scope.slider.min).to.equal(40);
+        expect(scope.slider.max).to.equal(100);
+        expect(slider.tracking).to.equal('rzSliderModel');
+      });
+
+      it('should a working positionTrackingBar', function() {
+        var newMin = 50,
+          newMax = 90,
+          minOffset = slider.valueToOffset(newMin),
+          maxOffset = slider.valueToOffset(newMax);
+        slider.positionTrackingBar(newMin, newMax, minOffset, maxOffset);
+
+        expect(scope.slider.min).to.equal(50);
+        expect(scope.slider.max).to.equal(90);
+        expect(slider.minH.css('left')).to.equal(minOffset + 'px');
+        expect(slider.maxH.css('left')).to.equal(maxOffset + 'px');
+      });
     });
 
-    it('should handle click and drag on maxH correctly when mouse is on the middle', function() {
-      sinon.spy(slider, 'positionTrackingHandle');
-      sinon.spy(slider, 'callOnChange');
-      var event = fireMousedown(slider.maxH, 0);
-      var expectedValue = 50,
-        offset = slider.valueToOffset(expectedValue) + slider.handleHalfDim + slider.sliderElem.rzsp;
-      fireMousemove(offset);
-      expect(scope.slider.max).to.equal(expectedValue);
-      slider.positionTrackingHandle.called.should.be.true;
-      slider.callOnChange.called.should.be.true;
+    describe('range horizontal slider with draggableRangeOnly - ', function() {
+      beforeEach(function() {
+        var sliderConf = {
+          min: 40,
+          max: 60,
+          options: {
+            floor: 0,
+            ceil: 100,
+            draggableRangeOnly: true
+          }
+        };
+        createRangeSlider(sliderConf);
+      });
+      afterEach(function() {
+        // to clean document listener
+        fireMouseup();
+      });
+
+      it('should handle click and drag on minH correctly', function() {
+        sinon.spy(slider, 'positionTrackingBar');
+        sinon.spy(slider, 'callOnChange');
+
+        var event = fireMousedown(slider.minH, 0);
+        var moveValue = 10,
+          offset = slider.valueToOffset(moveValue);
+        fireMousemove(offset);
+
+        expect(scope.slider.min).to.equal(50);
+        expect(scope.slider.max).to.equal(70);
+        slider.positionTrackingBar.called.should.be.true;
+        slider.callOnChange.called.should.be.true;
+      });
+
+      it('should handle click and drag on maxH correctly', function() {
+        sinon.spy(slider, 'positionTrackingBar');
+        sinon.spy(slider, 'callOnChange');
+        var event = fireMousedown(slider.maxH, 0);
+        var moveValue = 10,
+          offset = slider.valueToOffset(moveValue);
+        fireMousemove(offset);
+        expect(scope.slider.min).to.equal(50);
+        expect(scope.slider.max).to.equal(70);
+        slider.positionTrackingBar.called.should.be.true;
+        slider.callOnChange.called.should.be.true;
+      });
+
+      it('should not handle click on fullbar', function() {
+        sinon.spy(slider, 'callOnStart');
+
+        var moveValue = 10,
+          offset = slider.valueToOffset(moveValue);
+
+        var event = fireMousedown(slider.fullBar, offset);
+
+        expect(scope.slider.min).to.equal(40);
+        expect(scope.slider.max).to.equal(60);
+        expect(slider.tracking).to.equal('');
+        slider.callOnStart.called.should.be.false;
+      });
+
+      it('should handle click on selbar and move whole range when moved within slider range', function() {
+        sinon.spy(slider, 'positionTrackingBar');
+        sinon.spy(slider, 'callOnStart');
+        sinon.spy(slider, 'callOnChange');
+        sinon.spy(slider, 'focusElement');
+
+        fireMousedown(slider.selBar, 0);
+
+        var moveValue = 10,
+          offset = slider.valueToOffset(moveValue);
+        fireMousemove(offset);
+
+        expect(scope.slider.min).to.equal(50);
+        expect(scope.slider.max).to.equal(70);
+        expect(slider.tracking).to.equal('rzSliderModel');
+        slider.focusElement.calledWith(slider.minH).should.be.true;
+        slider.positionTrackingBar.called.should.be.true;
+        slider.callOnStart.called.should.be.true;
+        slider.callOnChange.called.should.be.true;
+      });
+
+      it('should handle click on selbar and move move range when near 0 and moved left', function() {
+        scope.slider.min = 10;
+        scope.$digest();
+
+        fireMousedown(slider.selBar, 0);
+        fireMousemove(-1000);
+
+        expect(scope.slider.min).to.equal(0);
+        expect(scope.slider.max).to.equal(50);
+        expect(slider.tracking).to.equal('rzSliderModel');
+      });
+
+      it('should handle click on selbar and don\'t move range when already at 0 and moved left', function() {
+        scope.slider.min = 0;
+        scope.$digest();
+
+        fireMousedown(slider.selBar, 0);
+        fireMousemove(-100);
+
+        expect(scope.slider.min).to.equal(0);
+        expect(scope.slider.max).to.equal(60);
+        expect(slider.tracking).to.equal('rzSliderModel');
+      });
+
+      it('should handle click on selbar and move move range when near max and moved right', function() {
+        scope.slider.max = 90;
+        scope.$digest();
+
+        fireMousedown(slider.selBar, 0);
+        fireMousemove(slider.maxPos);
+
+        expect(scope.slider.min).to.equal(50);
+        expect(scope.slider.max).to.equal(100);
+        expect(slider.tracking).to.equal('rzSliderModel');
+      });
+
+      it('should handle click on selbar and don\'t move range when already at max and moved right', function() {
+        scope.slider.max = 100;
+        scope.$digest();
+
+        fireMousedown(slider.selBar, 0);
+        fireMousemove(slider.maxPos);
+
+        expect(scope.slider.min).to.equal(40);
+        expect(scope.slider.max).to.equal(100);
+        expect(slider.tracking).to.equal('rzSliderModel');
+      });
     });
 
-    it('should handle click and drag on minH and switch min/max if needed', function() {
-      var event = fireMousedown(slider.minH, 0);
-      var expectedValue = 80,
-        offset = slider.valueToOffset(expectedValue) + slider.handleHalfDim + slider.sliderElem.rzsp;
-      fireMousemove(offset);
+    describe('single horizontal slider with onlyBindHandles - ', function() {
+      beforeEach(function() {
+        var sliderConf = {
+          value: 0,
+          options: {
+            floor: 0,
+            ceil: 100,
+            showTicks: true,
+            onlyBindHandles: true
+          }
+        };
+        createSlider(sliderConf);
+      });
+      afterEach(function() {
+        // to clean document listener
+        fireMouseup();
+      });
 
-      expect(scope.slider.min).to.equal(60);
-      expect(scope.slider.max).to.equal(80);
+      it('should handle click and drag on minH correctly when mouse is on the middle', function() {
+        sinon.spy(slider, 'positionTrackingHandle');
+        sinon.spy(slider, 'callOnChange');
+        var event = fireMousedown(slider.minH, 0);
+        var expectedValue = 50,
+          offset = slider.valueToOffset(expectedValue) + slider.handleHalfDim + slider.sliderElem.rzsp;
+        fireMousemove(offset);
+        expect(scope.slider.value).to.equal(expectedValue);
+        slider.positionTrackingHandle.called.should.be.true;
+        slider.callOnChange.called.should.be.true;
+      });
+
+      it('should do nothing when a click happen on another element than the handle', function() {
+        scope.slider.value = 100;
+        scope.$digest();
+
+        sinon.spy(slider, 'positionTrackingHandle');
+        fireMousedown(slider.selBar, 0);
+        fireMousedown(slider.fullBar, 0);
+        fireMousedown(slider.ticks, 0);
+
+        expect(scope.slider.value).to.equal(100);
+        slider.positionTrackingHandle.called.should.be.false;
+      });
     });
 
-    it('should handle click and drag on maxH and switch min/max if needed', function() {
-      var event = fireMousedown(slider.maxH, 0);
-      var expectedValue = 20,
-        offset = slider.valueToOffset(expectedValue) + slider.handleHalfDim + slider.sliderElem.rzsp;
-      fireMousemove(offset);
+    describe('single horizontal slider with onlyBindHandles - ', function() {
+      beforeEach(function() {
+        var sliderConf = {
+          min: 45,
+          max: 55,
+          options: {
+            floor: 0,
+            ceil: 100,
+            minRange: 10
+          }
+        };
+        createRangeSlider(sliderConf);
+      });
+      afterEach(function() {
+        // to clean document listener
+        fireMouseup();
+      });
 
-      expect(scope.slider.min).to.equal(20);
-      expect(scope.slider.max).to.equal(40);
+      it('should not modify any value if new range would be smaller than minRange when moving minH', function() {
+        fireMousedown(slider.minH, 0);
+        var expectedValue = 50,
+          offset = slider.valueToOffset(expectedValue) + slider.handleHalfDim + slider.sliderElem.rzsp;
+        fireMousemove(offset);
+        expect(scope.slider.min).to.equal(45);
+      });
+
+      it('should not modify any value if new range would be smaller than minRange when moving maxH', function() {
+        fireMousedown(slider.maxH, 0);
+        var expectedValue = 50,
+          offset = slider.valueToOffset(expectedValue) + slider.handleHalfDim + slider.sliderElem.rzsp;
+        fireMousemove(offset);
+        expect(scope.slider.max).to.equal(55);
+      });
+
+      it('should modify the min value if new range is larger than minRange when moving minH', function() {
+        fireMousedown(slider.minH, 0);
+        var expectedValue = 30,
+          offset = slider.valueToOffset(expectedValue) + slider.handleHalfDim + slider.sliderElem.rzsp;
+        fireMousemove(offset);
+        expect(scope.slider.min).to.equal(expectedValue);
+      });
+
+      it('should modify the max value if new range is larger than than minRange when moving maxH', function() {
+        fireMousedown(slider.maxH, 0);
+        var expectedValue = 70,
+          offset = slider.valueToOffset(expectedValue) + slider.handleHalfDim + slider.sliderElem.rzsp;
+        fireMousemove(offset);
+        expect(scope.slider.max).to.equal(expectedValue);
+      });
     });
 
-    it('should handle click on fullbar and move minH when click pos is nearer to minH', function() {
-      sinon.spy(slider, 'positionTrackingHandle');
-      sinon.spy(slider, 'callOnStart');
-      sinon.spy(slider, 'callOnChange');
-      sinon.spy(slider, 'focusElement');
-
-      var expectedValue = 10,
-        offset = slider.valueToOffset(expectedValue) + slider.handleHalfDim + slider.sliderElem.rzsp;
-
-      var event = fireMousedown(slider.fullBar, offset);
-
-      expect(scope.slider.min).to.equal(expectedValue);
-      expect(slider.tracking).to.equal('rzSliderModel');
-      slider.focusElement.calledWith(slider.minH).should.be.true;
-      slider.positionTrackingHandle.called.should.be.true;
-      slider.callOnStart.called.should.be.true;
-      slider.callOnChange.called.should.be.true;
-    });
-
-    it('should handle click on fullbar and move maxH when click pos is nearer to maxH', function() {
-      sinon.spy(slider, 'positionTrackingHandle');
-      sinon.spy(slider, 'callOnStart');
-      sinon.spy(slider, 'callOnChange');
-      sinon.spy(slider, 'focusElement');
-
-      var expectedValue = 90,
-        offset = slider.valueToOffset(expectedValue) + slider.handleHalfDim + slider.sliderElem.rzsp;
-
-      var event = fireMousedown(slider.fullBar, offset);
-
-      expect(scope.slider.max).to.equal(expectedValue);
-      expect(slider.tracking).to.equal('rzSliderHigh');
-      slider.focusElement.calledWith(slider.maxH).should.be.true;
-      slider.positionTrackingHandle.called.should.be.true;
-      slider.callOnStart.called.should.be.true;
-      slider.callOnChange.called.should.be.true;
-    });
-
-    it('should handle click on selbar and move whole range when moved within slider range', function() {
-      sinon.spy(slider, 'positionTrackingBar');
-      sinon.spy(slider, 'callOnStart');
-      sinon.spy(slider, 'callOnChange');
-      sinon.spy(slider, 'focusElement');
-
-      fireMousedown(slider.selBar, 0);
-
-      var moveValue = 10,
-        offset = slider.valueToOffset(moveValue);
-      fireMousemove(offset);
-
-      expect(scope.slider.min).to.equal(50);
-      expect(scope.slider.max).to.equal(70);
-      expect(slider.tracking).to.equal('rzSliderModel');
-      slider.focusElement.calledWith(slider.minH).should.be.true;
-      slider.positionTrackingBar.called.should.be.true;
-      slider.callOnStart.called.should.be.true;
-      slider.callOnChange.called.should.be.true;
-    });
-
-    it('should handle click on selbar and move move range when near 0 and moved left', function() {
-      scope.slider.min = 10;
-      scope.$digest();
-
-      fireMousedown(slider.selBar, 0);
-      fireMousemove(-1000);
-
-      expect(scope.slider.min).to.equal(0);
-      expect(scope.slider.max).to.equal(50);
-      expect(slider.tracking).to.equal('rzSliderModel');
-    });
-
-    it('should handle click on selbar and don\'t move range when already at 0 and moved left', function() {
-      scope.slider.min = 0;
-      scope.$digest();
-
-      fireMousedown(slider.selBar, 0);
-      fireMousemove(-100);
-
-      expect(scope.slider.min).to.equal(0);
-      expect(scope.slider.max).to.equal(60);
-      expect(slider.tracking).to.equal('rzSliderModel');
-    });
-
-    it('should handle click on selbar and move move range when near max and moved right', function() {
-      scope.slider.max = 90;
-      scope.$digest();
-
-      fireMousedown(slider.selBar, 0);
-      fireMousemove(slider.maxPos);
-
-      expect(scope.slider.min).to.equal(50);
-      expect(scope.slider.max).to.equal(100);
-      expect(slider.tracking).to.equal('rzSliderModel');
-    });
-
-    it('should handle click on selbar and don\'t move range when already at max and moved right', function() {
-      scope.slider.max = 100;
-      scope.$digest();
-
-      fireMousedown(slider.selBar, 0);
-      fireMousemove(slider.maxPos);
-
-      expect(scope.slider.min).to.equal(40);
-      expect(scope.slider.max).to.equal(100);
-      expect(slider.tracking).to.equal('rzSliderModel');
-    });
-
-    it('should a working positionTrackingBar', function() {
-      var newMin = 50,
-        newMax = 90,
-        minOffset = slider.valueToOffset(newMin),
-        maxOffset = slider.valueToOffset(newMax);
-      slider.positionTrackingBar(newMin, newMax, minOffset, maxOffset);
-
-      expect(scope.slider.min).to.equal(50);
-      expect(scope.slider.max).to.equal(90);
-      expect(slider.minH.css('left')).to.equal(minOffset + 'px');
-      expect(slider.maxH.css('left')).to.equal(maxOffset + 'px');
-    });
-  });
-
-  describe('range horizontal slider with draggableRangeOnly - ', function() {
-    beforeEach(function() {
-      var sliderConf = {
-        min: 40,
-        max: 60,
-        options: {
-          floor: 0,
-          ceil: 100,
-          draggableRangeOnly: true
-        }
-      };
-      createRangeSlider(sliderConf);
-    });
-    afterEach(function() {
-      // to clean document listener
-      fireMouseup();
-    });
-
-    it('should handle click and drag on minH correctly', function() {
-      sinon.spy(slider, 'positionTrackingBar');
-      sinon.spy(slider, 'callOnChange');
-
-      var event = fireMousedown(slider.minH, 0);
-      var moveValue = 10,
-        offset = slider.valueToOffset(moveValue);
-      fireMousemove(offset);
-
-      expect(scope.slider.min).to.equal(50);
-      expect(scope.slider.max).to.equal(70);
-      slider.positionTrackingBar.called.should.be.true;
-      slider.callOnChange.called.should.be.true;
-    });
-
-    it('should handle click and drag on maxH correctly', function() {
-      sinon.spy(slider, 'positionTrackingBar');
-      sinon.spy(slider, 'callOnChange');
-      var event = fireMousedown(slider.maxH, 0);
-      var moveValue = 10,
-        offset = slider.valueToOffset(moveValue);
-      fireMousemove(offset);
-      expect(scope.slider.min).to.equal(50);
-      expect(scope.slider.max).to.equal(70);
-      slider.positionTrackingBar.called.should.be.true;
-      slider.callOnChange.called.should.be.true;
-    });
-
-    it('should not handle click on fullbar', function() {
-      sinon.spy(slider, 'callOnStart');
-
-      var moveValue = 10,
-        offset = slider.valueToOffset(moveValue);
-
-      var event = fireMousedown(slider.fullBar, offset);
-
-      expect(scope.slider.min).to.equal(40);
-      expect(scope.slider.max).to.equal(60);
-      expect(slider.tracking).to.equal('');
-      slider.callOnStart.called.should.be.false;
-    });
-
-    it('should handle click on selbar and move whole range when moved within slider range', function() {
-      sinon.spy(slider, 'positionTrackingBar');
-      sinon.spy(slider, 'callOnStart');
-      sinon.spy(slider, 'callOnChange');
-      sinon.spy(slider, 'focusElement');
-
-      fireMousedown(slider.selBar, 0);
-
-      var moveValue = 10,
-        offset = slider.valueToOffset(moveValue);
-      fireMousemove(offset);
-
-      expect(scope.slider.min).to.equal(50);
-      expect(scope.slider.max).to.equal(70);
-      expect(slider.tracking).to.equal('rzSliderModel');
-      slider.focusElement.calledWith(slider.minH).should.be.true;
-      slider.positionTrackingBar.called.should.be.true;
-      slider.callOnStart.called.should.be.true;
-      slider.callOnChange.called.should.be.true;
-    });
-
-    it('should handle click on selbar and move move range when near 0 and moved left', function() {
-      scope.slider.min = 10;
-      scope.$digest();
-
-      fireMousedown(slider.selBar, 0);
-      fireMousemove(-1000);
-
-      expect(scope.slider.min).to.equal(0);
-      expect(scope.slider.max).to.equal(50);
-      expect(slider.tracking).to.equal('rzSliderModel');
-    });
-
-    it('should handle click on selbar and don\'t move range when already at 0 and moved left', function() {
-      scope.slider.min = 0;
-      scope.$digest();
-
-      fireMousedown(slider.selBar, 0);
-      fireMousemove(-100);
-
-      expect(scope.slider.min).to.equal(0);
-      expect(scope.slider.max).to.equal(60);
-      expect(slider.tracking).to.equal('rzSliderModel');
-    });
-
-    it('should handle click on selbar and move move range when near max and moved right', function() {
-      scope.slider.max = 90;
-      scope.$digest();
-
-      fireMousedown(slider.selBar, 0);
-      fireMousemove(slider.maxPos);
-
-      expect(scope.slider.min).to.equal(50);
-      expect(scope.slider.max).to.equal(100);
-      expect(slider.tracking).to.equal('rzSliderModel');
-    });
-
-    it('should handle click on selbar and don\'t move range when already at max and moved right', function() {
-      scope.slider.max = 100;
-      scope.$digest();
-
-      fireMousedown(slider.selBar, 0);
-      fireMousemove(slider.maxPos);
-
-      expect(scope.slider.min).to.equal(40);
-      expect(scope.slider.max).to.equal(100);
-      expect(slider.tracking).to.equal('rzSliderModel');
-    });
-  });
-
-  describe('single horizontal slider - ', function() {
-    beforeEach(function() {
-      var sliderConf = {
-        value: 0,
-        options: {
-          floor: 0,
-          ceil: 100,
-          showTicks: true,
-          onlyBindHandles: true
-        }
-      };
-      createSlider(sliderConf);
-    });
-    afterEach(function() {
-      // to clean document listener
-      fireMouseup();
-    });
-
-    it('should handle click and drag on minH correctly when mouse is on the middle', function() {
-      sinon.spy(slider, 'positionTrackingHandle');
-      sinon.spy(slider, 'callOnChange');
-      var event = fireMousedown(slider.minH, 0);
-      var expectedValue = 50,
-        offset = slider.valueToOffset(expectedValue) + slider.handleHalfDim + slider.sliderElem.rzsp;
-      fireMousemove(offset);
-      expect(scope.slider.value).to.equal(expectedValue);
-      slider.positionTrackingHandle.called.should.be.true;
-      slider.callOnChange.called.should.be.true;
-    });
-
-    it('should do nothing when a click happen on another element than the handle', function() {
-      scope.slider.value = 100;
-      scope.$digest();
-
-      sinon.spy(slider, 'positionTrackingHandle');
-      fireMousedown(slider.selBar, 0);
-      fireMousedown(slider.fullBar, 0);
-      fireMousedown(slider.ticks, 0);
-
-      expect(scope.slider.value).to.equal(100);
-      slider.positionTrackingHandle.called.should.be.false;
-    });
   });
 
   /*
-  ******************************************************************************
-    KEYBOARD CONTROLS
-  ******************************************************************************
-  */
+   ******************************************************************************
+   KEYBOARD CONTROLS
+   ******************************************************************************
+   */
   describe('keyboard controls', function() {
 
     describe('simple cases for single slider - ', function() {
@@ -3114,19 +3166,51 @@ describe('rzslider - ', function() {
       expect(scope.slider.value).to.equal(10);
     });
 
-    it('should not be modified by keyboard if keyboardSupport=false', function() {
+    it('should not be modified by keyboard if new range is below minRange', function() {
       var sliderConf = {
-        value: 10,
+        min: 45,
+        max: 55,
         options: {
           floor: 0,
           ceil: 100,
-          keyboardSupport: false
+          step: 1,
+          minRange: 10
         }
       };
-      createSlider(sliderConf);
+      createRangeSlider(sliderConf);
+      //try to move minH right
+      slider.minH.triggerHandler('focus');
+      pressKeydown(slider.minH, 'RIGHT');
+      expect(scope.slider.min).to.equal(45);
+
+      //try to move maxH left
+      slider.maxH.triggerHandler('focus');
+      pressKeydown(slider.maxH, 'LEFT');
+      expect(scope.slider.max).to.equal(55);
+    });
+
+    it('should be modified by keyboard if new range is above minRange', function() {
+      var sliderConf = {
+        min: 45,
+        max: 55,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 1,
+          minRange: 10
+        }
+      };
+      createRangeSlider(sliderConf);
+
+      //try to move minH left
       slider.minH.triggerHandler('focus');
       pressKeydown(slider.minH, 'LEFT');
-      expect(scope.slider.value).to.equal(10);
+      expect(scope.slider.min).to.equal(44);
+
+      //try to move maxH right
+      slider.maxH.triggerHandler('focus');
+      pressKeydown(slider.maxH, 'RIGHT');
+      expect(scope.slider.max).to.equal(56);
     });
   });
 
