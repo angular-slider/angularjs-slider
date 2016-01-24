@@ -94,8 +94,11 @@ rzslider {
     &:hover:after {
       background-color: @handleHoverColor;
     }
-    &.rz-active:after {
-      background-color: @handleActiveColor;
+    &.rz-active{
+      z-index: 4;
+      &:after {
+        background-color: @handleActiveColor;
+      }
     }
   }
 

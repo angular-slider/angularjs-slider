@@ -184,6 +184,7 @@ The default options are:
     keyboardSupport: true,
     scale: 1,
     enforceRange: false,
+    noSwitching: false,
     onlyBindHandles: false,
     onStart: null,
     onChange: null,
@@ -199,7 +200,7 @@ The default options are:
 
 **precision** - _Number (defaults to 0)_: The precision to display values with. The `toFixed()` is used internally for this.
 
-**minRange** - _Number (defaults to 0)_: The minimum range authorized on the slider.
+**minRange** - _Number (defaults to 0)_: The minimum range authorized on the slider. *Applies to range slider only.*
 
 **translate** - _Function(value, sliderId)_: Custom translate function. Use this if you want to translate values displayed on the slider. For example if you want to display dollar amounts instead of just numbers:
 ```html
@@ -226,9 +227,9 @@ $scope.slider = {
 
 **stepsArray** - _Array_: If you want to display a slider with non linear/number steps. Just pass an array with each slider value and that's it; the floor, ceil and step settings of the slider will be computed automatically. The `rz-slider-model` value will be the index of the selected item in the stepsArray.
 
-**draggableRange** - _Boolean (defaults to false)_: When set to true and using a range slider, the range can be dragged by the selection bar.
+**draggableRange** - _Boolean (defaults to false)_: When set to true and using a range slider, the range can be dragged by the selection bar. *Applies to range slider only.*
 
-**draggableRangeOnly** - _Boolean (defaults to false)_: Same as draggableRange but the slider range can't be changed.
+**draggableRangeOnly** - _Boolean (defaults to false)_: Same as draggableRange but the slider range can't be changed. *Applies to range slider only.*
 
 **showSelectionBar** - _Boolean (defaults to false)_: Set to true to always show the selection bar before the slider handle.
 
@@ -255,6 +256,8 @@ $scope.slider = {
 **scale** - _Number (defaults to 1)_: If you display the slider in an element that uses `transform: scale(0.5)`, set the `scale` value to 2 so that the slider is rendered properly and the events are handled correctly.
 
 **enforceRange** - _Boolean (defaults to false)_: Set to true to round the `rzSliderModel` and `rzSliderHigh` to the slider range even when modified from outside the slider. When set to false, if the model values are modified from outside the slider, they are not rounded but they are still rendered properly on the slider.
+
+**noSwitching** - _Boolean (defaults to false)_: Set to true to prevent to user from switching the min and max handles. *Applies to range slider only.*
 
 **onlyBindHandles** - _Boolean (defaults to false)_: Set to true to only bind events on slider handles.
 
