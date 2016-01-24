@@ -1,4 +1,4 @@
-# 2.5.0 (not-released)
+# 2.5.0 (2016-01-24)
 ## Features
 - Add a `minRange` option to set a minimal range (#231).
 - Pass the slider values to the `onStart`, `onChange` and `onEnd` callbacks.
