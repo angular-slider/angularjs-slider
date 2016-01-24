@@ -77,14 +77,17 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
   $scope.slider_callbacks = {
     value: 100,
     options: {
-      onStart: function() {
-        $scope.otherData.start = $scope.slider_callbacks.value * 10;
+      onStart: function(id, newValue) {
+        console.info('start', id, newValue);
+        $scope.otherData.start = newValue * 10;
       },
-      onChange: function() {
-        $scope.otherData.change = $scope.slider_callbacks.value * 10;
+      onChange: function(id, newValue) {
+        console.info('change', id, newValue);
+        $scope.otherData.change = newValue * 10;
       },
-      onEnd: function() {
-        $scope.otherData.end = $scope.slider_callbacks.value * 10;
+      onEnd: function(id, newValue) {
+        console.info('end', id, newValue);
+        $scope.otherData.end = newValue * 10;
       }
     }
   };

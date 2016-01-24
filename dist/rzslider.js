@@ -1,7 +1,7 @@
 /*! angularjs-slider - v2.4.1 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-01-22 */
+ 2016-01-24 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -791,36 +791,45 @@
 
       /**
        * Call the onStart callback if defined
+       * The callback call is wrapped in a $evalAsync to ensure that its result will be applied to the scope.
        *
        * @returns {undefined}
        */
       callOnStart: function() {
         if (this.options.onStart) {
-          this.options.onStart(this.options.id);
+          var self = this;
+          this.scope.$evalAsync(function () {
+            self.options.onStart(self.options.id, self.scope.rzSliderModel, self.scope.rzSliderHigh);
+          });
         }
       },
 
       /**
        * Call the onChange callback if defined
+       * The callback call is wrapped in a $evalAsync to ensure that its result will be applied to the scope.
        *
        * @returns {undefined}
        */
       callOnChange: function() {
         if (this.options.onChange) {
-          this.options.onChange(this.options.id);
+          var self = this;
+          this.scope.$evalAsync(function () {
+            self.options.onChange(self.options.id, self.scope.rzSliderModel, self.scope.rzSliderHigh);
+          });
         }
       },
 
       /**
        * Call the onEnd callback if defined
+       * The callback call is wrapped in a $evalAsync to ensure that its result will be applied to the scope.
        *
        * @returns {undefined}
        */
       callOnEnd: function() {
         if (this.options.onEnd) {
           var self = this;
-          $timeout(function() {
-            self.options.onEnd(self.options.id);
+          this.scope.$evalAsync(function () {
+            self.options.onEnd(self.options.id, self.scope.rzSliderModel, self.scope.rzSliderHigh);
           });
         }
       },

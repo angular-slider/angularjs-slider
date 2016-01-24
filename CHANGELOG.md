@@ -1,6 +1,8 @@
 # 2.5.0 (not-released)
 ## Features
 - Add a `minRange` option to set a minimal range (#231).
+- Pass the slider values to the `onStart`, `onChange` and `onEnd` callbacks.
+- Rollback and improve the callback changes brought with 2.4.1 that were no applying the last update to the scope anymore.
 
 # 2.4.1 (2016-01-15)
 ## Performance improvements

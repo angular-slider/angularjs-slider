@@ -504,6 +504,7 @@ describe('rzslider - ', function() {
         createSlider(sliderConf);
 
         slider.callOnStart();
+        $timeout.flush();
         sliderConf.options.onStart.calledWith('test').should.be.true;
       });
 
@@ -518,6 +519,7 @@ describe('rzslider - ', function() {
         createSlider(sliderConf);
 
         slider.callOnChange();
+        $timeout.flush();
         sliderConf.options.onChange.calledWith('test').should.be.true;
       });
 

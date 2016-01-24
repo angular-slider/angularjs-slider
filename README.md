@@ -252,11 +252,11 @@ $scope.slider = {
 
 **onlyBindHandles** - _Boolean (defaults to false)_: Set to true to only bind events on slider handles.
 
-**onStart** - _Function(sliderId)_: Function to be called when a slider update is started. If an id was set in the options, then it's passed to this callback. This callback is called before any update on the model.
+**onStart** - _Function(sliderId, modelValue, highValue)_: Function to be called when a slider update is started. If an id was set in the options, then it's passed to this callback. This callback is called before any update on the model.
 
-**onChange** - _Function(sliderId)_: Function to be called when rz-slider-model or rz-slider-high change. If an id was set in the options, then it's passed to this callback.
+**onChange** - _Function(sliderId, modelValue, highValue)_: Function to be called when rz-slider-model or rz-slider-high change. If an id was set in the options, then it's passed to this callback.
 
-**onEnd** - _Function(sliderId)_: Function to be called when a slider update is ended. If an id was set in the options, then it's passed to this callback.
+**onEnd** - _Function(sliderId, modelValue, highValue)_: Function to be called when a slider update is ended. If an id was set in the options, then it's passed to this callback.
 
 **vertical** - _Boolean (defaults to false)_: Set to true to display the slider vertically. The slider will take the full height of its parent.
 _Changing this value at runtime is not currently supported._
