@@ -66,6 +66,12 @@ or
 $ bower install --save angularjs-slider
 ```
 
+or
+### CDNJS
+Directly use:
+- `https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/2.5.0/rzslider.min.js`
+- `https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/2.5.0/rzslider.min.css`
+
 ### Module
 ```javascript
 angular.module('yourApp', ['rzModule']);
