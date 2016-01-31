@@ -1,3 +1,7 @@
+# 2.6.0 (not-released)
+## Features
+- Add a `noSwitching` option to prevent the user from switching the min and max handles (#233).
+
 # 2.5.0 (2016-01-24)
 ## Features
 - Add a `minRange` option to set a minimal range (#231).
