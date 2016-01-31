@@ -1,6 +1,9 @@
-# 2.6.0 (not-released)
+# 2.6.0 (2016-01-31)
 ## Features
 - Add a `noSwitching` option to prevent the user from switching the min and max handles (#233).
+
+## Bug fixes
+- Refactor the internal `roundStep` function that was too strict (5d130f09d).
 
 # 2.5.0 (2016-01-24)
 ## Features
