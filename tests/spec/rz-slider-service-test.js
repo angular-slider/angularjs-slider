@@ -968,7 +968,7 @@ describe('rzslider - ', function() {
       createSlider(sliderConf);
     });
 
-    it('should have a valid roundStep for integer values', function() {
+    it('should have a valid roundStep for integer values when floor is 0', function() {
       expect(slider.roundStep(10)).to.equal(10);
       expect(slider.roundStep(9)).to.equal(10);
       expect(slider.roundStep(11)).to.equal(10);
@@ -982,7 +982,33 @@ describe('rzslider - ', function() {
       expect(slider.roundStep(-14)).to.equal(-10);
     });
 
-    it('should have a valid roundStep for floating values', function() {
+    it('should have a valid roundStep for integer values when floor is above 0', function() {
+      scope.slider.options.floor = 3;
+      scope.slider.options.ceil = 103;
+      scope.$digest();
+
+      expect(slider.roundStep(3)).to.equal(3);
+      expect(slider.roundStep(13)).to.equal(13);
+      expect(slider.roundStep(12)).to.equal(13);
+      expect(slider.roundStep(14)).to.equal(13);
+      expect(slider.roundStep(18)).to.equal(23);
+      expect(slider.roundStep(17)).to.equal(13);
+    });
+
+    it('should have a valid roundStep for integer values when floor is below 0', function() {
+      scope.slider.options.floor = -25;
+      scope.$digest();
+
+      expect(slider.roundStep(-5)).to.equal(-5);
+      expect(slider.roundStep(-15)).to.equal(-15);
+      expect(slider.roundStep(-16)).to.equal(-15);
+      expect(slider.roundStep(-14)).to.equal(-15);
+      expect(slider.roundStep(-21)).to.equal(-25);
+      expect(slider.roundStep(-20)).to.equal(-15);
+      expect(slider.roundStep(-19)).to.equal(-15);
+    });
+
+    it('should have a valid roundStep for floating values when floor is 0', function() {
       scope.slider.options.precision = 1;
       scope.slider.options.step = 0.1;
       scope.$digest();
@@ -995,6 +1021,39 @@ describe('rzslider - ', function() {
       expect(slider.roundStep(1.14)).to.equal(1.1);
 
       expect(slider.roundStep(-10)).to.equal(-10);
+      expect(slider.roundStep(-1.1)).to.equal(-1.1);
+      expect(slider.roundStep(-1.09)).to.equal(-1.1);
+      expect(slider.roundStep(-1.11)).to.equal(-1.1);
+      expect(slider.roundStep(-1.16)).to.equal(-1.2);
+      expect(slider.roundStep(-1.15)).to.equal(-1.1);
+      expect(slider.roundStep(-1.14)).to.equal(-1.1);
+    });
+
+    it('should have a valid roundStep for floating values when floor is above 0', function() {
+      scope.slider.options.floor = 3;
+      scope.slider.options.ceil = 103;
+      scope.slider.options.precision = 1;
+      scope.slider.options.step = 0.1;
+      scope.$digest();
+
+      expect(slider.roundStep(3)).to.equal(3);
+      expect(slider.roundStep(13)).to.equal(13);
+      expect(slider.roundStep(1.1)).to.equal(1.1);
+      expect(slider.roundStep(1.09)).to.equal(1.1);
+      expect(slider.roundStep(1.11)).to.equal(1.1);
+      expect(slider.roundStep(1.15)).to.equal(1.2);
+      expect(slider.roundStep(1.14)).to.equal(1.1);
+    });
+
+    it('should have a valid roundStep for floating values when floor is below 0', function() {
+      scope.slider.options.floor = -25;
+      scope.slider.options.ceil = 75;
+      scope.slider.options.precision = 1;
+      scope.slider.options.step = 0.1;
+      scope.$digest();
+
+      expect(slider.roundStep(-25)).to.equal(-25);
+      expect(slider.roundStep(-5)).to.equal(-5);
       expect(slider.roundStep(-1.1)).to.equal(-1.1);
       expect(slider.roundStep(-1.09)).to.equal(-1.1);
       expect(slider.roundStep(-1.11)).to.equal(-1.1);

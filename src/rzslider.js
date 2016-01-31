@@ -635,14 +635,14 @@
         this.step = +this.options.step;
         this.precision = +this.options.precision;
 
+        this.minValue = this.options.floor;
+
         this.scope.rzSliderModel = this.roundStep(this.scope.rzSliderModel);
         if (this.range)
           this.scope.rzSliderHigh = this.roundStep(this.scope.rzSliderHigh);
 
-        this.minValue = this.roundStep(+this.options.floor);
-
         if (this.options.ceil != null)
-          this.maxValue = this.roundStep(+this.options.ceil);
+          this.maxValue = this.options.ceil;
         else
           this.maxValue = this.options.ceil = this.range ? this.scope.rzSliderHigh : this.scope.rzSliderModel;
 
@@ -802,7 +802,7 @@
       callOnStart: function() {
         if (this.options.onStart) {
           var self = this;
-          this.scope.$evalAsync(function () {
+          this.scope.$evalAsync(function() {
             self.options.onStart(self.options.id, self.scope.rzSliderModel, self.scope.rzSliderHigh);
           });
         }
@@ -817,7 +817,7 @@
       callOnChange: function() {
         if (this.options.onChange) {
           var self = this;
-          this.scope.$evalAsync(function () {
+          this.scope.$evalAsync(function() {
             self.options.onChange(self.options.id, self.scope.rzSliderModel, self.scope.rzSliderHigh);
           });
         }
@@ -832,7 +832,7 @@
       callOnEnd: function() {
         if (this.options.onEnd) {
           var self = this;
-          this.scope.$evalAsync(function () {
+          this.scope.$evalAsync(function() {
             self.options.onEnd(self.options.id, self.scope.rzSliderModel, self.scope.rzSliderHigh);
           });
         }
@@ -997,16 +997,16 @@
       },
 
       /**
-       * Round value to step and precision
+       * Round value to step and precision based on minValue
        *
        * @param {number} value
        * @returns {number}
        */
       roundStep: function(value) {
-        var steppedValue = parseFloat(value / this.step).toPrecision(12)
-        steppedValue = Math.round(steppedValue) * this.step;
-        steppedValue = steppedValue.toFixed(this.precision);
-        return +steppedValue;
+        var steppedDifference = parseFloat((value - this.minValue) / this.step).toPrecision(12);
+        steppedDifference = Math.round(+steppedDifference) * this.step;
+        var newValue = (this.minValue + (+steppedDifference)).toFixed(this.precision);
+        return +newValue;
       },
 
       /**
