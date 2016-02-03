@@ -43,6 +43,7 @@
       draggableRangeOnly: false,
       showSelectionBar: false,
       showSelectionBarEnd: false,
+      showSelectionBarFromValue: null,
       hideLimitLabels: false,
       readOnly: false,
       disabled: false,
@@ -410,7 +411,8 @@
         this.options.showTicks = this.options.showTicks || this.options.showTicksValues;
         this.scope.showTicks = this.options.showTicks; //scope is used in the template
 
-        this.options.showSelectionBar = this.options.showSelectionBar || this.options.showSelectionBarEnd;
+        this.options.showSelectionBar = this.options.showSelectionBar || this.options.showSelectionBarEnd
+          || this.options.showSelectionBarFromValue !== null;
 
         if (this.options.stepsArray) {
           this.options.floor = 0;
@@ -766,8 +768,21 @@
       },
 
       isTickSelected: function(value) {
-        if (!this.range && this.options.showSelectionBar && value <= this.scope.rzSliderModel)
-          return true;
+        if (!this.range) {
+          if (this.options.showSelectionBarFromValue !== null) {
+            var center = this.options.showSelectionBarFromValue;
+            if (this.scope.rzSliderModel > center && value >= center && value <= this.scope.rzSliderModel)
+              return true;
+            else if (this.scope.rzSliderModel < center && value <= center && value >= this.scope.rzSliderModel)
+              return true;
+          }
+          else if (this.options.showSelectionBarEnd) {
+            if (value >= this.scope.rzSliderModel)
+              return true;
+          }
+          else if (this.options.showSelectionBar && value <= this.scope.rzSliderModel)
+            return true;
+        }
         if (this.range && value >= this.scope.rzSliderModel && value <= this.scope.rzSliderHigh)
           return true;
         return false;
@@ -936,12 +951,30 @@
       updateSelectionBar: function() {
         var position = 0,
           dimension = 0;
-        if (this.range || !this.options.showSelectionBarEnd) {
-          dimension = Math.abs(this.maxH.rzsp - this.minH.rzsp) + this.handleHalfDim
-          position = this.range ? this.minH.rzsp + this.handleHalfDim : 0;
-        } else {
-          dimension = Math.abs(this.maxPos - this.minH.rzsp) + this.handleHalfDim
+        if(this.range) {
+          dimension = Math.abs(this.maxH.rzsp - this.minH.rzsp) + this.handleHalfDim;
           position = this.minH.rzsp + this.handleHalfDim;
+        }
+        else {
+          if (this.options.showSelectionBarFromValue !== null) {
+            var center = this.options.showSelectionBarFromValue,
+              centerPosition = this.valueToOffset(center);
+            if (this.scope.rzSliderModel > center) {
+              dimension = this.minH.rzsp - centerPosition;
+              position = centerPosition + this.handleHalfDim;
+            }
+            else {
+              dimension = centerPosition - this.minH.rzsp;
+              position = this.minH.rzsp + this.handleHalfDim;
+            }
+          }
+          else if (this.options.showSelectionBarEnd) {
+            dimension = Math.abs(this.maxPos - this.minH.rzsp) + this.handleHalfDim;
+            position = this.minH.rzsp + this.handleHalfDim;
+          } else {
+            dimension = Math.abs(this.maxH.rzsp - this.minH.rzsp) + this.handleHalfDim;
+            position = 0;
+          }
         }
         this.setDimension(this.selBar, dimension);
         this.setPosition(this.selBar, position);
