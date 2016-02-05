@@ -1,7 +1,7 @@
 /*! angularjs-slider - v2.7.1 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-02-06 */
+ 2016-02-07 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -50,6 +50,7 @@
       ticksValuesTooltip: null,
       vertical: false,
       selectionBarColor: null,
+      getPointerColor: null,
       keyboardSupport: true,
       scale: 1,
       enforceStep: true,
@@ -889,6 +890,13 @@
         );
         this.setPosition(this.minLab, pos);
 
+        if (this.options.getPointerColor) {
+          var pointercolor = this.getPointerColor('min');
+          this.scope.minPointerStyle = {
+            backgroundColor: pointercolor
+          };
+        }
+
         this.shFloorCeil();
       },
 
@@ -903,6 +911,13 @@
         this.translateFn(this.scope.rzSliderHigh, this.maxLab, 'high');
         var pos = Math.min(newOffset - this.maxLab.rzsd / 2 + this.handleHalfDim, this.barDimension - this.maxLab.rzsd);
         this.setPosition(this.maxLab, pos);
+
+        if (this.options.getPointerColor) {
+          var pointercolor = this.getPointerColor('max');
+          this.scope.maxPointerStyle = {
+            backgroundColor: pointercolor
+          };
+        }
 
         this.shFloorCeil();
       },
@@ -999,6 +1014,17 @@
         if (this.range)
           return this.options.getSelectionBarColor(this.scope.rzSliderModel, this.scope.rzSliderHigh);
         return this.options.getSelectionBarColor(this.scope.rzSliderModel);
+      },
+
+      /**
+       * Wrapper around the getPointerColor of the user to pass to
+       * correct parameters
+       */
+      getPointerColor: function(pointerType) {
+        if ( pointerType === 'max' ) {
+          return this.options.getPointerColor(this.scope.rzSliderHigh, pointerType);
+        }
+        return this.options.getPointerColor(this.scope.rzSliderModel, pointerType);
       },
 
       /**
@@ -1697,7 +1723,7 @@
   'use strict';
 
   $templateCache.put('rzSliderTpl.html',
-    "<span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span> <span class=rz-pointer></span> <span class=rz-pointer></span> <span class=\"rz-bubble rz-limit\"></span> <span class=\"rz-bubble rz-limit\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul ng-show=showTicks class=rz-ticks><li ng-repeat=\"t in ticks track by $index\" class=tick ng-class=\"{selected: t.selected}\" ng-style=t.style ng-attr-uib-tooltip=\"{{ t.tooltip }}\" ng-attr-tooltip-placement={{t.tooltipPlacement}} ng-attr-tooltip-append-to-body=\"{{ t.tooltip ? true : undefined}}\"><span ng-if=\"t.value != null\" class=tick-value ng-attr-uib-tooltip=\"{{ t.valueTooltip }}\" ng-attr-tooltip-placement={{t.valueTooltipPlacement}}>{{ t.value }}</span></li></ul>"
+    "<span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span> <span class=\"rz-pointer rz-pointer-min\" ng-style=minPointerStyle></span> <span class=\"rz-pointer rz-pointer-max\" ng-style=maxPointerStyle></span> <span class=\"rz-bubble rz-limit\"></span> <span class=\"rz-bubble rz-limit\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul ng-show=showTicks class=rz-ticks><li ng-repeat=\"t in ticks track by $index\" class=tick ng-class=\"{selected: t.selected}\" ng-style=t.style ng-attr-uib-tooltip=\"{{ t.tooltip }}\" ng-attr-tooltip-placement={{t.tooltipPlacement}} ng-attr-tooltip-append-to-body=\"{{ t.tooltip ? true : undefined}}\"><span ng-if=\"t.value != null\" class=tick-value ng-attr-uib-tooltip=\"{{ t.valueTooltip }}\" ng-attr-tooltip-placement={{t.valueTooltipPlacement}}>{{ t.value }}</span></li></ul>"
   );
 
 }]);

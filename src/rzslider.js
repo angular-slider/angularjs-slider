@@ -54,6 +54,7 @@
       ticksValuesTooltip: null,
       vertical: false,
       selectionBarColor: null,
+      getPointerColor: null,
       keyboardSupport: true,
       scale: 1,
       enforceStep: true,
@@ -893,6 +894,13 @@
         );
         this.setPosition(this.minLab, pos);
 
+        if (this.options.getPointerColor) {
+          var pointercolor = this.getPointerColor('min');
+          this.scope.minPointerStyle = {
+            backgroundColor: pointercolor
+          };
+        }
+
         this.shFloorCeil();
       },
 
@@ -907,6 +915,13 @@
         this.translateFn(this.scope.rzSliderHigh, this.maxLab, 'high');
         var pos = Math.min(newOffset - this.maxLab.rzsd / 2 + this.handleHalfDim, this.barDimension - this.maxLab.rzsd);
         this.setPosition(this.maxLab, pos);
+
+        if (this.options.getPointerColor) {
+          var pointercolor = this.getPointerColor('max');
+          this.scope.maxPointerStyle = {
+            backgroundColor: pointercolor
+          };
+        }
 
         this.shFloorCeil();
       },
@@ -1003,6 +1018,17 @@
         if (this.range)
           return this.options.getSelectionBarColor(this.scope.rzSliderModel, this.scope.rzSliderHigh);
         return this.options.getSelectionBarColor(this.scope.rzSliderModel);
+      },
+
+      /**
+       * Wrapper around the getPointerColor of the user to pass to
+       * correct parameters
+       */
+      getPointerColor: function(pointerType) {
+        if ( pointerType === 'max' ) {
+          return this.options.getPointerColor(this.scope.rzSliderHigh, pointerType);
+        }
+        return this.options.getPointerColor(this.scope.rzSliderModel, pointerType);
       },
 
       /**
