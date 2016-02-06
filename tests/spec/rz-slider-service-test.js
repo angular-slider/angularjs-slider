@@ -514,7 +514,7 @@ describe('rzslider - ', function() {
           }
         };
         createRangeSlider(sliderConf);
-        var expectedDimension = slider.valueToOffset(6) + slider.handleHalfDim,
+        var expectedDimension = slider.valueToOffset(6),
           expectedPosition = slider.valueToOffset(2) + slider.handleHalfDim;
         expect(slider.selBar.css('width')).to.equal(expectedDimension + 'px');
         expect(slider.selBar.css('left')).to.equal(expectedPosition + 'px');

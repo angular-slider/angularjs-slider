@@ -880,7 +880,13 @@
       updateLowHandle: function(newOffset) {
         this.setPosition(this.minH, newOffset);
         this.translateFn(this.scope.rzSliderModel, this.minLab);
-        var pos = Math.min(Math.max(newOffset - this.minLab.rzsd / 2 + this.handleHalfDim, 0), this.barDimension - this.ceilLab.rzsd);
+        var pos = Math.min(
+          Math.max(
+            newOffset - this.minLab.rzsd / 2 + this.handleHalfDim,
+            0
+          ),
+          this.barDimension - this.ceilLab.rzsd
+        );
         this.setPosition(this.minLab, pos);
 
         this.shFloorCeil();
@@ -895,7 +901,7 @@
       updateHighHandle: function(newOffset) {
         this.setPosition(this.maxH, newOffset);
         this.translateFn(this.scope.rzSliderHigh, this.maxLab);
-        var pos = Math.min((newOffset - this.maxLab.rzsd / 2 + this.handleHalfDim), (this.barDimension - this.ceilLab.rzsd));
+        var pos = Math.min(newOffset - this.maxLab.rzsd / 2 + this.handleHalfDim, this.barDimension - this.ceilLab.rzsd);
         this.setPosition(this.maxLab, pos);
 
         this.shFloorCeil();
@@ -950,8 +956,8 @@
       updateSelectionBar: function() {
         var position = 0,
           dimension = 0;
-        if(this.range) {
-          dimension = Math.abs(this.maxH.rzsp - this.minH.rzsp) + this.handleHalfDim;
+        if (this.range) {
+          dimension = Math.abs(this.maxH.rzsp - this.minH.rzsp);
           position = this.minH.rzsp + this.handleHalfDim;
         }
         else {
@@ -1001,14 +1007,20 @@
        * @returns {undefined}
        */
       updateCmbLabel: function() {
-        var lowTr, highTr;
 
         if (this.minLab.rzsp + this.minLab.rzsd + 10 >= this.maxLab.rzsp) {
-          lowTr = this.getDisplayValue(this.scope.rzSliderModel);
-          highTr = this.getDisplayValue(this.scope.rzSliderHigh);
+          var lowTr = this.getDisplayValue(this.scope.rzSliderModel),
+            highTr = this.getDisplayValue(this.scope.rzSliderHigh),
+            labelVal = lowTr === highTr ? lowTr : lowTr + ' - ' + highTr;
 
-          this.translateFn(lowTr + ' - ' + highTr, this.cmbLab, false);
-          var pos = Math.min(Math.max((this.selBar.rzsp + this.selBar.rzsd / 2 - this.cmbLab.rzsd / 2), 0), (this.barDimension - this.cmbLab.rzsd));
+          this.translateFn(labelVal, this.cmbLab, false);
+          var pos = Math.min(
+            Math.max(
+              this.selBar.rzsp + this.selBar.rzsd / 2 - this.cmbLab.rzsd / 2,
+              0
+            ),
+            this.barDimension - this.cmbLab.rzsd
+          );
           this.setPosition(this.cmbLab, pos);
           this.hideEl(this.minLab);
           this.hideEl(this.maxLab);
