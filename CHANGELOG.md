@@ -1,3 +1,7 @@
+# 2.7.0 (not released)
+## Features
+- Add a `showSelectionBarFromValue` options (#250).
+
 # 2.6.0 (2016-01-31)
 ## Features
 - Add a `noSwitching` option to prevent the user from switching the min and max handles (#233).

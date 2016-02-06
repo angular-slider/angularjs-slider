@@ -58,6 +58,17 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     }
   };
 
+  //Slider with selection bar from value
+  $scope.slider_visible_bar_from_value = {
+    value: 10,
+    options: {
+      floor: -100,
+      ceil: 100,
+      step: 10,
+      showSelectionBarFromValue: 0
+    }
+  };
+
   //Slider with selection bar
   $scope.color_slider_bar = {
     value: 12,
