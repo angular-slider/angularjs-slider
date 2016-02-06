@@ -889,7 +889,7 @@
             newOffset - this.minLab.rzsd / 2 + this.handleHalfDim,
             0
           ),
-          this.barDimension - this.ceilLab.rzsd
+          this.barDimension - this.minLab.rzsd
         );
         this.setPosition(this.minLab, pos);
 
@@ -905,7 +905,7 @@
       updateHighHandle: function(newOffset) {
         this.setPosition(this.maxH, newOffset);
         this.translateFn(this.scope.rzSliderHigh, this.maxLab, 'high');
-        var pos = Math.min(newOffset - this.maxLab.rzsd / 2 + this.handleHalfDim, this.barDimension - this.ceilLab.rzsd);
+        var pos = Math.min(newOffset - this.maxLab.rzsd / 2 + this.handleHalfDim, this.barDimension - this.maxLab.rzsd);
         this.setPosition(this.maxLab, pos);
 
         this.shFloorCeil();

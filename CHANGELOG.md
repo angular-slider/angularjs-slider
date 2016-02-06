@@ -1,3 +1,7 @@
+# 2.7.1 (2016-02-06)
+## Fix
+- Fix high label positioning when size is different than the ceil one.
+
 # 2.7.0 (2016-02-06)
 ## Features
 - Add an `enforceStep` option (defaults to true) (#246).

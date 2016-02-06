@@ -1,4 +1,4 @@
-/*! angularjs-slider - v2.7.0 - 
+/*! angularjs-slider - v2.7.1 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
  2016-02-06 */
@@ -885,7 +885,7 @@
             newOffset - this.minLab.rzsd / 2 + this.handleHalfDim,
             0
           ),
-          this.barDimension - this.ceilLab.rzsd
+          this.barDimension - this.minLab.rzsd
         );
         this.setPosition(this.minLab, pos);
 
@@ -901,7 +901,7 @@
       updateHighHandle: function(newOffset) {
         this.setPosition(this.maxH, newOffset);
         this.translateFn(this.scope.rzSliderHigh, this.maxLab, 'high');
-        var pos = Math.min(newOffset - this.maxLab.rzsd / 2 + this.handleHalfDim, this.barDimension - this.ceilLab.rzsd);
+        var pos = Math.min(newOffset - this.maxLab.rzsd / 2 + this.handleHalfDim, this.barDimension - this.maxLab.rzsd);
         this.setPosition(this.maxLab, pos);
 
         this.shFloorCeil();
