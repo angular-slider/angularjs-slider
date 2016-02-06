@@ -1,6 +1,6 @@
 # 2.7.0 (2016-02-06)
 ## Features
-- Add an enforceStep` option (defaults to true) (#246).
+- Add an `enforceStep` option (defaults to true) (#246).
 - Add a `showSelectionBarFromValue` options (#250).
 - Use jqLite html() method to display label values so the translate function can return formated content (#251).
 - Pass a label string as third arg to the `translate` function to differentiate the labels (#252).
