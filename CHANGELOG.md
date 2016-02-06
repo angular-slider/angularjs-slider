@@ -1,4 +1,4 @@
-# 2.7.0 (not released)
+# 2.7.0 (2016-02-06)
 ## Features
 - Add an enforceStep` option (defaults to true) (#246).
 - Add a `showSelectionBarFromValue` options (#250).
