@@ -1,7 +1,7 @@
 /*! angularjs-slider - v2.6.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-02-03 */
+ 2016-02-06 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -52,6 +52,7 @@
       selectionBarColor: null,
       keyboardSupport: true,
       scale: 1,
+      enforceStep: true,
       enforceRange: false,
       noSwitching: false,
       onlyBindHandles: false,
@@ -636,9 +637,11 @@
 
         this.minValue = this.options.floor;
 
-        this.scope.rzSliderModel = this.roundStep(this.scope.rzSliderModel);
-        if (this.range)
-          this.scope.rzSliderHigh = this.roundStep(this.scope.rzSliderHigh);
+        if (this.options.enforceStep) {
+          this.scope.rzSliderModel = this.roundStep(this.scope.rzSliderModel);
+          if (this.range)
+            this.scope.rzSliderHigh = this.roundStep(this.scope.rzSliderHigh);
+        }
 
         if (this.options.ceil != null)
           this.maxValue = this.options.ceil;

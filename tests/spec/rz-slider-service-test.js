@@ -104,14 +104,14 @@ describe('rzslider - ', function() {
       slider.resetSlider.called.should.be.true;
     });
 
-    it('should round the model value to the step', function() {
+    it('should round the model value to the step by default', function() {
       scope.slider.value = 54;
       scope.$digest();
       expect(scope.slider.value).to.equal(50);
 
       scope.slider.value = 55;
       scope.$digest();
-      $timeout.flush(); //to flush the throttle function
+      $timeout.flush(); //to flush the throttle function since we modify twice in a row
       expect(scope.slider.value).to.equal(60);
     });
 
@@ -315,6 +315,24 @@ describe('rzslider - ', function() {
         scope.slider.options.step = -1;
         scope.$digest();
         expect(slider.options.step).to.equal(1);
+      });
+
+      it('should not round value to step if enforceStep is false', function() {
+        scope.slider.options.enforceStep = false;
+        scope.$digest();
+
+        scope.slider.value = 14;
+        scope.$digest();
+        expect(scope.slider.value).to.equal(14);
+      });
+
+      it('should round value to step if enforceStep is true', function() {
+        scope.slider.options.enforceStep = true;
+        scope.$digest();
+
+        scope.slider.value = 14;
+        scope.$digest();
+        expect(scope.slider.value).to.equal(10);
       });
 
       it('should set the showTicks scope flag to true when showTicks is true', function() {
