@@ -621,7 +621,7 @@
           label.rzsv = valStr;
         }
 
-        label.text(valStr);
+        label.html(valStr);
 
         // Update width only when length of the label have changed
         if (getDimension) {
