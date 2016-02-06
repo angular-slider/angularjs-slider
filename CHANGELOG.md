@@ -1,6 +1,7 @@
 # 2.7.0 (not released)
 ## Features
 - Add a `showSelectionBarFromValue` options (#250).
+- Pass a label string as third arg to the `translate` function to differentiate the labels (#252).
 
 # 2.6.0 (2016-01-31)
 ## Features

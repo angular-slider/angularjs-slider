@@ -606,10 +606,10 @@
        * @param {boolean} [useCustomTr]
        * @returns {undefined}
        */
-      translateFn: function(value, label, useCustomTr) {
+      translateFn: function(value, label, which, useCustomTr) {
         useCustomTr = useCustomTr === undefined ? true : useCustomTr;
 
-        var valStr = String((useCustomTr ? this.customTrFn(value, this.options.id) : value)),
+        var valStr = String((useCustomTr ? this.customTrFn(value, this.options.id, which) : value)),
           getDimension = false;
 
         if (label.rzsv === undefined || label.rzsv.length !== valStr.length || (label.rzsv.length > 0 && label.rzsd === 0)) {
@@ -691,14 +691,14 @@
       updateAriaAttributes: function() {
         this.minH.attr({
           'aria-valuenow': this.scope.rzSliderModel,
-          'aria-valuetext': this.customTrFn(this.scope.rzSliderModel),
+          'aria-valuetext': this.customTrFn(this.scope.rzSliderModel, this.options.id, 'model'),
           'aria-valuemin': this.minValue,
           'aria-valuemax': this.maxValue
         });
         if (this.range) {
           this.maxH.attr({
             'aria-valuenow': this.scope.rzSliderHigh,
-            'aria-valuetext': this.customTrFn(this.scope.rzSliderHigh),
+            'aria-valuetext': this.customTrFn(this.scope.rzSliderHigh, this.options.id, 'high'),
             'aria-valuemin': this.minValue,
             'aria-valuemax': this.maxValue
           });
@@ -756,7 +756,7 @@
             tick.tooltipPlacement = this.options.vertical ? 'right' : 'top';
           }
           if (this.options.showTicksValues) {
-            tick.value = this.getDisplayValue(value);
+            tick.value = this.getDisplayValue(value, 'tick-value');
             if (this.options.ticksValuesTooltip) {
               tick.valueTooltip = this.options.ticksValuesTooltip(value);
               tick.valueTooltipPlacement = this.options.vertical ? 'right' : 'top';
@@ -793,7 +793,7 @@
        * @returns {undefined}
        */
       updateCeilLab: function() {
-        this.translateFn(this.maxValue, this.ceilLab);
+        this.translateFn(this.maxValue, this.ceilLab, 'ceil');
         this.setPosition(this.ceilLab, this.barDimension - this.ceilLab.rzsd);
         this.getDimension(this.ceilLab);
       },
@@ -804,7 +804,7 @@
        * @returns {undefined}
        */
       updateFloorLab: function() {
-        this.translateFn(this.minValue, this.flrLab);
+        this.translateFn(this.minValue, this.flrLab, 'floor');
         this.getDimension(this.flrLab);
       },
 
@@ -879,7 +879,7 @@
        */
       updateLowHandle: function(newOffset) {
         this.setPosition(this.minH, newOffset);
-        this.translateFn(this.scope.rzSliderModel, this.minLab);
+        this.translateFn(this.scope.rzSliderModel, this.minLab, 'model');
         var pos = Math.min(
           Math.max(
             newOffset - this.minLab.rzsd / 2 + this.handleHalfDim,
@@ -900,7 +900,7 @@
        */
       updateHighHandle: function(newOffset) {
         this.setPosition(this.maxH, newOffset);
-        this.translateFn(this.scope.rzSliderHigh, this.maxLab);
+        this.translateFn(this.scope.rzSliderHigh, this.maxLab, 'high');
         var pos = Math.min(newOffset - this.maxLab.rzsd / 2 + this.handleHalfDim, this.barDimension - this.ceilLab.rzsd);
         this.setPosition(this.maxLab, pos);
 
@@ -1009,11 +1009,11 @@
       updateCmbLabel: function() {
 
         if (this.minLab.rzsp + this.minLab.rzsd + 10 >= this.maxLab.rzsp) {
-          var lowTr = this.getDisplayValue(this.scope.rzSliderModel),
-            highTr = this.getDisplayValue(this.scope.rzSliderHigh),
+          var lowTr = this.getDisplayValue(this.scope.rzSliderModel, 'model'),
+            highTr = this.getDisplayValue(this.scope.rzSliderHigh, 'high'),
             labelVal = lowTr === highTr ? lowTr : lowTr + ' - ' + highTr;
 
-          this.translateFn(labelVal, this.cmbLab, false);
+          this.translateFn(labelVal, this.cmbLab, 'cmb', false);
           var pos = Math.min(
             Math.max(
               this.selBar.rzsp + this.selBar.rzsd / 2 - this.cmbLab.rzsd / 2,
@@ -1037,8 +1037,8 @@
        * @param value
        * @returns {*}
        */
-      getDisplayValue: function(value) {
-        return this.customTrFn(value, this.options.id);
+      getDisplayValue: function(value, which) {
+        return this.customTrFn(value, this.options.id, which);
       },
 
       /**

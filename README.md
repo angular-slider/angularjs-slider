@@ -204,7 +204,15 @@ The default options are:
 
 **minRange** - _Number (defaults to 0)_: The minimum range authorized on the slider. *Applies to range slider only.*
 
-**translate** - _Function(value, sliderId)_: Custom translate function. Use this if you want to translate values displayed on the slider. For example if you want to display dollar amounts instead of just numbers:
+**translate** - _Function(value, sliderId, label)_: Custom translate function. Use this if you want to translate values displayed on the slider.
+`sliderId` can be used to determine the slider for which we are translating the value. `label` is a string that can take the following values:
+  - *'model'*: the model label
+  - *'high'*: the high label
+  - *'floor'*: the floor label
+  - *'ceil'*: the ceil label
+  - *'tick-value'*: the ticks labels
+
+For example if you want to display dollar amounts instead of just numbers:
 ```html
 <div>
     <rzslider

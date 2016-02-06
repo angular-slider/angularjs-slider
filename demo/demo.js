@@ -127,7 +127,11 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     options: {
       ceil: 500,
       floor: 0,
-      translate: function(value) {
+      step: 50,
+      showTicksValues: true,
+      id: 'translate-slider',
+      translate: function(value, id, which) {
+        console.info(value, id, which);
         return '$' + value;
       }
     }
