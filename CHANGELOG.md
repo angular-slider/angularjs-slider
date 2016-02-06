@@ -1,7 +1,12 @@
 # 2.7.0 (not released)
 ## Features
+- Add an enforceStep` option (defaults to true) (#246).
 - Add a `showSelectionBarFromValue` options (#250).
+- Use jqLite html() method to display label values so the translate function can return formated content (#251).
 - Pass a label string as third arg to the `translate` function to differentiate the labels (#252).
+
+## Fix
+- Improve combined label position and show only one value if min==max (#245).
 
 # 2.6.0 (2016-01-31)
 ## Features
