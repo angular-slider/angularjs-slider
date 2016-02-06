@@ -91,6 +91,24 @@
   </article>
 
   <article>
+    <h2>Slider with visible selection bar at the end</h2>
+    <rzslider
+      rz-slider-model="slider_visible_bar_end.value"
+      rz-slider-options="slider_visible_bar_end.options"
+    ></rzslider>
+    <show-code js-file="slider_visible_bar_end" html-file="singleSlider"></show-code>
+  </article>
+
+  <article>
+    <h2>Slider with visible selection bar from a value</h2>
+    <rzslider
+      rz-slider-model="slider_visible_bar_from_value.value"
+      rz-slider-options="slider_visible_bar_from_value.options"
+    ></rzslider>
+    <show-code js-file="slider_visible_bar_from_value" html-file="singleSlider"></show-code>
+  </article>
+
+  <article>
     <h2>Slider with dynamic selection bar colors</h2>
     <rzslider
       rz-slider-model="color_slider_bar.value"
@@ -106,6 +124,15 @@
       rz-slider-options="slider_floor_ceil.options"
     ></rzslider>
     <show-code js-file="slider_floor_ceil" html-file="singleSlider"></show-code>
+  </article>
+
+  <article>
+    <h2>Slider with floating values</h2>
+    <rzslider
+      rz-slider-model="slider_float.value"
+      rz-slider-options="slider_float.options"
+    ></rzslider>
+    <show-code js-file="slider_float" html-file="singleSlider"></show-code>
   </article>
 
   <article>
@@ -129,6 +156,16 @@
       rz-slider-options="slider_translate.options"
     ></rzslider>
     <show-code js-file="slider_translate" html-file="rangeSlider"></show-code>
+  </article>
+
+  <article>
+    <h2>Slider with custom display function using html formatting</h2>
+    <rzslider
+      rz-slider-model="slider_translate_html.minValue"
+      rz-slider-high="slider_translate_html.maxValue"
+      rz-slider-options="slider_translate_html.options"
+    ></rzslider>
+    <show-code js-file="slider_translate_html" html-file="rangeSlider"></show-code>
   </article>
 
   <article>
@@ -270,13 +307,13 @@
 
     <tabset class="code">
       <tab heading="HTML">
-        <div hljs hljs-include="'snippets/slider_modal.html'"  hljs-language="html"></div>
+        <div hljs hljs-include="'snippets/slider_modal.html'" hljs-language="html"></div>
       </tab>
       <tab heading="JS">
-        <div hljs hljs-include="'snippets/slider_modal.js'"  hljs-language="js"></div>
+        <div hljs hljs-include="'snippets/slider_modal.js'" hljs-language="js"></div>
       </tab>
       <tab heading="sliderModal.html">
-        <div hljs hljs-include="'sliderModal.html'"  hljs-language="html"></div>
+        <div hljs hljs-include="'sliderModal.html'" hljs-language="html"></div>
       </tab>
     </tabset>
   </article>
@@ -340,6 +377,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
 <script src="lib/highlight.min.js"></script>
 <script src="lib/angular-highlightjs.min.js"></script>
-<script src="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.min.js"></script>
+<script src="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.js"></script>
 <script src="demo.js"></script>
 </html>

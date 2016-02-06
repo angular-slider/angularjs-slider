@@ -1,6 +1,6 @@
 var app = angular.module('rzSliderDemo', ['rzModule', 'ui.bootstrap', 'hljs']);
 
-app.directive('showCode', function () {
+app.directive('showCode', function() {
   return {
     scope: {
       jsFile: '@',
@@ -10,7 +10,7 @@ app.directive('showCode', function () {
   };
 });
 
-app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
+app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
   //Minimal slider config
   $scope.minSlider = {
     value: 10
@@ -58,12 +58,32 @@ app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
     }
   };
 
+  //Slider with selection bar at the end
+  $scope.slider_visible_bar_end = {
+    value: 5,
+    options: {
+      floor: 0,
+      ceil: 10,
+      showSelectionBarEnd: true
+    }
+  };
+
+  //Slider with selection bar from a value
+  $scope.slider_visible_bar_from_value = {
+    value: 5,
+    options: {
+      floor: -10,
+      ceil: 10,
+      showSelectionBarFromValue: 0
+    }
+  };
+
   //Slider with selection bar
   $scope.color_slider_bar = {
     value: 12,
     options: {
       showSelectionBar: true,
-      getSelectionBarColor: function (value) {
+      getSelectionBarColor: function(value) {
         if (value <= 3)
           return 'red';
         if (value <= 6)
@@ -85,17 +105,28 @@ app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
     }
   };
 
+  //Slider config with floating values
+  $scope.slider_float = {
+    value: 0.5,
+    options: {
+      floor: 0,
+      ceil: 2,
+      step: 0.1,
+      precision: 1
+    }
+  };
+
   //Slider config with callbacks
   $scope.slider_callbacks = {
     value: 100,
     options: {
-      onStart: function () {
+      onStart: function() {
         $scope.otherData.start = $scope.slider_callbacks.value * 10;
       },
-      onChange: function () {
+      onChange: function() {
         $scope.otherData.change = $scope.slider_callbacks.value * 10;
       },
-      onEnd: function () {
+      onEnd: function() {
         $scope.otherData.end = $scope.slider_callbacks.value * 10;
       }
     }
@@ -113,8 +144,28 @@ app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
     options: {
       floor: 0,
       ceil: 500,
-      translate: function (value) {
+      translate: function(value) {
         return '$' + value;
+      }
+    }
+  };
+
+  //Slider config with custom display function using html formatting
+  $scope.slider_translate_html = {
+    minValue: 100,
+    maxValue: 400,
+    options: {
+      floor: 0,
+      ceil: 500,
+      translate: function(value, sliderId, label) {
+        switch (label) {
+          case 'model':
+            return '<b>Min price:</b> $' + value;
+          case 'high':
+            return '<b>Max price:</b> $' + value;
+          default:
+            return '$' + value
+        }
       }
     }
   };
@@ -144,7 +195,7 @@ app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
       floor: 0,
       ceil: 10,
       showTicks: true,
-      ticksTooltip: function (v) {
+      ticksTooltip: function(v) {
         return 'Tooltip for ' + v;
       }
     }
@@ -157,7 +208,7 @@ app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
       floor: 0,
       ceil: 10,
       showTicksValues: true,
-      ticksValuesTooltip: function (v) {
+      ticksValuesTooltip: function(v) {
         return 'Tooltip for ' + v;
       }
     }
@@ -250,7 +301,7 @@ app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
       vertical: true,
       showSelectionBar: true,
       showTicksValues: true,
-      ticksValuesTooltip: function (v) {
+      ticksValuesTooltip: function(v) {
         return 'Tooltip for ' + v;
       }
     }
@@ -285,9 +336,9 @@ app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
       ceil: 10
     }
   };
-  $scope.toggle = function () {
+  $scope.toggle = function() {
     $scope.visible = !$scope.visible;
-    $timeout(function () {
+    $timeout(function() {
       $scope.$broadcast('rzSliderForceRender');
     });
   };
@@ -302,14 +353,14 @@ app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
       high: 50
     }
   };
-  $scope.openModal = function () {
+  $scope.openModal = function() {
     var modalInstance = $modal.open({
       templateUrl: 'sliderModal.html',
-      controller: function ($scope, $modalInstance, values) {
+      controller: function($scope, $modalInstance, values) {
         $scope.percentages = JSON.parse(JSON.stringify(values)); //Copy of the object in order to keep original values in $scope.percentages in parent controller.
 
 
-        var formatToPercentage = function (value) {
+        var formatToPercentage = function(value) {
           return value + '%';
         };
 
@@ -324,23 +375,23 @@ app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
           ceil: 100,
           translate: formatToPercentage
         };
-        $scope.ok = function () {
+        $scope.ok = function() {
           $modalInstance.close($scope.percentages);
         };
-        $scope.cancel = function () {
+        $scope.cancel = function() {
           $modalInstance.dismiss();
         };
       },
       resolve: {
-        values: function () {
+        values: function() {
           return $scope.percentages;
         }
       }
     });
-    modalInstance.result.then(function (percentages) {
+    modalInstance.result.then(function(percentages) {
       $scope.percentages = percentages;
     });
-    modalInstance.rendered.then(function () {
+    modalInstance.rendered.then(function() {
       $rootScope.$broadcast('rzSliderForceRender'); //Force refresh sliders on render. Otherwise bullets are aligned at left side.
     });
   };
@@ -355,8 +406,8 @@ app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
       value: 200
     }
   };
-  $scope.refreshSlider = function () {
-    $timeout(function () {
+  $scope.refreshSlider = function() {
+    $timeout(function() {
       $scope.$broadcast('rzSliderForceRender');
     });
   };
@@ -379,7 +430,7 @@ app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
       showTicksValues: false
     }
   };
-  $scope.toggleHighValue = function () {
+  $scope.toggleHighValue = function() {
     if ($scope.slider_all_options.maxValue != null) {
       $scope.slider_all_options.maxValue = undefined;
     } else {
