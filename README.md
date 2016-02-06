@@ -184,6 +184,7 @@ The default options are:
     selectionBarColor: null,
     keyboardSupport: true,
     scale: 1,
+    enforceStep: true,
     enforceRange: false,
     noSwitching: false,
     onlyBindHandles: false,
@@ -257,6 +258,8 @@ $scope.slider = {
 **ticksValuesTooltip** - _Function(value) (defaults to null)_: Same as `ticksTooltip` but for ticks values.
 
 **scale** - _Number (defaults to 1)_: If you display the slider in an element that uses `transform: scale(0.5)`, set the `scale` value to 2 so that the slider is rendered properly and the events are handled correctly.
+
+**enforceStep** - _Boolean (defaults to true)_: Set to true to force the value to be rounded to the step, even when modified from the outside.. When set to false, if the model values are modified from outside the slider, they are not rounded and can be between two steps.
 
 **enforceRange** - _Boolean (defaults to false)_: Set to true to round the `rzSliderModel` and `rzSliderHigh` to the slider range even when modified from outside the slider. When set to false, if the model values are modified from outside the slider, they are not rounded but they are still rendered properly on the slider.
 
