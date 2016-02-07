@@ -587,6 +587,118 @@ describe('rzslider - ', function() {
         $timeout.flush();
         sliderConf.options.onEnd.calledWith('test').should.be.true;
       });
+
+      it('should set the correct background-color on pointer for single slider', function() {
+        var sliderConf = {
+          value: 10,
+          options: {
+            floor: 0,
+            ceil: 10,
+            showSelectionBar: true,
+            getPointerColor: function(v) {
+              if (v < 5) return 'red';
+              return 'green';
+            }
+          }
+        };
+        createSlider(sliderConf);
+        var minHChild = angular.element(slider.minH[0]);
+        expect(minHChild.css('background-color')).to.equal('green');
+
+        scope.slider.value = 2;
+        scope.$digest();
+        expect(minHChild.css('background-color')).to.equal('red');
+      });
+
+      it('should set the correct background-color on pointer for range slider (simple rule)', function() {
+        var sliderConf = {
+          min: 2,
+          max: 8,
+          options: {
+            floor: 0,
+            ceil: 10,
+            getPointerColor: function(v) {
+              if (v < 5) return 'red';
+              return 'green';
+            }
+          }
+        };
+        createRangeSlider(sliderConf);
+        var minHChild = angular.element(slider.minH[0]),
+            maxHChild = angular.element(slider.maxH[0]);
+        expect(minHChild.css('background-color')).to.equal('red');
+        expect(maxHChild.css('background-color')).to.equal('green');
+
+        scope.slider.min = 6;
+        scope.slider.max = 7;
+        scope.$digest();
+        expect(minHChild.css('background-color')).to.equal('green');
+        expect(maxHChild.css('background-color')).to.equal('green');
+      });
+
+      it('should set the correct background-color on pointer for range slider (min/high independent rule 1)', function() {
+        var sliderConf = {
+          min: 2,
+          max: 8,
+          options: {
+            floor: 0,
+            ceil: 10,
+            getPointerColor: function(v, type) {
+              if ( type == 'min' ) {
+                if (v < 5) return 'red';
+                return 'green';
+              }
+
+              if ( type == 'max' ) {
+                if (v < 5) return 'blue';
+                return 'orange';
+              }
+            }
+          }
+        };
+        createRangeSlider(sliderConf);
+        var minHChild = angular.element(slider.minH[0]),
+            maxHChild = angular.element(slider.maxH[0]);
+        expect(minHChild.css('background-color')).to.equal('red');
+        expect(maxHChild.css('background-color')).to.equal('orange');
+
+        scope.slider.min = 6;
+        scope.$digest();
+        expect(minHChild.css('background-color')).to.equal('green');
+      });
+
+      it('should set the correct background-color on pointer for range slider (min/high independent rule 2)', function() {
+        var sliderConf = {
+          min: 2,
+          max: 8,
+          options: {
+            floor: 0,
+            ceil: 10,
+            getPointerColor: function(v, type) {
+              if ( type == 'min' ) {
+                if (v < 5) return 'red';
+                return 'green';
+              }
+
+              if ( type == 'max' ) {
+                if (v < 5) return 'blue';
+                return 'orange';
+              }
+            }
+          }
+        };
+        createRangeSlider(sliderConf);
+        var minHChild = angular.element(slider.minH[0]),
+            maxHChild = angular.element(slider.maxH[0]);
+        expect(minHChild.css('background-color')).to.equal('red');
+        expect(maxHChild.css('background-color')).to.equal('orange');
+
+        scope.slider.max = 3;
+        scope.$digest();
+        expect(minHChild.css('background-color')).to.equal('red');
+        expect(maxHChild.css('background-color')).to.equal('blue');
+
+      });
     });
   });
 
