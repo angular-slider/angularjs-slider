@@ -53,7 +53,7 @@
       ticksTooltip: null,
       ticksValuesTooltip: null,
       vertical: false,
-      selectionBarColor: null,
+      getSelectionBarColor: null,
       getPointerColor: null,
       keyboardSupport: true,
       scale: 1,

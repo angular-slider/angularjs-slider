@@ -1,7 +1,7 @@
-/*! angularjs-slider - v2.7.1 - 
+/*! angularjs-slider - v2.8.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-02-07 */
+ 2016-02-08 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -49,7 +49,7 @@
       ticksTooltip: null,
       ticksValuesTooltip: null,
       vertical: false,
-      selectionBarColor: null,
+      getSelectionBarColor: null,
       getPointerColor: null,
       keyboardSupport: true,
       scale: 1,

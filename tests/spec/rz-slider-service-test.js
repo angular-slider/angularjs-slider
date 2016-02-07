@@ -601,12 +601,12 @@ describe('rzslider - ', function() {
             floor: 0,
             ceil: 10,
             getPointerColor: function(v, type) {
-              if ( type == 'min' ) {
+              if ( type === 'min' ) {
                 if (v < 5) return 'red';
                 return 'green';
               }
 
-              if ( type == 'max' ) {
+              if ( type === 'max' ) {
                 if (v < 5) return 'blue';
                 return 'orange';
               }
@@ -632,12 +632,12 @@ describe('rzslider - ', function() {
             floor: 0,
             ceil: 10,
             getPointerColor: function(v, type) {
-              if ( type == 'min' ) {
+              if ( type === 'min' ) {
                 if (v < 5) return 'red';
                 return 'green';
               }
 
-              if ( type == 'max' ) {
+              if ( type === 'max' ) {
                 if (v < 5) return 'blue';
                 return 'orange';
               }

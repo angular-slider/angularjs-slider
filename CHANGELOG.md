@@ -1,3 +1,7 @@
+# 2.7.1 (2016-02-08)
+## Features
+- Add a `getPointerColor` option to dynamically change the pointers color (#253).
+
 # 2.7.1 (2016-02-06)
 ## Fix
 - Fix high label positioning when size is different than the ceil one.

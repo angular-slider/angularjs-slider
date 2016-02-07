@@ -181,7 +181,7 @@ The default options are:
     ticksTooltip: null,
     ticksValuesTooltip: null,
     vertical: false,
-    selectionBarColor: null,
+    getSelectionBarColor: null,
     getPointerColor: null,
     keyboardSupport: true,
     scale: 1,
@@ -250,7 +250,7 @@ $scope.slider = {
 
 **getSelectionBarColor** - _Function(value) or Function(minVal, maxVal) (defaults to null)_: Function that returns the current color of the selection bar. If the returned color depends on a model value (either `rzScopeModel`or `'rzSliderHigh`), you should use the argument passed to the function. Indeed, when the function is called, there is no certainty that the model has already been updated.
 
-**getPointerColor** - _Function(value, pointerType) (defaults to null)_: Function that returns the current color of a pointer. To handle range slider pointer independently, you should evaluate pointerType within the given function where "min" stands for `rzScopeModel` and "max" for `rzScopeHigh` values. Indeed, when the function is called, there is no certainty that the model has already been updated.
+**getPointerColor** - _Function(value, pointerType) (defaults to null)_: Function that returns the current color of a pointer. If the returned color depends on a model value (either `rzScopeModel`or `'rzSliderHigh`), you should use the argument passed to the function. Indeed, when the function is called, there is no certainty that the model has already been updated. To handle range slider pointers independently, you should evaluate pointerType within the given function where "min" stands for `rzScopeModel` and "max" for `rzScopeHigh` values.
 
 **hideLimitLabels** - _Boolean (defaults to false)_: Set to true to hide min / max labels
 
