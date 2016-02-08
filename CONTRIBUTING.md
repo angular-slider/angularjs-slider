@@ -16,3 +16,5 @@ To contribute to the project, please follow these steps:
 12. Create the Pull Request (a demo showing what the PR does is always good so you can fork [this fiddle](http://jsfiddle.net/cwhgLcjv/))
 13. If there are several commits, please [rebase](https://github.com/edx/edx-platform/wiki/How-to-Rebase-a-Pull-Request) and [squash](https://github.com/edx/edx-platform/wiki/How-to-Rebase-a-Pull-Request#squash-your-changes) everything to only get one commit.
 14. Get merged and celebrate
+
+**Working on your first Pull-Request?** You can watch this cool serie: [How to Contribute to an Open Source Project on GitHub](https://egghead.io/series/how-to-contribute-to-an-open-source-project-on-github?utm_content=buffer8da7c&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer)! ;)
