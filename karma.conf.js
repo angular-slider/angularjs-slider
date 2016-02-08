@@ -15,7 +15,8 @@ module.exports = function (config) {
       'node_modules/angular/angular.js',
       'node_modules/angular-mocks/angular-mocks.js',
       'src/*.js',
-      'tests/spec/*.js',
+      'tests/specs/helper.js',
+      'tests/specs/**/*-test.js',
       'dist/rzslider.css',
       'src/*.html'
     ],

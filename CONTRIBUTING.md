@@ -8,7 +8,7 @@ To contribute to the project, please follow these steps:
 4. Run `npm install`
 5. Run `npm run test`
 6. Make your changes
-7. Test your changes
+7. Test your changes (if you need a new test file, please copy the `test-template.js` file in the tests/specs folder.)
 8. Run `npm run build` to generate the dist files
 9. Run `git add -A` to add your changes
 10. Run `npm run commit` (**Do not** use `git commit`) - follow the prompts to create your git message

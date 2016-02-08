@@ -133,7 +133,7 @@ module.exports = function(grunt) {
         tasks: ['css']
       },
       test: {
-        files: ['src/*.js', 'tests/spec/*.js'],
+        files: ['src/*.js', 'tests/specs/**/*.js'],
         tasks: ['test']
       }
     },
