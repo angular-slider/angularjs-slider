@@ -1079,8 +1079,8 @@
        */
       roundStep: function(value) {
         var steppedDifference = parseFloat((value - this.minValue) / this.step).toPrecision(12);
-        steppedDifference = Math.round(+steppedDifference) * this.step;
-        var newValue = (this.minValue + (+steppedDifference)).toFixed(this.precision);
+        steppedDifference = Math.round(steppedDifference) * this.step;
+        var newValue = (this.minValue + steppedDifference).toFixed(this.precision);
         return +newValue;
       },
 
