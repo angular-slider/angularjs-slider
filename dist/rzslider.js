@@ -1,7 +1,7 @@
 /*! angularjs-slider - v2.8.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-02-08 */
+ 2016-02-09 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -1075,8 +1075,8 @@
        */
       roundStep: function(value) {
         var steppedDifference = parseFloat((value - this.minValue) / this.step).toPrecision(12);
-        steppedDifference = Math.round(+steppedDifference) * this.step;
-        var newValue = (this.minValue + (+steppedDifference)).toFixed(this.precision);
+        steppedDifference = Math.round(steppedDifference) * this.step;
+        var newValue = (this.minValue + steppedDifference).toFixed(this.precision);
         return +newValue;
       },
 
