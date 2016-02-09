@@ -73,6 +73,16 @@ Directly use:
 - `https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/2.5.0/rzslider.min.js`
 - `https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/2.5.0/rzslider.min.css`
 
+
+## Project integration
+
+### Imports
+```html
+<link rel="stylesheet" type="text/css" href="/path/to/slider/rzslider.css"/>
+<script src="/path/to/angularjs/angular.min.js"></script>
+<script src="/path/to/slider/rzslider.min.js"></script>
+```
+
 ### Module
 ```javascript
 angular.module('yourApp', ['rzModule']);
@@ -318,18 +328,6 @@ At the end of each "slide" slider emits `slideEnded` event.
 $scope.$on("slideEnded", function() {
      // user finished sliding a handle
 });
-```
-
-## Project integration
-
-```html
-    <link rel="stylesheet" type="text/css" href="/path/to/slider/rzslider.css"/>
-    <script src="/path/to/angularjs/angular.min.js"></script>
-    <script src="/path/to/slider/rzslider.min.js"></script>
-
-    <script>
-        var YourApp = angular.module('myapp', ['rzModule']);
-    </script>
 ```
 
 ## Browser support
