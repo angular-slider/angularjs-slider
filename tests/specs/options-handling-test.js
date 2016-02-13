@@ -660,6 +660,18 @@
         expect(helper.slider.scope.showTicks).to.be.true;
       });
 
+      it('should set the intermediateTicks flag to true when showTicks is an integer', function() {
+        helper.scope.slider.options.showTicks = 10;
+        helper.scope.$digest();
+        expect(helper.slider.intermediateTicks).to.be.true;
+      });
+
+      it('should set the intermediateTicks flag to true when showTicksValues is an integer', function() {
+        helper.scope.slider.options.showTicksValues = 10;
+        helper.scope.$digest();
+        expect(helper.slider.intermediateTicks).to.be.true;
+      });
+
       it('should set not accept draggableRange to true when slider is a single one', function() {
         helper.scope.slider.options.draggableRange = true;
         helper.scope.$digest();

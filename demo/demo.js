@@ -237,6 +237,26 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     }
   };
 
+  //Slider with ticks at intermediate positions
+  $scope.slider_ticks_at = {
+    value: 500,
+    options: {
+      ceil: 1000,
+      floor: 0,
+      showTicks: 100
+    }
+  };
+
+  //Slider with ticks and values at intermediate positions
+  $scope.slider_ticks_values_at = {
+    value: 500,
+    options: {
+      ceil: 1000,
+      floor: 0,
+      showTicksValues: 100
+    }
+  };
+
   //Slider with draggable range
   $scope.slider_draggable_range = {
     minValue: 1,

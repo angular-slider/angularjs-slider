@@ -159,6 +159,11 @@ rzslider .rz-ticks .rz-tick .rz-tick-value {
   transform: translate(-50%, 0);
 }
 
+rzslider .rz-ticks.rz-ticks-values-under .rz-tick-value {
+  top: initial;
+  bottom: -40px;
+}
+
 rzslider.rz-vertical {
   position: relative;
   width: 4px;
@@ -224,7 +229,13 @@ rzslider.rz-vertical .rz-ticks .rz-tick {
 }
 
 rzslider.rz-vertical .rz-ticks .rz-tick .rz-tick-value {
-  top: auto;
+  top: initial;
   left: 22px;
   transform: translate(0, -28%);
+}
+
+rzslider.rz-vertical .rz-ticks.rz-ticks-values-under .rz-tick-value {
+  right: 12px;
+  bottom: initial;
+  left: initial;
 }

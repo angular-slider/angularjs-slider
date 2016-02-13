@@ -149,6 +149,13 @@ rzslider {
         transform: translate(-50%, 0);
       }
     }
+
+    &.rz-ticks-values-under {
+      .rz-tick-value {
+        top: initial;
+        bottom: @ticksValuePosition - 10;
+      }
+    }
   }
 
   &.rz-vertical {
@@ -212,8 +219,16 @@ rzslider {
         vertical-align: middle;
         .rz-tick-value {
           left: @ticksValuePositionOnVertical;
-          top: auto;
+          top: initial;
           transform: translate(0, -28%);
+        }
+      }
+
+      &.rz-ticks-values-under {
+        .rz-tick-value {
+          bottom: initial;
+          left: initial;
+          right: @ticksValuePositionOnVertical - 10;
         }
       }
     }
