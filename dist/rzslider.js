@@ -1,7 +1,7 @@
 /*! angularjs-slider - v2.8.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-02-09 */
+ 2016-02-16 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -330,7 +330,7 @@
 
         // Watchers (order is important because in case of simultaneous change,
         // watchers will be called in the same order)
-        this.scope.$watch('rzSliderOptions', function(newValue, oldValue) {
+        this.scope.$watch('rzSliderOptions()', function(newValue, oldValue) {
           if (newValue === oldValue)
             return;
           self.applyOptions();
@@ -394,7 +394,13 @@
        * Read the user options and apply them to the slider model
        */
       applyOptions: function() {
-        this.options = RzSliderOptions.getOptions(this.scope.rzSliderOptions);
+        var sliderOptions;
+        if (this.scope.rzSliderOptions)
+          sliderOptions = this.scope.rzSliderOptions();
+        else
+          sliderOptions = {};
+
+        this.options = RzSliderOptions.getOptions(sliderOptions);
 
         if (this.options.step <= 0)
           this.options.step = 1;
@@ -1664,7 +1670,7 @@
       scope: {
         rzSliderModel: '=?',
         rzSliderHigh: '=?',
-        rzSliderOptions: '=?',
+        rzSliderOptions: '&?',
         rzSliderTplUrl: '@'
       },
 

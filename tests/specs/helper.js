@@ -11,8 +11,10 @@
 
     h.createSlider = function(sliderObj) {
       var template = '';
-      if (sliderObj.options)
-        template = '<rzslider rz-slider-model="slider.value" rz-slider-options="slider.options"></rzslider>';
+      var optionsExpression = sliderObj.optionsExpression || 'slider.options';
+      if (sliderObj.options || sliderObj.optionsExpression)
+        template = '<rzslider rz-slider-model="slider.value" rz-slider-options="' +
+        optionsExpression + '"></rzslider>';
       else
         template = '<rzslider rz-slider-model="slider.value"></rzslider>';
       h.initSlider(sliderObj, template);
@@ -20,9 +22,10 @@
 
     h.createRangeSlider = function(sliderObj) {
       var template = '';
-      if (sliderObj.options)
+      var optionsExpression = sliderObj.optionsExpression || 'slider.options';
+      if (sliderObj.options || sliderObj.optionsExpression)
         template = '<rzslider rz-slider-model="slider.min" rz-slider-high="slider.max"' +
-          'rz-slider-options="slider.options"></rzslider>';
+        'rz-slider-options="' + optionsExpression + '"></rzslider>';
       else
         template = '<rzslider rz-slider-model="slider.min" rz-slider-high="slider.max"></rzslider>';
       h.initSlider(sliderObj, template);
