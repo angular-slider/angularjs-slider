@@ -481,6 +481,36 @@
         expect(helper.scope.slider.max).to.equal(100);
       });
     });
+
+    describe('options expression specific - ', function() {
+      it('should safely handle null expressions', function() {
+        var sliderConf = {
+          value: 10,
+          optionsExpression: 'thisDoesntExist'
+        };
+
+        helper.createSlider(sliderConf);
+        helper.scope.$digest();
+        expect(helper.slider.step).to.equal(1);
+      });
+
+      it('should not cause an infinite $digest loop with an expression that always returns a new object', function() {
+        var sliderConf = {
+          value: 10,
+          options: function() {
+            return {
+              floor: 1,
+              ceil: 1000
+            };
+          },
+          optionsExpression: 'slider.options()'
+        };
+
+        helper.createSlider(sliderConf);
+        helper.scope.$digest();
+        expect(helper.slider.minValue).to.equal(1);
+        expect(helper.slider.maxValue).to.equal(1000);
+      });
+    });
   });
 }());
-
