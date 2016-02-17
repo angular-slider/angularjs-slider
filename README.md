@@ -69,9 +69,9 @@ $ bower install --save angularjs-slider
 
 or
 ### CDNJS
-Directly use:
-- `https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/2.5.0/rzslider.min.js`
-- `https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/2.5.0/rzslider.min.css`
+Directly use (replace `X.X.X` by the version you want to use):
+- `https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/X.X.X/rzslider.min.js`
+- `https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/X.X.X/rzslider.min.css`
 
 
 ## Project integration
