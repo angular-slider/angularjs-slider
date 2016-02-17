@@ -1,4 +1,8 @@
-# Contributing
+## Reporting issues
+Make sure the report is accompanied by a reproducible demo. The ideal demo is created by forking [our standard jsFiddle](http://jsfiddle.net/cwhgLcjv/), adding your own code and stripping it down to an absolute minimum needed to demonstrate the bug.
+
+
+## Submittting a Pull Request
 
 To contribute to the project, please follow these steps:
 
