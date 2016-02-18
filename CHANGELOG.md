@@ -1,3 +1,7 @@
+# 2.9.0 (2016-02-18)
+## Features
+- Change `rzSliderOptions` to use expression binding (#266).
+
 # 2.8.0 (2016-02-08)
 ## Features
 - Add a `getPointerColor` option to dynamically change the pointers color (#253).
