@@ -112,6 +112,17 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     }
   };
 
+  //Right to left slider with floor, ceil and step
+  $scope.slider_floor_ceil_rtl = {
+    value: 12,
+    options: {
+    floor: 10,
+    ceil: 100,
+    step: 5,
+    rightToLeft: true
+    }
+  }
+
   //Slider config with callbacks
   $scope.slider_callbacks = {
     value: 100,

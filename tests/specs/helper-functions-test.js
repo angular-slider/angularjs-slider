@@ -652,6 +652,60 @@
         expect(helper.slider.onPointerFocus.callCount).to.equal(0);
       });
     });
+
+    describe('RTL tests with same config', function() {
+      beforeEach(function () {
+        var sliderConf = {
+          value: 50,
+          options: {
+            floor: 0,
+            ceil: 100,
+            step: 10,
+            rightToLeft: true
+          }
+
+        };
+        helper.createSlider(sliderConf);
+      });
+
+      it('should have a valid valueToOffset for positive sliders', function() {
+        helper.slider.maxPos = 1000;
+        expect(helper.slider.valueToOffset(0)).to.equal(1000);
+        expect(helper.slider.valueToOffset(50)).to.equal(500);
+        expect(helper.slider.valueToOffset(100)).to.equal(0);
+      });
+
+      it('should have a valid valueToOffset for negative sliders', function() {
+        helper.scope.slider.options.floor = -100;
+        helper.scope.slider.options.ceil = 0;
+        helper.scope.slider.value = -50;
+        helper.scope.$digest();
+
+        helper.slider.maxPos = 1000;
+        expect(helper.slider.valueToOffset(0)).to.equal(0);
+        expect(helper.slider.valueToOffset(-50)).to.equal(500);
+        expect(helper.slider.valueToOffset(-100)).to.equal(1000);
+      });
+
+      it('should have a valid offsetToValue for positive sliders', function() {
+        helper.slider.maxPos = 1000;
+        expect(helper.slider.offsetToValue(0)).to.equal(100);
+        expect(helper.slider.offsetToValue(1000)).to.equal(0);
+        expect(helper.slider.offsetToValue(500)).to.equal(50);
+      });
+
+      it('should have a valid offsetToValue for for negative sliders', function() {
+        helper.scope.slider.options.floor = -100;
+        helper.scope.slider.options.ceil = 0;
+        helper.scope.slider.value = -50;
+        helper.scope.$digest();
+        helper.slider.maxPos = 1000;
+
+        expect(helper.slider.offsetToValue(0)).to.equal(0);
+        expect(helper.slider.offsetToValue(1000)).to.equal(-100);
+        expect(helper.slider.offsetToValue(500)).to.equal(-50);
+      });
+    });
   });
 }());
 
