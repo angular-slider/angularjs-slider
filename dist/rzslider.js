@@ -1,7 +1,7 @@
 /*! angularjs-slider - v2.9.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-02-18 */
+ 2016-02-24 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -1549,15 +1549,18 @@
             return;
           newMinValue = this.minValue;
           newMaxValue = this.minValue + this.dragging.difference;
+          newMaxValue = this.roundStep(newMaxValue);
         } else if (newOffset >= this.maxPos - this.dragging.highLimit) {
           if (this.maxH.rzsp === this.maxPos)
             return;
           newMaxValue = this.maxValue;
           newMinValue = this.maxValue - this.dragging.difference;
+          newMinValue = this.roundStep(newMinValue);
         } else {
           newMinValue = this.offsetToValue(newOffset - this.dragging.lowLimit);
           newMinValue = this.roundStep(newMinValue);
           newMaxValue = newMinValue + this.dragging.difference;
+          newMaxValue = this.roundStep(newMaxValue);
         }
 
         this.positionTrackingBar(newMinValue, newMaxValue);

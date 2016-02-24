@@ -1553,15 +1553,18 @@
             return;
           newMinValue = this.minValue;
           newMaxValue = this.minValue + this.dragging.difference;
+          newMaxValue = this.roundStep(newMaxValue);
         } else if (newOffset >= this.maxPos - this.dragging.highLimit) {
           if (this.maxH.rzsp === this.maxPos)
             return;
           newMaxValue = this.maxValue;
           newMinValue = this.maxValue - this.dragging.difference;
+          newMinValue = this.roundStep(newMinValue);
         } else {
           newMinValue = this.offsetToValue(newOffset - this.dragging.lowLimit);
           newMinValue = this.roundStep(newMinValue);
           newMaxValue = newMinValue + this.dragging.difference;
+          newMaxValue = this.roundStep(newMaxValue);
         }
 
         this.positionTrackingBar(newMinValue, newMaxValue);
