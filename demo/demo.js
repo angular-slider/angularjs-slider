@@ -137,6 +137,16 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     }
   };
 
+  //Slider config with logarithmic scale
+  $scope.slider_log = {
+    value: 1,
+    options: {
+      floor: 1,
+      ceil: 100,
+      logScale: true
+    }
+  };
+
   //Right to left slider with floor, ceil and step
   $scope.slider_floor_ceil_rtl = {
     value: 12,
