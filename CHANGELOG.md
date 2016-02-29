@@ -1,3 +1,7 @@
+2.10.0 (2016-02-28)
+## Features
+- Added rightToLeft option for RTL support (#270)
+
 # 2.9.0 (2016-02-18)
 ## Features
 - Change `rzSliderOptions` to use expression binding (#266).

@@ -20,6 +20,7 @@ Slider directive implementation for AngularJS, without any dependencies: [http:/
 - Simple to use
 - Keyboard support
 - Compatibility with jQuery Lite, ie. with full jQuery ( Thanks Jusas! https://github.com/Jusas)
+- Supports right to left
 
 **Horizontal**
 
@@ -202,7 +203,8 @@ The default options are:
     onlyBindHandles: false,
     onStart: null,
     onChange: null,
-    onEnd: null
+    onEnd: null,
+    rightToLeft: false
 }
 ````
 
@@ -294,6 +296,8 @@ $scope.slider = {
 **onChange** - _Function(sliderId, modelValue, highValue)_: Function to be called when rz-slider-model or rz-slider-high change. If an id was set in the options, then it's passed to this callback.
 
 **onEnd** - _Function(sliderId, modelValue, highValue)_: Function to be called when a slider update is ended. If an id was set in the options, then it's passed to this callback.
+
+**rightToLeft** - _Boolean (defaults to false)_: Set to true to show graphs right to left. If **vertical** is true it reverses the left / right arrow functions
 
 **vertical** - _Boolean (defaults to false)_: Set to true to display the slider vertically. The slider will take the full height of its parent.
 _Changing this value at runtime is not currently supported._

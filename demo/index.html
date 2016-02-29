@@ -103,6 +103,14 @@
   </article>
 
   <article>
+    <h2>Right to left slider with custom floor/ceil/step</h2>
+    <rzslider
+      rz-slider-model="slider_floor_ceil_rtl.value"
+      rz-slider-options="slider_floor_ceil_rtl.options"
+    ></rzslider>
+  </article>
+
+  <article>
     <h2>Slider with callbacks on start, change and end</h2>
     <p>Value linked on start: {{ otherData.start }}</p>
     <p>Value linked on change: {{ otherData.change }}</p>
@@ -289,7 +297,8 @@
         <label>Show ticks <input type="checkbox" ng-model="slider_all_options.options.showTicks"></label><br/>
         <label>Show ticks values <input type="checkbox" ng-model="slider_all_options.options.showTicksValues"></label><br/>
         <label>Disabled <input type="checkbox" ng-model="slider_all_options.options.disabled"></label><br/>
-        <label>Read-Only <input type="checkbox" ng-model="slider_all_options.options.readOnly"></label>
+        <label>Read-Only <input type="checkbox" ng-model="slider_all_options.options.readOnly"></label><br />
+        <label>Right to Left <input type="checkbox" ng-model="slider_all_options.options.rightToLeft"></label>
       </div>
     </div>
     <rzslider

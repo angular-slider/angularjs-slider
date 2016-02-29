@@ -63,7 +63,8 @@
       onlyBindHandles: false,
       onStart: null,
       onChange: null,
-      onEnd: null
+      onEnd: null,
+      rightToLeft: false
     };
     var globalOptions = {};
 
@@ -773,7 +774,11 @@
               tick.valueTooltipPlacement = this.options.vertical ? 'right' : 'top';
             }
           }
-          this.scope.ticks.push(tick);
+          if (!this.options.rightToLeft) {
+            this.scope.ticks.push(tick);
+          } else {
+            this.scope.ticks.unshift(tick);
+          }
         }
       },
 
@@ -805,7 +810,9 @@
        */
       updateCeilLab: function() {
         this.translateFn(this.maxValue, this.ceilLab, 'ceil');
-        this.setPosition(this.ceilLab, this.barDimension - this.ceilLab.rzsd);
+        var position = this.options.rightToLeft ? 0 : this.barDimension - this.ceilLab.rzsd;
+        this.setPosition(this.ceilLab, position);
+        //need to explicitly set to 0 for switching between rtl and ltr in demo
         this.getDimension(this.ceilLab);
       },
 
@@ -816,6 +823,8 @@
        */
       updateFloorLab: function() {
         this.translateFn(this.minValue, this.flrLab, 'floor');
+        var position = this.options.rightToLeft ? 0 : this.barDimension - this.flrLab.rzsd;
+        this.setPosition(this.flrLab, position);
         this.getDimension(this.flrLab);
       },
 
@@ -883,6 +892,26 @@
       },
 
       /**
+       * Helper function to work out the position for handle labels depending on RTL or not
+       *
+       * @param {string} labelName maxLab or minLab
+       * @param newOffset
+       *
+       * @returns {number}
+       */
+      getHandleLabelPos: function(labelName, newOffset) {
+        var labelRzsd = this[labelName].rzsd,
+          nearHandlePos = newOffset - labelRzsd / 2 + this.handleHalfDim,
+          endOfBarPos = this.barDimension - labelRzsd;
+
+        if (this.options.rightToLeft && labelName === 'minLab' || !this.options.rightToLeft && labelName === 'maxLab') {
+          return Math.min(nearHandlePos, endOfBarPos);
+        } else {
+          return Math.min(Math.max(nearHandlePos, 0), endOfBarPos);
+        }
+      },
+
+      /**
        * Update low slider handle position and label
        *
        * @param {number} newOffset
@@ -891,14 +920,7 @@
       updateLowHandle: function(newOffset) {
         this.setPosition(this.minH, newOffset);
         this.translateFn(this.scope.rzSliderModel, this.minLab, 'model');
-        var pos = Math.min(
-          Math.max(
-            newOffset - this.minLab.rzsd / 2 + this.handleHalfDim,
-            0
-          ),
-          this.barDimension - this.minLab.rzsd
-        );
-        this.setPosition(this.minLab, pos);
+        this.setPosition(this.minLab, this.getHandleLabelPos('minLab', newOffset));
 
         if (this.options.getPointerColor) {
           var pointercolor = this.getPointerColor('min');
@@ -919,8 +941,7 @@
       updateHighHandle: function(newOffset) {
         this.setPosition(this.maxH, newOffset);
         this.translateFn(this.scope.rzSliderHigh, this.maxLab, 'high');
-        var pos = Math.min(newOffset - this.maxLab.rzsd / 2 + this.handleHalfDim, this.barDimension - this.maxLab.rzsd);
-        this.setPosition(this.maxLab, pos);
+        this.setPosition(this.maxLab, this.getHandleLabelPos("maxLab", newOffset));
 
         if (this.options.getPointerColor) {
           var pointercolor = this.getPointerColor('max');
@@ -939,9 +960,23 @@
        */
       shFloorCeil: function() {
         var flHidden = false,
-          clHidden = false;
+          clHidden = false,
+          isRTL = this.options.rightToLeft,
+          flrLabPos = this.flrLab.rzsp,
+          flrLabDim = this.flrLab.rzsd,
+          minLabPos = this.minLab.rzsp,
+          minLabDim = this.minLab.rzsd,
+          maxLabPos = this.maxLab.rzsp,
+          maxLabDim = this.maxLab.rzsd,
+          ceilLabPos = this.ceilLab.rzsp,
+          halfHandle = this.handleHalfDim,
+          isMinLabAtFloor = isRTL ? minLabPos + minLabDim >= flrLabPos - flrLabDim - 5 : minLabPos <= flrLabPos + flrLabDim + 5,
+          isMinLabAtCeil = isRTL ? minLabPos - minLabDim <= ceilLabPos + halfHandle + 10 : minLabPos + minLabDim >= ceilLabPos - halfHandle - 10,
+          isMaxLabAtFloor = isRTL ? maxLabPos >= flrLabPos - flrLabDim - halfHandle : maxLabPos <= flrLabPos + flrLabDim + halfHandle,
+          isMaxLabAtCeil = isRTL ? maxLabPos - maxLabDim <= ceilLabPos + 10 : maxLabPos + maxLabDim >= ceilLabPos - 10;
 
-        if (this.minLab.rzsp <= this.flrLab.rzsp + this.flrLab.rzsd + 5) {
+
+        if (isMinLabAtFloor) {
           flHidden = true;
           this.hideEl(this.flrLab);
         } else {
@@ -949,7 +984,7 @@
           this.showEl(this.flrLab);
         }
 
-        if (this.minLab.rzsp + this.minLab.rzsd >= this.ceilLab.rzsp - this.handleHalfDim - 10) {
+        if (isMinLabAtCeil) {
           clHidden = true;
           this.hideEl(this.ceilLab);
         } else {
@@ -958,14 +993,14 @@
         }
 
         if (this.range) {
-          if (this.maxLab.rzsp + this.maxLab.rzsd >= this.ceilLab.rzsp - 10) {
+          if (isMaxLabAtCeil) {
             this.hideEl(this.ceilLab);
           } else if (!clHidden) {
             this.showEl(this.ceilLab);
           }
 
           // Hide or show floor label
-          if (this.maxLab.rzsp <= this.flrLab.rzsp + this.flrLab.rzsd + this.handleHalfDim) {
+          if (isMaxLabAtFloor) {
             this.hideEl(this.flrLab);
           } else if (!flHidden) {
             this.showEl(this.flrLab);
@@ -980,16 +1015,20 @@
        */
       updateSelectionBar: function() {
         var position = 0,
-          dimension = 0;
+          dimension = 0,
+          isSelectionBarFromRight = this.options.rightToLeft ? !this.options.showSelectionBarEnd : this.options.showSelectionBarEnd,
+          positionForRange = this.options.rightToLeft ? this.maxH.rzsp + this.handleHalfDim : this.minH.rzsp + this.handleHalfDim;
+
         if (this.range) {
           dimension = Math.abs(this.maxH.rzsp - this.minH.rzsp);
-          position = this.minH.rzsp + this.handleHalfDim;
+          position = positionForRange;
         }
         else {
           if (this.options.showSelectionBarFromValue !== null) {
             var center = this.options.showSelectionBarFromValue,
-              centerPosition = this.valueToOffset(center);
-            if (this.scope.rzSliderModel > center) {
+              centerPosition = this.valueToOffset(center),
+              isModelGreaterThanCenter = this.options.rightToLeft ? this.scope.rzSliderModel <= center : this.scope.rzSliderModel > center;
+            if (isModelGreaterThanCenter) {
               dimension = this.minH.rzsp - centerPosition;
               position = centerPosition + this.handleHalfDim;
             }
@@ -998,7 +1037,7 @@
               position = this.minH.rzsp + this.handleHalfDim;
             }
           }
-          else if (this.options.showSelectionBarEnd) {
+          else if (isSelectionBarFromRight) {
             dimension = Math.abs(this.maxPos - this.minH.rzsp) + this.handleHalfDim;
             position = this.minH.rzsp + this.handleHalfDim;
           } else {
@@ -1031,7 +1070,7 @@
        * correct parameters
        */
       getPointerColor: function(pointerType) {
-        if ( pointerType === 'max' ) {
+        if (pointerType === 'max') {
           return this.options.getPointerColor(this.scope.rzSliderHigh, pointerType);
         }
         return this.options.getPointerColor(this.scope.rzSliderModel, pointerType);
@@ -1043,11 +1082,22 @@
        * @returns {undefined}
        */
       updateCmbLabel: function() {
+        var isLabelOverlap = null;
+        if (this.options.rightToLeft) {
+          isLabelOverlap = this.minLab.rzsp - this.minLab.rzsd - 10 <= this.maxLab.rzsp;
+        } else {
+          isLabelOverlap = this.minLab.rzsp + this.minLab.rzsd + 10 >= this.maxLab.rzsp;
+        }
 
-        if (this.minLab.rzsp + this.minLab.rzsd + 10 >= this.maxLab.rzsp) {
+        if (isLabelOverlap) {
           var lowTr = this.getDisplayValue(this.scope.rzSliderModel, 'model'),
             highTr = this.getDisplayValue(this.scope.rzSliderHigh, 'high'),
-            labelVal = lowTr === highTr ? lowTr : lowTr + ' - ' + highTr;
+            labelVal = '';
+          if (lowTr === highTr) {
+            labelVal = lowTr;
+          } else {
+            labelVal = this.options.rightToLeft ? highTr + ' - ' + lowTr : lowTr + ' - ' + highTr;
+          }
 
           this.translateFn(labelVal, this.cmbLab, 'cmb', false);
           var pos = Math.min(
@@ -1170,6 +1220,9 @@
        * @returns {number}
        */
       valueToOffset: function(val) {
+        if (this.options.rightToLeft) {
+          return (this.maxValue - this.sanitizeValue(val)) * this.maxPos / this.valueRange || 0;
+        }
         return (this.sanitizeValue(val) - this.minValue) * this.maxPos / this.valueRange || 0;
       },
 
@@ -1190,6 +1243,9 @@
        * @returns {number}
        */
       offsetToValue: function(offset) {
+        if (this.options.rightToLeft) {
+          return (1 - (offset / this.maxPos)) * this.valueRange + this.minValue;
+        }
         return (offset / this.maxPos) * this.valueRange + this.minValue;
       },
 
@@ -1269,8 +1325,12 @@
           return this.minH;
         else if (distanceMin > distanceMax)
           return this.maxH;
-        else //if event is at the same distance from min/max then if it's at left of minH, we return minH else maxH
+        else if (!this.options.rightToLeft)
+        //if event is at the same distance from min/max then if it's at left of minH, we return minH else maxH
           return offset < this.minH.rzsp ? this.minH : this.maxH;
+        else
+        //reverse in rtl
+          return offset > this.minH.rzsp ? this.minH : this.maxH;
       },
 
       /**
@@ -1411,12 +1471,14 @@
        */
       onMove: function(pointer, event) {
         var newOffset = this.getEventPosition(event),
-          newValue;
+          newValue,
+          ceilValue = this.options.rightToLeft ? this.minValue : this.maxValue,
+          flrValue = this.options.rightToLeft ? this.maxValue : this.minValue;
 
         if (newOffset <= 0) {
-          newValue = this.minValue;
+          newValue = flrValue;
         } else if (newOffset >= this.maxPos) {
-          newValue = this.maxValue;
+          newValue = ceilValue;
         } else {
           newValue = this.offsetToValue(newOffset);
           newValue = this.roundStep(newValue);
@@ -1459,6 +1521,43 @@
         pointer.removeClass('rz-active');
       },
 
+      /**
+       * Key actions helper function
+       *
+       * @param {number} currentValue value of the slider
+       *
+       * @returns {?Object} action value mappings
+       */
+      getKeyActions: function(currentValue) {
+        var increaseStep = currentValue + this.step,
+          decreaseStep = currentValue - this.step,
+          increasePage = currentValue + this.valueRange / 10,
+          decreasePage = currentValue - this.valueRange / 10;
+
+        //Left to right default actions
+        var actions = {
+          'UP': increaseStep,
+          'DOWN': decreaseStep,
+          'LEFT': decreaseStep,
+          'RIGHT': increaseStep,
+          'PAGEUP': increasePage,
+          'PAGEDOWN': decreasePage,
+          'HOME': this.minValue,
+          'END': this.maxValue
+        };
+        //right to left means swapping right and left arrows
+        if (this.options.rightToLeft) {
+          actions.LEFT = increaseStep;
+          actions.RIGHT = decreaseStep;
+          // right to left and vertical means we also swap up and down
+          if (this.options.vertical) {
+            actions.UP = decreaseStep;
+            actions.DOWN = increaseStep;
+          }
+        }
+        return actions;
+      },
+
       onKeyboardEvent: function(event) {
         var currentValue = this.scope[this.tracking],
           keyCode = event.keyCode || event.which,
@@ -1472,16 +1571,7 @@
             36: 'HOME',
             35: 'END'
           },
-          actions = {
-            UP: currentValue + this.step,
-            DOWN: currentValue - this.step,
-            LEFT: currentValue - this.step,
-            RIGHT: currentValue + this.step,
-            PAGEUP: currentValue + this.valueRange / 10,
-            PAGEDOWN: currentValue - this.valueRange / 10,
-            HOME: this.minValue,
-            END: this.maxValue
-          },
+          actions = this.getKeyActions(currentValue),
           key = keys[keyCode],
           action = actions[key];
         if (action == null || this.tracking === '') return;
@@ -1528,11 +1618,57 @@
           active: true,
           value: this.offsetToValue(offset),
           difference: this.scope.rzSliderHigh - this.scope.rzSliderModel,
-          lowLimit: offset - this.minH.rzsp,
-          highLimit: this.maxH.rzsp - offset
+          lowLimit: this.options.rightToLeft ? this.minH.rzsp - offset : offset - this.minH.rzsp,
+          highLimit: this.options.rightToLeft ? offset - this.maxH.rzsp : this.maxH.rzsp - offset
         };
 
         this.onStart(pointer, ref, event);
+      },
+
+      /**
+       * getValue helper function
+       *
+       * gets max or min value depending on whether the newOffset is outOfBounds above or below the bar and rightToLeft
+       *
+       * @param {string} type 'max' || 'min' The value we are calculating
+       * @param {number} newOffset  The new offset
+       * @param {boolean} outOfBounds Is the new offset above or below the max/min?
+       * @param {boolean} isAbove Is the new offset above the bar if out of bounds?
+       *
+       * @returns {number}
+       */
+      getValue: function(type, newOffset, outOfBounds, isAbove) {
+        var isRTL = this.options.rightToLeft,
+          value = null;
+
+        if (type === 'min') {
+          if (outOfBounds) {
+            if (isAbove) {
+              value = isRTL ? value : this.maxValue - this.dragging.difference;
+            } else {
+              value = isRTL ? this.maxValue - this.dragging.difference : value;
+            }
+          } else {
+            value = isRTL ? this.offsetToValue(newOffset + this.dragging.lowLimit) : this.offsetToValue(newOffset - this.dragging.lowLimit)
+          }
+        } else {
+          if (outOfBounds) {
+            if (isAbove) {
+              value = isRTL ? this.minValue + this.dragging.difference : this.maxValue;
+            } else {
+              value = isRTL ? this.maxValue : this.minValue + this.dragging.difference;
+            }
+          } else {
+            if (isRTL) {
+              value = this.offsetToValue(newOffset + this.dragging.lowLimit) + this.dragging.difference
+            } else {
+              value = this.offsetToValue(newOffset - this.dragging.lowLimit) + this.dragging.difference;
+            }
+          }
+        }
+        return this.roundStep(value);
+
+
       },
 
       /**
@@ -1546,27 +1682,39 @@
        */
       onDragMove: function(pointer, event) {
         var newOffset = this.getEventPosition(event),
-          newMinValue, newMaxValue;
+          newMinValue, newMaxValue,
+          ceilLimit, flrLimit,
+          isUnderFlrLimit, isOverCeilLimit,
+          flrH, ceilH;
 
-        if (newOffset <= this.dragging.lowLimit) {
-          if (this.minH.rzsp === 0)
-            return;
-          newMinValue = this.minValue;
-          newMaxValue = this.minValue + this.dragging.difference;
-          newMaxValue = this.roundStep(newMaxValue);
-        } else if (newOffset >= this.maxPos - this.dragging.highLimit) {
-          if (this.maxH.rzsp === this.maxPos)
-            return;
-          newMaxValue = this.maxValue;
-          newMinValue = this.maxValue - this.dragging.difference;
-          newMinValue = this.roundStep(newMinValue);
+        if (this.options.rightToLeft) {
+          ceilLimit = this.dragging.lowLimit;
+          flrLimit = this.dragging.highLimit;
+          flrH = this.maxH;
+          ceilH = this.minH;
         } else {
-          newMinValue = this.offsetToValue(newOffset - this.dragging.lowLimit);
-          newMinValue = this.roundStep(newMinValue);
-          newMaxValue = newMinValue + this.dragging.difference;
-          newMaxValue = this.roundStep(newMaxValue);
+          ceilLimit = this.dragging.highLimit;
+          flrLimit = this.dragging.lowLimit;
+          flrH = this.minH;
+          ceilH = this.maxH;
         }
+        isUnderFlrLimit = newOffset <= flrLimit;
+        isOverCeilLimit = newOffset >= this.maxPos - ceilLimit;
 
+        if (isUnderFlrLimit) {
+          if (flrH.rzsp === 0)
+            return;
+          newMinValue = this.getValue('min', newOffset, true, false);
+          newMaxValue = this.getValue('max', newOffset, true, false);
+        } else if (isOverCeilLimit) {
+          if (ceilH.rzsp === this.maxPos)
+            return;
+          newMaxValue = this.getValue('max', newOffset, true, true);
+          newMinValue = this.getValue('min', newOffset, true, true);
+        } else {
+          newMinValue = this.getValue('min', newOffset, false);
+          newMaxValue = this.getValue('max', newOffset, false);
+        }
         this.positionTrackingBar(newMinValue, newMaxValue);
       },
 
