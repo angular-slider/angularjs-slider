@@ -95,6 +95,22 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     }
   };
 
+  //Slider with selection bar
+  $scope.color_slider_pointer = {
+    value: 12,
+    options: {
+      getPointerColor: function(value) {
+        if (value <= 3)
+          return 'red';
+        if (value <= 6)
+          return 'orange';
+        if (value <= 9)
+          return 'yellow';
+        return '#2AE02A';
+      }
+    }
+  };
+
   //Slider config with floor, ceil and step
   $scope.slider_floor_ceil = {
     value: 12,
@@ -102,6 +118,17 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
       floor: 10,
       ceil: 100,
       step: 5
+    }
+  };
+
+  //Slider config with rtl
+  $scope.slider_rtl = {
+    value: 20,
+    options: {
+      floor: 10,
+      ceil: 100,
+      step: 5,
+      rightToLeft: true
     }
   };
 
@@ -427,7 +454,8 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
       readOnly: false,
       disabled: false,
       showTicks: false,
-      showTicksValues: false
+      showTicksValues: false,
+      rightToLeft: false
     }
   };
   $scope.toggleHighValue = function() {

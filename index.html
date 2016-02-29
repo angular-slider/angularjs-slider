@@ -109,12 +109,21 @@
   </article>
 
   <article>
-    <h2>Slider with dynamic selection bar colors</h2>
+    <h2>Slider with dynamic selection bar color</h2>
     <rzslider
       rz-slider-model="color_slider_bar.value"
       rz-slider-options="color_slider_bar.options"
     ></rzslider>
     <show-code js-file="color_slider_bar" html-file="singleSlider"></show-code>
+  </article>
+
+  <article>
+    <h2>Slider with dynamic pointer color</h2>
+    <rzslider
+      rz-slider-model="color_slider_pointer.value"
+      rz-slider-options="color_slider_pointer.options"
+    ></rzslider>
+    <show-code js-file="color_slider_pointer" html-file="singleSlider"></show-code>
   </article>
 
   <article>
@@ -124,6 +133,15 @@
       rz-slider-options="slider_floor_ceil.options"
     ></rzslider>
     <show-code js-file="slider_floor_ceil" html-file="singleSlider"></show-code>
+  </article>
+
+  <article>
+    <h2>Right to left slider</h2>
+    <rzslider
+      rz-slider-model="slider_rtl.value"
+      rz-slider-options="slider_rtl.options"
+    ></rzslider>
+    <show-code js-file="slider_rtl" html-file="singleSlider"></show-code>
   </article>
 
   <article>
@@ -361,7 +379,8 @@
         <label>Show ticks values <input type="checkbox"
                                         ng-model="slider_all_options.options.showTicksValues"></label><br/>
         <label>Disabled <input type="checkbox" ng-model="slider_all_options.options.disabled"></label><br/>
-        <label>Read-Only <input type="checkbox" ng-model="slider_all_options.options.readOnly"></label>
+        <label>Read-Only <input type="checkbox" ng-model="slider_all_options.options.readOnly"></label><br/>
+        <label>Right to left <input type="checkbox" ng-model="slider_all_options.options.rightToLeft"></label>
       </div>
     </div>
     <rzslider
