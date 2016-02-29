@@ -297,7 +297,7 @@ $scope.slider = {
 
 **onEnd** - _Function(sliderId, modelValue, highValue)_: Function to be called when a slider update is ended. If an id was set in the options, then it's passed to this callback.
 
-**rightToLeft** - _Boolean (defaults to false)_: Set to true to show graphs right to left. If **vertical** is true it reverses the left / right arrow functions
+**rightToLeft** - _Boolean (defaults to false)_: Set to true to show graphs right to left. If **vertical** is true it will be from top to bottom and left / right arrow functions reversed.
 
 **vertical** - _Boolean (defaults to false)_: Set to true to display the slider vertically. The slider will take the full height of its parent.
 _Changing this value at runtime is not currently supported._
