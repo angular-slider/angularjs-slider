@@ -804,73 +804,27 @@
       },
 
       /**
-       * Update position of the ceiling label
-       *
-       * @returns {undefined}
-       */
-      updateCeilLab: function() {
-        this.translateFn(this.maxValue, this.ceilLab, 'ceil');
-        var position = this.options.rightToLeft ? 0 : this.barDimension - this.ceilLab.rzsd;
-        this.setPosition(this.ceilLab, position);
-        //need to explicitly set to 0 for switching between rtl and ltr in demo
-        this.getDimension(this.ceilLab);
-      },
-
-      /**
        * Update position of the floor label
        *
        * @returns {undefined}
        */
       updateFloorLab: function() {
         this.translateFn(this.minValue, this.flrLab, 'floor');
-        var position = this.options.rightToLeft ? 0 : this.barDimension - this.flrLab.rzsd;
-        this.setPosition(this.flrLab, position);
         this.getDimension(this.flrLab);
+        var position = this.options.rightToLeft ? this.barDimension - this.flrLab.rzsd : 0;
+        this.setPosition(this.flrLab, position);
       },
 
       /**
-       * Call the onStart callback if defined
-       * The callback call is wrapped in a $evalAsync to ensure that its result will be applied to the scope.
+       * Update position of the ceiling label
        *
        * @returns {undefined}
        */
-      callOnStart: function() {
-        if (this.options.onStart) {
-          var self = this;
-          this.scope.$evalAsync(function() {
-            self.options.onStart(self.options.id, self.scope.rzSliderModel, self.scope.rzSliderHigh);
-          });
-        }
-      },
-
-      /**
-       * Call the onChange callback if defined
-       * The callback call is wrapped in a $evalAsync to ensure that its result will be applied to the scope.
-       *
-       * @returns {undefined}
-       */
-      callOnChange: function() {
-        if (this.options.onChange) {
-          var self = this;
-          this.scope.$evalAsync(function() {
-            self.options.onChange(self.options.id, self.scope.rzSliderModel, self.scope.rzSliderHigh);
-          });
-        }
-      },
-
-      /**
-       * Call the onEnd callback if defined
-       * The callback call is wrapped in a $evalAsync to ensure that its result will be applied to the scope.
-       *
-       * @returns {undefined}
-       */
-      callOnEnd: function() {
-        if (this.options.onEnd) {
-          var self = this;
-          this.scope.$evalAsync(function() {
-            self.options.onEnd(self.options.id, self.scope.rzSliderModel, self.scope.rzSliderHigh);
-          });
-        }
+      updateCeilLab: function() {
+        this.translateFn(this.maxValue, this.ceilLab, 'ceil');
+        this.getDimension(this.ceilLab);
+        var position = this.options.rightToLeft ? 0 : this.barDimension - this.ceilLab.rzsd;
+        this.setPosition(this.ceilLab, position);
       },
 
       /**
@@ -941,7 +895,7 @@
       updateHighHandle: function(newOffset) {
         this.setPosition(this.maxH, newOffset);
         this.translateFn(this.scope.rzSliderHigh, this.maxLab, 'high');
-        this.setPosition(this.maxLab, this.getHandleLabelPos("maxLab", newOffset));
+        this.setPosition(this.maxLab, this.getHandleLabelPos('maxLab', newOffset));
 
         if (this.options.getPointerColor) {
           var pointercolor = this.getPointerColor('max');
@@ -1811,6 +1765,51 @@
         this.scope.$apply();
         this.callOnChange();
         this.internalChange = false;
+      },
+
+      /**
+       * Call the onStart callback if defined
+       * The callback call is wrapped in a $evalAsync to ensure that its result will be applied to the scope.
+       *
+       * @returns {undefined}
+       */
+      callOnStart: function() {
+        if (this.options.onStart) {
+          var self = this;
+          this.scope.$evalAsync(function() {
+            self.options.onStart(self.options.id, self.scope.rzSliderModel, self.scope.rzSliderHigh);
+          });
+        }
+      },
+
+      /**
+       * Call the onChange callback if defined
+       * The callback call is wrapped in a $evalAsync to ensure that its result will be applied to the scope.
+       *
+       * @returns {undefined}
+       */
+      callOnChange: function() {
+        if (this.options.onChange) {
+          var self = this;
+          this.scope.$evalAsync(function() {
+            self.options.onChange(self.options.id, self.scope.rzSliderModel, self.scope.rzSliderHigh);
+          });
+        }
+      },
+
+      /**
+       * Call the onEnd callback if defined
+       * The callback call is wrapped in a $evalAsync to ensure that its result will be applied to the scope.
+       *
+       * @returns {undefined}
+       */
+      callOnEnd: function() {
+        if (this.options.onEnd) {
+          var self = this;
+          this.scope.$evalAsync(function() {
+            self.options.onEnd(self.options.id, self.scope.rzSliderModel, self.scope.rzSliderHigh);
+          });
+        }
       }
     };
 
