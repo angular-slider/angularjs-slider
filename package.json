@@ -11,6 +11,9 @@
     "angular",
     "slider"
   ],
+  "scripts" : {
+    "build" : "grunt"
+  },
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-angular-templates": "^0.5.7",

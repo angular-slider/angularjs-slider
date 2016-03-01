@@ -634,7 +634,7 @@ function throttle(func, wait, options) {
         this.selBar.addClass('rz-draggable');
       }
     },
-    
+
     /**
      * Adds accessibility atributes
      *
@@ -682,11 +682,12 @@ function throttle(func, wait, options) {
     updateTicksScale: function() {
       if(!this.showTicks) return;
       if(!this.step) return; //if step is 0, the following loop will be endless.
-
+      var step = this.step;
+      if(parseInt(this.showTicks) == this.showTicks){step = this.showTicks};
       var positions = '',
-          ticksCount = Math.round((this.maxValue - this.minValue) / this.step) + 1;
+          ticksCount = Math.round((this.maxValue - this.minValue) / step) + 1;
       for (var i = 0; i < ticksCount; i++) {
-        var value = this.roundStep(this.minValue + i * this.step);
+        var value = this.roundStep(this.minValue + i * step);
         var selectedClass = this.isTickSelected(value) ? 'selected': '';
         positions += '<li class="tick '+ selectedClass +'">';
         if(this.showTicksValue)
