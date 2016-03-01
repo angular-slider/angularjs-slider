@@ -3,4 +3,3 @@ node_modules/
 bower_components/
 temp/
 tests/coverage/
-dist/

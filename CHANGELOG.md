@@ -1,6 +1,10 @@
+# 2.10.2 (2016-03-01)
+## Bug fixes
+- Remove the dist folder from gitignore.
+
 # 2.10.1 (2016-03-01)
-## Buf fixes
-- Republish the npm module since dist files were missing
+## Bug fixes
+- Republish the npm module since dist files were missing.
 
 # 2.10.0 (2016-02-29)
 ## Features
