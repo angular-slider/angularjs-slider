@@ -1,3 +1,7 @@
+# 2.10.1 (2016-03-01)
+## Buf fixes
+- Republish the npm module since dist files were missing
+
 # 2.10.0 (2016-02-29)
 ## Features
 - Added `rightToLeft` option for RTL support (#270). Thanks @Liam-Ryan :).
