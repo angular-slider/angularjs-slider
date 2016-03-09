@@ -203,6 +203,13 @@ function throttle(func, wait, options) {
     this.hideLimitLabels = !!attributes.rzSliderHideLimitLabels;
 
     /**
+     * Hide pointer labels
+     *
+     * @type {boolean}
+     */
+    this.hidePointerLabels = !!attributes.rzSliderHidePointerLabels;
+
+    /**
      * Only present model values
      *
      * Do not allow to change values
@@ -595,14 +602,12 @@ function throttle(func, wait, options) {
         this.hideEl(this.ceilLab);
       }
 
-      if(this.showTicksValue) {
-        this.flrLab.rzAlwaysHide = true;
-        this.ceilLab.rzAlwaysHide = true;
+      // Hide pointer labels
+      if(this.hidePointerLabels)
+      {
         this.minLab.rzAlwaysHide = true;
         this.maxLab.rzAlwaysHide = true;
         this.cmbLab.rzAlwaysHide = true;
-        this.hideEl(this.flrLab);
-        this.hideEl(this.ceilLab);
         this.hideEl(this.minLab);
         this.hideEl(this.maxLab);
         this.hideEl(this.cmbLab);
@@ -1418,6 +1423,7 @@ function throttle(func, wait, options) {
       rzSliderDraggable: '@',
       rzSliderTranslate: '&',
       rzSliderHideLimitLabels: '=?',
+      rzSliderHidePointerLabels: '=?',
       rzSliderAlwaysShowBar: '=?',
       rzSliderPresentOnly: '@',
       rzSliderOnStart: '&',
@@ -1426,7 +1432,7 @@ function throttle(func, wait, options) {
       rzSliderShowTicks: '=?',
       rzSliderShowTicksValue: '=?',
       rzSliderDisabled: '=?',
-      rzSliderInterval: '=?',
+      rzSliderInterval: '=?'
     },
 
     /**
