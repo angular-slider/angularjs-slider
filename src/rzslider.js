@@ -427,9 +427,14 @@
           this.options.floor = 0;
           this.options.ceil = this.options.stepsArray.length - 1;
           this.options.step = 1;
-          this.customTrFn = function(value) {
-            return this.options.stepsArray[value];
-          };
+          if (this.options.translate) {
+            this.customTrFn = this.options.translate;
+          }
+          else {
+            this.customTrFn = function(value) {
+              return this.options.stepsArray[value];
+            };
+          }
         } else if (this.options.translate)
           this.customTrFn = this.options.translate;
         else

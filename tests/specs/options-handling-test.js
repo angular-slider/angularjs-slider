@@ -115,6 +115,24 @@
         expect(helper.slider.customTrFn(2)).to.equal('C');
       });
 
+      it('should allow a custom translate function when stepsArray is used', function() {
+        helper.scope.slider.options.stepsArray = [{'foo': 'barA'}, {'foo': 'barB'}, {'foo': 'barC'}];
+        helper.scope.slider.options.translate = function(value, sliderId, label) {
+          if (value >= 0 && value < helper.scope.slider.options.stepsArray.length) {
+            return helper.scope.slider.options.stepsArray[value]['foo'];
+          } else {
+            return ""
+          }
+        };
+        helper.scope.$digest();
+        expect(helper.slider.options.step).to.equal(1);
+        expect(helper.slider.options.floor).to.equal(0);
+        expect(helper.slider.options.ceil).to.equal(2);
+
+        expect(helper.slider.customTrFn(0)).to.equal('barA');
+        expect(helper.slider.customTrFn(2)).to.equal('barC');
+      });
+
       it('should sanitize rzSliderModel between floor and ceil', function() {
         helper.scope.slider.options.enforceRange = true;
         helper.scope.slider.value = 1000;
