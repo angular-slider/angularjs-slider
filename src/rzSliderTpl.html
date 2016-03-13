@@ -10,11 +10,11 @@
 <span class="rz-bubble"></span> <!-- // 7 Label above right slider handle -->
 <span class="rz-bubble"></span> <!-- // 8 Range label when the slider handles are close ex. 15 - 17 -->
 <ul ng-show="showTicks" class="rz-ticks"> <!-- // 9 The ticks -->
-  <li ng-repeat="t in ticks track by $index" class="tick"
-      ng-class="{selected: t.selected}" ng-style="t.style"
+  <li ng-repeat="t in ticks track by $index" class="rz-tick"
+      ng-class="{'rz-selected': t.selected}" ng-style="t.style"
       ng-attr-uib-tooltip="{{ t.tooltip }}" ng-attr-tooltip-placement="{{t.tooltipPlacement}}"
       ng-attr-tooltip-append-to-body="{{ t.tooltip ? true : undefined}}">
-    <span ng-if="t.value != null" class="tick-value"
+    <span ng-if="t.value != null" class="rz-tick-value"
       ng-attr-uib-tooltip="{{ t.valueTooltip }}"
       ng-attr-tooltip-placement="{{t.valueTooltipPlacement}}">{{ t.value }}</span>
   </li>

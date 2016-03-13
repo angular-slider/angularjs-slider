@@ -38,7 +38,7 @@
         expect(helper.element[0].getBoundingClientRect().width).to.equal(1000);
         expect(helper.slider.positionProperty).to.equal('left');
         expect(helper.slider.dimensionProperty).to.equal('width');
-        expect(helper.slider.sliderElem.hasClass('vertical')).to.be.false;
+        expect(helper.slider.sliderElem.hasClass('rz-vertical')).to.be.false;
       });
 
       it('vertical slider should take the full height and get correct position/dimension properties', function() {
@@ -48,7 +48,7 @@
         expect(helper.element[0].getBoundingClientRect().height).to.equal(1000);
         expect(helper.slider.positionProperty).to.equal('bottom');
         expect(helper.slider.dimensionProperty).to.equal('height');
-        expect(helper.slider.sliderElem.hasClass('vertical')).to.be.true;
+        expect(helper.slider.sliderElem.hasClass('rz-vertical')).to.be.true;
       });
 
       it('should prevent invalid step', function() {
@@ -552,7 +552,7 @@
         expect(helper.element[0].getBoundingClientRect().width).to.equal(1000);
         expect(helper.slider.positionProperty).to.equal('left');
         expect(helper.slider.dimensionProperty).to.equal('width');
-        expect(helper.slider.sliderElem.hasClass('vertical')).to.be.false;
+        expect(helper.slider.sliderElem.hasClass('rz-vertical')).to.be.false;
       });
 
       it('vertical slider should take the full height and get correct position/dimension properties', function() {
@@ -562,7 +562,7 @@
         expect(helper.element[0].getBoundingClientRect().height).to.equal(1000);
         expect(helper.slider.positionProperty).to.equal('bottom');
         expect(helper.slider.dimensionProperty).to.equal('height');
-        expect(helper.slider.sliderElem.hasClass('vertical')).to.be.true;
+        expect(helper.slider.sliderElem.hasClass('rz-vertical')).to.be.true;
       });
 
       it('should prevent invalid step', function() {

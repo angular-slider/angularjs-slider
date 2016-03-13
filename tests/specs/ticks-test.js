@@ -30,7 +30,7 @@
         }
       };
       helper.createSlider(sliderConf);
-      expect(helper.element[0].querySelectorAll('.tick')).to.have.length(0);
+      expect(helper.element[0].querySelectorAll('.rz-tick')).to.have.length(0);
     });
 
     it('should create the correct number of ticks when showTicks is true', function() {
@@ -44,7 +44,7 @@
         }
       };
       helper.createSlider(sliderConf);
-      expect(helper.element[0].querySelectorAll('.tick')).to.have.length(11);
+      expect(helper.element[0].querySelectorAll('.rz-tick')).to.have.length(11);
     });
 
     it('should create the correct number of ticks when showTicksValues is true', function() {
@@ -58,15 +58,15 @@
         }
       };
       helper.createSlider(sliderConf);
-      expect(helper.element[0].querySelectorAll('.tick')).to.have.length(11);
-      expect(helper.element[0].querySelectorAll('.tick-value')).to.have.length(11);
-      var firstTick = angular.element(helper.element[0].querySelectorAll('.tick-value')[0]);
+      expect(helper.element[0].querySelectorAll('.rz-tick')).to.have.length(11);
+      expect(helper.element[0].querySelectorAll('.rz-tick-value')).to.have.length(11);
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[0]);
       expect(firstTick.text()).to.equal('0');
-      var secondTick = angular.element(helper.element[0].querySelectorAll('.tick-value')[1]);
+      var secondTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[1]);
       expect(secondTick.text()).to.equal('10');
     });
 
-    it('should set selected class to ticks below the model value if showSelectionBar is true', function() {
+    it('should set rz-selected class to ticks below the model value if showSelectionBar is true', function() {
       var sliderConf = {
         value: 50,
         options: {
@@ -78,17 +78,17 @@
         }
       };
       helper.createSlider(sliderConf);
-      var firstTick = angular.element(helper.element[0].querySelectorAll('.tick')[0]);
-      expect(firstTick.hasClass('selected')).to.be.true;
-      var sixthTick = angular.element(helper.element[0].querySelectorAll('.tick')[5]);
-      expect(sixthTick.hasClass('selected')).to.be.true;
-      var seventhTick = angular.element(helper.element[0].querySelectorAll('.tick')[6]);
-      expect(seventhTick.hasClass('selected')).to.be.false;
-      var lastTick = angular.element(helper.element[0].querySelectorAll('.tick')[10]);
-      expect(lastTick.hasClass('selected')).to.be.false;
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[0]);
+      expect(firstTick.hasClass('rz-selected')).to.be.true;
+      var sixthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[5]);
+      expect(sixthTick.hasClass('rz-selected')).to.be.true;
+      var seventhTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[6]);
+      expect(seventhTick.hasClass('rz-selected')).to.be.false;
+      var lastTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[10]);
+      expect(lastTick.hasClass('rz-selected')).to.be.false;
     });
 
-    it('should set selected class to ticks above the model value if showSelectionBarEnd is true', function() {
+    it('should set rz-selected class to ticks above the model value if showSelectionBarEnd is true', function() {
       var sliderConf = {
         value: 50,
         options: {
@@ -100,19 +100,19 @@
         }
       };
       helper.createSlider(sliderConf);
-      var firstTick = angular.element(helper.element[0].querySelectorAll('.tick')[0]);
-      expect(firstTick.hasClass('selected')).to.be.false;
-      var fifthTick = angular.element(helper.element[0].querySelectorAll('.tick')[4]);
-      expect(fifthTick.hasClass('selected')).to.be.false;
-      var sixthTick = angular.element(helper.element[0].querySelectorAll('.tick')[5]);
-      expect(sixthTick.hasClass('selected')).to.be.true;
-      var seventhTick = angular.element(helper.element[0].querySelectorAll('.tick')[6]);
-      expect(seventhTick.hasClass('selected')).to.be.true;
-      var lastTick = angular.element(helper.element[0].querySelectorAll('.tick')[10]);
-      expect(lastTick.hasClass('selected')).to.be.true;
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[0]);
+      expect(firstTick.hasClass('rz-selected')).to.be.false;
+      var fifthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[4]);
+      expect(fifthTick.hasClass('rz-selected')).to.be.false;
+      var sixthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[5]);
+      expect(sixthTick.hasClass('rz-selected')).to.be.true;
+      var seventhTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[6]);
+      expect(seventhTick.hasClass('rz-selected')).to.be.true;
+      var lastTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[10]);
+      expect(lastTick.hasClass('rz-selected')).to.be.true;
     });
 
-    it('should set selected class to correct ticks if showSelectionBarFromValue is used and the model is on the right', function() {
+    it('should set rz-selected class to correct ticks if showSelectionBarFromValue is used and the model is on the right', function() {
       var sliderConf = {
         value: 50,
         options: {
@@ -124,22 +124,22 @@
         }
       };
       helper.createSlider(sliderConf);
-      var firstTick = angular.element(helper.element[0].querySelectorAll('.tick')[0]);
-      expect(firstTick.hasClass('selected')).to.be.false;
-      var thirdTick = angular.element(helper.element[0].querySelectorAll('.tick')[2]);
-      expect(thirdTick.hasClass('selected')).to.be.false;
-      var fourthTick = angular.element(helper.element[0].querySelectorAll('.tick')[3]);
-      expect(fourthTick.hasClass('selected')).to.be.true;
-      var fifthTick = angular.element(helper.element[0].querySelectorAll('.tick')[4]);
-      expect(fifthTick.hasClass('selected')).to.be.true;
-      var sixthTick = angular.element(helper.element[0].querySelectorAll('.tick')[5]);
-      expect(sixthTick.hasClass('selected')).to.be.true;
-      var seventhTick = angular.element(helper.element[0].querySelectorAll('.tick')[6]);
-      expect(seventhTick.hasClass('selected')).to.be.false;
-      var lastTick = angular.element(helper.element[0].querySelectorAll('.tick')[10]);
-      expect(lastTick.hasClass('selected')).to.be.false;
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[0]);
+      expect(firstTick.hasClass('rz-selected')).to.be.false;
+      var thirdTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[2]);
+      expect(thirdTick.hasClass('rz-selected')).to.be.false;
+      var fourthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[3]);
+      expect(fourthTick.hasClass('rz-selected')).to.be.true;
+      var fifthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[4]);
+      expect(fifthTick.hasClass('rz-selected')).to.be.true;
+      var sixthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[5]);
+      expect(sixthTick.hasClass('rz-selected')).to.be.true;
+      var seventhTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[6]);
+      expect(seventhTick.hasClass('rz-selected')).to.be.false;
+      var lastTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[10]);
+      expect(lastTick.hasClass('rz-selected')).to.be.false;
     });
-    it('should set selected class to correct ticks if showSelectionBarFromValue is used and the model is on the left', function() {
+    it('should set rz-selected class to correct ticks if showSelectionBarFromValue is used and the model is on the left', function() {
       var sliderConf = {
         value: 50,
         options: {
@@ -151,23 +151,23 @@
         }
       };
       helper.createSlider(sliderConf);
-      var firstTick = angular.element(helper.element[0].querySelectorAll('.tick')[0]);
-      expect(firstTick.hasClass('selected')).to.be.false;
-      var fifthTick = angular.element(helper.element[0].querySelectorAll('.tick')[4]);
-      expect(fifthTick.hasClass('selected')).to.be.false;
-      var sixthTick = angular.element(helper.element[0].querySelectorAll('.tick')[5]);
-      expect(sixthTick.hasClass('selected')).to.be.true;
-      var seventhTick = angular.element(helper.element[0].querySelectorAll('.tick')[6]);
-      expect(seventhTick.hasClass('selected')).to.be.true;
-      var eighthTick = angular.element(helper.element[0].querySelectorAll('.tick')[7]);
-      expect(eighthTick.hasClass('selected')).to.be.true;
-      var ninthTick = angular.element(helper.element[0].querySelectorAll('.tick')[8]);
-      expect(ninthTick.hasClass('selected')).to.be.false;
-      var lastTick = angular.element(helper.element[0].querySelectorAll('.tick')[10]);
-      expect(lastTick.hasClass('selected')).to.be.false;
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[0]);
+      expect(firstTick.hasClass('rz-selected')).to.be.false;
+      var fifthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[4]);
+      expect(fifthTick.hasClass('rz-selected')).to.be.false;
+      var sixthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[5]);
+      expect(sixthTick.hasClass('rz-selected')).to.be.true;
+      var seventhTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[6]);
+      expect(seventhTick.hasClass('rz-selected')).to.be.true;
+      var eighthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[7]);
+      expect(eighthTick.hasClass('rz-selected')).to.be.true;
+      var ninthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[8]);
+      expect(ninthTick.hasClass('rz-selected')).to.be.false;
+      var lastTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[10]);
+      expect(lastTick.hasClass('rz-selected')).to.be.false;
     });
 
-    it('should set selected class to ticks between min/max if showSelectionBar is true on range slider', function() {
+    it('should set rz-selected class to ticks between min/max if showSelectionBar is true on range slider', function() {
       var sliderConf = {
         min: 40,
         max: 60,
@@ -179,14 +179,14 @@
         }
       };
       helper.createRangeSlider(sliderConf);
-      var firstTick = angular.element(helper.element[0].querySelectorAll('.tick')[0]);
-      expect(firstTick.hasClass('selected')).to.be.false;
-      var sixthTick = angular.element(helper.element[0].querySelectorAll('.tick')[5]);
-      expect(sixthTick.hasClass('selected')).to.be.true;
-      var seventhTick = angular.element(helper.element[0].querySelectorAll('.tick')[6]);
-      expect(seventhTick.hasClass('selected')).to.be.true;
-      var lastTick = angular.element(helper.element[0].querySelectorAll('.tick')[10]);
-      expect(lastTick.hasClass('selected')).to.be.false;
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[0]);
+      expect(firstTick.hasClass('rz-selected')).to.be.false;
+      var sixthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[5]);
+      expect(sixthTick.hasClass('rz-selected')).to.be.true;
+      var seventhTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[6]);
+      expect(seventhTick.hasClass('rz-selected')).to.be.true;
+      var lastTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[10]);
+      expect(lastTick.hasClass('rz-selected')).to.be.false;
     });
 
     it('should set the correct color to ticks when getSelectionBarColor is defined', function() {
@@ -207,7 +207,7 @@
         }
       };
       helper.createSlider(sliderConf);
-      var firstTick = angular.element(helper.element[0].querySelectorAll('.tick')[0]);
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[0]);
       expect(firstTick.css('background-color')).to.equal('red');
 
       helper.scope.slider.value = 100;
@@ -229,10 +229,10 @@
         }
       };
       helper.createSlider(sliderConf);
-      var firstTick = angular.element(helper.element[0].querySelectorAll('.tick')[0]);
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[0]);
       expect(firstTick.attr('uib-tooltip')).to.equal('tooltip for 0');
       expect(firstTick.attr('tooltip-placement')).to.equal('top');
-      var secondTick = angular.element(helper.element[0].querySelectorAll('.tick')[1]);
+      var secondTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[1]);
       expect(secondTick.attr('uib-tooltip')).to.equal('tooltip for 10');
     });
 
@@ -251,14 +251,14 @@
         }
       };
       helper.createSlider(sliderConf);
-      var firstTick = angular.element(helper.element[0].querySelectorAll('.tick')[0]);
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[0]);
       expect(firstTick.attr('uib-tooltip')).to.equal('tooltip for 0');
       expect(firstTick.attr('tooltip-placement')).to.equal('right');
-      var secondTick = angular.element(helper.element[0].querySelectorAll('.tick')[1]);
+      var secondTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[1]);
       expect(secondTick.attr('uib-tooltip')).to.equal('tooltip for 10');
     });
 
-    it('should set correct tooltip attributes on tick-value if ticksValuesTooltip is defined for a horizontal slider', function() {
+    it('should set correct tooltip attributes on rz-tick-value if ticksValuesTooltip is defined for a horizontal slider', function() {
       var sliderConf = {
         value: 50,
         options: {
@@ -272,14 +272,14 @@
         }
       };
       helper.createSlider(sliderConf);
-      var firstTick = angular.element(helper.element[0].querySelectorAll('.tick-value')[0]);
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[0]);
       expect(firstTick.attr('uib-tooltip')).to.equal('tooltip for 0');
       expect(firstTick.attr('tooltip-placement')).to.equal('top');
-      var secondTick = angular.element(helper.element[0].querySelectorAll('.tick-value')[1]);
+      var secondTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[1]);
       expect(secondTick.attr('uib-tooltip')).to.equal('tooltip for 10');
     });
 
-    it('should set correct tooltip attributes on tick-value if ticksValuesTooltip is defined for a vertical slider', function() {
+    it('should set correct tooltip attributes on rz-tick-value if ticksValuesTooltip is defined for a vertical slider', function() {
       var sliderConf = {
         value: 50,
         options: {
@@ -294,10 +294,10 @@
         }
       };
       helper.createSlider(sliderConf);
-      var firstTick = angular.element(helper.element[0].querySelectorAll('.tick-value')[0]);
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[0]);
       expect(firstTick.attr('uib-tooltip')).to.equal('tooltip for 0');
       expect(firstTick.attr('tooltip-placement')).to.equal('right');
-      var secondTick = angular.element(helper.element[0].querySelectorAll('.tick-value')[1]);
+      var secondTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[1]);
       expect(secondTick.attr('uib-tooltip')).to.equal('tooltip for 10');
     });
   });
@@ -321,7 +321,7 @@
       helper.clean();
     });
 
-    it('should set selected class to ticks below the model value if showSelectionBar is true', function() {
+    it('should set rz-selected class to ticks below the model value if showSelectionBar is true', function() {
       var sliderConf = {
         value: 50,
         options: {
@@ -334,17 +334,17 @@
         }
       };
       helper.createSlider(sliderConf);
-      var firstTick = angular.element(helper.element[0].querySelectorAll('.tick')[0]);
-      expect(firstTick.hasClass('selected')).to.be.false;
-      var sixthTick = angular.element(helper.element[0].querySelectorAll('.tick')[5]);
-      expect(sixthTick.hasClass('selected')).to.be.true;
-      var seventhTick = angular.element(helper.element[0].querySelectorAll('.tick')[6]);
-      expect(seventhTick.hasClass('selected')).to.be.true;
-      var lastTick = angular.element(helper.element[0].querySelectorAll('.tick')[10]);
-      expect(lastTick.hasClass('selected')).to.be.true;
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[0]);
+      expect(firstTick.hasClass('rz-selected')).to.be.false;
+      var sixthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[5]);
+      expect(sixthTick.hasClass('rz-selected')).to.be.true;
+      var seventhTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[6]);
+      expect(seventhTick.hasClass('rz-selected')).to.be.true;
+      var lastTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[10]);
+      expect(lastTick.hasClass('rz-selected')).to.be.true;
     });
 
-    it('should set selected class to ticks above the model value if showSelectionBarEnd is true', function() {
+    it('should set rz-selected class to ticks above the model value if showSelectionBarEnd is true', function() {
       var sliderConf = {
         value: 50,
         options: {
@@ -357,19 +357,19 @@
         }
       };
       helper.createSlider(sliderConf);
-      var firstTick = angular.element(helper.element[0].querySelectorAll('.tick')[0]);
-      expect(firstTick.hasClass('selected')).to.be.true;
-      var fifthTick = angular.element(helper.element[0].querySelectorAll('.tick')[4]);
-      expect(fifthTick.hasClass('selected')).to.be.true;
-      var sixthTick = angular.element(helper.element[0].querySelectorAll('.tick')[5]);
-      expect(sixthTick.hasClass('selected')).to.be.true;
-      var seventhTick = angular.element(helper.element[0].querySelectorAll('.tick')[6]);
-      expect(seventhTick.hasClass('selected')).to.be.false;
-      var lastTick = angular.element(helper.element[0].querySelectorAll('.tick')[10]);
-      expect(lastTick.hasClass('selected')).to.be.false;
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[0]);
+      expect(firstTick.hasClass('rz-selected')).to.be.true;
+      var fifthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[4]);
+      expect(fifthTick.hasClass('rz-selected')).to.be.true;
+      var sixthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[5]);
+      expect(sixthTick.hasClass('rz-selected')).to.be.true;
+      var seventhTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[6]);
+      expect(seventhTick.hasClass('rz-selected')).to.be.false;
+      var lastTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[10]);
+      expect(lastTick.hasClass('rz-selected')).to.be.false;
     });
 
-    it('should set selected class to correct ticks if showSelectionBarFromValue is used and the model is on the right', function() {
+    it('should set rz-selected class to correct ticks if showSelectionBarFromValue is used and the model is on the right', function() {
       var sliderConf = {
         value: 50,
         options: {
@@ -382,22 +382,22 @@
         }
       };
       helper.createSlider(sliderConf);
-      var firstTick = angular.element(helper.element[0].querySelectorAll('.tick')[0]);
-      expect(firstTick.hasClass('selected')).to.be.false;
-      var thirdTick = angular.element(helper.element[0].querySelectorAll('.tick')[2]);
-      expect(thirdTick.hasClass('selected')).to.be.false;
-      var fourthTick = angular.element(helper.element[0].querySelectorAll('.tick')[3]);
-      expect(fourthTick.hasClass('selected')).to.be.false;
-      var fifthTick = angular.element(helper.element[0].querySelectorAll('.tick')[4]);
-      expect(fifthTick.hasClass('selected')).to.be.false;
-      var sixthTick = angular.element(helper.element[0].querySelectorAll('.tick')[5]);
-      expect(sixthTick.hasClass('selected')).to.be.true;
-      var seventhTick = angular.element(helper.element[0].querySelectorAll('.tick')[6]);
-      expect(seventhTick.hasClass('selected')).to.be.true;
-      var lastTick = angular.element(helper.element[0].querySelectorAll('.tick')[10]);
-      expect(lastTick.hasClass('selected')).to.be.false;
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[0]);
+      expect(firstTick.hasClass('rz-selected')).to.be.false;
+      var thirdTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[2]);
+      expect(thirdTick.hasClass('rz-selected')).to.be.false;
+      var fourthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[3]);
+      expect(fourthTick.hasClass('rz-selected')).to.be.false;
+      var fifthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[4]);
+      expect(fifthTick.hasClass('rz-selected')).to.be.false;
+      var sixthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[5]);
+      expect(sixthTick.hasClass('rz-selected')).to.be.true;
+      var seventhTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[6]);
+      expect(seventhTick.hasClass('rz-selected')).to.be.true;
+      var lastTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[10]);
+      expect(lastTick.hasClass('rz-selected')).to.be.false;
     });
-    it('should set selected class to correct ticks if showSelectionBarFromValue is used and the model is on the left', function() {
+    it('should set rz-selected class to correct ticks if showSelectionBarFromValue is used and the model is on the left', function() {
       var sliderConf = {
         value: 50,
         options: {
@@ -410,20 +410,20 @@
         }
       };
       helper.createSlider(sliderConf);
-      var firstTick = angular.element(helper.element[0].querySelectorAll('.tick')[0]);
-      expect(firstTick.hasClass('selected')).to.be.false;
-      var fifthTick = angular.element(helper.element[0].querySelectorAll('.tick')[4]);
-      expect(fifthTick.hasClass('selected')).to.be.true;
-      var sixthTick = angular.element(helper.element[0].querySelectorAll('.tick')[5]);
-      expect(sixthTick.hasClass('selected')).to.be.true;
-      var seventhTick = angular.element(helper.element[0].querySelectorAll('.tick')[6]);
-      expect(seventhTick.hasClass('selected')).to.be.false;
-      var eighthTick = angular.element(helper.element[0].querySelectorAll('.tick')[7]);
-      expect(eighthTick.hasClass('selected')).to.be.false;
-      var ninthTick = angular.element(helper.element[0].querySelectorAll('.tick')[8]);
-      expect(ninthTick.hasClass('selected')).to.be.false;
-      var lastTick = angular.element(helper.element[0].querySelectorAll('.tick')[10]);
-      expect(lastTick.hasClass('selected')).to.be.false;
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[0]);
+      expect(firstTick.hasClass('rz-selected')).to.be.false;
+      var fifthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[4]);
+      expect(fifthTick.hasClass('rz-selected')).to.be.true;
+      var sixthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[5]);
+      expect(sixthTick.hasClass('rz-selected')).to.be.true;
+      var seventhTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[6]);
+      expect(seventhTick.hasClass('rz-selected')).to.be.false;
+      var eighthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[7]);
+      expect(eighthTick.hasClass('rz-selected')).to.be.false;
+      var ninthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[8]);
+      expect(ninthTick.hasClass('rz-selected')).to.be.false;
+      var lastTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[10]);
+      expect(lastTick.hasClass('rz-selected')).to.be.false;
     });
 
     it('should set the correct color to ticks when getSelectionBarColor is defined', function() {
@@ -445,7 +445,7 @@
         }
       };
       helper.createSlider(sliderConf);
-      var firstTick = angular.element(helper.element[0].querySelectorAll('.tick')[9]);
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[9]);
       expect(firstTick.css('background-color')).to.equal('red');
 
       helper.scope.slider.value = 100;
@@ -468,10 +468,10 @@
         }
       };
       helper.createSlider(sliderConf);
-      var firstTick = angular.element(helper.element[0].querySelectorAll('.tick')[0]);
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[0]);
       expect(firstTick.attr('uib-tooltip')).to.equal('tooltip for 100');
       expect(firstTick.attr('tooltip-placement')).to.equal('top');
-      var secondTick = angular.element(helper.element[0].querySelectorAll('.tick')[1]);
+      var secondTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[1]);
       expect(secondTick.attr('uib-tooltip')).to.equal('tooltip for 90');
     });
 
@@ -491,14 +491,14 @@
         }
       };
       helper.createSlider(sliderConf);
-      var firstTick = angular.element(helper.element[0].querySelectorAll('.tick')[0]);
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[0]);
       expect(firstTick.attr('uib-tooltip')).to.equal('tooltip for 100');
       expect(firstTick.attr('tooltip-placement')).to.equal('right');
-      var secondTick = angular.element(helper.element[0].querySelectorAll('.tick')[1]);
+      var secondTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[1]);
       expect(secondTick.attr('uib-tooltip')).to.equal('tooltip for 90');
     });
 
-    it('should set correct tooltip attributes on tick-value if ticksValuesTooltip is defined for a horizontal slider', function() {
+    it('should set correct tooltip attributes on rz-tick-value if ticksValuesTooltip is defined for a horizontal slider', function() {
       var sliderConf = {
         value: 50,
         options: {
@@ -513,14 +513,14 @@
         }
       };
       helper.createSlider(sliderConf);
-      var firstTick = angular.element(helper.element[0].querySelectorAll('.tick-value')[0]);
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[0]);
       expect(firstTick.attr('uib-tooltip')).to.equal('tooltip for 100');
       expect(firstTick.attr('tooltip-placement')).to.equal('top');
-      var secondTick = angular.element(helper.element[0].querySelectorAll('.tick-value')[1]);
+      var secondTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[1]);
       expect(secondTick.attr('uib-tooltip')).to.equal('tooltip for 90');
     });
 
-    it('should set correct tooltip attributes on tick-value if ticksValuesTooltip is defined for a vertical slider', function() {
+    it('should set correct tooltip attributes on rz-tick-value if ticksValuesTooltip is defined for a vertical slider', function() {
       var sliderConf = {
         value: 50,
         options: {
@@ -536,10 +536,10 @@
         }
       };
       helper.createSlider(sliderConf);
-      var firstTick = angular.element(helper.element[0].querySelectorAll('.tick-value')[0]);
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[0]);
       expect(firstTick.attr('uib-tooltip')).to.equal('tooltip for 100');
       expect(firstTick.attr('tooltip-placement')).to.equal('right');
-      var secondTick = angular.element(helper.element[0].querySelectorAll('.tick-value')[1]);
+      var secondTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[1]);
       expect(secondTick.attr('uib-tooltip')).to.equal('tooltip for 90');
     });
   });
