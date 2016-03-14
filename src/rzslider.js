@@ -536,7 +536,7 @@
         this.alwaysHide(this.selBar, !this.range && !this.options.showSelectionBar);
 
         if (this.options.vertical)
-          this.sliderElem.addClass('vertical');
+          this.sliderElem.addClass('rz-vertical');
 
         if (this.options.draggableRange)
           this.selBar.addClass('rz-draggable');

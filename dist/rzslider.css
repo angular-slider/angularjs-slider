@@ -1,7 +1,7 @@
 /*! angularjs-slider - v2.10.2 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-03-01 */
+ 2016-03-13 */
 rzslider {
   position: relative;
   display: inline-block;
@@ -140,7 +140,7 @@ rzslider .rz-ticks {
   justify-content: space-between;
 }
 
-rzslider .rz-ticks .tick {
+rzslider .rz-ticks .rz-tick {
   width: 10px;
   height: 10px;
   text-align: center;
@@ -149,17 +149,17 @@ rzslider .rz-ticks .tick {
   border-radius: 50%;
 }
 
-rzslider .rz-ticks .tick.selected {
+rzslider .rz-ticks .rz-tick.rz-selected {
   background: #0db9f0;
 }
 
-rzslider .rz-ticks .tick .tick-value {
+rzslider .rz-ticks .rz-tick .rz-tick-value {
   position: absolute;
   top: -30px;
   transform: translate(-50%, 0);
 }
 
-rzslider.vertical {
+rzslider.rz-vertical {
   position: relative;
   width: 4px;
   height: 100%;
@@ -168,13 +168,13 @@ rzslider.vertical {
   vertical-align: baseline;
 }
 
-rzslider.vertical .rz-base {
+rzslider.rz-vertical .rz-base {
   width: 100%;
   height: 100%;
   padding: 0;
 }
 
-rzslider.vertical .rz-bar-wrapper {
+rzslider.rz-vertical .rz-bar-wrapper {
   top: auto;
   left: 0;
   width: 32px;
@@ -183,31 +183,31 @@ rzslider.vertical .rz-bar-wrapper {
   margin: 0 0 0 -16px;
 }
 
-rzslider.vertical .rz-bar {
+rzslider.rz-vertical .rz-bar {
   bottom: 0;
   left: auto;
   width: 4px;
   height: 100%;
 }
 
-rzslider.vertical .rz-pointer {
+rzslider.rz-vertical .rz-pointer {
   top: auto;
   bottom: 0;
   left: -14px !important;
 }
 
-rzslider.vertical .rz-bubble {
+rzslider.rz-vertical .rz-bubble {
   bottom: 0;
   left: 16px !important;
   margin-left: 3px;
 }
 
-rzslider.vertical .rz-bubble.rz-selection {
+rzslider.rz-vertical .rz-bubble.rz-selection {
   top: auto;
   left: 16px !important;
 }
 
-rzslider.vertical .rz-ticks {
+rzslider.rz-vertical .rz-ticks {
   top: 0;
   left: -3px;
   z-index: 1;
@@ -219,11 +219,11 @@ rzslider.vertical .rz-ticks {
           flex-direction: column-reverse;
 }
 
-rzslider.vertical .rz-ticks .tick {
+rzslider.rz-vertical .rz-ticks .rz-tick {
   vertical-align: middle;
 }
 
-rzslider.vertical .rz-ticks .tick .tick-value {
+rzslider.rz-vertical .rz-ticks .rz-tick .rz-tick-value {
   top: auto;
   right: -30px;
   transform: translate(0, -28%);

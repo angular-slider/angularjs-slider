@@ -133,17 +133,17 @@ rzslider {
     -ms-flex-pack: justify;
     justify-content: space-between;
 
-    .tick {
+    .rz-tick {
       text-align: center;
       cursor: pointer;
       width: @ticksWidth;
       height: @ticksHeight;
       background: @ticksColor;
       border-radius: 50%;
-      &.selected {
+      &.rz-selected {
         background: @selectedTicksColor;
       }
-      .tick-value {
+      .rz-tick-value {
         position: absolute;
         top: @ticksValuePosition;
         transform: translate(-50%, 0);
@@ -151,7 +151,7 @@ rzslider {
     }
   }
 
-  &.vertical {
+  &.rz-vertical {
     position: relative;
     width: @barDimension;
     height: 100%;
@@ -208,9 +208,9 @@ rzslider {
       -ms-flex-direction: column-reverse;
       flex-direction: column-reverse;
 
-      .tick {
+      .rz-tick {
         vertical-align: middle;
-        .tick-value {
+        .rz-tick-value {
           right: @ticksValuePosition;
           top: auto;
           transform: translate(0, -28%);
