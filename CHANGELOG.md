@@ -1,3 +1,7 @@
+# 2.10.3 (2016-03-14)
+## Fix
+- Prefix all CSS classes with rz- to prevent conflicts.
+
 # 2.10.2 (2016-03-01)
 ## Bug fixes
 - Remove the dist folder from gitignore.
