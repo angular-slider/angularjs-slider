@@ -1598,9 +1598,9 @@
         if (type === 'min') {
           if (outOfBounds) {
             if (isAbove) {
-              value = isRTL ? value : this.maxValue - this.dragging.difference;
+              value = isRTL ? this.minValue : this.maxValue - this.dragging.difference;
             } else {
-              value = isRTL ? this.maxValue - this.dragging.difference : value;
+              value = isRTL ? this.maxValue - this.dragging.difference : this.minValue;
             }
           } else {
             value = isRTL ? this.offsetToValue(newOffset + this.dragging.lowLimit) : this.offsetToValue(newOffset - this.dragging.lowLimit)
@@ -1621,8 +1621,6 @@
           }
         }
         return this.roundStep(value);
-
-
       },
 
       /**

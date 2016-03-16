@@ -100,7 +100,7 @@
       helper.slider.callOnChange.called.should.be.true;
     });
 
-    it('should handle click on selbar and move move range when near 0 and moved left', function() {
+    it('should handle click on selbar and move range when near 0 and moved left', function() {
       helper.scope.slider.min = 10;
       helper.scope.$digest();
 
@@ -124,7 +124,7 @@
       expect(helper.slider.tracking).to.equal('rzSliderModel');
     });
 
-    it('should handle click on selbar and move move range when near max and moved right', function() {
+    it('should handle click on selbar and move range when near max and moved right', function() {
       helper.scope.slider.max = 90;
       helper.scope.$digest();
 
@@ -145,6 +145,21 @@
 
       expect(helper.scope.slider.min).to.equal(40);
       expect(helper.scope.slider.max).to.equal(100);
+      expect(helper.slider.tracking).to.equal('rzSliderModel');
+    });
+
+    it('should handle click on selbar and move range when floor is not 0 and handle is dragged below limit', function() {
+      helper.scope.slider.min = 1050;
+      helper.scope.slider.max = 1550;
+      helper.scope.slider.options.floor = 1000;
+      helper.scope.slider.options.ceil = 5000;
+      helper.scope.$digest();
+
+      helper.fireMousedown(helper.slider.selBar, 0);
+      helper.fireMousemove(-1000);
+
+      expect(helper.scope.slider.min).to.equal(1000);
+      expect(helper.scope.slider.max).to.equal(1500);
       expect(helper.slider.tracking).to.equal('rzSliderModel');
     });
   });
@@ -249,7 +264,7 @@
       helper.slider.callOnChange.called.should.be.true;
     });
 
-    it('should handle click on selbar and move move range when near 0 and moved left', function() {
+    it('should handle click on selbar and move range when near 0 and moved left', function() {
       helper.scope.slider.min = 10;
       helper.scope.$digest();
 
@@ -273,7 +288,7 @@
       expect(helper.slider.tracking).to.equal('rzSliderModel');
     });
 
-    it('should handle click on selbar and move move range when near max and moved right', function() {
+    it('should handle click on selbar and move range when near max and moved right', function() {
       helper.scope.slider.max = 90;
       helper.scope.$digest();
 
@@ -294,6 +309,21 @@
 
       expect(helper.scope.slider.min).to.equal(40);
       expect(helper.scope.slider.max).to.equal(100);
+      expect(helper.slider.tracking).to.equal('rzSliderModel');
+    });
+
+    it('should handle click on selbar and move range when floor is not 0 and handle is dragged below limit', function() {
+      helper.scope.slider.min = 1050;
+      helper.scope.slider.max = 1550;
+      helper.scope.slider.options.floor = 1000;
+      helper.scope.slider.options.ceil = 5000;
+      helper.scope.$digest();
+
+      helper.fireMousedown(helper.slider.selBar, 0);
+      helper.fireMousemove(-1000);
+
+      expect(helper.scope.slider.min).to.equal(1000);
+      expect(helper.scope.slider.max).to.equal(1500);
       expect(helper.slider.tracking).to.equal('rzSliderModel');
     });
   });
