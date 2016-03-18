@@ -221,7 +221,7 @@ function throttle(func, wait, options) {
     /**
      * Display ticks on each possible value.
      *
-     * @type {boolean}
+     * @type {boolean|Number} if Number then the ticks step value
      */
     this.showTicks = attributes.rzSliderShowTicks || attributes.rzSliderShowTicksValue;
 
@@ -231,6 +231,12 @@ function throttle(func, wait, options) {
      * @type {boolean}
      */
     this.showTicksValue = attributes.rzSliderShowTicksValue;
+
+    /**
+     *  Legend to show
+     * @type {string}
+     */
+    this.rzSliderLegend = attributes.rzSliderLegend
 
     /**
      * Disable the slider
@@ -286,7 +292,7 @@ function throttle(func, wait, options) {
     this.maxLab = null;   // Label above the high value
     this.cmbLab = null;   // Combined label
     this.ticks = null;  // The ticks
-
+    this.legend = null; //The legend
     // Initialize slider
     this.init();
   };
@@ -339,7 +345,7 @@ function throttle(func, wait, options) {
         self.updateLowHandle(self.valueToOffset(self.scope.rzSliderModel));
         self.updateSelectionBar();
         self.updateTicksScale();
-
+        self.updateLegend();
         if(self.range)
         {
           self.updateCmbLabel();
@@ -353,6 +359,7 @@ function throttle(func, wait, options) {
         self.updateHighHandle(self.valueToOffset(self.scope.rzSliderHigh));
         self.updateSelectionBar();
         self.updateTicksScale();
+        self.updateLegend();
         self.updateCmbLabel();
       }, self.interval);
 
@@ -491,6 +498,7 @@ function throttle(func, wait, options) {
         this.updateCmbLabel();
 
       this.updateTicksScale();
+      this.updateLegend();
     },
 
     /**
@@ -579,6 +587,7 @@ function throttle(func, wait, options) {
           case 7: this.maxLab = jElem; break;
           case 8: this.cmbLab = jElem; break;
           case 9: this.ticks = jElem; break;
+          case 10 : this.legend = jElem; break;
         }
 
       }, this);
@@ -710,7 +719,13 @@ function throttle(func, wait, options) {
         return true;
       return false;
     },
-
+    /**
+     * Update legend
+     */
+    updateLegend : function (){
+      if(!this.rzSliderLegend) return;
+      this.legend.text(this.rzSliderLegend)
+    },
     /**
      * Update position of the ceiling label
      *
@@ -816,6 +831,7 @@ function throttle(func, wait, options) {
       this.updateSelectionBar();
       this.updateTicksScale();
       this.updateCmbLabel();
+      this.updateLegend();
     },
 
     /**
@@ -1432,7 +1448,8 @@ function throttle(func, wait, options) {
       rzSliderShowTicks: '=?',
       rzSliderShowTicksValue: '=?',
       rzSliderDisabled: '=?',
-      rzSliderInterval: '=?'
+      rzSliderInterval: '=?',
+      rzSliderLegend : '@?'
     },
 
     /**
@@ -1491,7 +1508,7 @@ function throttle(func, wait, options) {
   'use strict';
 
   $templateCache.put('rzSliderTpl.html',
-    "<span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\"></span></span> <span class=rz-pointer></span> <span class=rz-pointer></span> <span class=\"rz-bubble rz-limit\"></span> <span class=\"rz-bubble rz-limit\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul class=rz-ticks></ul>"
+    "<span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\"></span></span> <span class=rz-pointer></span> <span class=rz-pointer></span> <span class=\"rz-bubble rz-limit\"></span> <span class=\"rz-bubble rz-limit\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul class=rz-ticks></ul><span class=rz-legend></span>"
   );
 
 }]);

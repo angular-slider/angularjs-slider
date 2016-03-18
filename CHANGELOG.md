@@ -1,3 +1,5 @@
+- Allow more steps than ticks. Assign number to rzSliderShowTick
+
 # 1.1.0 (2015-11-07)
 ## Features
 - Configurable update interval (#153)
