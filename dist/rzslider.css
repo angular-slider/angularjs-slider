@@ -11,6 +11,8 @@
 
 /* Slider size parameters */
 
+/**Legend**/
+
 rzslider {
   position: relative;
   display: inline-block;
@@ -153,4 +155,11 @@ rzslider .rz-ticks .tick .tick-value {
   position: absolute;
   top: -30px;
   transform: translate(-50%, 0);
+}
+
+rzslider .rz-legend {
+  margin-top: -8px;
+  margin-left: 5px;
+  font-size: 12px;
+  text-indent: 100%;
 }

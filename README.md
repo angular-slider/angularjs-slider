@@ -1,6 +1,6 @@
 ## AngularJS slider directive with no external dependencies
 
-> **A refactoring is on-going, any feedback is welcome:** https://github.com/rzajac/angularjs-slider/pull/158
+> Improvements over v1.1.0 for back compatibility
 
 Slider directive implementation for AngularJS, without any dependencies.
 
@@ -29,6 +29,10 @@ or
 ### Bower
 ```
 $ bower install --save angularjs-slider
+```
+### Build
+```
+npm run build
 ```
 
 ### Module
