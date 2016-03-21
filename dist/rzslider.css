@@ -158,7 +158,8 @@ rzslider .rz-ticks .tick .tick-value {
 }
 
 rzslider .rz-legend {
-  padding-left: 50%;
-  margin-top: -11px;
+  margin-top: -8px;
+  margin-left: 5px;
   font-size: 12px;
+  text-indent: 100%;
 }
