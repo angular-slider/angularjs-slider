@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "angular": "1.4.7",
-    "angular-mocks": "^1.4.8",
+    "angular-mocks": "1.4.8",
     "chai": "^3.4.1",
     "codecov.io": "^0.1.6",
     "commitizen": "^2.4.6",
