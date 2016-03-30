@@ -1,7 +1,7 @@
-/*! angularjs-slider - v2.10.4 - 
- (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
- https://github.com/angular-slider/angularjs-slider - 
- 2016-03-16 */
+/*! angularjs-slider - v2.10.4 -
+ (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> -
+ https://github.com/angular-slider/angularjs-slider -
+ 2016-03-28 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -423,9 +423,14 @@
           this.options.floor = 0;
           this.options.ceil = this.options.stepsArray.length - 1;
           this.options.step = 1;
-          this.customTrFn = function(value) {
-            return this.options.stepsArray[value];
-          };
+          if (this.options.translate) {
+            this.customTrFn = this.options.translate;
+          }
+          else {
+            this.customTrFn = function(value) {
+              return this.options.stepsArray[value];
+            };
+          }
         } else if (this.options.translate)
           this.customTrFn = this.options.translate;
         else
