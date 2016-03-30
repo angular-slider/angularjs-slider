@@ -164,6 +164,10 @@ $scope.slider = {
 
 > Model for high value slider. Providing both _rz-slider-model_ and _rz-slider-high_ will render range slider.
 
+**rz-slider-tpl-url**
+
+> If for some reason you need to use a custom template, you can do so by providing a template URL to the `rz-slider-tpl-url` attribute. The default template is [this one](https://github.com/angular-slider/angularjs-slider/blob/master/src/rzSliderTpl.html).
+
 **rz-slider-options**
 
 > An object with all the other options of the slider. Each option can be updated at runtime and the slider will automatically be re-rendered.
