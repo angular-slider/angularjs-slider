@@ -244,6 +244,43 @@
         expect(helper.slider.selBar.css('left')).to.equal(expectedPosition + 'px');
       });
 
+      it('should set alwaysHide on floor/ceil when hideLimitLabels is set to true', function() {
+        var sliderConf = {
+          value: 10,
+          options: {
+            hideLimitLabels: true
+          }
+        };
+        helper.createSlider(sliderConf);
+        expect(helper.slider.flrLab.rzAlwaysHide).to.be.true;
+        expect(helper.slider.ceilLab.rzAlwaysHide).to.be.true;
+      });
+
+      it('should set alwaysHide on minLab when hidePointerLabels is set to true on a single slider', function() {
+        var sliderConf = {
+          value: 10,
+          options: {
+            hidePointerLabels: true
+          }
+        };
+        helper.createSlider(sliderConf);
+        expect(helper.slider.minLab.rzAlwaysHide).to.be.true;
+      });
+
+      it('should set alwaysHide on minLab when hidePointerLabels is set to true on a single slider', function() {
+        var sliderConf = {
+          min: 10,
+          max: 100,
+          options: {
+            hidePointerLabels: true
+          }
+        };
+        helper.createRangeSlider(sliderConf);
+        expect(helper.slider.minLab.rzAlwaysHide).to.be.true;
+        expect(helper.slider.maxLab.rzAlwaysHide).to.be.true;
+        expect(helper.slider.cmbLab.rzAlwaysHide).to.be.true;
+      });
+
       it('should set the correct background-color on selection bar for single slider', function() {
         var sliderConf = {
           value: 10,
@@ -463,7 +500,7 @@
       });
     });
 
-    describe('range slider spcific - ', function() {
+    describe('range slider specific - ', function() {
       beforeEach(function() {
         var sliderConf = {
           min: 10,

@@ -44,6 +44,7 @@
       showSelectionBar: false,
       showSelectionBarEnd: false,
       showSelectionBarFromValue: null,
+      hidePointerLabels: false,
       hideLimitLabels: false,
       readOnly: false,
       disabled: false,
@@ -535,9 +536,9 @@
 
         this.alwaysHide(this.flrLab, this.options.showTicksValues || this.options.hideLimitLabels);
         this.alwaysHide(this.ceilLab, this.options.showTicksValues || this.options.hideLimitLabels);
-        this.alwaysHide(this.minLab, this.options.showTicksValues);
-        this.alwaysHide(this.maxLab, this.options.showTicksValues || !this.range);
-        this.alwaysHide(this.cmbLab, this.options.showTicksValues || !this.range);
+        this.alwaysHide(this.minLab, this.options.showTicksValues || this.options.hidePointerLabels);
+        this.alwaysHide(this.maxLab, this.options.showTicksValues || !this.range || this.options.hidePointerLabels);
+        this.alwaysHide(this.cmbLab, this.options.showTicksValues || !this.range || this.options.hidePointerLabels);
         this.alwaysHide(this.selBar, !this.range && !this.options.showSelectionBar);
 
         if (this.options.vertical)
