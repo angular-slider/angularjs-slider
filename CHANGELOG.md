@@ -1,3 +1,11 @@
+# 2.11.0 (2016-04-01)
+## Features
+- Add a hidePointerLabels option (#273).
+
+## Fix
+- Position long labels on vertical sliders correctly (#306).
+
+
 # 2.10.4 (2016-03-16)
 ## Fix
 - Fix the floor limit when floor is different than 0 (#293).
