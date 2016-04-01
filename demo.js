@@ -1,4 +1,4 @@
-var app = angular.module('rzSliderDemo', ['rzModule', 'ui.bootstrap', 'hljs']);
+var app = angular.module('rzSliderDemo', ['rzModule', 'ui.bootstrap', 'hljs', 'ngSanitize']);
 
 app.directive('showCode', function() {
   return {
@@ -193,6 +193,20 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
           default:
             return '$' + value
         }
+      }
+    }
+  };
+
+  //Slider with custom template in order to use HTML formatting for ticks
+  $scope.slider_custom_template = {
+    value: 100,
+    options: {
+      floor: 0,
+      ceil: 500,
+      step: 100,
+      showTicksValues: true,
+      translate: function(value) {
+        return '<b>Price:</b> $' + value;
       }
     }
   };

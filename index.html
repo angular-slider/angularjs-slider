@@ -177,13 +177,34 @@
   </article>
 
   <article>
-    <h2>Slider with custom display function using html formatting</h2>
+    <h2>Slider with custom display function using HTML formatting</h2>
     <rzslider
       rz-slider-model="slider_translate_html.minValue"
       rz-slider-high="slider_translate_html.maxValue"
       rz-slider-options="slider_translate_html.options"
     ></rzslider>
     <show-code js-file="slider_translate_html" html-file="rangeSlider"></show-code>
+  </article>
+
+  <article>
+    <h2>Slider with custom template to use HTML formatting for ticks</h2>
+    <rzslider
+      rz-slider-model="slider_custom_template.value"
+      rz-slider-options="slider_custom_template.options"
+      rz-slider-tpl-url="custom-template.html"
+    ></rzslider>
+    <i>* You need to include ngSanitize (angular-sanitize.js) in order to use <a href="https://docs.angularjs.org/api/ng/directive/ngBindHtml" target="_blank">ng-bind-html</a></i><br/>
+    <tabset class="code">
+      <tab heading="HTML">
+        <div hljs hljs-include="'snippets/customTemplateSlider.html'" hljs-language="html"></div>
+      </tab>
+      <tab heading="JS">
+        <div hljs hljs-include="'snippets/slider_custom_template.js'" hljs-language="js"></div>
+      </tab>
+      <tab heading="your-custom-template.html">
+        <div hljs hljs-include="'custom-template.html'" hljs-language="html"></div>
+      </tab>
+    </tabset>
   </article>
 
   <article>
@@ -393,6 +414,7 @@
 
 </body>
 <script src="lib/angular.min.js"></script>
+<script src="lib/angular-sanitize.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
 <script src="lib/highlight.min.js"></script>
 <script src="lib/angular-highlightjs.min.js"></script>
