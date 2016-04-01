@@ -55,6 +55,11 @@ vm.refreshSlider = function () {
 
 **UI-Boostrap tabs example**: http://jsfiddle.net/0f7sd7dw/
 
+### Decimal value can't be typed in an input field linked to the slider
+By default, the slider value is always rounded to the nearest step. A side effect is that when a input field is linked to the slider in order to enable a user to directly type a value, the value is rounded when it doesn't match the step. Even worse, when using decimal values, when a user will type "0.", the `.` will directly be truncated since the value is rounded.
+
+**Solution**: To avoid the value to be rounded, you need to use the `enforceStep: false` option. Thus, the value can be modified externally without taking care of the step. See [#298](https://github.com/angular-slider/angularjs-slider/issues/298).
+
 
 ## Installation
 
