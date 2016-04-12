@@ -475,7 +475,7 @@
        */
       initElemHandles: function() {
         // Assign all slider elements to object properties for easy access
-        angular.forEach(this.sliderElem.children(), function(elem, index) {
+        angular.forEach(angular.element( this.sliderElem.children()[0] ).children(), function(elem, index) {
           var jElem = angular.element(elem);
 
           switch (index) {
