@@ -1,10 +1,13 @@
+# 2.12.0 (2016-04-22)
+## Features
+- Accept numbers for showTicks/showTicksValues to display ticks at intermediate positions (#264).
+
 # 2.11.0 (2016-04-01)
 ## Features
 - Add a hidePointerLabels option (#273).
 
 ## Fix
 - Position long labels on vertical sliders correctly (#306).
-
 
 # 2.10.4 (2016-03-16)
 ## Fix
