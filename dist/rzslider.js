@@ -1,7 +1,7 @@
 /*! angularjs-slider - v2.11.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-04-01 */
+ 2016-04-22 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -247,6 +247,14 @@
        */
       this.valueRange = 0;
 
+
+      /**
+       * If showTicks/showTicksValues options are number.
+       * In this case, ticks values should be displayed below the slider.
+       * @type {boolean}
+       */
+      this.intermediateTicks = false;
+
       /**
        * Set to true if init method already executed
        *
@@ -416,6 +424,8 @@
 
         this.options.showTicks = this.options.showTicks || this.options.showTicksValues;
         this.scope.showTicks = this.options.showTicks; //scope is used in the template
+        if(angular.isNumber(this.options.showTicks))
+          this.intermediateTicks = true;
 
         this.options.showSelectionBar = this.options.showSelectionBar || this.options.showSelectionBarEnd
           || this.options.showSelectionBarFromValue !== null;
@@ -530,11 +540,14 @@
         else
           this.maxH.css('display', '');
 
+
         this.alwaysHide(this.flrLab, this.options.showTicksValues || this.options.hideLimitLabels);
         this.alwaysHide(this.ceilLab, this.options.showTicksValues || this.options.hideLimitLabels);
-        this.alwaysHide(this.minLab, this.options.showTicksValues || this.options.hidePointerLabels);
-        this.alwaysHide(this.maxLab, this.options.showTicksValues || !this.range || this.options.hidePointerLabels);
-        this.alwaysHide(this.cmbLab, this.options.showTicksValues || !this.range || this.options.hidePointerLabels);
+
+        var hideLabelsForTicks = this.options.showTicksValues && !this.intermediateTicks;
+        this.alwaysHide(this.minLab, hideLabelsForTicks || this.options.hidePointerLabels);
+        this.alwaysHide(this.maxLab, hideLabelsForTicks || !this.range || this.options.hidePointerLabels);
+        this.alwaysHide(this.cmbLab, hideLabelsForTicks || !this.range || this.options.hidePointerLabels);
         this.alwaysHide(this.selBar, !this.range && !this.options.showSelectionBar);
 
         if (this.options.vertical)
@@ -544,6 +557,9 @@
           this.selBar.addClass('rz-draggable');
         else
           this.selBar.removeClass('rz-draggable');
+
+        if(this.intermediateTicks && this.options.showTicksValues)
+          this.ticks.addClass('rz-ticks-values-under');
       },
 
       alwaysHide: function(el, hide) {
@@ -751,12 +767,13 @@
        */
       updateTicksScale: function() {
         if (!this.options.showTicks) return;
-
-        var positions = '',
-          ticksCount = Math.round((this.maxValue - this.minValue) / this.step) + 1;
+        var step = this.step;
+        if(this.intermediateTicks)
+          step = this.options.showTicks;
+        var ticksCount = Math.round((this.maxValue - this.minValue) / step) + 1;
         this.scope.ticks = [];
         for (var i = 0; i < ticksCount; i++) {
-          var value = this.roundStep(this.minValue + i * this.step);
+          var value = this.roundStep(this.minValue + i * step);
           var tick = {
             selected: this.isTickSelected(value)
           };
@@ -1077,6 +1094,7 @@
       /**
        * Return the translated value if a translate function is provided else the original value
        * @param value
+       * @param which if it's min or max handle
        * @returns {*}
        */
       getDisplayValue: function(value, which) {
@@ -1087,11 +1105,13 @@
        * Round value to step and precision based on minValue
        *
        * @param {number} value
+       * @param {number} customStep a custom step to override the defined step
        * @returns {number}
        */
-      roundStep: function(value) {
-        var steppedDifference = parseFloat((value - this.minValue) / this.step).toPrecision(12);
-        steppedDifference = Math.round(steppedDifference) * this.step;
+      roundStep: function(value, customStep) {
+        var step = customStep ? customStep : this.step,
+          steppedDifference = parseFloat((value - this.minValue) / step).toPrecision(12);
+        steppedDifference = Math.round(+steppedDifference) * step;
         var newValue = (this.minValue + steppedDifference).toFixed(this.precision);
         return +newValue;
       },
@@ -1334,7 +1354,7 @@
             this.fullBar.on('mousedown', angular.bind(this, this.onStart, null, null));
             this.fullBar.on('mousedown', angular.bind(this, this.onMove, this.fullBar));
             this.ticks.on('mousedown', angular.bind(this, this.onStart, null, null));
-            this.ticks.on('mousedown', angular.bind(this, this.onMove, this.ticks));
+            this.ticks.on('mousedown', angular.bind(this, this.onTickClick, this.ticks));
           }
         }
 
@@ -1354,7 +1374,7 @@
             this.fullBar.on('touchstart', angular.bind(this, this.onStart, null, null));
             this.fullBar.on('touchstart', angular.bind(this, this.onMove, this.fullBar));
             this.ticks.on('touchstart', angular.bind(this, this.onStart, null, null));
-            this.ticks.on('touchstart', angular.bind(this, this.onMove, this.ticks));
+            this.ticks.on('touchstart', angular.bind(this, this.onTickClick, this.ticks));
           }
         }
 
@@ -1423,9 +1443,10 @@
        *
        * @param {jqLite} pointer
        * @param {Event}  event The event
+       * @param {boolean}  fromTick if the event occured on a tick or not
        * @returns {undefined}
        */
-      onMove: function(pointer, event) {
+      onMove: function(pointer, event, fromTick) {
         var newOffset = this.getEventPosition(event),
           newValue,
           ceilValue = this.options.rightToLeft ? this.minValue : this.maxValue,
@@ -1437,7 +1458,10 @@
           newValue = ceilValue;
         } else {
           newValue = this.offsetToValue(newOffset);
-          newValue = this.roundStep(newValue);
+          if(fromTick && angular.isNumber(this.options.showTicks))
+            newValue = this.roundStep(newValue, this.options.showTicks);
+          else
+            newValue = this.roundStep(newValue);
         }
         this.positionTrackingHandle(newValue);
       },
@@ -1462,6 +1486,10 @@
         $document.off(moveEventName, ehMove);
         this.scope.$emit('slideEnded');
         this.callOnEnd();
+      },
+
+      onTickClick: function(pointer, event) {
+        this.onMove(pointer, event, true);
       },
 
       onPointerFocus: function(pointer, ref) {

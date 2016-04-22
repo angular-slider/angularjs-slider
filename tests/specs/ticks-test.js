@@ -47,6 +47,20 @@
       expect(helper.element[0].querySelectorAll('.rz-tick')).to.have.length(11);
     });
 
+    it('should create the correct number of ticks when showTicks is an integer', function() {
+      var sliderConf = {
+        value: 50,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          showTicks: 20
+        }
+      };
+      helper.createSlider(sliderConf);
+      expect(helper.element[0].querySelectorAll('.rz-tick')).to.have.length(6);
+    });
+
     it('should create the correct number of ticks when showTicksValues is true', function() {
       var sliderConf = {
         value: 50,
@@ -64,6 +78,28 @@
       expect(firstTick.text()).to.equal('0');
       var secondTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[1]);
       expect(secondTick.text()).to.equal('10');
+    });
+
+    it('should create the correct number of ticks when showTicksValues is an integer', function() {
+      var sliderConf = {
+        value: 50,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          showTicksValues: 20
+        }
+      };
+      helper.createSlider(sliderConf);
+      expect(helper.slider.ticks.hasClass('rz-ticks-values-under')).to.be.true;
+      expect(helper.element[0].querySelectorAll('.rz-tick')).to.have.length(6);
+      expect(helper.element[0].querySelectorAll('.rz-tick-value')).to.have.length(6);
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[0]);
+      expect(firstTick.text()).to.equal('0');
+      var secondTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[1]);
+      expect(secondTick.text()).to.equal('20');
+      var lastTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[5]);
+      expect(lastTick.text()).to.equal('100');
     });
 
     it('should set rz-selected class to ticks below the model value if showSelectionBar is true', function() {

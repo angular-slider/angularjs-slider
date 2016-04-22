@@ -183,6 +183,26 @@
       helper.slider.callOnStart.called.should.be.true;
       helper.slider.callOnChange.called.should.be.true;
     });
+
+    it('should handle click on ticks when showTicks is an integer and move minH', function () {
+      helper.scope.slider.options.step = 1;
+      helper.scope.slider.options.showTicks = 10;
+      helper.scope.$digest();
+      sinon.spy(helper.slider, 'positionTrackingHandle');
+      sinon.spy(helper.slider, 'callOnStart');
+      sinon.spy(helper.slider, 'callOnChange');
+
+      var expectedValue = 10,
+        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
+
+      helper.fireMousedown(helper.slider.ticks, offset);
+
+      expect(helper.scope.slider.value).to.equal(expectedValue);
+      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      helper.slider.positionTrackingHandle.called.should.be.true;
+      helper.slider.callOnStart.called.should.be.true;
+      helper.slider.callOnChange.called.should.be.true;
+    });
   });
 
     describe('Right to left Mouse controls - Single Horizontal', function() {
@@ -368,6 +388,25 @@
         helper.slider.callOnChange.called.should.be.true;
       });
 
+      it('should handle click on ticks when showTicks is an integer and move minH', function() {
+        helper.scope.slider.options.step = 1;
+        helper.scope.slider.options.showTicks = 10;
+        helper.scope.$digest();
+        sinon.spy(helper.slider, 'positionTrackingHandle');
+        sinon.spy(helper.slider, 'callOnStart');
+        sinon.spy(helper.slider, 'callOnChange');
+
+        var expectedValue = 10,
+          offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
+
+        helper.fireMousedown(helper.slider.ticks, offset);
+
+        expect(helper.scope.slider.value).to.equal(expectedValue);
+        expect(helper.slider.tracking).to.equal('rzSliderModel');
+        helper.slider.positionTrackingHandle.called.should.be.true;
+        helper.slider.callOnStart.called.should.be.true;
+        helper.slider.callOnChange.called.should.be.true;
+      });
   });
 }());
 
