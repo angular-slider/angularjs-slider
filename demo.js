@@ -229,6 +229,16 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     }
   };
 
+  //Slider with ticks
+  $scope.slider_ticks_intermediate = {
+    value: 55,
+    options: {
+      floor: 0,
+      ceil: 100,
+      showTicks: 10
+    }
+  };
+
   //Slider with ticks and tooltip
   $scope.slider_ticks_tooltip = {
     value: 5,
@@ -263,6 +273,17 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
       floor: 0,
       ceil: 10,
       showTicksValues: true
+    }
+  };
+
+  //Range slider with ticks and values
+  $scope.range_slider_ticks_values_intermediate = {
+    minValue: 15,
+    maxValue: 85,
+    options: {
+      floor: 0,
+      ceil: 100,
+      showTicksValues: 10
     }
   };
 
