@@ -1,3 +1,8 @@
+# 2.13.0 (2016-04-24)
+## Features
+- Add a `getLegend` option  (#318).
+- Handle objects in `stepsArray` that can contain `value` and `legend` properties.
+
 # 2.12.0 (2016-04-22)
 ## Features
 - Accept numbers for showTicks/showTicksValues to display ticks at intermediate positions (#264).
