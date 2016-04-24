@@ -1,7 +1,7 @@
 /*! angularjs-slider - v2.12.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-04-22 */
+ 2016-04-24 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -34,6 +34,7 @@
       minRange: 0,
       id: null,
       translate: null,
+      getLegend: null,
       stepsArray: null,
       draggableRange: false,
       draggableRangeOnly: false,
@@ -424,35 +425,56 @@
 
         this.options.showTicks = this.options.showTicks || this.options.showTicksValues;
         this.scope.showTicks = this.options.showTicks; //scope is used in the template
-        if(angular.isNumber(this.options.showTicks))
+        if (angular.isNumber(this.options.showTicks))
           this.intermediateTicks = true;
 
         this.options.showSelectionBar = this.options.showSelectionBar || this.options.showSelectionBarEnd
           || this.options.showSelectionBarFromValue !== null;
 
         if (this.options.stepsArray) {
-          this.options.floor = 0;
-          this.options.ceil = this.options.stepsArray.length - 1;
-          this.options.step = 1;
-          if (this.options.translate) {
+          this.parseStepsArray();
+        } else {
+          if (this.options.translate)
             this.customTrFn = this.options.translate;
-          }
-          else {
+          else
             this.customTrFn = function(value) {
-              return this.options.stepsArray[value];
+              return String(value);
             };
+
+          if (this.options.getLegend) {
+            this.getLegend = this.options.getLegend;
           }
-        } else if (this.options.translate)
-          this.customTrFn = this.options.translate;
-        else
-          this.customTrFn = function(value) {
-            return String(value);
-          };
+        }
 
         if (this.options.vertical) {
           this.positionProperty = 'bottom';
           this.dimensionProperty = 'height';
         }
+      },
+
+      parseStepsArray: function() {
+        this.options.floor = 0;
+        this.options.ceil = this.options.stepsArray.length - 1;
+        this.options.step = 1;
+
+        if (this.options.translate) {
+          this.customTrFn = this.options.translate;
+        }
+        else {
+          this.customTrFn = function(index) {
+            var step = this.options.stepsArray[index];
+            if (angular.isObject(step))
+              return step.value;
+            return step;
+          };
+        }
+
+        this.getLegend = function(index) {
+          var step = this.options.stepsArray[index];
+          if (angular.isObject(step))
+            return step.legend;
+          return null;
+        };
       },
 
       /**
@@ -558,7 +580,7 @@
         else
           this.selBar.removeClass('rz-draggable');
 
-        if(this.intermediateTicks && this.options.showTicksValues)
+        if (this.intermediateTicks && this.options.showTicksValues)
           this.ticks.addClass('rz-ticks-values-under');
       },
 
@@ -768,7 +790,7 @@
       updateTicksScale: function() {
         if (!this.options.showTicks) return;
         var step = this.step;
-        if(this.intermediateTicks)
+        if (this.intermediateTicks)
           step = this.options.showTicks;
         var ticksCount = Math.round((this.maxValue - this.minValue) / step) + 1;
         this.scope.ticks = [];
@@ -792,6 +814,11 @@
               tick.valueTooltip = this.options.ticksValuesTooltip(value);
               tick.valueTooltipPlacement = this.options.vertical ? 'right' : 'top';
             }
+          }
+          if (this.getLegend) {
+            var legend = this.getLegend(value, this.options.id);
+            if (legend)
+              tick.legend = legend;
           }
           if (!this.options.rightToLeft) {
             this.scope.ticks.push(tick);
@@ -1458,7 +1485,7 @@
           newValue = ceilValue;
         } else {
           newValue = this.offsetToValue(newOffset);
-          if(fromTick && angular.isNumber(this.options.showTicks))
+          if (fromTick && angular.isNumber(this.options.showTicks))
             newValue = this.roundStep(newValue, this.options.showTicks);
           else
             newValue = this.roundStep(newValue);
@@ -1911,7 +1938,7 @@
   'use strict';
 
   $templateCache.put('rzSliderTpl.html',
-    "<span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span> <span class=\"rz-pointer rz-pointer-min\" ng-style=minPointerStyle></span> <span class=\"rz-pointer rz-pointer-max\" ng-style=maxPointerStyle></span> <span class=\"rz-bubble rz-limit\"></span> <span class=\"rz-bubble rz-limit\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul ng-show=showTicks class=rz-ticks><li ng-repeat=\"t in ticks track by $index\" class=rz-tick ng-class=\"{'rz-selected': t.selected}\" ng-style=t.style ng-attr-uib-tooltip=\"{{ t.tooltip }}\" ng-attr-tooltip-placement={{t.tooltipPlacement}} ng-attr-tooltip-append-to-body=\"{{ t.tooltip ? true : undefined}}\"><span ng-if=\"t.value != null\" class=rz-tick-value ng-attr-uib-tooltip=\"{{ t.valueTooltip }}\" ng-attr-tooltip-placement={{t.valueTooltipPlacement}}>{{ t.value }}</span></li></ul>"
+    "<span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span> <span class=\"rz-pointer rz-pointer-min\" ng-style=minPointerStyle></span> <span class=\"rz-pointer rz-pointer-max\" ng-style=maxPointerStyle></span> <span class=\"rz-bubble rz-limit\"></span> <span class=\"rz-bubble rz-limit\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul ng-show=showTicks class=rz-ticks><li ng-repeat=\"t in ticks track by $index\" class=rz-tick ng-class=\"{'rz-selected': t.selected}\" ng-style=t.style ng-attr-uib-tooltip=\"{{ t.tooltip }}\" ng-attr-tooltip-placement={{t.tooltipPlacement}} ng-attr-tooltip-append-to-body=\"{{ t.tooltip ? true : undefined}}\"><span ng-if=\"t.value != null\" class=rz-tick-value ng-attr-uib-tooltip=\"{{ t.valueTooltip }}\" ng-attr-tooltip-placement={{t.valueTooltipPlacement}}>{{ t.value }}</span> <span ng-if=\"t.legend != null\" class=rz-tick-legend>{{ t.legend }}</span></li></ul>"
   );
 
 }]);

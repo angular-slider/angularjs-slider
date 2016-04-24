@@ -15,7 +15,8 @@
       ng-attr-uib-tooltip="{{ t.tooltip }}" ng-attr-tooltip-placement="{{t.tooltipPlacement}}"
       ng-attr-tooltip-append-to-body="{{ t.tooltip ? true : undefined}}">
     <span ng-if="t.value != null" class="rz-tick-value"
-      ng-attr-uib-tooltip="{{ t.valueTooltip }}"
-      ng-attr-tooltip-placement="{{t.valueTooltipPlacement}}">{{ t.value }}</span>
+          ng-attr-uib-tooltip="{{ t.valueTooltip }}"
+          ng-attr-tooltip-placement="{{t.valueTooltipPlacement}}">{{ t.value }}</span>
+    <span ng-if="t.legend != null" class="rz-tick-legend">{{ t.legend }}</span>
   </li>
 </ul>
