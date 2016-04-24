@@ -104,7 +104,7 @@
         expect(helper.slider.options.draggableRangeOnly).to.be.false;
       });
 
-      it('should set correct step/floor/ceil and translate function when stepsArray is used', function() {
+      it('should set correct step/floor/ceil and translate function when stepsArray is used with values', function() {
         helper.scope.slider.options.stepsArray = ['A', 'B', 'C', 'D', 'E'];
         helper.scope.$digest();
         expect(helper.slider.options.step).to.equal(1);
@@ -113,6 +113,60 @@
 
         expect(helper.slider.customTrFn(0)).to.equal('A');
         expect(helper.slider.customTrFn(2)).to.equal('C');
+      });
+
+      it('should set correct step/floor/ceil and translate function when stepsArray is used with values and ticks', function() {
+        helper.scope.slider.options.stepsArray = ['A', 'B', 'C', 'D', 'E'];
+        helper.scope.slider.options.showTicks = true;
+        helper.scope.$digest();
+        expect(helper.slider.options.step).to.equal(1);
+        expect(helper.slider.options.floor).to.equal(0);
+        expect(helper.slider.options.ceil).to.equal(4);
+
+        expect(helper.slider.customTrFn(0)).to.equal('A');
+        expect(helper.slider.customTrFn(2)).to.equal('C');
+      });
+
+      it('should set correct step/floor/ceil and translate function when stepsArray is used with objects', function() {
+        helper.scope.slider.options.stepsArray = [
+          {value: 'A'},
+          {value: 'B'},
+          {value: 'C'},
+          {value: 'D'},
+          {value: 'E'}
+        ];
+        helper.scope.$digest();
+        expect(helper.slider.options.step).to.equal(1);
+        expect(helper.slider.options.floor).to.equal(0);
+        expect(helper.slider.options.ceil).to.equal(4);
+
+        expect(helper.slider.customTrFn(0)).to.equal('A');
+        expect(helper.slider.customTrFn(2)).to.equal('C');
+      });
+
+
+      it('should set correct step/floor/ceil and translate function when stepsArray is used with objects containing legends', function() {
+        helper.scope.slider.options.stepsArray = [
+          {value: 'A'},
+          {value: 'B', legend: 'Legend B'},
+          {value: 'C'},
+          {value: 'D', legend: 'Legend D'},
+          {value: 'E'}
+        ];
+        helper.scope.slider.options.showTicks = true;
+        helper.scope.$digest();
+
+        expect(helper.slider.options.step).to.equal(1);
+        expect(helper.slider.options.floor).to.equal(0);
+        expect(helper.slider.options.ceil).to.equal(4);
+
+        expect(helper.slider.customTrFn(0)).to.equal('A');
+        expect(helper.slider.customTrFn(2)).to.equal('C');
+
+        expect(helper.slider.getLegend(1)).to.equal('Legend B');
+        expect(helper.slider.getLegend(3)).to.equal('Legend D');
+
+        expect(helper.element[0].querySelectorAll('.rz-tick-legend')).to.have.length(2);
       });
 
       it('should allow a custom translate function when stepsArray is used', function() {

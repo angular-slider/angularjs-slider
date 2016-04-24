@@ -116,10 +116,10 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
   $scope.slider_floor_ceil_rtl = {
     value: 12,
     options: {
-    floor: 10,
-    ceil: 100,
-    step: 5,
-    rightToLeft: true
+      floor: 10,
+      ceil: 100,
+      step: 5,
+      rightToLeft: true
     }
   }
 
@@ -254,6 +254,27 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
       ceil: 1000,
       floor: 0,
       showTicksValues: 100
+    }
+  };
+
+  //Slider with ticks values and legend
+  $scope.slider_ticks_legend = {
+    value: 5,
+    options: {
+      ceil: 10,
+      floor: 0,
+      showTicksValues: true,
+      stepsArray: [
+        {value: 1, legend: 'Very poor'},
+        {value: 2},
+        {value: 3, legend: 'Fair'},
+        {value: 4},
+        {value: 5, legend: 'Average'},
+        {value: 6},
+        {value: 7, legend: 'Good'},
+        {value: 8},
+        {value: 9, legend: 'Excellent'}
+      ]
     }
   };
 

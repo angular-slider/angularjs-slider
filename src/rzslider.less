@@ -20,6 +20,10 @@ rzslider {
   -ms-user-select: none;
   user-select: none;
 
+  &.with-legend {
+    margin-bottom: @withLegendMargin;
+  }
+
   &[disabled] {
     cursor: not-allowed;
     .rz-pointer {
@@ -148,6 +152,13 @@ rzslider {
         top: @ticksValuePosition;
         transform: translate(-50%, 0);
       }
+      .rz-tick-legend {
+        position: absolute;
+        top: @ticksLegendPosition;
+        transform: translate(-50%, 0);
+        max-width: 50px;
+        white-space: normal;
+      }
     }
 
     &.rz-ticks-values-under {
@@ -221,6 +232,13 @@ rzslider {
           left: @ticksValuePositionOnVertical;
           top: initial;
           transform: translate(0, -28%);
+        }
+        .rz-tick-legend {
+          top: initial;
+          right: @ticksLegendPosition;
+          transform: translate(0, -28%);
+          max-width: none;
+          white-space: nowrap;
         }
       }
 

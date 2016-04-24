@@ -1,7 +1,7 @@
 /*! angularjs-slider - v2.12.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-04-22 */
+ 2016-04-24 */
 rzslider {
   position: relative;
   display: inline-block;
@@ -13,6 +13,10 @@ rzslider {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+}
+
+rzslider.with-legend {
+  margin-bottom: 40px;
 }
 
 rzslider[disabled] {
@@ -159,6 +163,14 @@ rzslider .rz-ticks .rz-tick .rz-tick-value {
   transform: translate(-50%, 0);
 }
 
+rzslider .rz-ticks .rz-tick .rz-tick-legend {
+  position: absolute;
+  top: 24px;
+  max-width: 50px;
+  white-space: normal;
+  transform: translate(-50%, 0);
+}
+
 rzslider .rz-ticks.rz-ticks-values-under .rz-tick-value {
   top: initial;
   bottom: -40px;
@@ -231,6 +243,14 @@ rzslider.rz-vertical .rz-ticks .rz-tick {
 rzslider.rz-vertical .rz-ticks .rz-tick .rz-tick-value {
   top: initial;
   left: 22px;
+  transform: translate(0, -28%);
+}
+
+rzslider.rz-vertical .rz-ticks .rz-tick .rz-tick-legend {
+  top: initial;
+  right: 24px;
+  max-width: none;
+  white-space: nowrap;
   transform: translate(0, -28%);
 }
 

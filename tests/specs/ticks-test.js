@@ -102,6 +102,50 @@
       expect(lastTick.text()).to.equal('100');
     });
 
+    it('should create the correct number of legend items when getLegend is defined', function() {
+      var sliderConf = {
+        value: 50,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          showTicks: true,
+          getLegend: function(value) {
+            return 'Legend for ' + value;
+          }
+        }
+      };
+      helper.createSlider(sliderConf);
+      expect(helper.element[0].querySelectorAll('.rz-tick-legend')).to.have.length(11);
+      var firstLegend = angular.element(helper.element[0].querySelectorAll('.rz-tick-legend')[0]);
+      expect(firstLegend.text()).to.equal('Legend for 0');
+      var lastLegend = angular.element(helper.element[0].querySelectorAll('.rz-tick-legend')[10]);
+      expect(lastLegend.text()).to.equal('Legend for 100');
+    });
+
+    it('should create the correct number of legend items when getLegend is defined and only some legend are displayed', function() {
+      var sliderConf = {
+        value: 50,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          showTicks: true,
+          getLegend: function(value) {
+            if(value % 20 === 0)
+              return 'Legend for ' + value;
+            return null;
+          }
+        }
+      };
+      helper.createSlider(sliderConf);
+      expect(helper.element[0].querySelectorAll('.rz-tick-legend')).to.have.length(6);
+      var firstLegend = angular.element(helper.element[0].querySelectorAll('.rz-tick-legend')[0]);
+      expect(firstLegend.text()).to.equal('Legend for 0');
+      var lastLegend = angular.element(helper.element[0].querySelectorAll('.rz-tick-legend')[5]);
+      expect(lastLegend.text()).to.equal('Legend for 100');
+    });
+
     it('should set rz-selected class to ticks below the model value if showSelectionBar is true', function() {
       var sliderConf = {
         value: 50,
