@@ -1,7 +1,7 @@
 /*! angularjs-slider - v2.13.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-04-24 */
+ 2016-05-13 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -62,7 +62,8 @@
       onStart: null,
       onChange: null,
       onEnd: null,
-      rightToLeft: false
+      rightToLeft: false,
+      boundPointerLabels: true
     };
     var globalOptions = {};
 
@@ -904,6 +905,9 @@
           nearHandlePos = newOffset - labelRzsd / 2 + this.handleHalfDim,
           endOfBarPos = this.barDimension - labelRzsd;
 
+        if (!this.options.boundPointerLabels)
+          return nearHandlePos;
+
         if (this.options.rightToLeft && labelName === 'minLab' || !this.options.rightToLeft && labelName === 'maxLab') {
           return Math.min(nearHandlePos, endOfBarPos);
         } else {
@@ -1100,13 +1104,14 @@
           }
 
           this.translateFn(labelVal, this.cmbLab, 'cmb', false);
-          var pos = Math.min(
+          var pos = this.options.boundPointerLabels ? Math.min(
             Math.max(
               this.selBar.rzsp + this.selBar.rzsd / 2 - this.cmbLab.rzsd / 2,
               0
             ),
             this.barDimension - this.cmbLab.rzsd
-          );
+          ) : this.selBar.rzsp + this.selBar.rzsd / 2 - this.cmbLab.rzsd / 2;
+
           this.setPosition(this.cmbLab, pos);
           this.hideEl(this.minLab);
           this.hideEl(this.maxLab);
