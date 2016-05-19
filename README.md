@@ -51,6 +51,8 @@ vm.refreshSlider = function () {
     });
 };
 ```
+if you get some flickering issues, you can try to replace to `$timeout` call by `$scope.$$postDigest` as suggested by @maknapp in [this issue](https://github.com/angular-slider/angularjs-slider/issues/79#issuecomment-219213647).
+
 **ng-show-example**: http://jsfiddle.net/3jjye1cL/
 
 **UI-Boostrap tabs example**: http://jsfiddle.net/0f7sd7dw/
