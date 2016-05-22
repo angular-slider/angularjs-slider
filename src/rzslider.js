@@ -36,6 +36,8 @@
       step: 1,
       precision: 0,
       minRange: 0,
+      minLimit: null,
+      maxLimit: null,
       id: null,
       translate: null,
       getLegend: null,
@@ -1758,6 +1760,7 @@
       positionTrackingHandle: function(newValue) {
         var valueChanged = false;
 
+        newValue = this.applyMinMaxLimit(newValue);
         if (this.range) {
           newValue = this.applyMinRange(newValue);
           /* This is to check if we need to switch the min and max handles */
@@ -1803,6 +1806,14 @@
 
         if (valueChanged)
           this.applyModel();
+      },
+
+      applyMinMaxLimit: function(newValue) {
+        if (this.options.minLimit != null && newValue < this.options.minLimit)
+          return this.options.minLimit
+        if (this.options.maxLimit != null && newValue > this.options.maxLimit)
+          return this.options.maxLimit
+        return newValue;
       },
 
       applyMinRange: function(newValue) {

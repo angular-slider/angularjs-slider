@@ -18,6 +18,18 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
   };
 
   //Range slider with minRange config
+  $scope.minMaxLimitSlider = {
+    value: 50,
+    options: {
+      floor: 0,
+      ceil: 100,
+      step: 1,
+      minLimit: 10,
+      maxLimit: 90
+    }
+  };
+
+  //Range slider with minRange config
   $scope.minRangeSlider = {
     minValue: 10,
     maxValue: 90,
