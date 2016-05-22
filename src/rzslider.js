@@ -35,7 +35,8 @@
       ceil: null, //defaults to rz-slider-model
       step: 1,
       precision: 0,
-      minRange: 0,
+      minRange: null,
+      maxRange: null,
       minLimit: null,
       maxLimit: null,
       id: null,
@@ -1762,11 +1763,11 @@
 
         newValue = this.applyMinMaxLimit(newValue);
         if (this.range) {
-          newValue = this.applyMinRange(newValue);
+          newValue = this.applyMinMaxRange(newValue);
           /* This is to check if we need to switch the min and max handles */
           if (this.tracking === 'rzSliderModel' && newValue > this.scope.rzSliderHigh) {
             if (this.options.noSwitching && this.scope.rzSliderHigh !== this.minValue) {
-              newValue = this.applyMinRange(this.scope.rzSliderHigh);
+              newValue = this.applyMinMaxRange(this.scope.rzSliderHigh);
             }
             else {
               this.scope[this.tracking] = this.scope.rzSliderHigh;
@@ -1781,7 +1782,7 @@
             valueChanged = true;
           } else if (this.tracking === 'rzSliderHigh' && newValue < this.scope.rzSliderModel) {
             if (this.options.noSwitching && this.scope.rzSliderModel !== this.maxValue) {
-              newValue = this.applyMinRange(this.scope.rzSliderModel);
+              newValue = this.applyMinMaxRange(this.scope.rzSliderModel);
             }
             else {
               this.scope[this.tracking] = this.scope.rzSliderModel;
@@ -1810,22 +1811,29 @@
 
       applyMinMaxLimit: function(newValue) {
         if (this.options.minLimit != null && newValue < this.options.minLimit)
-          return this.options.minLimit
+          return this.options.minLimit;
         if (this.options.maxLimit != null && newValue > this.options.maxLimit)
-          return this.options.maxLimit
+          return this.options.maxLimit;
         return newValue;
       },
 
-      applyMinRange: function(newValue) {
-        if (this.options.minRange !== 0) {
-          var oppositeValue = this.tracking === 'rzSliderModel' ? this.scope.rzSliderHigh : this.scope.rzSliderModel,
-            difference = Math.abs(newValue - oppositeValue);
-
+      applyMinMaxRange: function(newValue) {
+        var oppositeValue = this.tracking === 'rzSliderModel' ? this.scope.rzSliderHigh : this.scope.rzSliderModel,
+          difference = Math.abs(newValue - oppositeValue);
+        if (this.options.minRange != null) {
           if (difference < this.options.minRange) {
             if (this.tracking === 'rzSliderModel')
               return this.scope.rzSliderHigh - this.options.minRange;
             else
               return this.scope.rzSliderModel + this.options.minRange;
+          }
+        }
+        if (this.options.maxRange != null) {
+          if (difference > this.options.maxRange) {
+            if (this.tracking === 'rzSliderModel')
+              return this.scope.rzSliderHigh - this.options.maxRange;
+            else
+              return this.scope.rzSliderModel + this.options.maxRange;
           }
         }
         return newValue;

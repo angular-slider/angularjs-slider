@@ -127,6 +127,53 @@
       expect(helper.scope.slider.max).to.equal(56);
     });
 
+    it('should not be modified by keyboard if new range is above maxRange', function() {
+      var sliderConf = {
+        min: 45,
+        max: 55,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 1,
+          maxRange: 10
+        }
+      };
+      helper.createRangeSlider(sliderConf);
+      //try to move minH left
+      helper.slider.minH.triggerHandler('focus');
+      helper.pressKeydown(helper.slider.minH, 'LEFT');
+      expect(helper.scope.slider.min).to.equal(45);
+
+      //try to move maxH right
+      helper.slider.maxH.triggerHandler('focus');
+      helper.pressKeydown(helper.slider.maxH, 'RIGHT');
+      expect(helper.scope.slider.max).to.equal(55);
+    });
+
+    it('should be modified by keyboard if new range is below maxRange', function() {
+      var sliderConf = {
+        min: 45,
+        max: 55,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 1,
+          maxRange: 10
+        }
+      };
+      helper.createRangeSlider(sliderConf);
+
+      //try to move minH right
+      helper.slider.minH.triggerHandler('focus');
+      helper.pressKeydown(helper.slider.minH, 'RIGHT');
+      expect(helper.scope.slider.min).to.equal(46);
+
+      //try to move maxH left
+      helper.slider.maxH.triggerHandler('focus');
+      helper.pressKeydown(helper.slider.maxH, 'LEFT');
+      expect(helper.scope.slider.max).to.equal(54);
+    });
+
     it('should be modified by keyboard if new value is above minLimit', function() {
       var sliderConf = {
         value: 10,
@@ -326,6 +373,55 @@
       helper.slider.maxH.triggerHandler('focus');
       helper.pressKeydown(helper.slider.maxH, 'LEFT');
       expect(helper.scope.slider.max).to.equal(56);
+    });
+
+    it('should not be modified by keyboard if new range is above maxRange', function() {
+      var sliderConf = {
+        min: 45,
+        max: 55,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 1,
+          maxRange: 10,
+          rightToLeft: true
+        }
+      };
+      helper.createRangeSlider(sliderConf);
+      //try to move minH right ( increase in rtl )
+      helper.slider.minH.triggerHandler('focus');
+      helper.pressKeydown(helper.slider.minH, 'RIGHT');
+      expect(helper.scope.slider.min).to.equal(45);
+
+      //try to move maxH left (decrease in rtl )
+      helper.slider.maxH.triggerHandler('focus');
+      helper.pressKeydown(helper.slider.maxH, 'LEFT');
+      expect(helper.scope.slider.max).to.equal(55);
+    });
+
+    it('should be modified by keyboard if new range is below maxRange', function() {
+      var sliderConf = {
+        min: 45,
+        max: 55,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 1,
+          maxRange: 10,
+          rightToLeft: true
+        }
+      };
+      helper.createRangeSlider(sliderConf);
+
+      //try to move minH LEFT
+      helper.slider.minH.triggerHandler('focus');
+      helper.pressKeydown(helper.slider.minH, 'LEFT');
+      expect(helper.scope.slider.min).to.equal(46);
+
+      //try to move maxH RIGHT
+      helper.slider.maxH.triggerHandler('focus');
+      helper.pressKeydown(helper.slider.maxH, 'RIGHT');
+      expect(helper.scope.slider.max).to.equal(54);
     });
   });
 }());
