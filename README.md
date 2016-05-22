@@ -187,6 +187,8 @@ The default options are:
     step: 1,
     precision: 0,
     minRange: 0,
+    minLimit: null,
+    maxLimit: null,
     id: null,
     translate: null,
     getLegend: null,
@@ -230,6 +232,10 @@ The default options are:
 **precision** - _Number (defaults to 0)_: The precision to display values with. The `toFixed()` is used internally for this.
 
 **minRange** - _Number (defaults to 0)_: The minimum range authorized on the slider. *Applies to range slider only.*
+
+**minLimit** - _Number (defaults to null)_: The minimum value authorized on the slider.
+
+**maxLimit** - _Number (defaults to null)_: The maximum value authorized on the slider.
 
 **translate** - _Function(value, sliderId, label)_: Custom translate function. Use this if you want to translate values displayed on the slider.
 `sliderId` can be used to determine the slider for which we are translating the value. `label` is a string that can take the following values:

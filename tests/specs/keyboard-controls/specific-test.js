@@ -126,6 +126,74 @@
       helper.pressKeydown(helper.slider.maxH, 'RIGHT');
       expect(helper.scope.slider.max).to.equal(56);
     });
+
+    it('should be modified by keyboard if new value is above minLimit', function() {
+      var sliderConf = {
+        value: 10,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 1,
+          minLimit: 10
+        }
+      };
+      helper.createSlider(sliderConf);
+      //try to move minH right
+      helper.slider.minH.triggerHandler('focus');
+      helper.pressKeydown(helper.slider.minH, 'RIGHT');
+      expect(helper.scope.slider.value).to.equal(11);
+    });
+
+    it('should not be modified by keyboard if new value is below minLimit', function() {
+      var sliderConf = {
+        value: 10,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 1,
+          minLimit: 10
+        }
+      };
+      helper.createSlider(sliderConf);
+      //try to move minH left
+      helper.slider.minH.triggerHandler('focus');
+      helper.pressKeydown(helper.slider.minH, 'LEFT');
+      expect(helper.scope.slider.value).to.equal(10);
+    });
+
+    it('should be modified by keyboard if new value is below maxLimit', function() {
+      var sliderConf = {
+        value: 90,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 1,
+          maxLimit: 90
+        }
+      };
+      helper.createSlider(sliderConf);
+      //try to move minH left
+      helper.slider.minH.triggerHandler('focus');
+      helper.pressKeydown(helper.slider.minH, 'LEFT');
+      expect(helper.scope.slider.value).to.equal(89);
+    });
+
+    it('should not be modified by keyboard if new value is above maxLimit', function() {
+      var sliderConf = {
+        value: 90,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 1,
+          maxLimit: 90
+        }
+      };
+      helper.createSlider(sliderConf);
+      //try to move minH right
+      helper.slider.minH.triggerHandler('focus');
+      helper.pressKeydown(helper.slider.minH, 'RIGHT');
+      expect(helper.scope.slider.value).to.equal(90);
+    });
   });
 
   describe('Right to left Keyboard controls - specific tests', function() {

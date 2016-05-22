@@ -552,6 +552,27 @@
         expect(maxHChild.css('background-color')).to.equal('blue');
 
       });
+
+      it('should set the correct position for labels for single slider with boundPointerLabels=false', function() {
+        var sliderConf = {
+          min: 100000000,
+          max: 100001000,
+          options: {
+            floor: 100000000,
+            ceil: 100001000,
+            boundPointerLabels: false
+          }
+        };
+
+        helper.createRangeSlider(sliderConf);
+        expect(helper.slider.minLab.css('left')).to.equal('-' + (helper.slider.minLab.rzsd / 2 - helper.slider.handleHalfDim) + 'px');
+        expect(helper.slider.maxLab.css('left')).to.equal((helper.slider.barDimension - (helper.slider.maxLab.rzsd / 2 + helper.slider.handleHalfDim)) + 'px');
+
+        sliderConf.max = 100000001;
+        helper.createRangeSlider(sliderConf);
+
+        expect(parseInt(helper.slider.cmbLab.css('left'))).to.be.below(0);
+      });
     });
 
     describe('range slider specific - ', function() {
@@ -1163,28 +1184,6 @@
         expect(helper.slider.minValue).to.equal(1);
         expect(helper.slider.maxValue).to.equal(1000);
       });
-
-      it('should set the correct position for labels for single slider with boundPointerLabels=false', function() {
-        var sliderConf = {
-          min: 100000000,
-          max: 100001000,
-          options: {
-            floor: 100000000,
-            ceil: 100001000,
-            boundPointerLabels: false
-          }
-        };
-
-        helper.createRangeSlider(sliderConf);
-        expect(helper.slider.minLab.css('left')).to.equal('-' + (helper.slider.minLab.rzsd / 2 - helper.slider.handleHalfDim) + 'px');
-        expect(helper.slider.maxLab.css('left')).to.equal((helper.slider.barDimension - (helper.slider.maxLab.rzsd / 2 + helper.slider.handleHalfDim)) + 'px');
-
-        sliderConf.max = 100000001;
-        helper.createRangeSlider(sliderConf);
-
-        expect(parseInt(helper.slider.cmbLab.css('left'))).to.be.below(0);
-      });
-
     });
   });
 
