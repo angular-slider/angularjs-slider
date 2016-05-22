@@ -27,14 +27,26 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     }
   };
 
-  $scope.minRangeSlider = {
-    minValue: 10,
-    maxValue: 90,
+  $scope.minMaxLimitSlider = {
+    value: 50,
     options: {
       floor: 0,
       ceil: 100,
       step: 1,
-      minRange: 10
+      minLimit: 10,
+      maxLimit: 90
+    }
+  };
+
+  $scope.minRangeSlider = {
+    minValue: 40,
+    maxValue: 60,
+    options: {
+      floor: 0,
+      ceil: 100,
+      step: 1,
+      minRange: 10,
+      maxRange: 50
     }
   };
 

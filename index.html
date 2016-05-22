@@ -62,7 +62,16 @@
   </article>
 
   <article>
-    <h2>Range slider with a minimal range set to 10</h2>
+    <h2>Range slider with min limit set to 10 and max limit set to 90</h2>
+    <rzslider
+      rz-slider-model="minMaxLimitSlider.value"
+      rz-slider-options="minMaxLimitSlider.options"
+    ></rzslider>
+    <show-code js-file="minMaxLimitSlider" html-file="singleSlider"></show-code>
+  </article>
+
+  <article>
+    <h2>Range slider with a minimal range set to 10 and maximum of 50</h2>
     <rzslider
       rz-slider-model="minRangeSlider.minValue"
       rz-slider-high="minRangeSlider.maxValue"
