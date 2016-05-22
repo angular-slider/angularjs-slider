@@ -1,3 +1,9 @@
+# 2.14.0 (2016-05-22)
+## Features
+- Add `minLimit` and `maxLimit` options (#332).
+- Add a `maxRange` option (#333).
+- Add `boundPointerLabels` option (#323).
+
 # 2.13.0 (2016-04-24)
 ## Features
 - Add a `getLegend` option  (#318).

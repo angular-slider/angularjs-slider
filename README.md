@@ -238,7 +238,7 @@ The default options are:
 
 **minRange** - _Number (defaults to null)_: The minimum range authorized on the slider. *Applies to range slider only.*
 
-**maxRange** - _Number (defaults to null)_: The minimum range authorized on the slider. *Applies to range slider only.*
+**maxRange** - _Number (defaults to null)_: The maximum range authorized on the slider. *Applies to range slider only.*
 
 **translate** - _Function(value, sliderId, label)_: Custom translate function. Use this if you want to translate values displayed on the slider.
 `sliderId` can be used to determine the slider for which we are translating the value. `label` is a string that can take the following values:
