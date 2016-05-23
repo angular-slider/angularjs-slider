@@ -475,7 +475,7 @@
        */
       initElemHandles: function() {
         // Assign all slider elements to object properties for easy access
-        angular.forEach(angular.element( this.sliderElem.children()[0] ).children(), function(elem, index) {
+        angular.forEach(this.sliderElem.children(), function(elem, index) {
           var jElem = angular.element(elem);
 
           switch (index) {
@@ -1825,6 +1825,7 @@
 
     return {
       restrict: 'AE',
+      replace: true,
       scope: {
         rzSliderModel: '=?',
         rzSliderHigh: '=?',
