@@ -25,10 +25,44 @@
         value: 100,
         options: {
           floor: 0,
-          ceil: 200
+          ceil: 200,
+          onStart: sinon.spy(),
+          onChange: sinon.spy(),
+          onEnd: sinon.spy()
         }
       };
       helper.createSlider(sliderConf);
+    });
+
+    it('should call onStart on the first keydown but not after', function() {
+      helper.slider.minH.triggerHandler('focus');
+      helper.pressKeydown(helper.slider.minH, 'RIGHT');
+      helper.scope.slider.options.onStart.callCount === 1;
+      helper.pressKeydown(helper.slider.minH, 'RIGHT');
+      helper.scope.slider.options.onStart.callCount === 1;
+    });
+
+    it('should call onChange on each keydown but after a timeout', function() {
+      helper.slider.minH.triggerHandler('focus');
+      helper.pressKeydown(helper.slider.minH, 'RIGHT', {timeout: false});
+      $timeout.flush();
+      helper.scope.slider.options.onChange.callCount === 1;
+      helper.pressKeydown(helper.slider.minH, 'RIGHT', {timeout: false});
+      $timeout.flush();
+      helper.scope.slider.options.onChange.callCount === 1;
+    });
+
+    it('should call onEnd on keyup and recall onStart if key is down again', function() {
+      helper.slider.minH.triggerHandler('focus');
+      helper.pressKeydown(helper.slider.minH, 'RIGHT');
+      helper.slider.minH.triggerHandler({type: 'keyup'});
+      helper.scope.slider.options.onStart.callCount === 1;
+      helper.scope.slider.options.onEnd.callCount === 1;
+
+      helper.pressKeydown(helper.slider.minH, 'RIGHT');
+      helper.slider.minH.triggerHandler({type: 'keyup'});
+      helper.scope.slider.options.onStart.callCount === 2;
+      helper.scope.slider.options.onEnd.callCount === 2;
     });
 
     it('should toggle active style when handle focused/blured', function() {
@@ -46,7 +80,7 @@
 
     it('should increment by 1 when RIGHT is pressed with oldAPI', function() {
       helper.slider.minH.triggerHandler('focus');
-      helper.pressKeydown(helper.slider.minH, 'RIGHT', true);
+      helper.pressKeydown(helper.slider.minH, 'RIGHT', {oldAPI: true});
       expect(helper.scope.slider.value).to.equal(101);
     });
 
@@ -103,7 +137,7 @@
       helper.pressKeydown(helper.slider.minH, 'RIGHT');
       expect(helper.scope.slider.value).to.equal(101);
       helper.slider.minH.triggerHandler('blur');
-      helper.pressKeydown(helper.slider.minH, 'RIGHT');
+      helper.pressKeydown(helper.slider.minH, 'RIGHT', {timeout: false});
       expect(helper.scope.slider.value).to.equal(101);
     });
   });
@@ -211,7 +245,7 @@
       helper.pressKeydown(helper.slider.minH, 'RIGHT');
       expect(helper.scope.slider.value).to.equal(99);
       helper.slider.minH.triggerHandler('blur');
-      helper.pressKeydown(helper.slider.minH, 'RIGHT');
+      helper.pressKeydown(helper.slider.minH, 'RIGHT', {timeout: false});
       expect(helper.scope.slider.value).to.equal(99);
     });
   });

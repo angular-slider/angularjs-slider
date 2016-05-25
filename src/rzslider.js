@@ -272,6 +272,13 @@
       this.initHasRun = false;
 
       /**
+       * Used to call onStart on the first keydown event
+       *
+       * @type {boolean}
+       */
+      this.firstKeyDown = false
+
+      /**
        * Internal flag to prevent watchers to be called when the sliders value are modified internally.
        * @type {boolean}
        */
@@ -1523,7 +1530,6 @@
         this.dragging.active = false;
 
         $document.off(moveEventName, ehMove);
-        this.scope.$emit('slideEnded');
         this.callOnEnd();
       },
 
@@ -1535,11 +1541,19 @@
         this.tracking = ref;
         pointer.one('blur', angular.bind(this, this.onPointerBlur, pointer));
         pointer.on('keydown', angular.bind(this, this.onKeyboardEvent));
+        pointer.on('keyup', angular.bind(this, this.onKeyUp));
+        this.firstKeyDown = true;
         pointer.addClass('rz-active');
+      },
+
+      onKeyUp: function() {
+        this.firstKeyDown = true;
+        this.callOnEnd();
       },
 
       onPointerBlur: function(pointer) {
         pointer.off('keydown');
+        pointer.off('keyup');
         this.tracking = '';
         pointer.removeClass('rz-active');
       },
@@ -1600,29 +1614,37 @@
         if (action == null || this.tracking === '') return;
         event.preventDefault();
 
-        var newValue = this.roundStep(this.sanitizeValue(action));
-        if (!this.options.draggableRangeOnly) {
-          this.positionTrackingHandle(newValue);
-        } else {
-          var difference = this.scope.rzSliderHigh - this.scope.rzSliderModel,
-            newMinValue, newMaxValue;
-          if (this.tracking === 'rzSliderModel') {
-            newMinValue = newValue;
-            newMaxValue = newValue + difference;
-            if (newMaxValue > this.maxValue) {
-              newMaxValue = this.maxValue;
-              newMinValue = newMaxValue - difference;
-            }
-          } else {
-            newMaxValue = newValue;
-            newMinValue = newValue - difference;
-            if (newMinValue < this.minValue) {
-              newMinValue = this.minValue;
-              newMaxValue = newMinValue + difference;
-            }
-          }
-          this.positionTrackingBar(newMinValue, newMaxValue);
+        if (this.firstKeyDown) {
+          this.firstKeyDown = false;
+          this.callOnStart();
         }
+
+        var self = this;
+        $timeout(function() {
+          var newValue = self.roundStep(self.sanitizeValue(action));
+          if (!self.options.draggableRangeOnly) {
+            self.positionTrackingHandle(newValue);
+          } else {
+            var difference = self.scope.rzSliderHigh - self.scope.rzSliderModel,
+              newMinValue, newMaxValue;
+            if (self.tracking === 'rzSliderModel') {
+              newMinValue = newValue;
+              newMaxValue = newValue + difference;
+              if (newMaxValue > self.maxValue) {
+                newMaxValue = self.maxValue;
+                newMinValue = newMaxValue - difference;
+              }
+            } else {
+              newMaxValue = newValue;
+              newMinValue = newValue - difference;
+              if (newMinValue < self.minValue) {
+                newMinValue = self.minValue;
+                newMaxValue = newMinValue + difference;
+              }
+            }
+            self.positionTrackingBar(newMinValue, newMaxValue);
+          }
+        });
       },
 
       /**
@@ -1893,6 +1915,7 @@
             self.options.onEnd(self.options.id, self.scope.rzSliderModel, self.scope.rzSliderHigh);
           });
         }
+        this.scope.$emit('slideEnded');
       }
     };
 

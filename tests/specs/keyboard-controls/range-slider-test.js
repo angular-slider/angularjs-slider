@@ -136,7 +136,7 @@
       helper.pressKeydown(helper.slider.minH, 'RIGHT');
       expect(helper.scope.slider.min).to.equal(51);
       helper.slider.minH.triggerHandler('blur');
-      helper.pressKeydown(helper.slider.minH, 'RIGHT');
+      helper.pressKeydown(helper.slider.minH, 'RIGHT', {timeout: false});
       expect(helper.scope.slider.min).to.equal(51);
     });
 
@@ -145,7 +145,7 @@
       helper.pressKeydown(helper.slider.maxH, 'RIGHT');
       expect(helper.scope.slider.max).to.equal(101);
       helper.slider.maxH.triggerHandler('blur');
-      helper.pressKeydown(helper.slider.maxH, 'RIGHT');
+      helper.pressKeydown(helper.slider.maxH, 'RIGHT', {timeout: false});
       expect(helper.scope.slider.max).to.equal(101);
     });
   });
@@ -273,7 +273,7 @@
       helper.pressKeydown(helper.slider.minH, 'RIGHT');
       expect(helper.scope.slider.min).to.equal(49);
       helper.slider.minH.triggerHandler('blur');
-      helper.pressKeydown(helper.slider.minH, 'RIGHT');
+      helper.pressKeydown(helper.slider.minH, 'RIGHT', {timeout: false});
       expect(helper.scope.slider.min).to.equal(49);
     });
 
@@ -282,7 +282,7 @@
       helper.pressKeydown(helper.slider.maxH, 'RIGHT');
       expect(helper.scope.slider.max).to.equal(99);
       helper.slider.maxH.triggerHandler('blur');
-      helper.pressKeydown(helper.slider.maxH, 'RIGHT');
+      helper.pressKeydown(helper.slider.maxH, 'RIGHT', {timeout: false});
       expect(helper.scope.slider.max).to.equal(99);
     });
 

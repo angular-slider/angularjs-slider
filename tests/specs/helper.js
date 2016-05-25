@@ -14,7 +14,7 @@
       var optionsExpression = sliderObj.optionsExpression || 'slider.options';
       if (sliderObj.options || sliderObj.optionsExpression)
         template = '<rzslider rz-slider-model="slider.value" rz-slider-options="' +
-        optionsExpression + '"></rzslider>';
+          optionsExpression + '"></rzslider>';
       else
         template = '<rzslider rz-slider-model="slider.value"></rzslider>';
       h.initSlider(sliderObj, template);
@@ -25,7 +25,7 @@
       var optionsExpression = sliderObj.optionsExpression || 'slider.options';
       if (sliderObj.options || sliderObj.optionsExpression)
         template = '<rzslider rz-slider-model="slider.min" rz-slider-high="slider.max"' +
-        'rz-slider-options="' + optionsExpression + '"></rzslider>';
+          'rz-slider-options="' + optionsExpression + '"></rzslider>';
       else
         template = '<rzslider rz-slider-model="slider.min" rz-slider-high="slider.max"></rzslider>';
       h.initSlider(sliderObj, template);
@@ -82,7 +82,8 @@
       $document.triggerHandler(event);
     };
 
-    h.pressKeydown = function(element, key, oldAPI) {
+    h.pressKeydown = function(element, key, options) {
+      options = options || {};
       key = key.toUpperCase();
       var event = {
         type: 'keydown'
@@ -99,10 +100,12 @@
         'SPACE': 32
       };
       var keyCode = keys[key];
-      if (oldAPI)
+      if (options.oldAPI)
         event.which = keyCode;
       else event.keyCode = keyCode;
       element.triggerHandler(event);
+      if (options.timeout !== false)
+        $timeout.flush();
     };
 
     return h;
