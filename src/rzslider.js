@@ -1926,7 +1926,8 @@
     'use strict';
 
     return {
-      restrict: 'E',
+      restrict: 'AE',
+      replace: true,
       scope: {
         rzSliderModel: '=?',
         rzSliderHigh: '=?',
