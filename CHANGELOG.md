@@ -1,3 +1,23 @@
+# 3.0.0 (2016-06-02)
+## Features
+- Add IE8 support (#314).
+- Consolidate onStart, onChange and onEnd for keyboard (#319).
+- Added `rz-floor` and `rz-ceil` classes to floor and ceil label to allow styling (#337).
+
+## Breaking changes
+- From now on, to allow the IE8 support, the directive is configured with `replace: true`. Thus, you need to update your custom CSS rules like in the following example:
+```css
+/* before 3.0 version */
+rzslider {
+  color: red;
+}
+
+/* from 3.0 version */
+.rzslider {
+  color: red;
+}
+```
+
 # 2.14.0 (2016-05-22)
 ## Features
 - Add `minLimit` and `maxLimit` options (#332).
