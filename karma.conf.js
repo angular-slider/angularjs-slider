@@ -8,7 +8,7 @@ module.exports = function (config) {
     // testing framework to use (jasmine/mocha/qunit/...)
     frameworks: ['mocha', 'sinon', 'chai'],
 
-    reporters: ['dots', 'coverage'],
+    reporters: ['dots', /*'coverage'*/],
 
     // list of files / patterns to load in the browser
     files: [
@@ -26,7 +26,7 @@ module.exports = function (config) {
 
     // preprocess matching files before serving them to the browser
     preprocessors: {
-      "src/*.js": ['coverage'],
+      //"src/*.js": ['coverage'],
       "src/*Tpl.html": 'ng-html2js'
     },
 

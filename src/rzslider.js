@@ -374,6 +374,9 @@
         this.scope.$watch('rzSliderOptions()', function(newValue, oldValue) {
           if (newValue === oldValue)
             return;
+          self.syncLowValue();
+          if (self.range)
+            self.syncHighValue();
           self.applyOptions();
           self.resetSlider();
         }, true);
@@ -461,6 +464,8 @@
        */
       onLowHandleChange: function() {
         this.syncLowValue();
+        if (this.range)
+          this.syncHighValue();
         this.setMinAndMax();
         this.updateLowHandle(this.valueToOffset(this.lowValue));
         this.updateSelectionBar();
@@ -475,6 +480,7 @@
        * Reflow the slider when the high handle changes (called with throttle)
        */
       onHighHandleChange: function() {
+        this.syncLowValue();
         this.syncHighValue();
         this.setMinAndMax();
         this.updateHighHandle(this.valueToOffset(this.highValue));

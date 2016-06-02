@@ -1117,7 +1117,7 @@
       });
     });
 
-    describe('range slider spcific - ', function() {
+    describe('range slider specific - ', function() {
       beforeEach(function() {
         var sliderConf = {
           min: 10,

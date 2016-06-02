@@ -72,17 +72,17 @@
     });
 
     it('should round the model value to the step', function() {
-      helper.scope.slider.min = 13;
-      helper.scope.slider.max = 94;
+      helper.scope.slider.min = 23;
+      helper.scope.slider.max = 84;
       helper.scope.$digest();
-      expect(helper.scope.slider.min).to.equal(10);
-      expect(helper.scope.slider.max).to.equal(90);
+      expect(helper.scope.slider.min).to.equal(20);
+      expect(helper.scope.slider.max).to.equal(80);
 
-      helper.scope.slider.min = 15;
+      helper.scope.slider.min = 25;
       helper.scope.slider.max = 95;
       helper.scope.$digest();
       $timeout.flush(); //to flush the throttle function
-      expect(helper.scope.slider.min).to.equal(20);
+      expect(helper.scope.slider.min).to.equal(30);
       expect(helper.scope.slider.max).to.equal(100);
     });
 
