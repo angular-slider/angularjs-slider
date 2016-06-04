@@ -401,9 +401,26 @@
         };
         helper.createSlider(sliderConf);
 
+        helper.slider.tracking = 'lowValue';
         helper.slider.callOnStart();
         $timeout.flush();
-        sliderConf.options.onStart.calledWith('test').should.be.true;
+        sliderConf.options.onStart.calledWith('test', 10, undefined, 'min').should.be.true;
+      });
+
+      it('should call the correct callback for onStart called on high handle', function() {
+        var sliderConf = {
+          value: 10,
+          options: {
+            id: 'test',
+            onStart: sinon.spy()
+          }
+        };
+        helper.createSlider(sliderConf);
+
+        helper.slider.tracking = 'highValue';
+        helper.slider.callOnStart();
+        $timeout.flush();
+        sliderConf.options.onStart.calledWith('test', 10, undefined, 'max').should.be.true;
       });
 
       it('should call the correct callback for onChange', function() {
@@ -416,9 +433,10 @@
         };
         helper.createSlider(sliderConf);
 
+        helper.slider.tracking = 'lowValue';
         helper.slider.callOnChange();
         $timeout.flush();
-        sliderConf.options.onChange.calledWith('test').should.be.true;
+        sliderConf.options.onChange.calledWith('test', 10, undefined, 'min').should.be.true;
       });
 
       it('should call the correct callback for onEnd', function() {
@@ -431,9 +449,10 @@
         };
         helper.createSlider(sliderConf);
 
+        helper.slider.tracking = 'lowValue';
         helper.slider.callOnEnd();
         $timeout.flush();
-        sliderConf.options.onEnd.calledWith('test').should.be.true;
+        sliderConf.options.onEnd.calledWith('test', 10, undefined, 'min').should.be.true;
       });
 
       it('should set the correct background-color on pointer for single slider', function() {

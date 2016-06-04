@@ -1974,9 +1974,10 @@
        */
       callOnStart: function() {
         if (this.options.onStart) {
-          var self = this;
+          var self = this,
+            pointerType = this.tracking === 'lowValue' ? 'min' : 'max';
           this.scope.$evalAsync(function() {
-            self.options.onStart(self.options.id, self.scope.rzSliderModel, self.scope.rzSliderHigh);
+            self.options.onStart(self.options.id, self.scope.rzSliderModel, self.scope.rzSliderHigh, pointerType);
           });
         }
       },
@@ -1989,9 +1990,10 @@
        */
       callOnChange: function() {
         if (this.options.onChange) {
-          var self = this;
+          var self = this,
+            pointerType = this.tracking === 'lowValue' ? 'min' : 'max';
           this.scope.$evalAsync(function() {
-            self.options.onChange(self.options.id, self.scope.rzSliderModel, self.scope.rzSliderHigh);
+            self.options.onChange(self.options.id, self.scope.rzSliderModel, self.scope.rzSliderHigh, pointerType);
           });
         }
       },
@@ -2004,9 +2006,10 @@
        */
       callOnEnd: function() {
         if (this.options.onEnd) {
-          var self = this;
+          var self = this,
+            pointerType = this.tracking === 'lowValue' ? 'min' : 'max';
           this.scope.$evalAsync(function() {
-            self.options.onEnd(self.options.id, self.scope.rzSliderModel, self.scope.rzSliderHigh);
+            self.options.onEnd(self.options.id, self.scope.rzSliderModel, self.scope.rzSliderHigh, pointerType);
           });
         }
         this.scope.$emit('slideEnded');

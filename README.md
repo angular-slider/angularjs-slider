@@ -328,11 +328,11 @@ Just pass an array with each slider value and that's it; the floor, ceil and ste
 
 **onlyBindHandles** - _Boolean (defaults to false)_: Set to true to only bind events on slider handles.
 
-**onStart** - _Function(sliderId, modelValue, highValue)_: Function to be called when a slider update is started. If an id was set in the options, then it's passed to this callback. This callback is called before any update on the model.
+**onStart** - _Function(sliderId, modelValue, highValue, pointerType)_: Function to be called when a slider update is started. If an id was set in the options, then it's passed to this callback. This callback is called before any update on the model. `pointerType` is either 'min' or 'max' depending on which handle is used.
 
-**onChange** - _Function(sliderId, modelValue, highValue)_: Function to be called when rz-slider-model or rz-slider-high change. If an id was set in the options, then it's passed to this callback.
+**onChange** - _Function(sliderId, modelValue, highValue, pointerType)_: Function to be called when rz-slider-model or rz-slider-high change. If an id was set in the options, then it's passed to this callback. `pointerType` is either 'min' or 'max' depending on which handle is used.
 
-**onEnd** - _Function(sliderId, modelValue, highValue)_: Function to be called when a slider update is ended. If an id was set in the options, then it's passed to this callback.
+**onEnd** - _Function(sliderId, modelValue, highValue, pointerType)_: Function to be called when a slider update is ended. If an id was set in the options, then it's passed to this callback. `pointerType` is either 'min' or 'max' depending on which handle is used.
 
 **rightToLeft** - _Boolean (defaults to false)_: Set to true to show graphs right to left. If **vertical** is true it will be from top to bottom and left / right arrow functions reversed.
 

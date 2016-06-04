@@ -134,26 +134,27 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
       step: 5,
       rightToLeft: true
     }
-  }
+  };
 
   //Slider config with callbacks
   $scope.slider_callbacks = {
     value: 100,
     options: {
-      onStart: function(id, newValue) {
-        console.info('start', id, newValue);
+      onStart: function(id, newValue, highValue, pointerType) {
+        console.info('start', id, newValue, pointerType);
         $scope.otherData.start = newValue * 10;
       },
-      onChange: function(id, newValue) {
-        console.info('change', id, newValue);
+      onChange: function(id, newValue, highValue, pointerType) {
+        console.info('change', id, newValue, pointerType);
         $scope.otherData.change = newValue * 10;
       },
-      onEnd: function(id, newValue) {
-        console.info('end', id, newValue);
+      onEnd: function(id, newValue, highValue, pointerType) {
+        console.info('end', id, newValue, pointerType);
         $scope.otherData.end = newValue * 10;
       }
     }
   };
+
   $scope.otherData = {
     start: 0,
     change: 0,
