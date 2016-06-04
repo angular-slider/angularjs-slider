@@ -1,3 +1,7 @@
+# 4.0.1 (2016-06-04)
+## Improvement
+- Add a pointerType arg for the callbacks (onStart, onChange and onEnd) to identify which handle is used (#339).
+
 # 4.0.0 (2016-06-04)
 ## Improvement
 - `stepsArray`: Bind rzSliderModel and rzSliderHigh to the actual value (#335).
