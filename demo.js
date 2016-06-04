@@ -251,6 +251,25 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     }
   };
 
+  //Slider with ticks values and legend
+  $scope.slider_ticks_legend = {
+    value: 5,
+    options: {
+      showTicksValues: true,
+      stepsArray: [
+        {value: 1, legend: 'Very poor'},
+        {value: 2},
+        {value: 3, legend: 'Fair'},
+        {value: 4},
+        {value: 5, legend: 'Average'},
+        {value: 6},
+        {value: 7, legend: 'Good'},
+        {value: 8},
+        {value: 9, legend: 'Excellent'}
+      ]
+    }
+  };
+
   //Slider with ticks and tooltip
   $scope.slider_ticks_tooltip = {
     value: 5,
