@@ -1,4 +1,4 @@
-/*! angularjs-slider - v3.0.0 - 
+/*! angularjs-slider - v4.0.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
  2016-06-04 */
