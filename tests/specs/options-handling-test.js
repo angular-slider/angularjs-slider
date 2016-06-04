@@ -105,29 +105,28 @@
       });
 
       it('should set correct step/floor/ceil and translate function when stepsArray is used with values', function() {
+        helper.scope.slider.value = 'C';
         helper.scope.slider.options.stepsArray = ['A', 'B', 'C', 'D', 'E'];
         helper.scope.$digest();
         expect(helper.slider.options.step).to.equal(1);
         expect(helper.slider.options.floor).to.equal(0);
         expect(helper.slider.options.ceil).to.equal(4);
-
-        expect(helper.slider.customTrFn(0)).to.equal('A');
-        expect(helper.slider.customTrFn(2)).to.equal('C');
+        expect(helper.slider.lowValue).to.equal(2);
       });
 
-      it('should set correct step/floor/ceil and translate function when stepsArray is used with values and ticks', function() {
+      it('should set correct step/floor/ceil when stepsArray is used with values and ticks', function() {
+        helper.scope.slider.value = 'C';
         helper.scope.slider.options.stepsArray = ['A', 'B', 'C', 'D', 'E'];
         helper.scope.slider.options.showTicks = true;
         helper.scope.$digest();
         expect(helper.slider.options.step).to.equal(1);
         expect(helper.slider.options.floor).to.equal(0);
         expect(helper.slider.options.ceil).to.equal(4);
-
-        expect(helper.slider.customTrFn(0)).to.equal('A');
-        expect(helper.slider.customTrFn(2)).to.equal('C');
+        expect(helper.slider.lowValue).to.equal(2);
       });
 
-      it('should set correct step/floor/ceil and translate function when stepsArray is used with objects', function() {
+      it('should set correct step/floor/ceil when stepsArray is used with objects', function() {
+        helper.scope.slider.value = 'D';
         helper.scope.slider.options.stepsArray = [
           {value: 'A'},
           {value: 'B'},
@@ -139,13 +138,11 @@
         expect(helper.slider.options.step).to.equal(1);
         expect(helper.slider.options.floor).to.equal(0);
         expect(helper.slider.options.ceil).to.equal(4);
-
-        expect(helper.slider.customTrFn(0)).to.equal('A');
-        expect(helper.slider.customTrFn(2)).to.equal('C');
+        expect(helper.slider.lowValue).to.equal(3);
       });
 
-
-      it('should set correct step/floor/ceil and translate function when stepsArray is used with objects containing legends', function() {
+      it('should set correct step/floor/ceil function when stepsArray is used with objects containing legends', function() {
+        helper.scope.slider.value = 'D';
         helper.scope.slider.options.stepsArray = [
           {value: 'A'},
           {value: 'B', legend: 'Legend B'},
@@ -159,9 +156,7 @@
         expect(helper.slider.options.step).to.equal(1);
         expect(helper.slider.options.floor).to.equal(0);
         expect(helper.slider.options.ceil).to.equal(4);
-
-        expect(helper.slider.customTrFn(0)).to.equal('A');
-        expect(helper.slider.customTrFn(2)).to.equal('C');
+        expect(helper.slider.lowValue).to.equal(3);
 
         expect(helper.slider.getLegend(1)).to.equal('Legend B');
         expect(helper.slider.getLegend(3)).to.equal('Legend D');
@@ -610,6 +605,49 @@
         expect(helper.scope.slider.min).to.equal(0);
         expect(helper.scope.slider.max).to.equal(100);
       });
+
+      it('should set correct step/floor/ceil and translate function when stepsArray is used with values', function() {
+        helper.scope.slider.min = 'B';
+        helper.scope.slider.max = 'D';
+        helper.scope.slider.options.stepsArray = ['A', 'B', 'C', 'D', 'E'];
+        helper.scope.$digest();
+        expect(helper.slider.options.step).to.equal(1);
+        expect(helper.slider.options.floor).to.equal(0);
+        expect(helper.slider.options.ceil).to.equal(4);
+        expect(helper.slider.lowValue).to.equal(1);
+        expect(helper.slider.highValue).to.equal(3);
+      });
+
+      it('should set correct step/floor/ceil when stepsArray is used with values and ticks', function() {
+        helper.scope.slider.min = 'B';
+        helper.scope.slider.max = 'D';
+        helper.scope.slider.options.stepsArray = ['A', 'B', 'C', 'D', 'E'];
+        helper.scope.slider.options.showTicks = true;
+        helper.scope.$digest();
+        expect(helper.slider.options.step).to.equal(1);
+        expect(helper.slider.options.floor).to.equal(0);
+        expect(helper.slider.options.ceil).to.equal(4);
+        expect(helper.slider.lowValue).to.equal(1);
+        expect(helper.slider.highValue).to.equal(3);
+      });
+
+      it('should set correct step/floor/ceil when stepsArray is used with objects', function() {
+        helper.scope.slider.min = 'B';
+        helper.scope.slider.max = 'D';
+        helper.scope.slider.options.stepsArray = [
+          {value: 'A'},
+          {value: 'B'},
+          {value: 'C'},
+          {value: 'D'},
+          {value: 'E'}
+        ];
+        helper.scope.$digest();
+        expect(helper.slider.options.step).to.equal(1);
+        expect(helper.slider.options.floor).to.equal(0);
+        expect(helper.slider.options.ceil).to.equal(4);
+        expect(helper.slider.lowValue).to.equal(1);
+        expect(helper.slider.highValue).to.equal(3);
+      });
     });
 
     describe('options expression specific - ', function() {
@@ -761,14 +799,13 @@
       });
 
       it('should set correct step/floor/ceil and translate function when stepsArray is used', function() {
+        helper.scope.slider.value = 'C';
         helper.scope.slider.options.stepsArray = ['A', 'B', 'C', 'D', 'E'];
         helper.scope.$digest();
         expect(helper.slider.options.step).to.equal(1);
         expect(helper.slider.options.floor).to.equal(0);
         expect(helper.slider.options.ceil).to.equal(4);
-
-        expect(helper.slider.customTrFn(0)).to.equal('A');
-        expect(helper.slider.customTrFn(2)).to.equal('C');
+        expect(helper.slider.lowValue).to.equal(2);
       });
 
       it('should sanitize rzSliderModel between floor and ceil', function() {
@@ -1117,7 +1154,7 @@
       });
     });
 
-    describe('range slider spcific - ', function() {
+    describe('range slider specific - ', function() {
       beforeEach(function() {
         var sliderConf = {
           min: 10,

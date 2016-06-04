@@ -30,9 +30,9 @@
     Min Value: <input type="number" ng-model="rangeSlider.minValue"/><br/>
     Max Value: <input type="number" ng-model="rangeSlider.maxValue"/><br/>
     <rzslider
-      rz-slider-model="rangeSlider.minValue"
-      rz-slider-high="rangeSlider.maxValue"
-      rz-slider-options="rangeSlider.options"
+      data-rz-slider-model="rangeSlider.minValue"
+      data-rz-slider-high="rangeSlider.maxValue"
+      data-rz-slider-options="rangeSlider.options"
     ></rzslider>
   </article>
 
@@ -150,6 +150,7 @@
 
   <article>
     <h2>Slider with Alphabet</h2>
+    Current letter: {{ slider_alphabet.value }}
     <rzslider
       rz-slider-model="slider_alphabet.value"
       rz-slider-options="slider_alphabet.options"

@@ -1,3 +1,28 @@
+# 4.0.0 (2016-06-04)
+## Improvement
+- `stepsArray`: Bind rzSliderModel and rzSliderHigh to the actual value (#335).
+
+## Breaking changes
+- From now on, when using the `stepsArray` feature, you should directly provide the actual value to rzSliderModel and rzSliderHigh instead of passing the index of this value.
+Thus, you need to update your config like in the following example:
+```js
+/* before 4.0 version */
+vm.slider = {
+    value: 4, // index of the 'E' value in the array
+    options: {
+        stepsArray: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
+    }
+}
+
+/* from 4.0 version */
+vm.slider = {
+    value: 'E',
+    options: {
+        stepsArray: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
+    }
+}
+```
+
 # 3.0.0 (2016-06-02)
 ## Features
 - Add IE8 support (#314).

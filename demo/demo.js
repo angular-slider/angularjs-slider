@@ -197,7 +197,7 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
 
   //Slider config with steps array of letters
   $scope.slider_alphabet = {
-    value: 0,
+    value: 'E',
     options: {
       stepsArray: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
     }
@@ -274,8 +274,6 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
   $scope.slider_ticks_legend = {
     value: 5,
     options: {
-      ceil: 10,
-      floor: 0,
       showTicksValues: true,
       stepsArray: [
         {value: 1, legend: 'Very poor'},

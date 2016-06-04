@@ -49,7 +49,7 @@
       helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true;
       event.preventDefault.called.should.be.true;
       event.stopPropagation.called.should.be.true;
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
       expect(helper.slider.minH.hasClass('rz-active')).to.be.true;
     });
 
@@ -68,7 +68,7 @@
       helper.slider.focusElement.called.should.be.false;
       event.preventDefault.called.should.be.true;
       event.stopPropagation.called.should.be.true;
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
       expect(helper.slider.minH.hasClass('rz-active')).to.be.true;
     });
 
@@ -84,7 +84,7 @@
       helper.slider.focusElement.calledWith(helper.slider.maxH).should.be.true;
       event.preventDefault.called.should.be.true;
       event.stopPropagation.called.should.be.true;
-      expect(helper.slider.tracking).to.equal('rzSliderHigh');
+      expect(helper.slider.tracking).to.equal('highValue');
       expect(helper.slider.maxH.hasClass('rz-active')).to.be.true;
     });
 
@@ -103,7 +103,7 @@
       helper.slider.focusElement.called.should.be.false;
       event.preventDefault.called.should.be.true;
       event.stopPropagation.called.should.be.true;
-      expect(helper.slider.tracking).to.equal('rzSliderHigh');
+      expect(helper.slider.tracking).to.equal('highValue');
       expect(helper.slider.maxH.hasClass('rz-active')).to.be.true;
     });
 
@@ -171,7 +171,7 @@
       var event = helper.fireMousedown(helper.slider.fullBar, offset, true);
 
       expect(helper.scope.slider.min).to.equal(expectedValue);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
       helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true;
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnStart.called.should.be.true;
@@ -190,7 +190,7 @@
       var event = helper.fireMousedown(helper.slider.fullBar, offset, true);
 
       expect(helper.scope.slider.max).to.equal(expectedValue);
-      expect(helper.slider.tracking).to.equal('rzSliderHigh');
+      expect(helper.slider.tracking).to.equal('highValue');
       helper.slider.focusElement.calledWith(helper.slider.maxH).should.be.true;
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnStart.called.should.be.true;
@@ -209,7 +209,7 @@
       var event = helper.fireMousedown(helper.slider.selBar, offset, true);
 
       expect(helper.scope.slider.min).to.equal(expectedValue);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
       helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true;
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnStart.called.should.be.true;
@@ -228,7 +228,7 @@
       var event = helper.fireMousedown(helper.slider.selBar, offset, true);
 
       expect(helper.scope.slider.max).to.equal(expectedValue);
-      expect(helper.slider.tracking).to.equal('rzSliderHigh');
+      expect(helper.slider.tracking).to.equal('highValue');
       helper.slider.focusElement.calledWith(helper.slider.maxH).should.be.true;
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnStart.called.should.be.true;
@@ -285,7 +285,7 @@
       helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true;
       event.preventDefault.called.should.be.true;
       event.stopPropagation.called.should.be.true;
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
       expect(helper.slider.minH.hasClass('rz-active')).to.be.true;
     });
 
@@ -304,7 +304,7 @@
       helper.slider.focusElement.called.should.be.false;
       event.preventDefault.called.should.be.true;
       event.stopPropagation.called.should.be.true;
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
       expect(helper.slider.minH.hasClass('rz-active')).to.be.true;
     });
 
@@ -320,7 +320,7 @@
       helper.slider.focusElement.calledWith(helper.slider.maxH).should.be.true;
       event.preventDefault.called.should.be.true;
       event.stopPropagation.called.should.be.true;
-      expect(helper.slider.tracking).to.equal('rzSliderHigh');
+      expect(helper.slider.tracking).to.equal('highValue');
       expect(helper.slider.maxH.hasClass('rz-active')).to.be.true;
     });
 
@@ -339,7 +339,7 @@
       helper.slider.focusElement.called.should.be.false;
       event.preventDefault.called.should.be.true;
       event.stopPropagation.called.should.be.true;
-      expect(helper.slider.tracking).to.equal('rzSliderHigh');
+      expect(helper.slider.tracking).to.equal('highValue');
       expect(helper.slider.maxH.hasClass('rz-active')).to.be.true;
     });
 
@@ -407,7 +407,7 @@
       var event = helper.fireMousedown(helper.slider.fullBar, offset, true);
 
       expect(helper.scope.slider.min).to.equal(expectedValue);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
       helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true;
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnStart.called.should.be.true;
@@ -426,7 +426,7 @@
       var event = helper.fireMousedown(helper.slider.fullBar, offset, true);
 
       expect(helper.scope.slider.max).to.equal(expectedValue);
-      expect(helper.slider.tracking).to.equal('rzSliderHigh');
+      expect(helper.slider.tracking).to.equal('highValue');
       helper.slider.focusElement.calledWith(helper.slider.maxH).should.be.true;
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnStart.called.should.be.true;
@@ -445,7 +445,7 @@
       var event = helper.fireMousedown(helper.slider.selBar, offset, true);
 
       expect(helper.scope.slider.min).to.equal(expectedValue);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
       helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true;
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnStart.called.should.be.true;
@@ -464,7 +464,7 @@
       var event = helper.fireMousedown(helper.slider.selBar, offset, true);
 
       expect(helper.scope.slider.max).to.equal(expectedValue);
-      expect(helper.slider.tracking).to.equal('rzSliderHigh');
+      expect(helper.slider.tracking).to.equal('highValue');
       helper.slider.focusElement.calledWith(helper.slider.maxH).should.be.true;
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnStart.called.should.be.true;

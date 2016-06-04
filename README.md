@@ -275,7 +275,7 @@ $scope.slider = {
 **id** - _Any (defaults to null)_: If you want to use the same `translate` function for several sliders, just set the `id` to anything you want, and it will be passed to the `translate(value, sliderId)` function as a second argument.
 
 **stepsArray** - _Array_: If you want to display a slider with non linear/number steps.
-Just pass an array with each slider value and that's it; the floor, ceil and step settings of the slider will be computed automatically. The `rz-slider-model` value will be the index of the selected item in the stepsArray.
+Just pass an array with each slider value and that's it; the floor, ceil and step settings of the slider will be computed automatically. The `rz-slider-model` and `rz-slider-high` values will be the value of the selected item in the stepsArray.
 
 `stepsArray` can also be an array of objects like:
 

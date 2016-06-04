@@ -93,7 +93,7 @@
 
       expect(helper.scope.slider.min).to.equal(50);
       expect(helper.scope.slider.max).to.equal(70);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
       helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true;
       helper.slider.positionTrackingBar.called.should.be.true;
       helper.slider.callOnStart.called.should.be.true;
@@ -109,7 +109,7 @@
 
       expect(helper.scope.slider.min).to.equal(0);
       expect(helper.scope.slider.max).to.equal(50);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
     });
 
     it('should handle click on selbar and don\'t move range when already at 0 and moved left', function() {
@@ -121,7 +121,7 @@
 
       expect(helper.scope.slider.min).to.equal(0);
       expect(helper.scope.slider.max).to.equal(60);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
     });
 
     it('should handle click on selbar and move range when near max and moved right', function() {
@@ -133,7 +133,7 @@
 
       expect(helper.scope.slider.min).to.equal(50);
       expect(helper.scope.slider.max).to.equal(100);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
     });
 
     it('should handle click on selbar and don\'t move range when already at max and moved right', function() {
@@ -145,7 +145,7 @@
 
       expect(helper.scope.slider.min).to.equal(40);
       expect(helper.scope.slider.max).to.equal(100);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
     });
 
     it('should handle click on selbar and move range when floor is not 0 and handle is dragged below limit', function() {
@@ -160,7 +160,7 @@
 
       expect(helper.scope.slider.min).to.equal(1000);
       expect(helper.scope.slider.max).to.equal(1500);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
     });
   });
 
@@ -257,7 +257,7 @@
 
       expect(helper.scope.slider.min).to.equal(50);
       expect(helper.scope.slider.max).to.equal(70);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
       helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true;
       helper.slider.positionTrackingBar.called.should.be.true;
       helper.slider.callOnStart.called.should.be.true;
@@ -273,7 +273,7 @@
 
       expect(helper.scope.slider.min).to.equal(0);
       expect(helper.scope.slider.max).to.equal(50);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
     });
 
     it('should handle click on selbar and don\'t move range when already at 0 and moved left', function() {
@@ -285,7 +285,7 @@
 
       expect(helper.scope.slider.min).to.equal(0);
       expect(helper.scope.slider.max).to.equal(60);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
     });
 
     it('should handle click on selbar and move range when near max and moved right', function() {
@@ -297,7 +297,7 @@
 
       expect(helper.scope.slider.min).to.equal(50);
       expect(helper.scope.slider.max).to.equal(100);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
     });
 
     it('should handle click on selbar and don\'t move range when already at max and moved right', function() {
@@ -309,7 +309,7 @@
 
       expect(helper.scope.slider.min).to.equal(40);
       expect(helper.scope.slider.max).to.equal(100);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
     });
 
     it('should handle click on selbar and move range when floor is not 0 and handle is dragged below limit', function() {
@@ -324,7 +324,7 @@
 
       expect(helper.scope.slider.min).to.equal(1000);
       expect(helper.scope.slider.max).to.equal(1500);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
     });
   });
 }());

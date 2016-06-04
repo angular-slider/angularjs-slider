@@ -47,7 +47,7 @@
       helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true;
       event.preventDefault.called.should.be.true;
       event.stopPropagation.called.should.be.true;
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
       expect(helper.slider.minH.hasClass('rz-active')).to.be.true;
     });
 
@@ -66,7 +66,7 @@
       helper.slider.focusElement.called.should.be.false;
       event.preventDefault.called.should.be.true;
       event.stopPropagation.called.should.be.true;
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
       expect(helper.slider.minH.hasClass('rz-active')).to.be.true;
     });
 
@@ -108,7 +108,7 @@
       sinon.spy(helper.slider.scope, '$emit');
       helper.fireMouseup();
 
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
       expect(helper.slider.minH.hasClass('rz-active')).to.be.true;
       helper.slider.callOnEnd.called.should.be.true;
       helper.slider.scope.$emit.calledWith('slideEnded').should.be.true;
@@ -141,7 +141,7 @@
       helper.fireMousedown(helper.slider.fullBar, offset);
 
       expect(helper.scope.slider.value).to.equal(expectedValue);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnStart.called.should.be.true;
       helper.slider.callOnChange.called.should.be.true;
@@ -158,7 +158,7 @@
       var event = helper.fireMousedown(helper.slider.selBar, offset);
 
       expect(helper.scope.slider.value).to.equal(expectedValue);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnStart.called.should.be.true;
       helper.slider.callOnChange.called.should.be.true;
@@ -178,7 +178,7 @@
       helper.fireMousedown(helper.slider.ticks, offset);
 
       expect(helper.scope.slider.value).to.equal(expectedValue);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnStart.called.should.be.true;
       helper.slider.callOnChange.called.should.be.true;
@@ -198,7 +198,7 @@
       helper.fireMousedown(helper.slider.ticks, offset);
 
       expect(helper.scope.slider.value).to.equal(expectedValue);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnStart.called.should.be.true;
       helper.slider.callOnChange.called.should.be.true;
@@ -252,7 +252,7 @@
         helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true;
         event.preventDefault.called.should.be.true;
         event.stopPropagation.called.should.be.true;
-        expect(helper.slider.tracking).to.equal('rzSliderModel');
+        expect(helper.slider.tracking).to.equal('lowValue');
         expect(helper.slider.minH.hasClass('rz-active')).to.be.true;
       });
 
@@ -271,7 +271,7 @@
         helper.slider.focusElement.called.should.be.false;
         event.preventDefault.called.should.be.true;
         event.stopPropagation.called.should.be.true;
-        expect(helper.slider.tracking).to.equal('rzSliderModel');
+        expect(helper.slider.tracking).to.equal('lowValue');
         expect(helper.slider.minH.hasClass('rz-active')).to.be.true;
       });
 
@@ -312,7 +312,7 @@
         sinon.spy(helper.slider.scope, '$emit');
         helper.fireMouseup();
 
-        expect(helper.slider.tracking).to.equal('rzSliderModel');
+        expect(helper.slider.tracking).to.equal('lowValue');
         expect(helper.slider.minH.hasClass('rz-active')).to.be.true;
         helper.slider.callOnEnd.called.should.be.true;
         helper.slider.scope.$emit.calledWith('slideEnded').should.be.true;
@@ -345,7 +345,7 @@
         helper.fireMousedown(helper.slider.fullBar, offset);
 
         expect(helper.scope.slider.value).to.equal(expectedValue);
-        expect(helper.slider.tracking).to.equal('rzSliderModel');
+        expect(helper.slider.tracking).to.equal('lowValue');
         helper.slider.positionTrackingHandle.called.should.be.true;
         helper.slider.callOnStart.called.should.be.true;
         helper.slider.callOnChange.called.should.be.true;
@@ -362,7 +362,7 @@
         var event = helper.fireMousedown(helper.slider.selBar, offset);
 
         expect(helper.scope.slider.value).to.equal(expectedValue);
-        expect(helper.slider.tracking).to.equal('rzSliderModel');
+        expect(helper.slider.tracking).to.equal('lowValue');
         helper.slider.positionTrackingHandle.called.should.be.true;
         helper.slider.callOnStart.called.should.be.true;
         helper.slider.callOnChange.called.should.be.true;
@@ -382,7 +382,7 @@
         helper.fireMousedown(helper.slider.ticks, offset);
 
         expect(helper.scope.slider.value).to.equal(expectedValue);
-        expect(helper.slider.tracking).to.equal('rzSliderModel');
+        expect(helper.slider.tracking).to.equal('lowValue');
         helper.slider.positionTrackingHandle.called.should.be.true;
         helper.slider.callOnStart.called.should.be.true;
         helper.slider.callOnChange.called.should.be.true;
@@ -402,7 +402,7 @@
         helper.fireMousedown(helper.slider.ticks, offset);
 
         expect(helper.scope.slider.value).to.equal(expectedValue);
-        expect(helper.slider.tracking).to.equal('rzSliderModel');
+        expect(helper.slider.tracking).to.equal('lowValue');
         helper.slider.positionTrackingHandle.called.should.be.true;
         helper.slider.callOnStart.called.should.be.true;
         helper.slider.callOnChange.called.should.be.true;
