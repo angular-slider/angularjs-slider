@@ -225,7 +225,7 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
 
   //Slider config with steps array of letters
   $scope.slider_alphabet = {
-    value: 0,
+    value: 'E',
     options: {
       stepsArray: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
     }

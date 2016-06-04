@@ -1,5 +1,5 @@
 $scope.slider = {
-  value: 0,
+  value: 'E',
   options: {
     stepsArray: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('') // equals to ['A', 'B', ... 'Z']
   }
