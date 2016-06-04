@@ -1,7 +1,7 @@
 /*! angularjs-slider - v2.14.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-05-25 */
+ 2016-06-04 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -370,7 +370,10 @@
         this.scope.$watch('rzSliderOptions()', function(newValue, oldValue) {
           if (newValue === oldValue)
             return;
-          self.applyOptions();
+          self.applyOptions(); // need to be called before synchronizing the values
+          self.syncLowValue();
+          if (self.range)
+            self.syncHighValue();
           self.resetSlider();
         }, true);
 
@@ -457,6 +460,8 @@
        */
       onLowHandleChange: function() {
         this.syncLowValue();
+        if (this.range)
+          this.syncHighValue();
         this.setMinAndMax();
         this.updateLowHandle(this.valueToOffset(this.lowValue));
         this.updateSelectionBar();
@@ -471,6 +476,7 @@
        * Reflow the slider when the high handle changes (called with throttle)
        */
       onHighHandleChange: function() {
+        this.syncLowValue();
         this.syncHighValue();
         this.setMinAndMax();
         this.updateHighHandle(this.valueToOffset(this.highValue));
@@ -1702,8 +1708,9 @@
           var newValue = self.roundStep(self.sanitizeValue(action));
           if (!self.options.draggableRangeOnly) {
             self.positionTrackingHandle(newValue);
-          } else {
-            var difference = this.highValue - this.lowValue,
+          }
+          else {
+            var difference = self.highValue - self.lowValue,
               newMinValue, newMaxValue;
             if (self.tracking === 'lowValue') {
               newMinValue = newValue;
@@ -1851,6 +1858,7 @@
         this.applyLowValue();
         if (this.range)
           this.applyHighValue();
+        this.applyModel();
         this.updateHandles('lowValue', this.valueToOffset(newMinValue));
         this.updateHandles('highValue', this.valueToOffset(newMaxValue));
       },

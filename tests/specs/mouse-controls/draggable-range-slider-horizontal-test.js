@@ -93,7 +93,7 @@
       var event = helper.fireMousedown(helper.slider.fullBar, offset);
 
       expect(helper.scope.slider.min).to.equal(expectedValue);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
       helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true;
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnStart.called.should.be.true;
@@ -112,7 +112,7 @@
       var event = helper.fireMousedown(helper.slider.fullBar, offset);
 
       expect(helper.scope.slider.max).to.equal(expectedValue);
-      expect(helper.slider.tracking).to.equal('rzSliderHigh');
+      expect(helper.slider.tracking).to.equal('highValue');
       helper.slider.focusElement.calledWith(helper.slider.maxH).should.be.true;
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnStart.called.should.be.true;
@@ -133,7 +133,7 @@
 
       expect(helper.scope.slider.min).to.equal(50);
       expect(helper.scope.slider.max).to.equal(70);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
       helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true;
       helper.slider.positionTrackingBar.called.should.be.true;
       helper.slider.callOnStart.called.should.be.true;
@@ -149,7 +149,7 @@
 
       expect(helper.scope.slider.min).to.equal(0);
       expect(helper.scope.slider.max).to.equal(50);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
     });
 
     it('should handle click on selbar and don\'t move range when already at 0 and moved left', function() {
@@ -161,7 +161,7 @@
 
       expect(helper.scope.slider.min).to.equal(0);
       expect(helper.scope.slider.max).to.equal(60);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
     });
 
     it('should handle click on selbar and move move range when near max and moved right', function() {
@@ -173,7 +173,7 @@
 
       expect(helper.scope.slider.min).to.equal(50);
       expect(helper.scope.slider.max).to.equal(100);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
     });
 
     it('should handle click on selbar and don\'t move range when already at max and moved right', function() {
@@ -185,7 +185,7 @@
 
       expect(helper.scope.slider.min).to.equal(40);
       expect(helper.scope.slider.max).to.equal(100);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
     });
 
     it('should a working positionTrackingBar', function() {
@@ -295,7 +295,7 @@
       var event = helper.fireMousedown(helper.slider.fullBar, offset);
 
       expect(helper.scope.slider.min).to.equal(expectedValue);
-      expect(helper.slider.tracking).to.equal('rzSliderModel');
+      expect(helper.slider.tracking).to.equal('lowValue');
       helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true;
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnStart.called.should.be.true;
@@ -314,7 +314,7 @@
       var event = helper.fireMousedown(helper.slider.fullBar, offset);
 
       expect(helper.scope.slider.max).to.equal(expectedValue);
-      expect(helper.slider.tracking).to.equal('rzSliderHigh');
+      expect(helper.slider.tracking).to.equal('highValue');
       helper.slider.focusElement.calledWith(helper.slider.maxH).should.be.true;
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnStart.called.should.be.true;
@@ -335,7 +335,7 @@
 
       expect(helper.scope.slider.min).to.equal(30);
       expect(helper.scope.slider.max).to.equal(50);
-      expect(helper.slider.tracking).to.equal('rzSliderHigh');
+      expect(helper.slider.tracking).to.equal('highValue');
       helper.slider.focusElement.calledWith(helper.slider.maxH).should.be.true;
       helper.slider.positionTrackingBar.called.should.be.true;
       helper.slider.callOnStart.called.should.be.true;
@@ -351,7 +351,7 @@
 
       expect(helper.scope.slider.min).to.equal(0);
       expect(helper.scope.slider.max).to.equal(50);
-      expect(helper.slider.tracking).to.equal('rzSliderHigh');
+      expect(helper.slider.tracking).to.equal('highValue');
     });
 
     it('should handle click on selbar and don\'t move range when already at 0 and moved right', function() {
@@ -363,7 +363,7 @@
 
       expect(helper.scope.slider.min).to.equal(0);
       expect(helper.scope.slider.max).to.equal(60);
-      expect(helper.slider.tracking).to.equal('rzSliderHigh');
+      expect(helper.slider.tracking).to.equal('highValue');
     });
 
     it('should handle click on selbar and move range when near max and moved left', function() {
@@ -375,7 +375,7 @@
 
       expect(helper.scope.slider.min).to.equal(50);
       expect(helper.scope.slider.max).to.equal(100);
-      expect(helper.slider.tracking).to.equal('rzSliderHigh');
+      expect(helper.slider.tracking).to.equal('highValue');
     });
 
     it('should handle click on selbar and don\'t move range when already at max and moved left', function() {
@@ -387,7 +387,7 @@
 
       expect(helper.scope.slider.min).to.equal(40);
       expect(helper.scope.slider.max).to.equal(100);
-      expect(helper.slider.tracking).to.equal('rzSliderHigh');
+      expect(helper.slider.tracking).to.equal('highValue');
     });
 
     it('should a working positionTrackingBar', function() {

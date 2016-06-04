@@ -374,10 +374,10 @@
         this.scope.$watch('rzSliderOptions()', function(newValue, oldValue) {
           if (newValue === oldValue)
             return;
+          self.applyOptions(); // need to be called before synchronizing the values
           self.syncLowValue();
           if (self.range)
             self.syncHighValue();
-          self.applyOptions();
           self.resetSlider();
         }, true);
 
@@ -1712,8 +1712,9 @@
           var newValue = self.roundStep(self.sanitizeValue(action));
           if (!self.options.draggableRangeOnly) {
             self.positionTrackingHandle(newValue);
-          } else {
-            var difference = this.highValue - this.lowValue,
+          }
+          else {
+            var difference = self.highValue - self.lowValue,
               newMinValue, newMaxValue;
             if (self.tracking === 'lowValue') {
               newMinValue = newValue;
@@ -1861,6 +1862,7 @@
         this.applyLowValue();
         if (this.range)
           this.applyHighValue();
+        this.applyModel();
         this.updateHandles('lowValue', this.valueToOffset(newMinValue));
         this.updateHandles('highValue', this.valueToOffset(newMaxValue));
       },
