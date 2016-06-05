@@ -54,6 +54,18 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     }
   };
 
+  //Range slider with minRange and pushRange config
+  $scope.minPushRangeSlider = {
+    minValue: 40,
+    maxValue: 60,
+    options: {
+      floor: 0,
+      ceil: 100,
+      minRange: 10,
+      pushRange: true
+    }
+  };
+
   //Slider with selection bar
   $scope.slider_visible_bar = {
     value: 10,

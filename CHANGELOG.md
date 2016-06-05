@@ -1,3 +1,7 @@
+# 5.1.0 (2016-07-02)
+## Features
+- Add a `pushRange` option (#341).
+
 # 5.0.1 (2016-07-01)
 ## Fix
 - Switch from using opacity to visibility to show/hide elements (#362).
