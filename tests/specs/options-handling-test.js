@@ -667,6 +667,22 @@
         expect(helper.slider.lowValue).to.equal(1);
         expect(helper.slider.highValue).to.equal(3);
       });
+
+      it('should set the correct combined label when range values are the same and mergeRangeLabelsIfSame option is false', function() {
+        helper.scope.slider.options.mergeRangeLabelsIfSame = false;
+        helper.scope.slider.min = 50;
+        helper.scope.slider.max = 50;
+        helper.scope.$digest();
+        expect(helper.slider.cmbLab.text()).to.equal('50 - 50');
+      });
+
+      it('should set the correct combined label when range values are the same and mergeRangeLabelsIfSame option is true', function() {
+        helper.scope.slider.options.mergeRangeLabelsIfSame = true;
+        helper.scope.slider.min = 50;
+        helper.scope.slider.max = 50;
+        helper.scope.$digest();
+        expect(helper.slider.cmbLab.text()).to.equal('50');
+      });
     });
 
     describe('options expression specific - ', function() {
@@ -889,8 +905,9 @@
           }
         };
         helper.createSlider(sliderConf);
-        var expectedDimension = Math.floor(helper.slider.valueToOffset(8) + helper.slider.handleHalfDim);
-        expect(helper.slider.selBar[0].getBoundingClientRect().width).to.equal(expectedDimension);
+        var expectedDimension = Math.floor(helper.slider.valueToOffset(8) + helper.slider.handleHalfDim),
+          actualDimension = Math.floor(helper.slider.selBar[0].getBoundingClientRect().width);
+        expect(actualDimension).to.equal(expectedDimension);
         expect(helper.slider.selBar.css('left')).to.equal(helper.slider.valueToOffset(2) + helper.slider.handleHalfDim + 'px');
       });
 
@@ -939,8 +956,9 @@
         };
         helper.createSlider(sliderConf);
         var expectedDimension = Math.floor(helper.slider.valueToOffset(13)),
+          actualDimension = Math.floor(helper.slider.selBar[0].getBoundingClientRect().width),
           expectedPosition = helper.slider.valueToOffset(10) + helper.slider.handleHalfDim;
-        expect(helper.slider.selBar[0].getBoundingClientRect().width).to.equal(expectedDimension);
+        expect(actualDimension).to.equal(expectedDimension);
         expect(helper.slider.selBar.css('left')).to.equal(expectedPosition + 'px');
       });
 

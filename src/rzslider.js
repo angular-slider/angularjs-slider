@@ -70,7 +70,8 @@
       onChange: null,
       onEnd: null,
       rightToLeft: false,
-      boundPointerLabels: true
+      boundPointerLabels: true,
+      mergeRangeLabelsIfSame: false
     };
     var globalOptions = {};
 
@@ -1196,7 +1197,7 @@
           var lowTr = this.getDisplayValue(this.lowValue, 'model'),
             highTr = this.getDisplayValue(this.highValue, 'high'),
             labelVal = '';
-          if (lowTr === highTr) {
+          if (this.options.mergeRangeLabelsIfSame && lowTr === highTr) {
             labelVal = lowTr;
           } else {
             labelVal = this.options.rightToLeft ? highTr + ' - ' + lowTr : lowTr + ' - ' + highTr;

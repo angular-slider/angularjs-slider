@@ -220,7 +220,9 @@ The default options are:
     onStart: null,
     onChange: null,
     onEnd: null,
-    rightToLeft: false
+    rightToLeft: false,
+    boundPointerLabels: true,
+    mergeRangeLabelsIfSame: false
 }
 ````
 
@@ -327,6 +329,10 @@ Just pass an array with each slider value and that's it; the floor, ceil and ste
 **noSwitching** - _Boolean (defaults to false)_: Set to true to prevent to user from switching the min and max handles. *Applies to range slider only.*
 
 **onlyBindHandles** - _Boolean (defaults to false)_: Set to true to only bind events on slider handles.
+
+**boundPointerLabels** - _Boolean (defaults to true)_: Set to true to keep the slider labels inside the slider bounds.
+
+**mergeRangeLabelsIfSame** - _Boolean (defaults to false)_: Set to true to merge the range labels if they are the same. For instance, if min and max are 50, the label will be "50 - 50" if `mergeRangeLabelsIfSame: false`, else "50".
 
 **onStart** - _Function(sliderId, modelValue, highValue, pointerType)_: Function to be called when a slider update is started. If an id was set in the options, then it's passed to this callback. This callback is called before any update on the model. `pointerType` is either 'min' or 'max' depending on which handle is used.
 

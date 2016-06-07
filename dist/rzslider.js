@@ -1,7 +1,7 @@
-/*! angularjs-slider - v4.0.1 - 
+/*! angularjs-slider - v4.0.2 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-06-04 */
+ 2016-06-07 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -66,7 +66,8 @@
       onChange: null,
       onEnd: null,
       rightToLeft: false,
-      boundPointerLabels: true
+      boundPointerLabels: true,
+      mergeRangeLabelsIfSame: false
     };
     var globalOptions = {};
 
@@ -1192,7 +1193,7 @@
           var lowTr = this.getDisplayValue(this.lowValue, 'model'),
             highTr = this.getDisplayValue(this.highValue, 'high'),
             labelVal = '';
-          if (lowTr === highTr) {
+          if (this.options.mergeRangeLabelsIfSame && lowTr === highTr) {
             labelVal = lowTr;
           } else {
             labelVal = this.options.rightToLeft ? highTr + ' - ' + lowTr : lowTr + ' - ' + highTr;

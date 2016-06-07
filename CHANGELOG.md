@@ -1,3 +1,7 @@
+# 4.0.2 (2016-06-07)
+## Improvement
+- Add a `mergeRangeLabelsIfSame` option (#245).
+
 # 4.0.1 (2016-06-04)
 ## Improvement
 - Add a pointerType arg for the callbacks (onStart, onChange and onEnd) to identify which handle is used (#339).
