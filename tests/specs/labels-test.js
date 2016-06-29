@@ -129,6 +129,46 @@
       expect(helper.slider.flrLab.css('opacity')).to.equal('0');
       expect(helper.slider.ceilLab.css('opacity')).to.equal('0');
     });
+
+    it('should hide floor and ceil labels when cmb label is overlapping, for range slider', function() {
+      var sliderConf = {
+        minValue: 50,
+        maxValue: 50,
+        options: {
+          floor: 0,
+          ceil: 100,
+          translate: function(v, _, which){
+            if(which != 'model' && which != 'high') return v;
+            return "I'm whatever long text ==============================================================================================================================================================="
+          }
+        }
+      };
+
+      helper.createRangeSlider(sliderConf);
+      expect(helper.slider.flrLab.css('opacity')).to.equal('0');
+      expect(helper.slider.ceilLab.css('opacity')).to.equal('0');
+    });
+
+    it('should hide floor and ceil labels when cmb label is overlapping, for range RTL slider', function() {
+      var sliderConf = {
+        minValue: 50,
+        maxValue: 50,
+        options: {
+          floor: 0,
+          ceil: 100,
+          translate: function(v, _, which){
+            if(which != 'model' && which != 'high') return v;
+            return "I'm whatever long text ==============================================================================================================================================================="
+          }
+        },
+        rightToLeft: true
+      };
+      helper.createRangeSlider(sliderConf);
+      expect(helper.slider.flrLab.css('opacity')).to.equal('0');
+      expect(helper.slider.ceilLab.css('opacity')).to.equal('0');
+    });
+
+
   });
 }());
 
