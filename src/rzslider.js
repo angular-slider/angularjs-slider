@@ -297,6 +297,12 @@
        */
       this.internalChange = false;
 
+      /**
+       * Internal flag to keep track of the visibility of combo label
+       * @type {boolean}
+       */
+      this.cmbLabelShown = false;
+
       // Slider DOM elements wrapped in jqLite
       this.fullBar = null; // The whole slider bar
       this.selBar = null; // Highlight between two handles
@@ -1072,12 +1078,16 @@
           minLabDim = this.minLab.rzsd,
           maxLabPos = this.maxLab.rzsp,
           maxLabDim = this.maxLab.rzsd,
+          cmbLabPos = this.cmbLab.rzsp,
+          cmbLabDim = this.cmbLab.rzsd,
           ceilLabPos = this.ceilLab.rzsp,
           halfHandle = this.handleHalfDim,
           isMinLabAtFloor = isRTL ? minLabPos + minLabDim >= flrLabPos - flrLabDim - 5 : minLabPos <= flrLabPos + flrLabDim + 5,
           isMinLabAtCeil = isRTL ? minLabPos - minLabDim <= ceilLabPos + halfHandle + 10 : minLabPos + minLabDim >= ceilLabPos - halfHandle - 10,
           isMaxLabAtFloor = isRTL ? maxLabPos >= flrLabPos - flrLabDim - halfHandle : maxLabPos <= flrLabPos + flrLabDim + halfHandle,
-          isMaxLabAtCeil = isRTL ? maxLabPos - maxLabDim <= ceilLabPos + 10 : maxLabPos + maxLabDim >= ceilLabPos - 10;
+          isMaxLabAtCeil = isRTL ? maxLabPos - maxLabDim <= ceilLabPos + 10 : maxLabPos + maxLabDim >= ceilLabPos - 10,
+          isCmbLabAtFloor = isRTL ? cmbLabPos >= flrLabPos - flrLabDim - halfHandle : cmbLabPos <= flrLabPos + flrLabDim + halfHandle,
+          isCmbLabAtCeil = isRTL ? cmbLabPos - cmbLabDim <= ceilLabPos + 10 : cmbLabPos + cmbLabDim >= ceilLabPos - 10
 
 
         if (isMinLabAtFloor) {
@@ -1097,14 +1107,17 @@
         }
 
         if (this.range) {
-          if (isMaxLabAtCeil) {
+          var hideCeil = this.cmbLabelShown ? isCmbLabAtCeil : isMaxLabAtCeil;
+          var hideFloor = this.cmbLabelShown ? isCmbLabAtFloor : isMinLabAtFloor;
+
+          if (hideCeil) {
             this.hideEl(this.ceilLab);
           } else if (!clHidden) {
             this.showEl(this.ceilLab);
           }
 
           // Hide or show floor label
-          if (isMaxLabAtFloor) {
+          if (hideFloor) {
             this.hideEl(this.flrLab);
           } else if (!flHidden) {
             this.showEl(this.flrLab);
@@ -1213,10 +1226,12 @@
           ) : this.selBar.rzsp + this.selBar.rzsd / 2 - this.cmbLab.rzsd / 2;
 
           this.setPosition(this.cmbLab, pos);
+          this.cmbLabelShown = true;
           this.hideEl(this.minLab);
           this.hideEl(this.maxLab);
           this.showEl(this.cmbLab);
         } else {
+          this.cmbLabelShown = false;
           this.showEl(this.maxLab);
           this.showEl(this.minLab);
           this.hideEl(this.cmbLab);
