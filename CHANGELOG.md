@@ -1,3 +1,7 @@
+# 4.1.0 (not released yet)
+## Improvement
+- Add a `bindIndexForStepsArray` option that enable to use `stepsArray` with the same behavior as before 4.0 (#345).
+
 # 4.0.2 (2016-06-07)
 ## Improvement
 - Add a `mergeRangeLabelsIfSame` option (#245).

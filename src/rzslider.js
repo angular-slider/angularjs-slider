@@ -43,6 +43,7 @@
       translate: null,
       getLegend: null,
       stepsArray: null,
+      bindIndexForStepsArray: false,
       draggableRange: false,
       draggableRangeOnly: false,
       showSelectionBar: false,
@@ -432,15 +433,23 @@
       },
 
       syncLowValue: function() {
-        if (this.options.stepsArray)
-          this.lowValue = this.findStepIndex(this.scope.rzSliderModel);
+        if (this.options.stepsArray) {
+          if (!this.options.bindIndexForStepsArray)
+            this.lowValue = this.findStepIndex(this.scope.rzSliderModel);
+          else
+            this.lowValue = this.scope.rzSliderModel
+        }
         else
           this.lowValue = this.scope.rzSliderModel;
       },
 
       syncHighValue: function() {
-        if (this.options.stepsArray)
-          this.highValue = this.findStepIndex(this.scope.rzSliderHigh);
+        if (this.options.stepsArray) {
+          if (!this.options.bindIndexForStepsArray)
+            this.highValue = this.findStepIndex(this.scope.rzSliderHigh);
+          else
+            this.highValue = this.scope.rzSliderHigh
+        }
         else
           this.highValue = this.scope.rzSliderHigh;
       },
@@ -453,15 +462,23 @@
       },
 
       applyLowValue: function() {
-        if (this.options.stepsArray)
-          this.scope.rzSliderModel = this.getStepValue(this.lowValue);
+        if (this.options.stepsArray) {
+          if (!this.options.bindIndexForStepsArray)
+            this.scope.rzSliderModel = this.getStepValue(this.lowValue);
+          else
+            this.scope.rzSliderModel = this.lowValue
+        }
         else
           this.scope.rzSliderModel = this.lowValue;
       },
 
       applyHighValue: function() {
-        if (this.options.stepsArray)
-          this.scope.rzSliderHigh = this.getStepValue(this.highValue);
+        if (this.options.stepsArray) {
+          if (!this.options.bindIndexForStepsArray)
+            this.scope.rzSliderHigh = this.getStepValue(this.highValue);
+          else
+            this.scope.rzSliderHigh = this.highValue
+        }
         else
           this.scope.rzSliderHigh = this.highValue;
       },
@@ -556,6 +573,8 @@
         }
         else {
           this.customTrFn = function(modelValue) {
+            if(this.options.bindIndexForStepsArray)
+              return this.getStepValue(modelValue)
             return modelValue;
           };
         }
@@ -757,7 +776,7 @@
           getDimension = false;
 
         if (useCustomTr) {
-          if (this.options.stepsArray)
+          if (this.options.stepsArray && !this.options.bindIndexForStepsArray)
             value = this.getStepValue(value);
           valStr = String(this.customTrFn(value, this.options.id, which));
         }
@@ -1243,7 +1262,7 @@
        * @returns {*}
        */
       getDisplayValue: function(value, which) {
-        if (this.options.stepsArray) {
+        if (this.options.stepsArray && !this.options.bindIndexForStepsArray) {
           value = this.getStepValue(value);
         }
         return this.customTrFn(value, this.options.id, which);

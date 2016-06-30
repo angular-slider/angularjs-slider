@@ -114,6 +114,17 @@
         expect(helper.slider.lowValue).to.equal(2);
       });
 
+      it('should set correct step/floor/ceil and translate function when stepsArray is used with values and bindIndexForStepsArray is true', function() {
+        helper.scope.slider.value = 2;
+        helper.scope.slider.options.stepsArray = ['A', 'B', 'C', 'D', 'E'];
+        helper.scope.slider.options.bindIndexForStepsArray = true;
+        helper.scope.$digest();
+        expect(helper.slider.options.step).to.equal(1);
+        expect(helper.slider.options.floor).to.equal(0);
+        expect(helper.slider.options.ceil).to.equal(4);
+        expect(helper.slider.lowValue).to.equal(2);
+      });
+
       it('should set correct step/floor/ceil when stepsArray is used with values and ticks', function() {
         helper.scope.slider.value = 'C';
         helper.scope.slider.options.stepsArray = ['A', 'B', 'C', 'D', 'E'];
@@ -134,6 +145,23 @@
           {value: 'D'},
           {value: 'E'}
         ];
+        helper.scope.$digest();
+        expect(helper.slider.options.step).to.equal(1);
+        expect(helper.slider.options.floor).to.equal(0);
+        expect(helper.slider.options.ceil).to.equal(4);
+        expect(helper.slider.lowValue).to.equal(3);
+      });
+
+      it('should set correct step/floor/ceil when stepsArray is used with objects and bindIndexForStepsArray is true', function() {
+        helper.scope.slider.value = 3;
+        helper.scope.slider.options.stepsArray = [
+          {value: 'A'},
+          {value: 'B'},
+          {value: 'C'},
+          {value: 'D'},
+          {value: 'E'}
+        ];
+        helper.scope.slider.options.bindIndexForStepsArray = true;
         helper.scope.$digest();
         expect(helper.slider.options.step).to.equal(1);
         expect(helper.slider.options.floor).to.equal(0);
@@ -164,13 +192,57 @@
         expect(helper.element[0].querySelectorAll('.rz-tick-legend')).to.have.length(2);
       });
 
+      it('should set correct step/floor/ceil function when stepsArray is used with objects containing legends and bindIndexForStepsArray is true', function() {
+        helper.scope.slider.value = 3;
+        helper.scope.slider.options.stepsArray = [
+          {value: 'A'},
+          {value: 'B', legend: 'Legend B'},
+          {value: 'C'},
+          {value: 'D', legend: 'Legend D'},
+          {value: 'E'}
+        ];
+        helper.scope.slider.options.bindIndexForStepsArray = true;
+        helper.scope.slider.options.showTicks = true;
+        helper.scope.$digest();
+
+        expect(helper.slider.options.step).to.equal(1);
+        expect(helper.slider.options.floor).to.equal(0);
+        expect(helper.slider.options.ceil).to.equal(4);
+        expect(helper.slider.lowValue).to.equal(3);
+
+        expect(helper.slider.getLegend(1)).to.equal('Legend B');
+        expect(helper.slider.getLegend(3)).to.equal('Legend D');
+
+        expect(helper.element[0].querySelectorAll('.rz-tick-legend')).to.have.length(2);
+      });
+
       it('should allow a custom translate function when stepsArray is used', function() {
+        helper.scope.slider.options.stepsArray = [
+          {value: 'A', 'foo': 'barA'},
+          {value: 'B', 'foo': 'barB'},
+          {value: 'C', 'foo': 'barC'}
+        ];
+        helper.scope.slider.options.translate = function(value, sliderId, label) {
+          return 'value: '+ value
+        };
+        helper.scope.$digest();
+        expect(helper.slider.options.step).to.equal(1);
+        expect(helper.slider.options.floor).to.equal(0);
+        expect(helper.slider.options.ceil).to.equal(2);
+
+        expect(helper.slider.customTrFn('A')).to.equal('value: A');
+        expect(helper.slider.customTrFn('C')).to.equal('value: C');
+      });
+
+      it('should allow a custom translate function when stepsArray is used and bindIndexForStepsArray is true', function() {
         helper.scope.slider.options.stepsArray = [{'foo': 'barA'}, {'foo': 'barB'}, {'foo': 'barC'}];
+        helper.scope.slider.options.bindIndexForStepsArray = true;
         helper.scope.slider.options.translate = function(value, sliderId, label) {
           if (value >= 0 && value < helper.scope.slider.options.stepsArray.length) {
             return helper.scope.slider.options.stepsArray[value]['foo'];
-          } else {
-            return ""
+          }
+          else {
+            return ''
           }
         };
         helper.scope.$digest();
@@ -637,10 +709,37 @@
         expect(helper.slider.highValue).to.equal(3);
       });
 
+      it('should set correct step/floor/ceil and translate function when stepsArray is used with values and bindIndexForStepsArray is true', function() {
+        helper.scope.slider.min = 1;
+        helper.scope.slider.max = 3;
+        helper.scope.slider.options.stepsArray = ['A', 'B', 'C', 'D', 'E'];
+        helper.scope.slider.options.bindIndexForStepsArray = true;
+        helper.scope.$digest();
+        expect(helper.slider.options.step).to.equal(1);
+        expect(helper.slider.options.floor).to.equal(0);
+        expect(helper.slider.options.ceil).to.equal(4);
+        expect(helper.slider.lowValue).to.equal(1);
+        expect(helper.slider.highValue).to.equal(3);
+      });
+
       it('should set correct step/floor/ceil when stepsArray is used with values and ticks', function() {
         helper.scope.slider.min = 'B';
         helper.scope.slider.max = 'D';
         helper.scope.slider.options.stepsArray = ['A', 'B', 'C', 'D', 'E'];
+        helper.scope.slider.options.showTicks = true;
+        helper.scope.$digest();
+        expect(helper.slider.options.step).to.equal(1);
+        expect(helper.slider.options.floor).to.equal(0);
+        expect(helper.slider.options.ceil).to.equal(4);
+        expect(helper.slider.lowValue).to.equal(1);
+        expect(helper.slider.highValue).to.equal(3);
+      });
+
+      it('should set correct step/floor/ceil when stepsArray is used with values and ticks and bindIndexForStepsArray is true', function() {
+        helper.scope.slider.min = 1;
+        helper.scope.slider.max = 3;
+        helper.scope.slider.options.stepsArray = ['A', 'B', 'C', 'D', 'E'];
+        helper.scope.slider.options.bindIndexForStepsArray = true;
         helper.scope.slider.options.showTicks = true;
         helper.scope.$digest();
         expect(helper.slider.options.step).to.equal(1);
@@ -660,6 +759,25 @@
           {value: 'D'},
           {value: 'E'}
         ];
+        helper.scope.$digest();
+        expect(helper.slider.options.step).to.equal(1);
+        expect(helper.slider.options.floor).to.equal(0);
+        expect(helper.slider.options.ceil).to.equal(4);
+        expect(helper.slider.lowValue).to.equal(1);
+        expect(helper.slider.highValue).to.equal(3);
+      });
+
+      it('should set correct step/floor/ceil when stepsArray is used with objects and bindIndexForStepsArray is true', function() {
+        helper.scope.slider.min = 1;
+        helper.scope.slider.max = 3;
+        helper.scope.slider.options.stepsArray = [
+          {value: 'A'},
+          {value: 'B'},
+          {value: 'C'},
+          {value: 'D'},
+          {value: 'E'}
+        ];
+        helper.scope.slider.options.bindIndexForStepsArray = true;
         helper.scope.$digest();
         expect(helper.slider.options.step).to.equal(1);
         expect(helper.slider.options.floor).to.equal(0);

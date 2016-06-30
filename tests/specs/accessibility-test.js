@@ -221,6 +221,28 @@
       expect(helper.slider.minH.attr('aria-valuenow')).to.equal('C');
       expect(helper.slider.minH.attr('aria-valuetext')).to.equal('C');
     });
+
+    it('should have accessible slider when values are text but bindIndexForStepsArray is true', function() {
+      var sliderConf = {
+        value: 1,
+        options: {
+          stepsArray: ['A', 'B', 'C'],
+          bindIndexForStepsArray: true
+        }
+      };
+      helper.createSlider(sliderConf);
+      expect(helper.slider.minH.attr('role')).to.equal('slider');
+      expect(helper.slider.minH.attr('tabindex')).to.equal('0');
+      expect(helper.slider.minH.attr('aria-valuenow')).to.equal('1');
+      expect(helper.slider.minH.attr('aria-valuetext')).to.equal('B');
+      expect(helper.slider.minH.attr('aria-valuemin')).to.equal('0');
+      expect(helper.slider.minH.attr('aria-valuemax')).to.equal('2');
+
+      helper.scope.slider.value = 2;
+      helper.scope.$digest();
+      expect(helper.slider.minH.attr('aria-valuenow')).to.equal('2');
+      expect(helper.slider.minH.attr('aria-valuetext')).to.equal('C');
+    });
   });
 }());
 

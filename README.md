@@ -194,6 +194,7 @@ The default options are:
     translate: null,
     getLegend: null,
     stepsArray: null,
+    bindIndexForStepsArray: false,
     draggableRange: false,
     draggableRangeOnly: false,
     showSelectionBar: false,
@@ -277,7 +278,7 @@ $scope.slider = {
 **id** - _Any (defaults to null)_: If you want to use the same `translate` function for several sliders, just set the `id` to anything you want, and it will be passed to the `translate(value, sliderId)` function as a second argument.
 
 **stepsArray** - _Array_: If you want to display a slider with non linear/number steps.
-Just pass an array with each slider value and that's it; the floor, ceil and step settings of the slider will be computed automatically. The `rz-slider-model` and `rz-slider-high` values will be the value of the selected item in the stepsArray.
+Just pass an array with each slider value and that's it; the floor, ceil and step settings of the slider will be computed automatically. By default, the `rz-slider-model` and `rz-slider-high` values will be the value of the selected item in the stepsArray. They can also be bound to the index of the selected item by setting the `bindIndexForStepsArray` option to `true`.
 
 `stepsArray` can also be an array of objects like:
 
@@ -286,7 +287,9 @@ Just pass an array with each slider value and that's it; the floor, ceil and ste
   {value: 'A'}, // the display value will be *A*
   {value: 10, legend: 'Legend for 10'} // the display value will be 10 and a legend will be displayed under the corresponding tick.
 ]
-```
+````
+
+**bindIndexForStepsArray** - _Boolean (defaults to false)_: Set to true to bind the index of the selected item to `rz-slider-model` and `rz-slider-high`. (This was the default behavior prior to 4.0).
 
 **draggableRange** - _Boolean (defaults to false)_: When set to true and using a range slider, the range can be dragged by the selection bar. *Applies to range slider only.*
 

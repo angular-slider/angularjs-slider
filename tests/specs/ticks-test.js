@@ -99,6 +99,26 @@
       expect(lasTick.text()).to.equal('E');
     });
 
+    it('should create the correct number of ticks when showTicksValues is true and used with stepsArray and bindIndexForStepsArray is true', function() {
+      var sliderConf = {
+        value: 2,
+        options: {
+          stepsArray: ['A', 'B', 'C', 'D', 'E'],
+          bindIndexForStepsArray: true,
+          showTicksValues: true
+        }
+      };
+      helper.createSlider(sliderConf);
+      expect(helper.element[0].querySelectorAll('.rz-tick')).to.have.length(5);
+      expect(helper.element[0].querySelectorAll('.rz-tick-value')).to.have.length(5);
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[0]);
+      expect(firstTick.text()).to.equal('A');
+      var secondTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[1]);
+      expect(secondTick.text()).to.equal('B');
+      var lasTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[4]);
+      expect(lasTick.text()).to.equal('E');
+    });
+
     it('should create the correct number of ticks when showTicksValues is an integer', function() {
       var sliderConf = {
         value: 50,
