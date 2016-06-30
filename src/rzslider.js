@@ -537,9 +537,7 @@
               return String(value);
             };
 
-          if (this.options.getLegend) {
-            this.getLegend = this.options.getLegend;
-          }
+          this.getLegend = this.options.getLegend;
         }
 
         if (this.options.vertical) {
