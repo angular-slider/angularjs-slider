@@ -1,7 +1,7 @@
 /*! angularjs-slider - v4.0.2 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-06-29 */
+ 2016-06-30 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -2108,5 +2108,5 @@
 
 }]);
 
-  return module
+  return module.name
 }));
