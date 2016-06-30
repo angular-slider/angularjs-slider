@@ -1,6 +1,10 @@
-# 4.1.0 (not released yet)
+# 4.1.0 (2016-06-30)
 ## Improvement
 - Add a `bindIndexForStepsArray` option that enable to use `stepsArray` with the same behavior as before 4.0 (#345).
+
+## Fix
+- Hide floor/ceil label when overlapped on combo label (#357).
+- Fix switching from steps array to regular steps (#361).
 
 # 4.0.2 (2016-06-07)
 ## Improvement
