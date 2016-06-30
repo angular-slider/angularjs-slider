@@ -2122,5 +2122,5 @@
 
   /*templateReplacement*/
 
-  return module
+  return module.name
 }));
