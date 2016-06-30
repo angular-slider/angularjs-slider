@@ -1,3 +1,10 @@
+# 5.0.0 (2016-06-30)
+## Fix
+- AMD/CommonJS exported module: export module name instead of module (#360).
+
+## Breaking change
+Code that relies on the module object to be exported (accessing the name via .name for example) will break, since the name is now directly returned.
+
 # 4.1.0 (2016-06-30)
 ## Improvement
 - Add a `bindIndexForStepsArray` option that enable to use `stepsArray` with the same behavior as before 4.0 (#345).
