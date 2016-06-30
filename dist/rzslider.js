@@ -2125,5 +2125,5 @@
 
 }]);
 
-  return module
+  return module.name
 }));
