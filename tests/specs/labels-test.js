@@ -29,8 +29,8 @@
         }
       };
       helper.createSlider(sliderConf);
-      expect(helper.slider.flrLab.css('opacity')).to.equal('1');
-      expect(helper.slider.ceilLab.css('opacity')).to.equal('1');
+      expect(helper.slider.flrLab.css('visibility')).to.equal('visible');
+      expect(helper.slider.ceilLab.css('visibility')).to.equal('visible');
     });
 
     it('should hide floor and display ceil labels when handle is at min', function() {
@@ -42,8 +42,8 @@
         }
       };
       helper.createSlider(sliderConf);
-      expect(helper.slider.flrLab.css('opacity')).to.equal('0');
-      expect(helper.slider.ceilLab.css('opacity')).to.equal('1');
+      expect(helper.slider.flrLab.css('visibility')).to.equal('hidden');
+      expect(helper.slider.ceilLab.css('visibility')).to.equal('visible');
     });
 
     it('should show floor and hide ceil labels when handle is at max', function() {
@@ -55,8 +55,8 @@
         }
       };
       helper.createSlider(sliderConf);
-      expect(helper.slider.flrLab.css('opacity')).to.equal('1');
-      expect(helper.slider.ceilLab.css('opacity')).to.equal('0');
+      expect(helper.slider.flrLab.css('visibility')).to.equal('visible');
+      expect(helper.slider.ceilLab.css('visibility')).to.equal('hidden');
     });
 
     it('should display floor and ceil labels when handle is at the middle for RTL slider', function() {
@@ -69,8 +69,8 @@
         }
       };
       helper.createSlider(sliderConf);
-      expect(helper.slider.flrLab.css('opacity')).to.equal('1');
-      expect(helper.slider.ceilLab.css('opacity')).to.equal('1');
+      expect(helper.slider.flrLab.css('visibility')).to.equal('visible');
+      expect(helper.slider.ceilLab.css('visibility')).to.equal('visible');
     });
 
     it('should hide floor and display ceil labels when handle is at min for RTL slider', function() {
@@ -83,8 +83,8 @@
         }
       };
       helper.createSlider(sliderConf);
-      expect(helper.slider.flrLab.css('opacity')).to.equal('0');
-      expect(helper.slider.ceilLab.css('opacity')).to.equal('1');
+      expect(helper.slider.flrLab.css('visibility')).to.equal('hidden');
+      expect(helper.slider.ceilLab.css('visibility')).to.equal('visible');
     });
 
     it('should show floor and hide ceil labels when handle is at max for RTL slider', function() {
@@ -97,8 +97,8 @@
         }
       };
       helper.createSlider(sliderConf);
-      expect(helper.slider.flrLab.css('opacity')).to.equal('1');
-      expect(helper.slider.ceilLab.css('opacity')).to.equal('0');
+      expect(helper.slider.flrLab.css('visibility')).to.equal('visible');
+      expect(helper.slider.ceilLab.css('visibility')).to.equal('hidden');
     });
 
     it('should hide floor and ceil labels when minHandle is at min and maxHandle at max for range slider', function() {
@@ -111,8 +111,8 @@
         }
       };
       helper.createRangeSlider(sliderConf);
-      expect(helper.slider.flrLab.css('opacity')).to.equal('0');
-      expect(helper.slider.ceilLab.css('opacity')).to.equal('0');
+      expect(helper.slider.flrLab.css('visibility')).to.equal('hidden');
+      expect(helper.slider.ceilLab.css('visibility')).to.equal('hidden');
     });
 
     it('should hide floor and ceil labels when minHandle is at min and maxHandle at max for range RTL slider', function() {
@@ -126,8 +126,8 @@
         }
       };
       helper.createRangeSlider(sliderConf);
-      expect(helper.slider.flrLab.css('opacity')).to.equal('0');
-      expect(helper.slider.ceilLab.css('opacity')).to.equal('0');
+      expect(helper.slider.flrLab.css('visibility')).to.equal('hidden');
+      expect(helper.slider.ceilLab.css('visibility')).to.equal('hidden');
     });
 
     it('should hide floor and ceil labels when cmb label is overlapping, for range slider', function() {
@@ -145,8 +145,8 @@
       };
 
       helper.createRangeSlider(sliderConf);
-      expect(helper.slider.flrLab.css('opacity')).to.equal('0');
-      expect(helper.slider.ceilLab.css('opacity')).to.equal('0');
+      expect(helper.slider.flrLab.css('visibility')).to.equal('hidden');
+      expect(helper.slider.ceilLab.css('visibility')).to.equal('hidden');
     });
 
     it('should hide floor and ceil labels when cmb label is overlapping, for range RTL slider', function() {
@@ -164,8 +164,8 @@
         rightToLeft: true
       };
       helper.createRangeSlider(sliderConf);
-      expect(helper.slider.flrLab.css('opacity')).to.equal('0');
-      expect(helper.slider.ceilLab.css('opacity')).to.equal('0');
+      expect(helper.slider.flrLab.css('visibility')).to.equal('hidden');
+      expect(helper.slider.ceilLab.css('visibility')).to.equal('hidden');
     });
 
 

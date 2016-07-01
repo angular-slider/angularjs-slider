@@ -130,22 +130,22 @@
       it('should have a valid hideEl', function() {
         var el = angular.element('<div></div>');
         helper.slider.hideEl(el);
-        expect(el.css('opacity')).to.equal('0');
+        expect(el.css('visibility')).to.equal('hidden');
       });
 
       it('should have a valid showEl when not rzAlwaysHide', function() {
         var el = angular.element('<div></div>');
         helper.slider.showEl(el);
-        expect(el.css('opacity')).to.equal('1');
+        expect(el.css('visibility')).to.equal('visible');
       });
 
       it('should have a valid showEl when rzAlwaysHide', function() {
         var el = angular.element('<div></div>');
-        el.css('opacity', 0);
+        el.css('visibility', 'hidden');
         el.rzAlwaysHide = true;
 
         helper.slider.showEl(el);
-        expect(el.css('opacity')).to.equal('0');
+        expect(el.css('visibility')).to.equal('hidden');
       });
 
       it('should have a valid setPosition for horizontal sliders', function() {
