@@ -1,3 +1,7 @@
+# 5.0.1 (2016-07-01)
+## Fix
+- Switch from using opacity to visibility to show/hide elements (#362).
+
 # 5.0.0 (2016-06-30)
 ## Fix
 - AMD/CommonJS exported module: export module name instead of module (#360).
