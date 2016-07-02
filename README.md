@@ -190,6 +190,7 @@ The default options are:
     maxLimit: null,
     minRange: null,
     maxRange: null,
+    pushRange: false,
     id: null,
     translate: null,
     getLegend: null,
@@ -242,6 +243,8 @@ The default options are:
 **minRange** - _Number (defaults to null)_: The minimum range authorized on the slider. *Applies to range slider only.*
 
 **maxRange** - _Number (defaults to null)_: The maximum range authorized on the slider. *Applies to range slider only.*
+
+**pushRange** - _Boolean (defaults to false)_: Set to true to have a push behavior. When the min handle goes above the max, the max is moved as well (and vice-versa). The range between min and max is defined by the `step` option (defaults to 1) and can also be override by the `minRange` option. *Applies to range slider only.*
 
 **translate** - _Function(value, sliderId, label)_: Custom translate function. Use this if you want to translate values displayed on the slider.
 `sliderId` can be used to determine the slider for which we are translating the value. `label` is a string that can take the following values:

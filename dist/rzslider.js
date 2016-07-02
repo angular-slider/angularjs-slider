@@ -1,7 +1,7 @@
 /*! angularjs-slider - v5.0.1 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-07-01 */
+ 2016-07-02 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -33,6 +33,7 @@
       precision: 0,
       minRange: null,
       maxRange: null,
+      pushRange: false,
       minLimit: null,
       maxLimit: null,
       id: null,
@@ -1906,40 +1907,47 @@
 
         newValue = this.applyMinMaxLimit(newValue);
         if (this.range) {
-          newValue = this.applyMinMaxRange(newValue);
-          /* This is to check if we need to switch the min and max handles */
-          if (this.tracking === 'lowValue' && newValue > this.highValue) {
-            if (this.options.noSwitching && this.highValue !== this.minValue) {
-              newValue = this.applyMinMaxRange(this.highValue);
-            }
-            else {
-              this.lowValue = this.highValue;
-              this.applyLowValue();
-              this.updateHandles(this.tracking, this.maxH.rzsp);
-              this.updateAriaAttributes();
-              this.tracking = 'highValue';
-              this.minH.removeClass('rz-active');
-              this.maxH.addClass('rz-active');
-              if (this.options.keyboardSupport)
-                this.focusElement(this.maxH);
-            }
+          if (this.options.pushRange) {
+            newValue = this.applyPushRange(newValue);
             valueChanged = true;
-          } else if (this.tracking === 'highValue' && newValue < this.lowValue) {
-            if (this.options.noSwitching && this.lowValue !== this.maxValue) {
-              newValue = this.applyMinMaxRange(this.lowValue);
+          }
+          else {
+            newValue = this.applyMinMaxRange(newValue);
+            /* This is to check if we need to switch the min and max handles */
+            if (this.tracking === 'lowValue' && newValue > this.highValue) {
+              if (this.options.noSwitching && this.highValue !== this.minValue) {
+                newValue = this.applyMinMaxRange(this.highValue);
+              }
+              else {
+                this.lowValue = this.highValue;
+                this.applyLowValue();
+                this.updateHandles(this.tracking, this.maxH.rzsp);
+                this.updateAriaAttributes();
+                this.tracking = 'highValue';
+                this.minH.removeClass('rz-active');
+                this.maxH.addClass('rz-active');
+                if (this.options.keyboardSupport)
+                  this.focusElement(this.maxH);
+              }
+              valueChanged = true;
             }
-            else {
-              this.highValue = this.lowValue;
-              this.applyHighValue();
-              this.updateHandles(this.tracking, this.minH.rzsp);
-              this.updateAriaAttributes();
-              this.tracking = 'lowValue';
-              this.maxH.removeClass('rz-active');
-              this.minH.addClass('rz-active');
-              if (this.options.keyboardSupport)
-                this.focusElement(this.minH);
+            else if (this.tracking === 'highValue' && newValue < this.lowValue) {
+              if (this.options.noSwitching && this.lowValue !== this.maxValue) {
+                newValue = this.applyMinMaxRange(this.lowValue);
+              }
+              else {
+                this.highValue = this.lowValue;
+                this.applyHighValue();
+                this.updateHandles(this.tracking, this.minH.rzsp);
+                this.updateAriaAttributes();
+                this.tracking = 'lowValue';
+                this.maxH.removeClass('rz-active');
+                this.minH.addClass('rz-active');
+                if (this.options.keyboardSupport)
+                  this.focusElement(this.minH);
+              }
+              valueChanged = true;
             }
-            valueChanged = true;
           }
         }
 
@@ -1984,6 +1992,27 @@
             else
               return this.lowValue + this.options.maxRange;
           }
+        }
+        return newValue;
+      },
+
+      applyPushRange: function(newValue) {
+        var difference = this.tracking === 'lowValue' ? this.highValue - newValue : newValue - this.lowValue,
+          range = this.options.minRange !== null ? this.options.minRange : this.options.step;
+        if (difference < range) {
+          if (this.tracking === 'lowValue') {
+            this.highValue = Math.min(newValue + range, this.maxValue);
+            newValue = this.highValue - range;
+            this.applyHighValue();
+            this.updateHandles('highValue', this.valueToOffset(this.highValue));
+          }
+          else {
+            this.lowValue = Math.max(newValue - range, this.minValue);
+            newValue = this.lowValue + range;
+            this.applyLowValue();
+            this.updateHandles('lowValue', this.valueToOffset(this.lowValue));
+          }
+          this.updateAriaAttributes();
         }
         return newValue;
       },
