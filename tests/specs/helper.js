@@ -108,9 +108,12 @@
         $timeout.flush();
     };
 
-    h.mouseMoveToValue = function(value) {
-      var offset = h.slider.valueToOffset(value) + h.slider.handleHalfDim + h.slider.sliderElem.rzsp;
-      h.fireMousemove(offset);
+    h.getMousePosition = function(value) {
+      return h.slider.valueToOffset(value) + h.slider.handleHalfDim + h.slider.sliderElem.rzsp;
+    };
+
+    h.moveMouseToValue = function(value) {
+      h.fireMousemove(h.getMousePosition(value));
     };
 
     return h;

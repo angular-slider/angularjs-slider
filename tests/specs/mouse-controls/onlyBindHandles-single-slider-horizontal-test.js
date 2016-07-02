@@ -41,9 +41,8 @@
       sinon.spy(helper.slider, 'positionTrackingHandle');
       sinon.spy(helper.slider, 'callOnChange');
       helper.fireMousedown(helper.slider.minH, 0);
-      var expectedValue = 50,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
-      helper.fireMousemove(offset);
+      var expectedValue = 50;
+      helper.moveMouseToValue(expectedValue);
       expect(helper.scope.slider.value).to.equal(expectedValue);
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnChange.called.should.be.true;
@@ -104,9 +103,8 @@
       sinon.spy(helper.slider, 'positionTrackingHandle');
       sinon.spy(helper.slider, 'callOnChange');
       helper.fireMousedown(helper.slider.minH, 0);
-      var expectedValue = 50,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
-      helper.fireMousemove(offset);
+      var expectedValue = 50;
+      helper.moveMouseToValue(expectedValue);
       expect(helper.scope.slider.value).to.equal(expectedValue);
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnChange.called.should.be.true;

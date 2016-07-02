@@ -39,33 +39,29 @@
 
     it('should be able to modify minH above minLimit', function() {
       helper.fireMousedown(helper.slider.minH, 0);
-      var expectedValue = 42,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
-      helper.fireMousemove(offset);
+      var expectedValue = 42;
+      helper.moveMouseToValue(expectedValue);
       expect(helper.scope.slider.value).to.equal(42);
     });
 
     it('should not be able to modify minH below minLimit', function() {
       helper.fireMousedown(helper.slider.minH, 0);
-      var expectedValue = 30,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
-      helper.fireMousemove(offset);
+      var expectedValue = 30;
+      helper.moveMouseToValue(expectedValue);
       expect(helper.scope.slider.value).to.equal(40);
     });
 
     it('should be able to modify minH below maxLimit', function() {
       helper.fireMousedown(helper.slider.minH, 0);
-      var expectedValue = 58,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
-      helper.fireMousemove(offset);
+      var expectedValue = 58;
+      helper.moveMouseToValue(expectedValue);
       expect(helper.scope.slider.value).to.equal(58);
     });
 
     it('should not be able to modify minH above maxLimit', function() {
       helper.fireMousedown(helper.slider.minH, 0);
-      var expectedValue = 70,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
-      helper.fireMousemove(offset);
+      var expectedValue = 70;
+      helper.moveMouseToValue(expectedValue);
       expect(helper.scope.slider.value).to.equal(60);
     });
   });
@@ -109,33 +105,29 @@
 
     it('should be able to modify minH above minLimit', function() {
       helper.fireMousedown(helper.slider.minH, 0);
-      var expectedValue = 42,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
-      helper.fireMousemove(offset);
+      var expectedValue = 42;
+      helper.moveMouseToValue(expectedValue);
       expect(helper.scope.slider.value).to.equal(42);
     });
 
     it('should not be able to modify minH below minLimit', function() {
       helper.fireMousedown(helper.slider.minH, 0);
-      var expectedValue = 30,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
-      helper.fireMousemove(offset);
+      var expectedValue = 30;
+      helper.moveMouseToValue(expectedValue);
       expect(helper.scope.slider.value).to.equal(40);
     });
 
     it('should be able to modify minH below maxLimit', function() {
       helper.fireMousedown(helper.slider.minH, 0);
-      var expectedValue = 58,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
-      helper.fireMousemove(offset);
+      var expectedValue = 58;
+      helper.moveMouseToValue(expectedValue);
       expect(helper.scope.slider.value).to.equal(58);
     });
 
     it('should not be able to modify minH above maxLimit', function() {
       helper.fireMousedown(helper.slider.minH, 0);
-      var expectedValue = 70,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
-      helper.fireMousemove(offset);
+      var expectedValue = 70;
+      helper.moveMouseToValue(expectedValue);
       expect(helper.scope.slider.value).to.equal(60);
     });
   });

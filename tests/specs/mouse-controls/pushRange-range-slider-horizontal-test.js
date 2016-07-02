@@ -39,28 +39,28 @@
 
     it('should push maxH when moving minH above it', function() {
       helper.fireMousedown(helper.slider.minH, 0);
-      helper.mouseMoveToValue(60);
+      helper.moveMouseToValue(60);
       expect(helper.scope.slider.min).to.equal(60);
       expect(helper.scope.slider.max).to.equal(61);
     });
 
     it('should push minH when moving maxH below it', function() {
       helper.fireMousedown(helper.slider.maxH, 0);
-      helper.mouseMoveToValue(40);
+      helper.moveMouseToValue(40);
       expect(helper.scope.slider.min).to.equal(39);
       expect(helper.scope.slider.max).to.equal(40);
     });
 
     it('should not move maxH above ceil when moving minH to ceil', function() {
       helper.fireMousedown(helper.slider.minH, 0);
-      helper.mouseMoveToValue(100);
+      helper.moveMouseToValue(100);
       expect(helper.scope.slider.min).to.equal(99);
       expect(helper.scope.slider.max).to.equal(100);
     });
 
     it('should not move minH below floor when moving maxH to floor', function() {
       helper.fireMousedown(helper.slider.maxH, 0);
-      helper.mouseMoveToValue(0);
+      helper.moveMouseToValue(0);
       expect(helper.scope.slider.min).to.equal(0);
       expect(helper.scope.slider.max).to.equal(1);
     });
@@ -70,7 +70,7 @@
       helper.scope.$digest();
 
       helper.fireMousedown(helper.slider.minH, 0);
-      helper.mouseMoveToValue(60);
+      helper.moveMouseToValue(60);
       expect(helper.scope.slider.min).to.equal(60);
       expect(helper.scope.slider.max).to.equal(65);
     });
@@ -80,7 +80,7 @@
       helper.scope.$digest();
 
       helper.fireMousedown(helper.slider.maxH, 0);
-      helper.mouseMoveToValue(40);
+      helper.moveMouseToValue(40);
       expect(helper.scope.slider.min).to.equal(35);
       expect(helper.scope.slider.max).to.equal(40);
     });
@@ -91,7 +91,7 @@
       helper.scope.$digest();
 
       helper.fireMousedown(helper.slider.minH, 0);
-      helper.mouseMoveToValue(60);
+      helper.moveMouseToValue(60);
       expect(helper.scope.slider.min).to.equal(60);
       expect(helper.scope.slider.max).to.equal(70);
     });
@@ -102,7 +102,7 @@
       helper.scope.$digest();
 
       helper.fireMousedown(helper.slider.maxH, 0);
-      helper.mouseMoveToValue(40);
+      helper.moveMouseToValue(40);
       expect(helper.scope.slider.min).to.equal(30);
       expect(helper.scope.slider.max).to.equal(40);
     });
@@ -113,7 +113,7 @@
       helper.scope.$digest();
 
       helper.fireMousedown(helper.slider.minH, 0);
-      helper.mouseMoveToValue(60);
+      helper.moveMouseToValue(60);
       expect(helper.scope.slider.min).to.equal(60);
       expect(helper.scope.slider.max).to.equal(60);
     });
@@ -124,7 +124,7 @@
       helper.scope.$digest();
 
       helper.fireMousedown(helper.slider.maxH, 0);
-      helper.mouseMoveToValue(40);
+      helper.moveMouseToValue(40);
       expect(helper.scope.slider.min).to.equal(40);
       expect(helper.scope.slider.max).to.equal(40);
     });

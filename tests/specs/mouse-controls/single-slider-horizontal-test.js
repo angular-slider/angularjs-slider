@@ -75,7 +75,7 @@
       sinon.spy(helper.slider, 'callOnChange');
       var event = helper.fireMousedown(helper.slider.minH, 0);
       var expectedValue = 50,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
+        offset = helper.getMousePosition(expectedValue);
       helper.fireMousemove(offset);
       expect(helper.scope.slider.value).to.equal(expectedValue);
       helper.slider.positionTrackingHandle.called.should.be.true;
@@ -136,7 +136,7 @@
       sinon.spy(helper.slider, 'callOnChange');
 
       var expectedValue = 12,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
+        offset = helper.getMousePosition(expectedValue);
 
       helper.fireMousedown(helper.slider.fullBar, offset);
 
@@ -153,7 +153,7 @@
       sinon.spy(helper.slider, 'callOnChange');
 
       var expectedValue = 12,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
+        offset = helper.getMousePosition(expectedValue);
 
       var event = helper.fireMousedown(helper.slider.selBar, offset);
 
@@ -173,7 +173,7 @@
       sinon.spy(helper.slider, 'callOnChange');
 
       var expectedValue = 10,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
+        offset = helper.getMousePosition(expectedValue);
 
       helper.fireMousedown(helper.slider.ticks, offset);
 
@@ -193,7 +193,7 @@
       sinon.spy(helper.slider, 'callOnChange');
 
       var expectedValue = 10,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
+        offset = helper.getMousePosition(expectedValue);
 
       helper.fireMousedown(helper.slider.ticks, offset);
 
@@ -280,7 +280,7 @@
         sinon.spy(helper.slider, 'callOnChange');
         var event = helper.fireMousedown(helper.slider.minH, 0);
         var expectedValue = 50,
-          offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
+          offset = helper.getMousePosition(expectedValue);
         helper.fireMousemove(offset);
         expect(helper.scope.slider.value).to.equal(expectedValue);
         helper.slider.positionTrackingHandle.called.should.be.true;
@@ -340,7 +340,7 @@
         sinon.spy(helper.slider, 'callOnChange');
 
         var expectedValue = 12,
-          offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
+          offset = helper.getMousePosition(expectedValue);
 
         helper.fireMousedown(helper.slider.fullBar, offset);
 
@@ -357,7 +357,7 @@
         sinon.spy(helper.slider, 'callOnChange');
 
         var expectedValue = 12,
-          offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
+          offset = helper.getMousePosition(expectedValue);
 
         var event = helper.fireMousedown(helper.slider.selBar, offset);
 
@@ -377,7 +377,7 @@
         sinon.spy(helper.slider, 'callOnChange');
 
         var expectedValue = 10,
-          offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
+          offset = helper.getMousePosition(expectedValue);
 
         helper.fireMousedown(helper.slider.ticks, offset);
 
@@ -397,7 +397,7 @@
         sinon.spy(helper.slider, 'callOnChange');
 
         var expectedValue = 10,
-          offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
+          offset = helper.getMousePosition(expectedValue);
 
         helper.fireMousedown(helper.slider.ticks, offset);
 

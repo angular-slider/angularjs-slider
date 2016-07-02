@@ -39,17 +39,15 @@
 
     it('should not switch min and max handles if minH is dragged after maxH', function() {
       helper.fireMousedown(helper.slider.minH, 0);
-      var expectedValue = 60,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
-      helper.fireMousemove(offset);
+      var expectedValue = 60;
+      helper.moveMouseToValue(expectedValue);
       expect(helper.scope.slider.min).to.equal(55);
     });
 
     it('should not switch min and max handles if maxH is dragged before minH', function() {
       helper.fireMousedown(helper.slider.maxH, 0);
-      var expectedValue = 20,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
-      helper.fireMousemove(offset);
+      var expectedValue = 20;
+      helper.moveMouseToValue(expectedValue);
       expect(helper.scope.slider.max).to.equal(45);
     });
 
@@ -58,7 +56,7 @@
       helper.scope.$digest();
 
       var expectedValue = 30,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
+        offset = helper.getMousePosition(expectedValue);
 
       helper.fireMousedown(helper.slider.fullBar, offset);
 
@@ -71,7 +69,7 @@
       helper.scope.$digest();
 
       var expectedValue = 70,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
+        offset = helper.getMousePosition(expectedValue);
 
       helper.fireMousedown(helper.slider.fullBar, offset);
 
@@ -119,17 +117,15 @@
 
     it('should not switch min and max handles if minH is dragged after maxH', function() {
       helper.fireMousedown(helper.slider.minH, 0);
-      var expectedValue = 60,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
-      helper.fireMousemove(offset);
+      var expectedValue = 60;
+      helper.moveMouseToValue(expectedValue);
       expect(helper.scope.slider.min).to.equal(55);
     });
 
     it('should not switch min and max handles if maxH is dragged before minH', function() {
       helper.fireMousedown(helper.slider.maxH, 0);
-      var expectedValue = 20,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
-      helper.fireMousemove(offset);
+      var expectedValue = 20;
+      helper.moveMouseToValue(expectedValue);
       expect(helper.scope.slider.max).to.equal(45);
     });
 
@@ -138,7 +134,7 @@
       helper.scope.$digest();
 
       var expectedValue = 30,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
+        offset = helper.getMousePosition(expectedValue);
 
       helper.fireMousedown(helper.slider.fullBar, offset);
 
@@ -151,7 +147,7 @@
       helper.scope.$digest();
 
       var expectedValue = 70,
-        offset = helper.slider.valueToOffset(expectedValue) + helper.slider.handleHalfDim + helper.slider.sliderElem.rzsp;
+        offset = helper.getMousePosition(expectedValue);
 
       helper.fireMousedown(helper.slider.fullBar, offset);
 
