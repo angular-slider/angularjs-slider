@@ -1,3 +1,7 @@
+# 5.1.1 (2016-07-06)
+## Fix
+- Fix the way to check when event properties are undefined (#365).
+
 # 5.1.0 (2016-07-02)
 ## Features
 - Add a `pushRange` option (#341).

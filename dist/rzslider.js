@@ -1,7 +1,7 @@
-/*! angularjs-slider - v5.1.0 - 
+/*! angularjs-slider - v5.1.1 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-07-02 */
+ 2016-07-06 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -1401,7 +1401,7 @@
         /* http://stackoverflow.com/a/12336075/282882 */
         //noinspection JSLint
         var clientXY = this.options.vertical ? 'clientY' : 'clientX';
-        if (clientXY in event) {
+        if (event[clientXY] !== undefined) {
           return event[clientXY];
         }
 
