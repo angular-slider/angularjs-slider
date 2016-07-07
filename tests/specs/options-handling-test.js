@@ -1307,6 +1307,21 @@
         expect(maxHChild.css('background-color')).to.equal('blue');
 
       });
+
+      it('should correctly link the customTemplateScope properties on slider scope', function() {
+        var sliderConf = {
+          value: 10,
+          options: {
+            customTemplateScope: {
+              a: 1,
+              b: 'test'
+            }
+          }
+        };
+        helper.createSlider(sliderConf);
+        expect(helper.slider.scope.custom.a).to.equal(1)
+        expect(helper.slider.scope.custom.b).to.equal('test')
+      });
     });
 
     describe('range slider specific - ', function() {

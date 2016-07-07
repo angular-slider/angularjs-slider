@@ -73,7 +73,8 @@
       onEnd: null,
       rightToLeft: false,
       boundPointerLabels: true,
-      mergeRangeLabelsIfSame: false
+      mergeRangeLabelsIfSame: false,
+      customTemplateScope: null
     };
     var globalOptions = {};
 
@@ -562,6 +563,9 @@
           this.positionProperty = 'bottom';
           this.dimensionProperty = 'height';
         }
+
+        if (this.options.customTemplateScope)
+          this.scope.custom = this.options.customTemplateScope;
       },
 
       parseStepsArray: function() {
@@ -574,7 +578,7 @@
         }
         else {
           this.customTrFn = function(modelValue) {
-            if(this.options.bindIndexForStepsArray)
+            if (this.options.bindIndexForStepsArray)
               return this.getStepValue(modelValue)
             return modelValue;
           };

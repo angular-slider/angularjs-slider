@@ -1,7 +1,7 @@
-/*! angularjs-slider - v5.1.1 - 
+/*! angularjs-slider - v5.2.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-07-06 */
+ 2016-07-07 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -69,7 +69,8 @@
       onEnd: null,
       rightToLeft: false,
       boundPointerLabels: true,
-      mergeRangeLabelsIfSame: false
+      mergeRangeLabelsIfSame: false,
+      customTemplateScope: null
     };
     var globalOptions = {};
 
@@ -558,6 +559,9 @@
           this.positionProperty = 'bottom';
           this.dimensionProperty = 'height';
         }
+
+        if (this.options.customTemplateScope)
+          this.scope.custom = this.options.customTemplateScope;
       },
 
       parseStepsArray: function() {
@@ -570,7 +574,7 @@
         }
         else {
           this.customTrFn = function(modelValue) {
-            if(this.options.bindIndexForStepsArray)
+            if (this.options.bindIndexForStepsArray)
               return this.getStepValue(modelValue)
             return modelValue;
           };

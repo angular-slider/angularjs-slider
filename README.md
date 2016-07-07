@@ -224,7 +224,8 @@ The default options are:
     onEnd: null,
     rightToLeft: false,
     boundPointerLabels: true,
-    mergeRangeLabelsIfSame: false
+    mergeRangeLabelsIfSame: false,
+    customTemplateScope: null
 }
 ````
 
@@ -358,6 +359,8 @@ _Changing this value at runtime is not currently supported._
   - Page-up: +10%
   - Home: minimum value
   - End: maximum value
+
+**customTemplateScope** - _Object (default to null)_: The properties defined in this object will be exposed in the slider template under `custom.X`.
 
 ## Change default options
 If you want the change the default options for all the sliders displayed in your application, you can set them using the `RzSliderOptions.options()` method:
