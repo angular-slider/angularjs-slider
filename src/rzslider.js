@@ -778,7 +778,8 @@
         useCustomTr = useCustomTr === undefined ? true : useCustomTr;
 
         var valStr = '',
-          getDimension = false;
+          getDimension = false,
+          noLabelInjection = label.hasClass('no-label-injection');
 
         if (useCustomTr) {
           if (this.options.stepsArray && !this.options.bindIndexForStepsArray)
@@ -794,7 +795,9 @@
           label.rzsv = valStr;
         }
 
-        label.html(valStr);
+        if(!noLabelInjection){ label.html(valStr); };
+
+        this.scope[which + 'Label'] = valStr;
 
         // Update width only when length of the label have changed
         if (getDimension) {

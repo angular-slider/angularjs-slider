@@ -207,6 +207,15 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
       }
     }
   };
+  //Slider config with angular directive inside custom template
+  $scope.slider_custom_directive_inside_template = {
+    minValue: 20,
+    maxValue: 80,
+    options: {
+      floor: 0,
+      ceil: 100
+    }
+  };
 
   //Slider config with steps array of letters
   $scope.slider_alphabet = {
@@ -514,4 +523,18 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
       $scope.slider_all_options.maxValue = 8;
     }
   }
+});
+
+app.directive('clickableLabel', function() {
+  return {
+    restrict: 'E',
+    scope: {label: '='},
+    replace: true,
+    template: "<button ng-click='onclick(label)' style='cursor: pointer;'>click me - {{label}}</button>",
+    link: function(scope, elem, attrs){
+      scope.onclick = function(label){
+        alert("I'm " + label);
+      };
+    }
+  };
 });

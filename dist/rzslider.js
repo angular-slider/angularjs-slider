@@ -1,7 +1,7 @@
 /*! angularjs-slider - v5.2.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-07-07 */
+ 2016-07-09 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -774,7 +774,8 @@
         useCustomTr = useCustomTr === undefined ? true : useCustomTr;
 
         var valStr = '',
-          getDimension = false;
+          getDimension = false,
+          noLabelInjection = label.hasClass('no-label-injection');
 
         if (useCustomTr) {
           if (this.options.stepsArray && !this.options.bindIndexForStepsArray)
@@ -790,7 +791,9 @@
           label.rzsv = valStr;
         }
 
-        label.html(valStr);
+        if(!noLabelInjection){ label.html(valStr); };
+
+        this.scope[which + 'Label'] = valStr;
 
         // Update width only when length of the label have changed
         if (getDimension) {
