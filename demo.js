@@ -10,6 +10,20 @@ app.directive('showCode', function() {
   };
 });
 
+app.directive('clickableLabel', function() {
+  return {
+    restrict: 'E',
+    scope: {label: '='},
+    replace: true,
+    template: "<button ng-click='onclick(label)' style='cursor: pointer;'>click me - {{label}}</button>",
+    link: function(scope, elem, attrs){
+      scope.onclick = function(label){
+        alert("I'm " + label);
+      };
+    }
+  };
+});
+
 app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
   //Minimal slider config
   $scope.minSlider = {
@@ -233,6 +247,16 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
       translate: function(value) {
         return '<b>Price:</b> $' + value;
       }
+    }
+  };
+
+  //Slider config with angular directive inside custom template
+  $scope.slider_custom_directive_inside_template = {
+    minValue: 20,
+    maxValue: 80,
+    options: {
+      floor: 0,
+      ceil: 100
     }
   };
 
