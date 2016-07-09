@@ -17,6 +17,7 @@ module.exports = function (config) {
       'src/*.js',
       'tests/specs/helper.js',
       'tests/specs/**/*-test.js',
+      'tests/specs/*.html',
       'dist/rzslider.css',
       'src/*.html'
     ],
@@ -27,7 +28,8 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     preprocessors: {
       "src/*.js": ['coverage'],
-      "src/*Tpl.html": 'ng-html2js'
+      "src/*Tpl.html": 'ng-html2js',
+      "tests/specs/*-tpl.html": 'ng-html2js'
     },
 
     ngHtml2JsPreprocessor: {

@@ -173,7 +173,18 @@ $scope.slider = {
 
 **rz-slider-tpl-url**
 
-> If for some reason you need to use a custom template, you can do so by providing a template URL to the `rz-slider-tpl-url` attribute. The default template is [this one](https://github.com/angular-slider/angularjs-slider/blob/master/src/rzSliderTpl.html).
+> If you need to use a custom template, you can do so by providing a template URL to the `rz-slider-tpl-url` attribute. The default template is [this one](https://github.com/angular-slider/angularjs-slider/blob/master/src/rzSliderTpl.html).
+
+The following variables are available in the template as scope variables.
+- `floorLabel`: The value set to `floor` in `rz-slider-options`
+- `ceilLabel`: The value set to `ceil` in `rz-slider-options`
+- `modelLabel`: The value set to `rz-slider-model`
+- `highLabel`: The value set to `rz-slider-high`
+- `cmbLabel`: The text shown when the two handlers are close to each other. (e.g. "30-40")
+
+The library replaces the HTML contents of label elements in the template by default, if you want to stop this behaviour and tweak label HTML on your own, you need to set `no-label-injection` class on the elements you're customizing.
+
+See the [Custom template to use angular directive for label](./demo/directiveInCustomTemplate.html) for an example.
 
 **rz-slider-options**
 

@@ -31,6 +31,20 @@
       h.initSlider(sliderObj, template);
     };
 
+    h.createRangeSliderWithCustomTemplate = function(sliderObj, templateUrl) {
+      var template = '';
+      var optionsExpression = sliderObj.optionsExpression || 'slider.options';
+      if (sliderObj.options || sliderObj.optionsExpression)
+        template = '<rzslider rz-slider-model="slider.min"' +
+          ' rz-slider-high="slider.max"' +
+          ' rz-slider-options="' + optionsExpression +
+          '" rz-slider-tpl-url="' + templateUrl +
+          '"></rzslider>';
+      else
+        template = '<rzslider rz-slider-model="slider.min" rz-slider-high="slider.max"></rzslider>';
+      h.initSlider(sliderObj, template);
+    };
+
     h.initSlider = function(sliderObj, template) {
       h.scope = $rootScope.$new();
       h.scope.slider = sliderObj;
