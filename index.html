@@ -227,6 +227,27 @@
   </article>
 
   <article>
+    <h2>Slider with angular directive inside custom template</h2>
+    <rzslider
+            rz-slider-model="slider_custom_directive_inside_template.minValue"
+            rz-slider-high="slider_custom_directive_inside_template.maxValue"
+            rz-slider-options="slider_custom_directive_inside_template.options"
+            rz-slider-tpl-url="directive-in-custom-template.html"
+    ></rzslider>
+    <tabset class="code">
+      <tab heading="HTML">
+        <div hljs hljs-include="'snippets/directive_in_custom_template.html'" hljs-language="html"></div>
+      </tab>
+      <tab heading="JS">
+        <div hljs hljs-include="'snippets/directive_in_custom_template.js'" hljs-language="js"></div>
+      </tab>
+      <tab heading="directive-in-custom-template.html">
+        <div hljs hljs-include="'directive-in-custom-template.html'" hljs-language="html"></div>
+      </tab>
+    </tabset>
+  </article>
+
+  <article>
     <h2>Slider with Alphabet</h2>
     Current letter: {{ slider_alphabet.value }}
     <rzslider
