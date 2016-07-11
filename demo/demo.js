@@ -207,15 +207,6 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
       }
     }
   };
-  //Slider config with angular directive inside custom template
-  $scope.slider_custom_directive_inside_template = {
-    minValue: 20,
-    maxValue: 80,
-    options: {
-      floor: 0,
-      ceil: 100
-    }
-  };
 
   //Slider config with steps array of letters
   $scope.slider_alphabet = {
@@ -332,6 +323,24 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
       draggableRangeOnly: true
     }
   };
+
+  //Slider with custom tick formating
+  $scope.slider_custom_tick_format = {
+    value: 30,
+    options: {
+      ceil: 1000,
+      floor: 0,
+      showSelectionBar: true,
+      showTicks: true,
+      getTickColor: function(value){
+        if(value > 100){
+          return 'red'; 
+        }
+        return 'blue';
+      }
+    }
+  };
+
 
   //Vertical sliders
   $scope.verticalSlider1 = {
@@ -523,18 +532,4 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
       $scope.slider_all_options.maxValue = 8;
     }
   }
-});
-
-app.directive('clickableLabel', function() {
-  return {
-    restrict: 'E',
-    scope: {label: '='},
-    replace: true,
-    template: "<button ng-click='onclick(label)' style='cursor: pointer;'>click me - {{label}}</button>",
-    link: function(scope, elem, attrs){
-      scope.onclick = function(label){
-        alert("I'm " + label);
-      };
-    }
-  };
 });

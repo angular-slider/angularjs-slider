@@ -158,16 +158,6 @@
   </article>
 
   <article>
-    <h2>Slider with angular directive inside custom template</h2>
-    <rzslider
-            rz-slider-model="slider_custom_directive_inside_template.minValue"
-            rz-slider-high="slider_custom_directive_inside_template.maxValue"
-            rz-slider-options="slider_custom_directive_inside_template.options"
-            rz-slider-tpl-url="directiveInCustomTemplate.html"
-    ></rzslider>
-  </article>
-
-  <article>
     <h2>Slider with Alphabet</h2>
     Current letter: {{ slider_alphabet.value }}
     <rzslider
@@ -249,6 +239,14 @@
       rz-slider-model="slider_draggable_range_only.minValue"
       rz-slider-high="slider_draggable_range_only.maxValue"
       rz-slider-options="slider_draggable_range_only.options"
+    ></rzslider>
+  </article>
+
+  <article>
+    <h2>Slider with custom tick formatting</h2>
+    <rzslider
+      rz-slider-model="slider_custom_tick_format.value"
+      rz-slider-options="slider_custom_tick_format.options"
     ></rzslider>
   </article>
 
