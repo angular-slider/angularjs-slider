@@ -1,3 +1,7 @@
+# 5.3.0 (2016-07-11)
+## Features
+- Expose labels on scope in template (#358).
+
 # 5.2.0 (2016-07-07)
 ## Features
 - Add a `customTemplateScope` option (#354).
