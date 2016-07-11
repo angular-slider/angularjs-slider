@@ -173,18 +173,7 @@ $scope.slider = {
 
 **rz-slider-tpl-url**
 
-> If you need to use a custom template, you can do so by providing a template URL to the `rz-slider-tpl-url` attribute. The default template is [this one](https://github.com/angular-slider/angularjs-slider/blob/master/src/rzSliderTpl.html).
-
-The following variables are available in the template as scope variables.
-- `floorLabel`: The value set to `floor` in `rz-slider-options`
-- `ceilLabel`: The value set to `ceil` in `rz-slider-options`
-- `modelLabel`: The value set to `rz-slider-model`
-- `highLabel`: The value set to `rz-slider-high`
-- `cmbLabel`: The text shown when the two handlers are close to each other. (e.g. "30-40")
-
-The library replaces the HTML contents of label elements in the template by default, if you want to stop this behaviour and tweak label HTML on your own, you need to set `no-label-injection` class on the elements you're customizing.
-
-See the [Custom template to use angular directive for label](./demo/directiveInCustomTemplate.html) for an example.
+> If for some reason you need to use a custom template, you can do so by providing a template URL to the `rz-slider-tpl-url` attribute. The default template is [this one](https://github.com/angular-slider/angularjs-slider/blob/master/src/rzSliderTpl.html).
 
 **rz-slider-options**
 
@@ -223,6 +212,7 @@ The default options are:
     ticksValuesTooltip: null,
     vertical: false,
     getSelectionBarColor: null,
+    getTickColor: null,
     getPointerColor: null,
     keyboardSupport: true,
     scale: 1,
@@ -317,6 +307,8 @@ Just pass an array with each slider value and that's it; the floor, ceil and ste
 **showSelectionBarFromValue** - _Number (defaults to null)_: Set a number to draw the selection bar between this value and the slider handle.
 
 **getSelectionBarColor** - _Function(value) or Function(minVal, maxVal) (defaults to null)_: Function that returns the current color of the selection bar. *If your color won't changed, don't use this option but set it through CSS.* If the returned color depends on a model value (either `rzScopeModel`or `'rzSliderHigh`), you should use the argument passed to the function. Indeed, when the function is called, there is no certainty that the model has already been updated.
+
+**getTickColor** - _Function(value) (defaults to null)_: Function that returns the color of a tick. showTicks must be enabled.
 
 **getPointerColor** - _Function(value, pointerType) (defaults to null)_: Function that returns the current color of a pointer. *If your color won't changed, don't use this option but set it through CSS.* If the returned color depends on a model value (either `rzScopeModel`or `'rzSliderHigh`), you should use the argument passed to the function. Indeed, when the function is called, there is no certainty that the model has already been updated. To handle range slider pointers independently, you should evaluate pointerType within the given function where "min" stands for `rzScopeModel` and "max" for `rzScopeHigh` values.
 

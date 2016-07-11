@@ -1,7 +1,7 @@
 /*! angularjs-slider - v5.2.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-07-09 */
+ 2016-07-10 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -57,6 +57,7 @@
       ticksValuesTooltip: null,
       vertical: false,
       getSelectionBarColor: null,
+      getTickColor: null,
       getPointerColor: null,
       keyboardSupport: true,
       scale: 1,
@@ -774,8 +775,7 @@
         useCustomTr = useCustomTr === undefined ? true : useCustomTr;
 
         var valStr = '',
-          getDimension = false,
-          noLabelInjection = label.hasClass('no-label-injection');
+          getDimension = false;
 
         if (useCustomTr) {
           if (this.options.stepsArray && !this.options.bindIndexForStepsArray)
@@ -791,9 +791,7 @@
           label.rzsv = valStr;
         }
 
-        if(!noLabelInjection){ label.html(valStr); };
-
-        this.scope[which + 'Label'] = valStr;
+        label.html(valStr);
 
         // Update width only when length of the label have changed
         if (getDimension) {
@@ -931,6 +929,11 @@
             tick.style = {
               'background-color': this.getSelectionBarColor()
             };
+          }
+          if(!tick.selected && this.options.getTickColor){
+            tick.style = {
+              'background-color': this.getTickColor(value)
+            }
           }
           if (this.options.ticksTooltip) {
             tick.tooltip = this.options.ticksTooltip(value);
@@ -1212,6 +1215,14 @@
           return this.options.getPointerColor(this.scope.rzSliderHigh, pointerType);
         }
         return this.options.getPointerColor(this.scope.rzSliderModel, pointerType);
+      },
+
+      /**
+       * Wrapper around the getTickColor of the user to pass to
+       * correct parameters
+       */
+      getTickColor: function(value) {
+        return this.options.getTickColor(value);
       },
 
       /**
