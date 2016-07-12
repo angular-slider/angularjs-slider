@@ -61,6 +61,7 @@
       ticksValuesTooltip: null,
       vertical: false,
       getSelectionBarColor: null,
+      getTickColor: null,
       getPointerColor: null,
       keyboardSupport: true,
       scale: 1,
@@ -936,6 +937,11 @@
               'background-color': this.getSelectionBarColor()
             };
           }
+          if(!tick.selected && this.options.getTickColor){
+            tick.style = {
+              'background-color': this.getTickColor(value)
+            }
+          }
           if (this.options.ticksTooltip) {
             tick.tooltip = this.options.ticksTooltip(value);
             tick.tooltipPlacement = this.options.vertical ? 'right' : 'top';
@@ -1216,6 +1222,14 @@
           return this.options.getPointerColor(this.scope.rzSliderHigh, pointerType);
         }
         return this.options.getPointerColor(this.scope.rzSliderModel, pointerType);
+      },
+
+      /**
+       * Wrapper around the getTickColor of the user to pass to
+       * correct parameters
+       */
+      getTickColor: function(value) {
+        return this.options.getTickColor(value);
       },
 
       /**

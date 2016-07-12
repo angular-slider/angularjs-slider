@@ -333,6 +333,24 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     }
   };
 
+  //Slider with custom tick formating
+  $scope.slider_custom_tick_format = {
+    value: 30,
+    options: {
+      ceil: 1000,
+      floor: 0,
+      showSelectionBar: true,
+      showTicks: true,
+      getTickColor: function(value){
+        if(value > 100){
+          return 'red'; 
+        }
+        return 'blue';
+      }
+    }
+  };
+
+
   //Vertical sliders
   $scope.verticalSlider1 = {
     value: 0,
