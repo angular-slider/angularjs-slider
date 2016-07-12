@@ -1,7 +1,7 @@
 /*! angularjs-slider - v5.3.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-07-11 */
+ 2016-07-12 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -70,6 +70,7 @@
       rightToLeft: false,
       boundPointerLabels: true,
       mergeRangeLabelsIfSame: false,
+      lockPointerLabelsLeft: true,
       customTemplateScope: null
     };
     var globalOptions = {};
@@ -1238,13 +1239,17 @@
           }
 
           this.translateFn(labelVal, this.cmbLab, 'cmb', false);
-          var pos = this.options.boundPointerLabels ? Math.min(
-            Math.max(
-              this.selBar.rzsp + this.selBar.rzsd / 2 - this.cmbLab.rzsd / 2,
-              0
-            ),
-            this.barDimension - this.cmbLab.rzsd
-          ) : this.selBar.rzsp + this.selBar.rzsd / 2 - this.cmbLab.rzsd / 2;
+
+          var pos = 0;
+          if (!this.options.lockPointerLabelsLeft) {
+            pos = this.options.boundPointerLabels ? Math.min(
+              Math.max(
+                this.selBar.rzsp + this.selBar.rzsd / 2 - this.cmbLab.rzsd / 2,
+                0
+              ),
+              this.barDimension - this.cmbLab.rzsd
+            ) : this.selBar.rzsp + this.selBar.rzsd / 2 - this.cmbLab.rzsd / 2;
+          }
 
           this.setPosition(this.cmbLab, pos);
           this.cmbLabelShown = true;
@@ -1912,8 +1917,10 @@
       positionTrackingHandle: function(newValue) {
         var valueChanged = false;
 
-        newValue = this.applyMinMaxLimit(newValue);
         if (this.range) {
+          if (this.tracking === 'lowValue') {
+            newValue = this.applyMinMaxLimit(newValue);
+          }
           if (this.options.pushRange) {
             newValue = this.applyPushRange(newValue);
             valueChanged = true;
@@ -1956,6 +1963,8 @@
               valueChanged = true;
             }
           }
+        } else {
+          newValue = this.applyMinMaxLimit(newValue);
         }
 
         if (this[this.tracking] !== newValue) {
@@ -2004,6 +2013,16 @@
       },
 
       applyPushRange: function(newValue) {
+        if (this.tracking === 'lowValue') {
+          var valueChange = this.lowValue - newValue;
+          this.highValue = Math.min(this.highValue - valueChange, this.maxValue);
+          this.applyHighValue();
+          this.updateHandles('highValue', this.valueToOffset(this.highValue));
+        } else {
+          newValue = this.applyMinMaxRange(newValue);
+          this.updateHandles(this.tracking, this.valueToOffset(newValue));
+        }
+        /*
         var difference = this.tracking === 'lowValue' ? this.highValue - newValue : newValue - this.lowValue,
           range = this.options.minRange !== null ? this.options.minRange : this.options.step;
         if (difference < range) {
@@ -2021,6 +2040,7 @@
           }
           this.updateAriaAttributes();
         }
+        */
         return newValue;
       },
 
