@@ -1,7 +1,7 @@
 /*! angularjs-slider - v5.3.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-07-11 */
+ 2016-07-12 */
 .rzslider {
   position: relative;
   display: inline-block;
@@ -25,7 +25,7 @@
 
 .rzslider[disabled] .rz-pointer {
   cursor: not-allowed;
-  background-color: #d8e0f3;
+  background-color: #ff6600;
 }
 
 .rzslider span {
@@ -44,9 +44,9 @@
   left: 0;
   z-index: 1;
   width: 100%;
-  height: 32px;
-  padding-top: 16px;
-  margin-top: -16px;
+  height: 20px;
+  padding-top: 10px;
+  margin-top: -10px;
   box-sizing: border-box;
 }
 
@@ -59,7 +59,7 @@
   z-index: 1;
   width: 100%;
   height: 4px;
-  background: #d8e0f3;
+  background: #ff6600;
   -webkit-border-radius: 2px;
      -moz-border-radius: 2px;
           border-radius: 2px;
@@ -74,21 +74,21 @@
 }
 
 .rzslider .rz-pointer {
-  top: -14px;
+  top: -8px;
   z-index: 3;
-  width: 32px;
-  height: 32px;
+  width: 20px;
+  height: 20px;
   cursor: pointer;
   background-color: #0db9f0;
-  -webkit-border-radius: 16px;
-     -moz-border-radius: 16px;
-          border-radius: 16px;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
 }
 
 .rzslider .rz-pointer:after {
   position: absolute;
-  top: 12px;
-  left: 12px;
+  top: 6px;
+  left: 6px;
   width: 8px;
   height: 8px;
   background: #ffffff;
@@ -96,6 +96,10 @@
      -moz-border-radius: 4px;
           border-radius: 4px;
   content: '';
+}
+
+.rzslider .rz-pointer:focus {
+  outline: 0 solid transparent;
 }
 
 .rzslider .rz-pointer:hover:after {
@@ -111,14 +115,14 @@
 }
 
 .rzslider .rz-bubble {
-  bottom: 16px;
+  bottom: 10px;
   padding: 1px 3px;
   color: #55637d;
   cursor: default;
 }
 
 .rzslider .rz-bubble.rz-selection {
-  top: 16px;
+  top: 10px;
 }
 
 .rzslider .rz-bubble.rz-limit {
@@ -135,7 +139,7 @@
   display: flex;
   width: 100%;
   height: 0;
-  padding: 0 11px;
+  padding: 0 5px;
   margin: 0;
   list-style: none;
   box-sizing: border-box;
@@ -149,7 +153,7 @@
   height: 10px;
   text-align: center;
   cursor: pointer;
-  background: #d8e0f3;
+  background: #ff6600;
   border-radius: 50%;
 }
 
@@ -194,10 +198,10 @@
 .rzslider.rz-vertical .rz-bar-wrapper {
   top: auto;
   left: 0;
-  width: 32px;
+  width: 20px;
   height: 100%;
-  padding: 0 0 0 16px;
-  margin: 0 0 0 -16px;
+  padding: 0 0 0 10px;
+  margin: 0 0 0 -10px;
 }
 
 .rzslider.rz-vertical .rz-bar {
@@ -210,18 +214,18 @@
 .rzslider.rz-vertical .rz-pointer {
   top: auto;
   bottom: 0;
-  left: -14px !important;
+  left: -8px !important;
 }
 
 .rzslider.rz-vertical .rz-bubble {
   bottom: 0;
-  left: 16px !important;
+  left: 10px !important;
   margin-left: 3px;
 }
 
 .rzslider.rz-vertical .rz-bubble.rz-selection {
   top: auto;
-  left: 16px !important;
+  left: 10px !important;
 }
 
 .rzslider.rz-vertical .rz-ticks {
@@ -230,7 +234,7 @@
   z-index: 1;
   width: 0;
   height: 100%;
-  padding: 11px 0;
+  padding: 5px 0;
   -webkit-flex-direction: column-reverse;
       -ms-flex-direction: column-reverse;
           flex-direction: column-reverse;

@@ -1,7 +1,7 @@
-/*! angularjs-slider - v5.3.0 -
- (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> -
- https://github.com/angular-slider/angularjs-slider -
- 2016-07-11 */
+/*! angularjs-slider - v5.3.0 - 
+ (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
+ https://github.com/angular-slider/angularjs-slider - 
+ 2016-07-12 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -2024,39 +2024,22 @@
         }
         /*
         var difference = this.tracking === 'lowValue' ? this.highValue - newValue : newValue - this.lowValue,
-          lowrange = this.options.minRange !== null ? this.options.minRange : this.options.step,
-          highrange = this.options.maxRange !== null ? this.options.maxRange : this.options.step;
-        if (difference < lowrange) {
+          range = this.options.minRange !== null ? this.options.minRange : this.options.step;
+        if (difference < range) {
           if (this.tracking === 'lowValue') {
-            console.log('difference < lowrange');
-            this.highValue = Math.min(newValue + lowrange, this.maxValue);
-            newValue = this.highValue - lowrange;
+            this.highValue = Math.min(newValue + range, this.maxValue);
+            newValue = this.highValue - range;
             this.applyHighValue();
             this.updateHandles('highValue', this.valueToOffset(this.highValue));
           }
           else {
-            this.lowValue = Math.max(newValue - lowrange, this.minValue);
-            newValue = this.lowValue + lowrange;
-            this.applyLowValue();
-            this.updateHandles('lowValue', this.valueToOffset(this.lowValue));
-          }
-          this.updateAriaAttributes();
-        } else if (difference > highrange) {
-          if (this.tracking === 'lowValue') {
-            this.highValue = Math.min(newValue + highrange, this.maxValue);
-            newValue = this.highValue - highrange;
-            this.applyHighValue();
-            this.updateHandles('highValue', this.valueToOffset(this.highValue));
-          }
-          else {
-            this.lowValue = Math.max(newValue - highrange, this.minValue);
-            newValue = this.lowValue + highrange;
+            this.lowValue = Math.max(newValue - range, this.minValue);
+            newValue = this.lowValue + range;
             this.applyLowValue();
             this.updateHandles('lowValue', this.valueToOffset(this.lowValue));
           }
           this.updateAriaAttributes();
         }
-      }
         */
         return newValue;
       },
