@@ -639,6 +639,27 @@
 
       });
 
+      it('should set the correct background-color on tick', function() {
+        var sliderConf = {
+          value: 3,
+          options: {
+            floor: 0,
+            ceil: 10,
+            showTicks: true,
+            getTickColor: function(v) {
+              if (v < 5) return 'red';
+              return 'green';
+            }
+          }
+        };
+        helper.createRangeSlider(sliderConf);
+        expect(helper.element[0].querySelectorAll('.rz-tick')).to.have.length(11);
+        var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[0]);
+        var lastTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[10]);
+        expect(firstTick[0].style['background-color']).to.equal('red');
+        expect(lastTick[0].style['background-color']).to.equal('green');
+      });
+
       it('should set the correct position for labels for single slider with boundPointerLabels=false', function() {
         var sliderConf = {
           min: 100000000,
