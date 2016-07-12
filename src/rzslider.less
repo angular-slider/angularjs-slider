@@ -79,7 +79,7 @@
     top: -@handleSize/2 + @barDimension/2;
     background-color: @handleBgColor;
     z-index: 3;
-    .rounded(@handleSize/2);
+    .rounded(@handleSize/4);
     //  -webkit-transition:all linear 0.15s;
     //  -moz-transition:all linear 0.15s;
     //  -o-transition:all linear 0.15s;
@@ -94,6 +94,9 @@
       left: @handleSize/2 - @handlePointerSize/2;
       .rounded(@handlePointerSize/2);
       background: @handleInnerColor;
+    }
+    &:focus {
+      outline: 0px solid transparent;
     }
     &:hover:after {
       background-color: @handleHoverColor;
