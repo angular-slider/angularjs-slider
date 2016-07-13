@@ -1,3 +1,7 @@
+# 5.4.0 (2016-07-13)
+## Features
+- Add function to customize color of ticks (#372).
+
 # 5.3.0 (2016-07-11)
 ## Features
 - Expose labels on scope in template (#358).

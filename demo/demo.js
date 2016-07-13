@@ -127,6 +127,27 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     }
   };
 
+  //Slider with custom tick formatting
+  $scope.slider_tick_color = {
+    value: 0,
+    options: {
+      ceil: 1200,
+      floor: 0,
+      step: 50,
+      showSelectionBar: true,
+      showTicks: true,
+      getTickColor: function(value){
+        if (value < 300)
+          return 'red';
+        if (value < 600)
+          return 'orange';
+        if (value < 900)
+          return 'yellow';
+        return '#2AE02A';
+      }
+    }
+  };
+
   //Slider config with floor, ceil and step
   $scope.slider_floor_ceil = {
     value: 12,
@@ -332,24 +353,6 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
       draggableRangeOnly: true
     }
   };
-
-  //Slider with custom tick formating
-  $scope.slider_custom_tick_format = {
-    value: 30,
-    options: {
-      ceil: 1000,
-      floor: 0,
-      showSelectionBar: true,
-      showTicks: true,
-      getTickColor: function(value){
-        if(value > 100){
-          return 'red'; 
-        }
-        return 'blue';
-      }
-    }
-  };
-
 
   //Vertical sliders
   $scope.verticalSlider1 = {
