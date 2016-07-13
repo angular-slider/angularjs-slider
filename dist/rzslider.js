@@ -1,7 +1,7 @@
 /*! angularjs-slider - v5.3.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-07-11 */
+ 2016-07-12 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -57,6 +57,7 @@
       ticksValuesTooltip: null,
       vertical: false,
       getSelectionBarColor: null,
+      getTickColor: null,
       getPointerColor: null,
       keyboardSupport: true,
       scale: 1,
@@ -932,6 +933,11 @@
               'background-color': this.getSelectionBarColor()
             };
           }
+          if(!tick.selected && this.options.getTickColor){
+            tick.style = {
+              'background-color': this.getTickColor(value)
+            }
+          }
           if (this.options.ticksTooltip) {
             tick.tooltip = this.options.ticksTooltip(value);
             tick.tooltipPlacement = this.options.vertical ? 'right' : 'top';
@@ -1212,6 +1218,14 @@
           return this.options.getPointerColor(this.scope.rzSliderHigh, pointerType);
         }
         return this.options.getPointerColor(this.scope.rzSliderModel, pointerType);
+      },
+
+      /**
+       * Wrapper around the getTickColor of the user to pass to
+       * correct parameters
+       */
+      getTickColor: function(value) {
+        return this.options.getTickColor(value);
       },
 
       /**
