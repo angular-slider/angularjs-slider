@@ -402,6 +402,35 @@
         expect(helper.slider.cmbLab.rzAlwaysHide).to.be.true;
       });
 
+      it('should show floor and ceil labels when hidePointerLabels is true', function() {
+        var sliderConf = {
+          value: 100,
+          options: {
+            floor: 0,
+            ceil: 100,
+            hidePointerLabels: true
+          }
+        };
+        helper.createSlider(sliderConf);
+        expect(helper.slider.flrLab.css('visibility')).to.equal('visible');
+        expect(helper.slider.ceilLab.css('visibility')).to.equal('visible');
+      });
+
+      it('should show floor and ceil labels when hidePointerLabels is true, for range slider', function() {
+        var sliderConf = {
+          minValue: 0,
+          maxValue: 100,
+          options: {
+            floor: 0,
+            ceil: 100,
+            hidePointerLabels: true
+          }
+        };
+        helper.createRangeSlider(sliderConf);
+        expect(helper.slider.flrLab.css('visibility')).to.equal('visible');
+        expect(helper.slider.ceilLab.css('visibility')).to.equal('visible');
+      });
+
       it('should set the correct background-color on selection bar for single slider', function() {
         var sliderConf = {
           value: 10,
