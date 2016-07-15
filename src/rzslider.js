@@ -1100,6 +1100,10 @@
        * @returns {undefined}
        */
       shFloorCeil: function() {
+        // Show based only on hideLimitLabels if pointer labels are hidden
+        if (this.options.hidePointerLabels) {
+            return;
+        }
         var flHidden = false,
           clHidden = false,
           isRTL = this.options.rightToLeft,
