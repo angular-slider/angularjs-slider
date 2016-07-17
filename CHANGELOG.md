@@ -1,3 +1,7 @@
+# 5.4.1 (2016-07-17)
+## Fix
+- Fix showing limit labels when pointer labels are always hidden (#373).
+
 # 5.4.0 (2016-07-13)
 ## Features
 - Add function to customize color of ticks (#372).
