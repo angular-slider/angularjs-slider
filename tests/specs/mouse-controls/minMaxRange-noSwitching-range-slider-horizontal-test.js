@@ -28,6 +28,7 @@
           floor: 0,
           ceil: 100,
           minRange: 10,
+          maxRange: 50,
           noSwitching: true
         }
       };
@@ -80,6 +81,44 @@
       helper.moveMouseToValue(expectedValue);
       expect(helper.scope.slider.min).to.equal(45);
       expect(helper.scope.slider.max).to.equal(55);
+    });
+
+    it('should not modify any value if new range would be larger than maxRange when moving minH', function() {
+      helper.fireMousedown(helper.slider.minH, 0);
+      var expectedValue = 0;
+      helper.moveMouseToValue(expectedValue);
+      expect(helper.scope.slider.min).to.equal(5);
+    });
+
+    it('should not modify any value if new range would be larger than maxRange when moving maxH', function() {
+      helper.fireMousedown(helper.slider.maxH, 0);
+      var expectedValue = 100;
+      helper.moveMouseToValue(expectedValue);
+      expect(helper.scope.slider.max).to.equal(95);
+    });
+
+    it('should not switch min/max when moving minH far higher than maxH (issue #377)', function() {
+      helper.scope.slider.min = 0;
+      helper.scope.slider.max = 10;
+      helper.scope.$digest();
+
+      helper.fireMousedown(helper.slider.minH, 0);
+      var expectedValue = 100;
+      helper.moveMouseToValue(expectedValue);
+      expect(helper.scope.slider.min).to.equal(0);
+      expect(helper.scope.slider.max).to.equal(10);
+    });
+
+    it('should not switch min/max when moving maxH far lower than minH (issue #377)', function() {
+      helper.scope.slider.min = 90;
+      helper.scope.slider.max = 100;
+      helper.scope.$digest();
+
+      helper.fireMousedown(helper.slider.maxH, 0);
+      var expectedValue = 0;
+      helper.moveMouseToValue(expectedValue);
+      expect(helper.scope.slider.min).to.equal(90);
+      expect(helper.scope.slider.max).to.equal(100);
     });
   });
 
