@@ -796,7 +796,10 @@
           label.rzsv = valStr;
         }
 
-        if(!noLabelInjection){ label.html(valStr); };
+        if (!noLabelInjection) {
+          label.html(valStr);
+        }
+        ;
 
         this.scope[which + 'Label'] = valStr;
 
@@ -937,7 +940,7 @@
               'background-color': this.getSelectionBarColor()
             };
           }
-          if(!tick.selected && this.options.getTickColor){
+          if (!tick.selected && this.options.getTickColor) {
             tick.style = {
               'background-color': this.getTickColor(value)
             }
@@ -1102,7 +1105,7 @@
       shFloorCeil: function() {
         // Show based only on hideLimitLabels if pointer labels are hidden
         if (this.options.hidePointerLabels) {
-            return;
+          return;
         }
         var flHidden = false,
           clHidden = false,
@@ -1941,40 +1944,36 @@
             valueChanged = true;
           }
           else {
+            if (this.options.noSwitching) {
+              if (this.tracking === 'lowValue' && newValue > this.highValue)
+                newValue = this.applyMinMaxRange(this.highValue);
+              else if (this.tracking === 'highValue' && newValue < this.lowValue)
+                newValue = this.applyMinMaxRange(this.lowValue);
+            }
             newValue = this.applyMinMaxRange(newValue);
             /* This is to check if we need to switch the min and max handles */
             if (this.tracking === 'lowValue' && newValue > this.highValue) {
-              if (this.options.noSwitching && this.highValue !== this.minValue) {
-                newValue = this.applyMinMaxRange(this.highValue);
-              }
-              else {
-                this.lowValue = this.highValue;
-                this.applyLowValue();
-                this.updateHandles(this.tracking, this.maxH.rzsp);
-                this.updateAriaAttributes();
-                this.tracking = 'highValue';
-                this.minH.removeClass('rz-active');
-                this.maxH.addClass('rz-active');
-                if (this.options.keyboardSupport)
-                  this.focusElement(this.maxH);
-              }
+              this.lowValue = this.highValue;
+              this.applyLowValue();
+              this.updateHandles(this.tracking, this.maxH.rzsp);
+              this.updateAriaAttributes();
+              this.tracking = 'highValue';
+              this.minH.removeClass('rz-active');
+              this.maxH.addClass('rz-active');
+              if (this.options.keyboardSupport)
+                this.focusElement(this.maxH);
               valueChanged = true;
             }
             else if (this.tracking === 'highValue' && newValue < this.lowValue) {
-              if (this.options.noSwitching && this.lowValue !== this.maxValue) {
-                newValue = this.applyMinMaxRange(this.lowValue);
-              }
-              else {
-                this.highValue = this.lowValue;
-                this.applyHighValue();
-                this.updateHandles(this.tracking, this.minH.rzsp);
-                this.updateAriaAttributes();
-                this.tracking = 'lowValue';
-                this.maxH.removeClass('rz-active');
-                this.minH.addClass('rz-active');
-                if (this.options.keyboardSupport)
-                  this.focusElement(this.minH);
-              }
+              this.highValue = this.lowValue;
+              this.applyHighValue();
+              this.updateHandles(this.tracking, this.minH.rzsp);
+              this.updateAriaAttributes();
+              this.tracking = 'lowValue';
+              this.maxH.removeClass('rz-active');
+              this.minH.addClass('rz-active');
+              if (this.options.keyboardSupport)
+                this.focusElement(this.minH);
               valueChanged = true;
             }
           }
