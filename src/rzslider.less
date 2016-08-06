@@ -8,6 +8,8 @@
  */
 @import 'variables.less';
 
+
+
 .rzslider {
   display: inline-block;
   position: relative;
@@ -84,6 +86,8 @@
     //  -moz-transition:all linear 0.15s;
     //  -o-transition:all linear 0.15s;
     //  transition:all linear 0.15s;
+    // Remove outline on webkit browser.
+    outline: none;
 
     &:after {
       content: '';
