@@ -87,7 +87,6 @@
     //  -o-transition:all linear 0.15s;
     //  transition:all linear 0.15s;
     // Remove outline on webkit browser.
-    outline: none;
 
     &:after {
       content: '';
@@ -104,6 +103,7 @@
     }
     &.rz-active{
       z-index: 4;
+       outline: none;
       &:after {
         background-color: @handleActiveColor;
       }
