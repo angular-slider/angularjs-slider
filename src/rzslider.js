@@ -1919,6 +1919,16 @@
        * @param {number} newMaxValue   the new maximum value
        */
       positionTrackingBar: function(newMinValue, newMaxValue) {
+
+        if (this.options.minLimit != null && newMinValue < this.options.minLimit) {
+          newMinValue = this.options.minLimit;
+          newMaxValue = newMinValue + this.dragging.difference;
+        }
+        if (this.options.maxLimit != null && newMaxValue > this.options.maxLimit){
+          newMaxValue = this.options.maxLimit;
+          newMinValue = newMaxValue - this.dragging.difference;
+        }
+
         this.lowValue = newMinValue;
         this.highValue = newMaxValue;
         this.applyLowValue();

@@ -1,3 +1,7 @@
+# 5.4.3 (2016-08-07)
+## Fix
+- Fix minLimit/maxLimit bugged for draggableRange (#384).
+
 # 5.4.2 (2016-08-02)
 ## Fix
 - Fix minimum value goes below floor when using maxRange (#377).

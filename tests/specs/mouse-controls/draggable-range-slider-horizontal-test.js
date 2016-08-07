@@ -196,6 +196,28 @@
       expect(helper.slider.minH.css('left')).to.equal(minOffset + 'px');
       expect(helper.slider.maxH.css('left')).to.equal(maxOffset + 'px');
     });
+
+    it('should respect minLimit option', function() {
+      helper.scope.slider.options.minLimit = 20;
+      helper.scope.$digest();
+
+      helper.fireMousedown(helper.slider.selBar, 0);
+      helper.fireMousemove(-1000);
+
+      expect(helper.scope.slider.min).to.equal(20);
+      expect(helper.scope.slider.max).to.equal(40);
+    });
+
+    it('should respect maxLimit option', function() {
+      helper.scope.slider.options.maxLimit = 80;
+      helper.scope.$digest();
+
+      helper.fireMousedown(helper.slider.selBar, 0);
+      helper.fireMousemove(helper.slider.maxPos);
+
+      expect(helper.scope.slider.min).to.equal(60);
+      expect(helper.scope.slider.max).to.equal(80);
+    });
   });
 
   describe('Right to left Mouse controls - draggableRange Horizontal', function() {

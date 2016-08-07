@@ -1,7 +1,7 @@
-/*! angularjs-slider - v5.4.2 - 
+/*! angularjs-slider - v5.4.3 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-08-02 */
+ 2016-08-07 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -1915,6 +1915,16 @@
        * @param {number} newMaxValue   the new maximum value
        */
       positionTrackingBar: function(newMinValue, newMaxValue) {
+
+        if (this.options.minLimit != null && newMinValue < this.options.minLimit) {
+          newMinValue = this.options.minLimit;
+          newMaxValue = newMinValue + this.dragging.difference;
+        }
+        if (this.options.maxLimit != null && newMaxValue > this.options.maxLimit){
+          newMaxValue = this.options.maxLimit;
+          newMinValue = newMaxValue - this.dragging.difference;
+        }
+
         this.lowValue = newMinValue;
         this.highValue = newMaxValue;
         this.applyLowValue();
