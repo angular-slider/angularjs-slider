@@ -1,4 +1,4 @@
-## AngularJS slider directive with no external dependencies
+## AngularJS 1.X slider directive with no external dependencies
 
 Status:
 [![npm version](https://img.shields.io/npm/v/angularjs-slider.svg?style=flat-square)](https://www.npmjs.com/package/angularjs-slider)
@@ -11,7 +11,7 @@ Links:
 [![Join the chat at https://gitter.im/rzajac/angularjs-slider](https://img.shields.io/badge/GITTER-join%20chat-1dce73.svg?style=flat-square)](https://gitter.im/rzajac/angularjs-slider?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-Slider directive implementation for AngularJS, without any dependencies: [http://angular-slider.github.io/angularjs-slider](http://angular-slider.github.io/angularjs-slider/index.html).
+Slider directive implementation for AngularJS 1.X, without any dependencies: [http://angular-slider.github.io/angularjs-slider](http://angular-slider.github.io/angularjs-slider/index.html).
 
 - Mobile friendly
 - Fast
