@@ -76,7 +76,7 @@
       boundPointerLabels: true,
       mergeRangeLabelsIfSame: false,
       customTemplateScope: null,
-      showLimitLabels: false
+      autoHideLabels: true
     };
     var globalOptions = {};
 
@@ -1074,7 +1074,7 @@
           };
         }
 
-        if(!this.options.showLimitLabels){
+        if(this.options.autoHideLabels){
           this.shFloorCeil();
         }
       },
@@ -1096,7 +1096,7 @@
             backgroundColor: pointercolor
           };
         }
-        if(!this.optionsshowLimitLabels){
+        if(this.options.autoHideLabels){
           this.shFloorCeil();
         }
         
