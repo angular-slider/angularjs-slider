@@ -1,7 +1,7 @@
 /*! angularjs-slider - v5.4.3 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-08-25 */
+ 2016-09-06 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -72,7 +72,7 @@
       boundPointerLabels: true,
       mergeRangeLabelsIfSame: false,
       customTemplateScope: null,
-      showLimitLabels: false
+      autoHideLabels: true
     };
     var globalOptions = {};
 
@@ -1070,7 +1070,7 @@
           };
         }
 
-        if(!this.options.showLimitLabels){
+        if(this.options.autoHideLabels){
           this.shFloorCeil();
         }
       },
@@ -1092,8 +1092,7 @@
             backgroundColor: pointercolor
           };
         }
-        console.log(this.options.showLimitLabels)
-        if(!this.optionsshowLimitLabels){
+        if(this.options.autoHideLabels){
           this.shFloorCeil();
         }
         
