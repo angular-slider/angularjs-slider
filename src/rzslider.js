@@ -52,6 +52,7 @@
       showSelectionBarFromValue: null,
       hidePointerLabels: false,
       hideLimitLabels: false,
+      autoHideLimitLabels: true,
       readOnly: false,
       disabled: false,
       interval: 350,
@@ -75,8 +76,7 @@
       rightToLeft: false,
       boundPointerLabels: true,
       mergeRangeLabelsIfSame: false,
-      customTemplateScope: null,
-      autoHideLabels: true
+      customTemplateScope: null
     };
     var globalOptions = {};
 
@@ -319,7 +319,7 @@
       this.maxLab = null; // Label above the high value
       this.cmbLab = null; // Combined label
       this.ticks = null; // The ticks
-    
+
       // Initialize slider
       this.init();
     };
@@ -1074,7 +1074,7 @@
           };
         }
 
-        if(this.options.autoHideLabels){
+        if(this.options.autoHideLimitLabels){
           this.shFloorCeil();
         }
       },
@@ -1096,10 +1096,10 @@
             backgroundColor: pointercolor
           };
         }
-        if(this.options.autoHideLabels){
+        if(this.options.autoHideLimitLabels){
           this.shFloorCeil();
         }
-        
+
       },
 
       /**

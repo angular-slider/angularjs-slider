@@ -1,4 +1,4 @@
-/*! angularjs-slider - v5.4.3 - 
+/*! angularjs-slider - v5.5.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
  2016-09-06 */
@@ -48,6 +48,7 @@
       showSelectionBarFromValue: null,
       hidePointerLabels: false,
       hideLimitLabels: false,
+      autoHideLimitLabels: true,
       readOnly: false,
       disabled: false,
       interval: 350,
@@ -71,8 +72,7 @@
       rightToLeft: false,
       boundPointerLabels: true,
       mergeRangeLabelsIfSame: false,
-      customTemplateScope: null,
-      autoHideLabels: true
+      customTemplateScope: null
     };
     var globalOptions = {};
 
@@ -315,7 +315,7 @@
       this.maxLab = null; // Label above the high value
       this.cmbLab = null; // Combined label
       this.ticks = null; // The ticks
-    
+
       // Initialize slider
       this.init();
     };
@@ -1070,7 +1070,7 @@
           };
         }
 
-        if(this.options.autoHideLabels){
+        if(this.options.autoHideLimitLabels){
           this.shFloorCeil();
         }
       },
@@ -1092,10 +1092,10 @@
             backgroundColor: pointercolor
           };
         }
-        if(this.options.autoHideLabels){
+        if(this.options.autoHideLimitLabels){
           this.shFloorCeil();
         }
-        
+
       },
 
       /**

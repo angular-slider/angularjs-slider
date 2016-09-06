@@ -214,6 +214,7 @@ The default options are:
     showSelectionBarFromValue: null,
     hidePointerLabels: false,
     hideLimitLabels: false,
+    autoHideLimitLabels: true,
     readOnly: false,
     disabled: false,
     interval: 350,
@@ -326,6 +327,8 @@ Just pass an array with each slider value and that's it; the floor, ceil and ste
 **hidePointerLabels** - _Boolean (defaults to false)_: Set to true to hide pointer labels
 
 **hideLimitLabels** - _Boolean (defaults to false)_: Set to true to hide min / max labels
+
+**autoHideLimitLabels** - _Boolean (defaults to true)_: Set to false to disable the auto-hiding behavior of the limit labels.
 
 **readOnly** - _Boolean (defaults to false)_: Set to true to make the slider read-only.
 
