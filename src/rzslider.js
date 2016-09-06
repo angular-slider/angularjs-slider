@@ -75,7 +75,8 @@
       rightToLeft: false,
       boundPointerLabels: true,
       mergeRangeLabelsIfSame: false,
-      customTemplateScope: null
+      customTemplateScope: null,
+      autoHideLabels: true
     };
     var globalOptions = {};
 
@@ -318,7 +319,7 @@
       this.maxLab = null; // Label above the high value
       this.cmbLab = null; // Combined label
       this.ticks = null; // The ticks
-
+    
       // Initialize slider
       this.init();
     };
@@ -1073,7 +1074,9 @@
           };
         }
 
-        this.shFloorCeil();
+        if(this.options.autoHideLabels){
+          this.shFloorCeil();
+        }
       },
 
       /**
@@ -1093,8 +1096,10 @@
             backgroundColor: pointercolor
           };
         }
-
-        this.shFloorCeil();
+        if(this.options.autoHideLabels){
+          this.shFloorCeil();
+        }
+        
       },
 
       /**

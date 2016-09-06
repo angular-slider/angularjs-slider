@@ -1,7 +1,7 @@
 /*! angularjs-slider - v5.4.3 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-08-07 */
+ 2016-09-06 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -71,7 +71,8 @@
       rightToLeft: false,
       boundPointerLabels: true,
       mergeRangeLabelsIfSame: false,
-      customTemplateScope: null
+      customTemplateScope: null,
+      autoHideLabels: true
     };
     var globalOptions = {};
 
@@ -314,7 +315,7 @@
       this.maxLab = null; // Label above the high value
       this.cmbLab = null; // Combined label
       this.ticks = null; // The ticks
-
+    
       // Initialize slider
       this.init();
     };
@@ -1069,7 +1070,9 @@
           };
         }
 
-        this.shFloorCeil();
+        if(this.options.autoHideLabels){
+          this.shFloorCeil();
+        }
       },
 
       /**
@@ -1089,8 +1092,10 @@
             backgroundColor: pointercolor
           };
         }
-
-        this.shFloorCeil();
+        if(this.options.autoHideLabels){
+          this.shFloorCeil();
+        }
+        
       },
 
       /**
