@@ -336,9 +336,9 @@ Just pass an array with each slider value and that's it; the floor, ceil and ste
 
 **interval** - _Number in ms (defaults to 350)_: Internally, a `throttle` function (See http://underscorejs.org/#throttle) is used when the model or high values of the slider are changed from outside the slider. This is to prevent from re-rendering the slider too many times in a row. `interval` is the number of milliseconds to wait between two updates of the slider.
 
-**showTicks** - _Boolean or Number (defaults to false)_: Set to true to display a tick for each step of the slider. Set an integer to display ticks at intermediate positions.
+**showTicks** - _Boolean or Number (defaults to false)_: Set to true to display a tick for each step of the slider. Set a number to display ticks at intermediate positions. This number corresponds to the step between each tick.
 
-**showTicksValues** - _Boolean or Number (defaults to false)_: Set to true to display a tick and the step value for each step of the slider. Set an integer to display ticks and the step value at intermediate positions.
+**showTicksValues** - _Boolean or Number (defaults to false)_: Set to true to display a tick and the step value for each step of the slider. Set a number to display ticks and the step value at intermediate positions. This number corresponds to the step between each tick.
 
 **ticksTooltip** - _Function(value) (defaults to null)_: (requires angular-ui bootstrap) Used to display a tooltip when a tick is hovered. Set to a function that returns the tooltip content for a given value.
 
