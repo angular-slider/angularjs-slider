@@ -241,6 +241,26 @@
       helper.pressKeydown(helper.slider.minH, 'RIGHT');
       expect(helper.scope.slider.value).to.equal(90);
     });
+
+    it('should refocus the slider after a reset if needed and still handle keyboard', function() {
+      var sliderConf = {
+        value: 90,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 1
+        }
+      };
+      helper.createSlider(sliderConf);
+      //try to move minH right
+      helper.slider.minH.triggerHandler('focus');
+
+      helper.slider.resetSlider();
+
+      helper.pressKeydown(helper.slider.minH, 'RIGHT');
+      expect(document.activeElement).to.equal(helper.slider.minH[0]);
+      expect(helper.scope.slider.value).to.equal(91);
+    });
   });
 
   describe('Right to left Keyboard controls - specific tests', function() {

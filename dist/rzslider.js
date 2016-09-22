@@ -1,7 +1,7 @@
 /*! angularjs-slider - v5.5.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-09-06 */
+ 2016-09-22 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -304,6 +304,11 @@
        */
       this.cmbLabelShown = false;
 
+      /**
+       * Internal variable to keep track of the focus element
+       */
+      this.currentFocusElement = null;
+
       // Slider DOM elements wrapped in jqLite
       this.fullBar = null; // The whole slider bar
       this.selBar = null; // Highlight between two handles
@@ -413,6 +418,7 @@
         this.scope.$on('$destroy', function() {
           self.unbindEvents();
           angular.element($window).off('resize', calcDimFn);
+          self.currentFocusElement = null;
         });
       },
 
@@ -577,7 +583,7 @@
         else {
           this.customTrFn = function(modelValue) {
             if (this.options.bindIndexForStepsArray)
-              return this.getStepValue(modelValue)
+              return this.getStepValue(modelValue);
             return modelValue;
           };
         }
@@ -605,6 +611,14 @@
         this.manageEventsBindings();
         this.setDisabledState();
         this.calcViewDimensions();
+        this.refocusPointerIfNeeded();
+      },
+
+      refocusPointerIfNeeded: function() {
+        if (this.currentFocusElement) {
+          this.onPointerFocus(this.currentFocusElement.pointer, this.currentFocusElement.ref);
+          this.focusElement(this.currentFocusElement.pointer)
+        }
       },
 
       /**
@@ -1070,7 +1084,7 @@
           };
         }
 
-        if(this.options.autoHideLimitLabels){
+        if (this.options.autoHideLimitLabels) {
           this.shFloorCeil();
         }
       },
@@ -1092,7 +1106,7 @@
             backgroundColor: pointercolor
           };
         }
-        if(this.options.autoHideLimitLabels){
+        if (this.options.autoHideLimitLabels) {
           this.shFloorCeil();
         }
 
@@ -1695,6 +1709,11 @@
         pointer.on('keyup', angular.bind(this, this.onKeyUp));
         this.firstKeyDown = true;
         pointer.addClass('rz-active');
+
+        this.currentFocusElement = {
+          pointer: pointer,
+          ref: ref
+        };
       },
 
       onKeyUp: function() {
@@ -1707,6 +1726,7 @@
         pointer.off('keyup');
         this.tracking = '';
         pointer.removeClass('rz-active');
+        this.currentFocusElement = null
       },
 
       /**
@@ -1925,7 +1945,7 @@
           newMinValue = this.options.minLimit;
           newMaxValue = newMinValue + this.dragging.difference;
         }
-        if (this.options.maxLimit != null && newMaxValue > this.options.maxLimit){
+        if (this.options.maxLimit != null && newMaxValue > this.options.maxLimit) {
           newMaxValue = this.options.maxLimit;
           newMinValue = newMaxValue - this.dragging.difference;
         }
