@@ -1,3 +1,7 @@
+# 5.5.1 (2016-09-22)
+## Fix
+- Prevent losing focus when slider is rerendered (#415).
+
 # 5.5.0 (2016-09-06)
 ## Features
 - Add an autoHideLimitLabels to disable the auto-hiding of limit labels (#405).
