@@ -1432,19 +1432,17 @@
        * @returns {number}
        */
       valueToOffset: function(val) {
-        var sanitizedValue = this.sanitizeValue(val);
-        if (!this.options.logScale) {
-          if (this.options.rightToLeft) {
-            return (this.maxValue - sanitizedValue) * this.maxPos / this.valueRange || 0;
-          }
-          return (sanitizedValue - this.minValue) * this.maxPos / this.valueRange || 0;
-        }
-        else {
-          var minLog = Math.log(this.minValue),
-            maxLog = Math.log(this.maxValue),
-            scale = (maxLog - minLog) / (this.maxPos);
-          return (Math.log(sanitizedValue) - minLog) / scale || 0;
-        }
+        var sanitizedValue = this.sanitizeValue(val),
+          minValue = this.options.logScale ? Math.log(this.minValue) : this.minValue,
+          maxValue = this.options.logScale ? Math.log(this.maxValue) : this.maxValue,
+          range = maxValue - minValue;
+
+        if (this.options.logScale)
+          sanitizedValue = Math.log(sanitizedValue);
+
+        if (this.options.rightToLeft)
+          return (maxValue - sanitizedValue) * this.maxPos / range || 0;
+        return (sanitizedValue - minValue) * this.maxPos / range || 0;
       },
 
       /**
@@ -1464,18 +1462,16 @@
        * @returns {number}
        */
       offsetToValue: function(offset) {
-        if (!this.options.logScale) {
-          if (this.options.rightToLeft) {
-            return (1 - (offset / this.maxPos)) * this.valueRange + this.minValue;
-          }
-          return (offset / this.maxPos) * this.valueRange + this.minValue;
-        }
-        else {
-          var minLog = Math.log(this.minValue),
-            maxLog = Math.log(this.maxValue),
-            scale = (maxLog - minLog) / (this.maxPos);
-          return Math.exp(minLog + scale * offset);
-        }
+        var minValue = this.options.logScale ? Math.log(this.minValue) : this.minValue,
+          maxValue = this.options.logScale ? Math.log(this.maxValue) : this.maxValue,
+          range = maxValue - minValue,
+          value = 0;
+        if (this.options.rightToLeft)
+          value = (1 - offset / this.maxPos) * range + minValue;
+        else
+          value = offset / this.maxPos * range + minValue;
+
+        return this.options.logScale ? Math.exp(value) : value;
       },
 
       // Events

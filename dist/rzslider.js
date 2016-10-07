@@ -62,6 +62,7 @@
       getTickColor: null,
       getPointerColor: null,
       keyboardSupport: true,
+      logScale: false,
       scale: 1,
       enforceStep: true,
       enforceRange: false,
@@ -832,6 +833,8 @@
         this.precision = +this.options.precision;
 
         this.minValue = this.options.floor;
+        if (this.options.logScale && this.minValue === 0)
+          throw new Error("Can't use floor=0 with logarithmic scale");
 
         if (this.options.enforceStep) {
           this.lowValue = this.roundStep(this.lowValue);
@@ -1425,10 +1428,17 @@
        * @returns {number}
        */
       valueToOffset: function(val) {
-        if (this.options.rightToLeft) {
-          return (this.maxValue - this.sanitizeValue(val)) * this.maxPos / this.valueRange || 0;
-        }
-        return (this.sanitizeValue(val) - this.minValue) * this.maxPos / this.valueRange || 0;
+        var sanitizedValue = this.sanitizeValue(val),
+          minValue = this.options.logScale ? Math.log(this.minValue) : this.minValue,
+          maxValue = this.options.logScale ? Math.log(this.maxValue) : this.maxValue,
+          range = maxValue - minValue;
+
+        if (this.options.logScale)
+          sanitizedValue = Math.log(sanitizedValue);
+
+        if (this.options.rightToLeft)
+          return (maxValue - sanitizedValue) * this.maxPos / range || 0;
+        return (sanitizedValue - minValue) * this.maxPos / range || 0;
       },
 
       /**
@@ -1448,10 +1458,16 @@
        * @returns {number}
        */
       offsetToValue: function(offset) {
-        if (this.options.rightToLeft) {
-          return (1 - (offset / this.maxPos)) * this.valueRange + this.minValue;
-        }
-        return (offset / this.maxPos) * this.valueRange + this.minValue;
+        var minValue = this.options.logScale ? Math.log(this.minValue) : this.minValue,
+          maxValue = this.options.logScale ? Math.log(this.maxValue) : this.maxValue,
+          range = maxValue - minValue,
+          value = 0;
+        if (this.options.rightToLeft)
+          value = (1 - offset / this.maxPos) * range + minValue;
+        else
+          value = offset / this.maxPos * range + minValue;
+
+        return this.options.logScale ? Math.exp(value) : value;
       },
 
       // Events
