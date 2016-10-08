@@ -1,7 +1,7 @@
 /*! angularjs-slider - v5.5.1 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-09-22 */
+ 2016-10-08 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -926,6 +926,10 @@
           this.updateFloorLab();
           this.updateCeilLab();
           this.initHandles();
+          var self = this;
+          $timeout(function() {
+            self.updateTicksScale();
+          });
         }
       },
 
@@ -939,22 +943,26 @@
         var step = this.step;
         if (this.intermediateTicks)
           step = this.options.showTicks;
-        var ticksCount = Math.round((this.maxValue - this.minValue) / step) + 1;
         this.scope.ticks = [];
-        for (var i = 0; i < ticksCount; i++) {
-          var value = this.roundStep(this.minValue + i * step);
+
+        for (var value = this.minValue; value <= this.maxValue; value += step) {
+          var  offset = this.valueToOffset(value),
+            translate = this.options.vertical ? 'translateY' : 'translateX';
+
+          if (this.options.vertical)
+            offset = this.maxPos - offset;
+
           var tick = {
-            selected: this.isTickSelected(value)
+            selected: this.isTickSelected(value),
+            style: {
+              transform: translate + '(' + offset + 'px)'
+            }
           };
           if (tick.selected && this.options.getSelectionBarColor) {
-            tick.style = {
-              'background-color': this.getSelectionBarColor()
-            };
+            tick.style['background-color'] = this.getSelectionBarColor();
           }
           if (!tick.selected && this.options.getTickColor) {
-            tick.style = {
-              'background-color': this.getTickColor(value)
-            }
+            tick.style['background-color'] = this.getTickColor(value);
           }
           if (this.options.ticksTooltip) {
             tick.tooltip = this.options.ticksTooltip(value);

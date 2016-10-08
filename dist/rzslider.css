@@ -1,7 +1,7 @@
 /*! angularjs-slider - v5.5.1 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-09-22 */
+ 2016-10-08 */
 .rzslider {
   position: relative;
   display: inline-block;
@@ -130,23 +130,20 @@
   top: -3px;
   left: 0;
   z-index: 1;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   width: 100%;
   height: 0;
-  padding: 0 11px;
   margin: 0;
   list-style: none;
   box-sizing: border-box;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
 }
 
 .rzslider .rz-ticks .rz-tick {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 10px;
   height: 10px;
+  margin-left: 11px;
   text-align: center;
   cursor: pointer;
   background: #d8e0f3;
@@ -230,13 +227,11 @@
   z-index: 1;
   width: 0;
   height: 100%;
-  padding: 11px 0;
-  -webkit-flex-direction: column-reverse;
-      -ms-flex-direction: column-reverse;
-          flex-direction: column-reverse;
 }
 
 .rzslider.rz-vertical .rz-ticks .rz-tick {
+  margin-top: 11px;
+  margin-left: auto;
   vertical-align: middle;
 }
 
