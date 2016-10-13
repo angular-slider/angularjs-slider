@@ -256,6 +256,16 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     }
   };
 
+  //Slider with ticks at specific positions
+  $scope.slider_ticks_array = {
+    value: 5,
+    options: {
+      ceil: 10,
+      floor: 0,
+      ticksArray: [0, 1, 3, 8, 10]
+    }
+  };
+
   //Slider with ticks and tooltip
   $scope.slider_ticks_tooltip = {
     value: 5,
