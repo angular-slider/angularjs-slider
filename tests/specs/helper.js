@@ -123,7 +123,7 @@
     };
 
     h.getMousePosition = function(value) {
-      return h.slider.valueToOffset(value) + h.slider.handleHalfDim + h.slider.sliderElem.rzsp;
+      return h.slider.valueToPosition(value) + h.slider.handleHalfDim + h.slider.sliderElem.rzsp;
     };
 
     h.moveMouseToValue = function(value) {

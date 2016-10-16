@@ -13,6 +13,7 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     options: {
       floor: 0,
       ceil: 100,
+      rightToLeft: true,
       step: 1
     }
   };
@@ -137,6 +138,41 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     }
   };
 
+  //Slider config with logarithmic scale
+  $scope.slider_log = {
+    value: 1,
+    options: {
+      floor: 1,
+      ceil: 100,
+      logScale: true,
+      showTicks: true
+    }
+  };
+
+  //Slider config with custom scale
+  $scope.slider_custom_scale = {
+    value: 50,
+    options: {
+      floor: 0,
+      ceil: 100,
+      step: 10,
+      showTicksValues: true,
+      customValueToPosition: function(val, minVal, maxVal) {
+        val = Math.sqrt(val);
+        minVal = Math.sqrt(minVal);
+        maxVal = Math.sqrt(maxVal);
+        var range = maxVal - minVal;
+        return (val - minVal) / range;
+      },
+      customPositionToValue: function(percent, minVal, maxVal) {
+        minVal = Math.sqrt(minVal);
+        maxVal = Math.sqrt(maxVal);
+        var value = percent * (maxVal - minVal) + minVal;
+        return Math.pow(value, 2);
+      }
+    }
+  };
+
   //Right to left slider with floor, ceil and step
   $scope.slider_floor_ceil_rtl = {
     value: 12,
@@ -232,8 +268,7 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     options: {
       ceil: 10,
       floor: 0,
-      ticksArray: [0, 1, 3, 8, 10],
-      showTicksValues: true
+      ticksArray: [0, 1, 3, 8, 10]
     }
   };
 
@@ -322,7 +357,7 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
       step: 50,
       showSelectionBar: true,
       showTicks: true,
-      getTickColor: function(value){
+      getTickColor: function(value) {
         if (value < 300)
           return 'red';
         if (value < 600)
@@ -564,8 +599,8 @@ app.directive('clickableLabel', function() {
     scope: {label: '='},
     replace: true,
     template: "<button ng-click='onclick(label)' style='cursor: pointer;'>click me - {{label}}</button>",
-    link: function(scope, elem, attrs){
-      scope.onclick = function(label){
+    link: function(scope, elem, attrs) {
+      scope.onclick = function(label) {
         alert("I'm " + label);
       };
     }

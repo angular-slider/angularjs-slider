@@ -23,7 +23,7 @@
   "devDependencies": {
     "angular": "1.4.7",
     "angular-mocks": "1.4.8",
-    "chai": "^3.4.1",
+    "chai": "^3.5.0",
     "codecov.io": "^0.1.6",
     "commitizen": "^2.4.6",
     "cz-conventional-changelog": "^1.1.5",
@@ -43,10 +43,11 @@
     "karma-chrome-launcher": "^0.2.2",
     "karma-coverage": "^0.5.3",
     "karma-mocha": "^0.2.1",
+    "karma-mocha-reporter": "^2.2.0",
     "karma-ng-html2js-preprocessor": "^0.2.0",
     "karma-phantomjs-launcher": "^1.0.2",
     "karma-sinon": "^1.0.4",
-    "mocha": "^2.3.4",
+    "mocha": "^3.1.2",
     "phantomjs": "^1.9.19",
     "recess": "~1.1.9",
     "sinon": "^1.17.2"

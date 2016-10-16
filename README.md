@@ -239,7 +239,10 @@ The default options are:
     rightToLeft: false,
     boundPointerLabels: true,
     mergeRangeLabelsIfSame: false,
-    customTemplateScope: null
+    customTemplateScope: null,
+    logScale: false,
+    customValueToPosition: null,
+    customPositionToValue: null
 }
 ````
 
@@ -381,6 +384,14 @@ _Changing this value at runtime is not currently supported._
   - End: maximum value
 
 **customTemplateScope** - _Object (default to null)_: The properties defined in this object will be exposed in the slider template under `custom.X`.
+
+**logScale** - _Boolean (defaults to false)_: Set to true to use a logarithmic scale to display the slider.
+
+For custom scales:
+**customValueToPosition** - _Function(val, minVal, maxVal): percent_: Function that returns the position on the slider for a given value. The position must be a percentage between 0 and 1.
+
+**customPositionToValue** - _Function(percent, minVal, maxVal): value_: Function that returns the value for a given position on the slider. The position is a percentage between 0 and 1.
+
 
 ## Change default options
 If you want the change the default options for all the sliders displayed in your application, you can set them using the `RzSliderOptions.options()` method:

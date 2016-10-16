@@ -43,8 +43,8 @@
 
       var event = helper.fireMousedown(helper.slider.minH, 0);
       var moveValue = 10,
-        offset = helper.slider.valueToOffset(moveValue);
-      helper.fireMousemove(offset);
+        position = helper.slider.valueToPosition(moveValue);
+      helper.fireMousemove(position);
 
       expect(helper.scope.slider.min).to.equal(50);
       expect(helper.scope.slider.max).to.equal(70);
@@ -57,8 +57,8 @@
       sinon.spy(helper.slider, 'callOnChange');
       var event = helper.fireMousedown(helper.slider.maxH, 0);
       var moveValue = 10,
-        offset = helper.slider.valueToOffset(moveValue);
-      helper.fireMousemove(offset);
+        position = helper.slider.valueToPosition(moveValue);
+      helper.fireMousemove(position);
       expect(helper.scope.slider.min).to.equal(50);
       expect(helper.scope.slider.max).to.equal(70);
       helper.slider.positionTrackingBar.called.should.be.true;
@@ -69,9 +69,9 @@
       sinon.spy(helper.slider, 'callOnStart');
 
       var moveValue = 10,
-        offset = helper.slider.valueToOffset(moveValue);
+        position = helper.slider.valueToPosition(moveValue);
 
-      var event = helper.fireMousedown(helper.slider.fullBar, offset);
+      var event = helper.fireMousedown(helper.slider.fullBar, position);
 
       expect(helper.scope.slider.min).to.equal(40);
       expect(helper.scope.slider.max).to.equal(60);
@@ -88,8 +88,8 @@
       helper.fireMousedown(helper.slider.selBar, 0);
 
       var moveValue = 10,
-        offset = helper.slider.valueToOffset(moveValue);
-      helper.fireMousemove(offset);
+        position = helper.slider.valueToPosition(moveValue);
+      helper.fireMousemove(position);
 
       expect(helper.scope.slider.min).to.equal(50);
       expect(helper.scope.slider.max).to.equal(70);
@@ -207,8 +207,8 @@
 
       var event = helper.fireMousedown(helper.slider.minH, 0);
       var moveValue = 10,
-          offset = helper.slider.valueToOffset(moveValue);
-      helper.fireMousemove(offset);
+          position = helper.slider.valueToPosition(moveValue);
+      helper.fireMousemove(position);
 
       expect(helper.scope.slider.min).to.equal(50);
       expect(helper.scope.slider.max).to.equal(70);
@@ -221,8 +221,8 @@
       sinon.spy(helper.slider, 'callOnChange');
       var event = helper.fireMousedown(helper.slider.maxH, 0);
       var moveValue = 10,
-          offset = helper.slider.valueToOffset(moveValue);
-      helper.fireMousemove(offset);
+          position = helper.slider.valueToPosition(moveValue);
+      helper.fireMousemove(position);
       expect(helper.scope.slider.min).to.equal(50);
       expect(helper.scope.slider.max).to.equal(70);
       helper.slider.positionTrackingBar.called.should.be.true;
@@ -233,9 +233,9 @@
       sinon.spy(helper.slider, 'callOnStart');
 
       var moveValue = 10,
-          offset = helper.slider.valueToOffset(moveValue);
+          position = helper.slider.valueToPosition(moveValue);
 
-      var event = helper.fireMousedown(helper.slider.fullBar, offset);
+      var event = helper.fireMousedown(helper.slider.fullBar, position);
 
       expect(helper.scope.slider.min).to.equal(40);
       expect(helper.scope.slider.max).to.equal(60);
@@ -252,8 +252,8 @@
       helper.fireMousedown(helper.slider.selBar, 0);
 
       var moveValue = 10,
-          offset = helper.slider.valueToOffset(moveValue);
-      helper.fireMousemove(offset);
+          position = helper.slider.valueToPosition(moveValue);
+      helper.fireMousemove(position);
 
       expect(helper.scope.slider.min).to.equal(50);
       expect(helper.scope.slider.max).to.equal(70);

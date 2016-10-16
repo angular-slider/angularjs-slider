@@ -56,9 +56,9 @@
       helper.scope.$digest();
 
       var expectedValue = 30,
-        offset = helper.getMousePosition(expectedValue);
+        position = helper.getMousePosition(expectedValue);
 
-      helper.fireMousedown(helper.slider.fullBar, offset);
+      helper.fireMousedown(helper.slider.fullBar, position);
 
       expect(helper.scope.slider.min).to.equal(30);
       expect(helper.scope.slider.max).to.equal(50);
@@ -69,9 +69,9 @@
       helper.scope.$digest();
 
       var expectedValue = 70,
-        offset = helper.getMousePosition(expectedValue);
+        position = helper.getMousePosition(expectedValue);
 
-      helper.fireMousedown(helper.slider.fullBar, offset);
+      helper.fireMousedown(helper.slider.fullBar, position);
 
       expect(helper.scope.slider.min).to.equal(50);
       expect(helper.scope.slider.max).to.equal(70);
@@ -134,9 +134,9 @@
       helper.scope.$digest();
 
       var expectedValue = 30,
-        offset = helper.getMousePosition(expectedValue);
+        position = helper.getMousePosition(expectedValue);
 
-      helper.fireMousedown(helper.slider.fullBar, offset);
+      helper.fireMousedown(helper.slider.fullBar, position);
 
       expect(helper.scope.slider.min).to.equal(30);
       expect(helper.scope.slider.max).to.equal(50);
@@ -147,9 +147,9 @@
       helper.scope.$digest();
 
       var expectedValue = 70,
-        offset = helper.getMousePosition(expectedValue);
+        position = helper.getMousePosition(expectedValue);
 
-      helper.fireMousedown(helper.slider.fullBar, offset);
+      helper.fireMousedown(helper.slider.fullBar, position);
 
       expect(helper.scope.slider.min).to.equal(50);
       expect(helper.scope.slider.max).to.equal(70);
