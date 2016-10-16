@@ -388,6 +388,7 @@ _Changing this value at runtime is not currently supported._
 **logScale** - _Boolean (defaults to false)_: Set to true to use a logarithmic scale to display the slider.
 
 For custom scales:
+
 **customValueToPosition** - _Function(val, minVal, maxVal): percent_: Function that returns the position on the slider for a given value. The position must be a percentage between 0 and 1.
 
 **customPositionToValue** - _Function(percent, minVal, maxVal): value_: Function that returns the value for a given position on the slider. The position is a percentage between 0 and 1.
