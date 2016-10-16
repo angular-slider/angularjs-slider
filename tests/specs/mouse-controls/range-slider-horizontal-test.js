@@ -197,9 +197,9 @@
       sinon.spy(helper.slider, 'focusElement');
 
       var expectedValue = 10,
-        offset = helper.getMousePosition(expectedValue);
+        position = helper.getMousePosition(expectedValue);
 
-      var event = helper.fireMousedown(helper.slider.fullBar, offset);
+      var event = helper.fireMousedown(helper.slider.fullBar, position);
 
       expect(helper.scope.slider.min).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
@@ -216,9 +216,9 @@
       sinon.spy(helper.slider, 'focusElement');
 
       var expectedValue = 90,
-        offset = helper.getMousePosition(expectedValue);
+        position = helper.getMousePosition(expectedValue);
 
-      var event = helper.fireMousedown(helper.slider.fullBar, offset);
+      var event = helper.fireMousedown(helper.slider.fullBar, position);
 
       expect(helper.scope.slider.max).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('highValue');
@@ -235,9 +235,9 @@
       sinon.spy(helper.slider, 'focusElement');
 
       var expectedValue = 10,
-        offset = helper.getMousePosition(expectedValue);
+        position = helper.getMousePosition(expectedValue);
 
-      var event = helper.fireMousedown(helper.slider.selBar, offset);
+      var event = helper.fireMousedown(helper.slider.selBar, position);
 
       expect(helper.scope.slider.min).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
@@ -254,9 +254,9 @@
       sinon.spy(helper.slider, 'focusElement');
 
       var expectedValue = 90,
-        offset = helper.getMousePosition(expectedValue);
+        position = helper.getMousePosition(expectedValue);
 
-      var event = helper.fireMousedown(helper.slider.selBar, offset);
+      var event = helper.fireMousedown(helper.slider.selBar, position);
 
       expect(helper.scope.slider.max).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('highValue');
@@ -464,9 +464,9 @@
       sinon.spy(helper.slider, 'focusElement');
 
       var expectedValue = 10,
-        offset = helper.getMousePosition(expectedValue);
+        position = helper.getMousePosition(expectedValue);
 
-      var event = helper.fireMousedown(helper.slider.fullBar, offset);
+      var event = helper.fireMousedown(helper.slider.fullBar, position);
 
       expect(helper.scope.slider.min).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
@@ -483,9 +483,9 @@
       sinon.spy(helper.slider, 'focusElement');
 
       var expectedValue = 90,
-        offset = helper.getMousePosition(expectedValue);
+        position = helper.getMousePosition(expectedValue);
 
-      var event = helper.fireMousedown(helper.slider.fullBar, offset);
+      var event = helper.fireMousedown(helper.slider.fullBar, position);
 
       expect(helper.scope.slider.max).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('highValue');
@@ -502,9 +502,9 @@
       sinon.spy(helper.slider, 'focusElement');
 
       var expectedValue = 10,
-        offset = helper.getMousePosition(expectedValue);
+        position = helper.getMousePosition(expectedValue);
 
-      var event = helper.fireMousedown(helper.slider.selBar, offset);
+      var event = helper.fireMousedown(helper.slider.selBar, position);
 
       expect(helper.scope.slider.min).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
@@ -521,9 +521,9 @@
       sinon.spy(helper.slider, 'focusElement');
 
       var expectedValue = 90,
-        offset = helper.getMousePosition(expectedValue);
+        position = helper.getMousePosition(expectedValue);
 
-      var event = helper.fireMousedown(helper.slider.selBar, offset);
+      var event = helper.fireMousedown(helper.slider.selBar, position);
 
       expect(helper.scope.slider.max).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('highValue');

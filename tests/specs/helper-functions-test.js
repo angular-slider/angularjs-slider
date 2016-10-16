@@ -199,23 +199,23 @@
         expect(el.css('height')).to.equal('12px');
       });
 
-      it('should have a valid valueToOffset for positive sliders', function() {
+      it('should have a valid valueToPosition for positive sliders', function() {
         helper.slider.maxPos = 1000;
-        expect(helper.slider.valueToOffset(0)).to.equal(0);
-        expect(helper.slider.valueToOffset(50)).to.equal(500);
-        expect(helper.slider.valueToOffset(100)).to.equal(1000);
+        expect(helper.slider.valueToPosition(0)).to.equal(0);
+        expect(helper.slider.valueToPosition(50)).to.equal(500);
+        expect(helper.slider.valueToPosition(100)).to.equal(1000);
       });
 
-      it('should have a valid valueToOffset for negative sliders', function() {
+      it('should have a valid valueToPosition for negative sliders', function() {
         helper.scope.slider.options.floor = -100;
         helper.scope.slider.options.ceil = 0;
         helper.scope.slider.value = -50;
         helper.scope.$digest();
 
         helper.slider.maxPos = 1000;
-        expect(helper.slider.valueToOffset(0)).to.equal(1000);
-        expect(helper.slider.valueToOffset(-50)).to.equal(500);
-        expect(helper.slider.valueToOffset(-100)).to.equal(0);
+        expect(helper.slider.valueToPosition(0)).to.equal(1000);
+        expect(helper.slider.valueToPosition(-50)).to.equal(500);
+        expect(helper.slider.valueToPosition(-100)).to.equal(0);
       });
 
       it('should have a valid sanitizeValue', function() {
@@ -228,23 +228,23 @@
         expect(helper.slider.sanitizeValue(110)).to.equal(100);
       });
 
-      it('should have a valid offsetToValue for positive sliders', function() {
+      it('should have a valid positionToValue for positive sliders', function() {
         helper.slider.maxPos = 1000;
-        expect(helper.slider.offsetToValue(0)).to.equal(0);
-        expect(helper.slider.offsetToValue(1000)).to.equal(100);
-        expect(helper.slider.offsetToValue(500)).to.equal(50);
+        expect(helper.slider.positionToValue(0)).to.equal(0);
+        expect(helper.slider.positionToValue(1000)).to.equal(100);
+        expect(helper.slider.positionToValue(500)).to.equal(50);
       });
 
-      it('should have a valid offsetToValue for for negative sliders', function() {
+      it('should have a valid positionToValue for for negative sliders', function() {
         helper.scope.slider.options.floor = -100;
         helper.scope.slider.options.ceil = 0;
         helper.scope.slider.value = -50;
         helper.scope.$digest();
         helper.slider.maxPos = 1000;
 
-        expect(helper.slider.offsetToValue(0)).to.equal(-100);
-        expect(helper.slider.offsetToValue(1000)).to.equal(0);
-        expect(helper.slider.offsetToValue(500)).to.equal(-50);
+        expect(helper.slider.positionToValue(0)).to.equal(-100);
+        expect(helper.slider.positionToValue(1000)).to.equal(0);
+        expect(helper.slider.positionToValue(500)).to.equal(-50);
       });
 
       it('should have a valid getEventXY for horizontal sliders on desktop browsers', function() {
@@ -668,42 +668,42 @@
         helper.createSlider(sliderConf);
       });
 
-      it('should have a valid valueToOffset for positive sliders', function() {
+      it('should have a valid valueToPosition for positive sliders', function() {
         helper.slider.maxPos = 1000;
-        expect(helper.slider.valueToOffset(0)).to.equal(1000);
-        expect(helper.slider.valueToOffset(50)).to.equal(500);
-        expect(helper.slider.valueToOffset(100)).to.equal(0);
+        expect(helper.slider.valueToPosition(0)).to.equal(1000);
+        expect(helper.slider.valueToPosition(50)).to.equal(500);
+        expect(helper.slider.valueToPosition(100)).to.equal(0);
       });
 
-      it('should have a valid valueToOffset for negative sliders', function() {
+      it('should have a valid valueToPosition for negative sliders', function() {
         helper.scope.slider.options.floor = -100;
         helper.scope.slider.options.ceil = 0;
         helper.scope.slider.value = -50;
         helper.scope.$digest();
 
         helper.slider.maxPos = 1000;
-        expect(helper.slider.valueToOffset(0)).to.equal(0);
-        expect(helper.slider.valueToOffset(-50)).to.equal(500);
-        expect(helper.slider.valueToOffset(-100)).to.equal(1000);
+        expect(helper.slider.valueToPosition(0)).to.equal(0);
+        expect(helper.slider.valueToPosition(-50)).to.equal(500);
+        expect(helper.slider.valueToPosition(-100)).to.equal(1000);
       });
 
-      it('should have a valid offsetToValue for positive sliders', function() {
+      it('should have a valid positionToValue for positive sliders', function() {
         helper.slider.maxPos = 1000;
-        expect(helper.slider.offsetToValue(0)).to.equal(100);
-        expect(helper.slider.offsetToValue(1000)).to.equal(0);
-        expect(helper.slider.offsetToValue(500)).to.equal(50);
+        expect(helper.slider.positionToValue(0)).to.equal(100);
+        expect(helper.slider.positionToValue(1000)).to.equal(0);
+        expect(helper.slider.positionToValue(500)).to.equal(50);
       });
 
-      it('should have a valid offsetToValue for for negative sliders', function() {
+      it('should have a valid positionToValue for for negative sliders', function() {
         helper.scope.slider.options.floor = -100;
         helper.scope.slider.options.ceil = 0;
         helper.scope.slider.value = -50;
         helper.scope.$digest();
         helper.slider.maxPos = 1000;
 
-        expect(helper.slider.offsetToValue(0)).to.equal(0);
-        expect(helper.slider.offsetToValue(1000)).to.equal(-100);
-        expect(helper.slider.offsetToValue(500)).to.equal(-50);
+        expect(helper.slider.positionToValue(0)).to.equal(0);
+        expect(helper.slider.positionToValue(1000)).to.equal(-100);
+        expect(helper.slider.positionToValue(500)).to.equal(-50);
       });
     });
   });

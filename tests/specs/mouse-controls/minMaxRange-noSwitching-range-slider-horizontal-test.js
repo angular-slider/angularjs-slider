@@ -163,16 +163,16 @@
     it('should not modify any value if new range would be smaller than minRange when moving minH', function() {
       helper.fireMousedown(helper.slider.minH, 0);
       var expectedValue = 50,
-        offset = helper.getMousePosition(expectedValue);
-      helper.fireMousemove(-offset);
+        position = helper.getMousePosition(expectedValue);
+      helper.fireMousemove(-position);
       expect(helper.scope.slider.min).to.equal(45);
     });
 
     it('should not modify any value if new range would be smaller than minRange when moving maxH', function() {
       helper.fireMousedown(helper.slider.maxH, 0);
       var expectedValue = 50,
-        offset = helper.slider.maxPos - helper.getMousePosition(expectedValue);
-      helper.fireMousemove(offset);
+        position = helper.slider.maxPos - helper.getMousePosition(expectedValue);
+      helper.fireMousemove(position);
       expect(helper.scope.slider.max).to.equal(55);
     });
 
@@ -193,8 +193,8 @@
     it('should not switch min/max when moving minH even if the range is large enough', function() {
       helper.fireMousedown(helper.slider.minH, 0);
       var expectedValue = 80,
-        offset = helper.getMousePosition(expectedValue);
-      helper.fireMousemove(-offset);
+        position = helper.getMousePosition(expectedValue);
+      helper.fireMousemove(-position);
       expect(helper.scope.slider.min).to.equal(45);
       expect(helper.scope.slider.max).to.equal(55);
     });

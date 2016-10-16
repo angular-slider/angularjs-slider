@@ -75,8 +75,8 @@
       sinon.spy(helper.slider, 'callOnChange');
       var event = helper.fireMousedown(helper.slider.minH, 0);
       var expectedValue = 50,
-        offset = helper.getMousePosition(expectedValue);
-      helper.fireMousemove(offset);
+        position = helper.getMousePosition(expectedValue);
+      helper.fireMousemove(position);
       expect(helper.scope.slider.value).to.equal(expectedValue);
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnChange.called.should.be.true;
@@ -136,9 +136,9 @@
       sinon.spy(helper.slider, 'callOnChange');
 
       var expectedValue = 12,
-        offset = helper.getMousePosition(expectedValue);
+        position = helper.getMousePosition(expectedValue);
 
-      helper.fireMousedown(helper.slider.fullBar, offset);
+      helper.fireMousedown(helper.slider.fullBar, position);
 
       expect(helper.scope.slider.value).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
@@ -153,9 +153,9 @@
       sinon.spy(helper.slider, 'callOnChange');
 
       var expectedValue = 12,
-        offset = helper.getMousePosition(expectedValue);
+        position = helper.getMousePosition(expectedValue);
 
-      var event = helper.fireMousedown(helper.slider.selBar, offset);
+      var event = helper.fireMousedown(helper.slider.selBar, position);
 
       expect(helper.scope.slider.value).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
@@ -173,9 +173,9 @@
       sinon.spy(helper.slider, 'callOnChange');
 
       var expectedValue = 10,
-        offset = helper.getMousePosition(expectedValue);
+        position = helper.getMousePosition(expectedValue);
 
-      helper.fireMousedown(helper.slider.ticks, offset);
+      helper.fireMousedown(helper.slider.ticks, position);
 
       expect(helper.scope.slider.value).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
@@ -193,9 +193,9 @@
       sinon.spy(helper.slider, 'callOnChange');
 
       var expectedValue = 10,
-        offset = helper.getMousePosition(expectedValue);
+        position = helper.getMousePosition(expectedValue);
 
-      helper.fireMousedown(helper.slider.ticks, offset);
+      helper.fireMousedown(helper.slider.ticks, position);
 
       expect(helper.scope.slider.value).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
@@ -280,8 +280,8 @@
         sinon.spy(helper.slider, 'callOnChange');
         var event = helper.fireMousedown(helper.slider.minH, 0);
         var expectedValue = 50,
-          offset = helper.getMousePosition(expectedValue);
-        helper.fireMousemove(offset);
+          position = helper.getMousePosition(expectedValue);
+        helper.fireMousemove(position);
         expect(helper.scope.slider.value).to.equal(expectedValue);
         helper.slider.positionTrackingHandle.called.should.be.true;
         helper.slider.callOnChange.called.should.be.true;
@@ -340,9 +340,9 @@
         sinon.spy(helper.slider, 'callOnChange');
 
         var expectedValue = 12,
-          offset = helper.getMousePosition(expectedValue);
+          position = helper.getMousePosition(expectedValue);
 
-        helper.fireMousedown(helper.slider.fullBar, offset);
+        helper.fireMousedown(helper.slider.fullBar, position);
 
         expect(helper.scope.slider.value).to.equal(expectedValue);
         expect(helper.slider.tracking).to.equal('lowValue');
@@ -357,9 +357,9 @@
         sinon.spy(helper.slider, 'callOnChange');
 
         var expectedValue = 12,
-          offset = helper.getMousePosition(expectedValue);
+          position = helper.getMousePosition(expectedValue);
 
-        var event = helper.fireMousedown(helper.slider.selBar, offset);
+        var event = helper.fireMousedown(helper.slider.selBar, position);
 
         expect(helper.scope.slider.value).to.equal(expectedValue);
         expect(helper.slider.tracking).to.equal('lowValue');
@@ -377,9 +377,9 @@
         sinon.spy(helper.slider, 'callOnChange');
 
         var expectedValue = 10,
-          offset = helper.getMousePosition(expectedValue);
+          position = helper.getMousePosition(expectedValue);
 
-        helper.fireMousedown(helper.slider.ticks, offset);
+        helper.fireMousedown(helper.slider.ticks, position);
 
         expect(helper.scope.slider.value).to.equal(expectedValue);
         expect(helper.slider.tracking).to.equal('lowValue');
@@ -397,9 +397,9 @@
         sinon.spy(helper.slider, 'callOnChange');
 
         var expectedValue = 10,
-          offset = helper.getMousePosition(expectedValue);
+          position = helper.getMousePosition(expectedValue);
 
-        helper.fireMousedown(helper.slider.ticks, offset);
+        helper.fireMousedown(helper.slider.ticks, position);
 
         expect(helper.scope.slider.value).to.equal(expectedValue);
         expect(helper.slider.tracking).to.equal('lowValue');

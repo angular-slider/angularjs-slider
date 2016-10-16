@@ -1,6 +1,11 @@
+# 5.7.0 (2016-10-16)
+## Features
+- Add a `logScale` option to display the slider using a logarithmic scale (#280).
+- Add `customValueToPosition` and `customPositionToValue` options to display the slider using a custom scale (#280).
+
 # 5.6.0 (2016-10-16)
 ## Features
-- Add an `ticksArray` to display ticks at specific positions (#426).
+- Add a `ticksArray` option to display ticks at specific positions (#426).
 
 To enable this new feature, the way the ticks are rendered has been changed. Now each tick is positioned absolutely using a `transform: translate()` instruction.
 

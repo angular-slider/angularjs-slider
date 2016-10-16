@@ -112,8 +112,8 @@
       sinon.spy(helper.slider, 'callOnChange');
       var event = helper.fireMousedown(helper.slider.minH, 0, true);
       var expectedValue = 50,
-        offset = helper.slider.sliderElem.rzsp - helper.slider.valueToOffset(expectedValue) - helper.slider.handleHalfDim;
-      helper.fireMousemove(offset, true);
+        position = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
+      helper.fireMousemove(position, true);
       expect(helper.scope.slider.min).to.equal(expectedValue);
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnChange.called.should.be.true;
@@ -124,8 +124,8 @@
       sinon.spy(helper.slider, 'callOnChange');
       var event = helper.fireMousedown(helper.slider.maxH, 0, true);
       var expectedValue = 50,
-        offset = helper.slider.sliderElem.rzsp - helper.slider.valueToOffset(expectedValue) - helper.slider.handleHalfDim;
-      helper.fireMousemove(offset, true);
+        position = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
+      helper.fireMousemove(position, true);
       expect(helper.scope.slider.max).to.equal(expectedValue);
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnChange.called.should.be.true;
@@ -138,8 +138,8 @@
 
       var event = helper.fireMousedown(helper.slider.minH, 0, true);
       var expectedValue = 80,
-        offset = helper.slider.sliderElem.rzsp - helper.slider.valueToOffset(expectedValue) - helper.slider.handleHalfDim;
-      helper.fireMousemove(offset, true);
+        position = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
+      helper.fireMousemove(position, true);
 
       expect(helper.scope.slider.min).to.equal(60);
       expect(helper.scope.slider.max).to.equal(80);
@@ -152,8 +152,8 @@
 
       var event = helper.fireMousedown(helper.slider.maxH, 0, true);
       var expectedValue = 20,
-        offset = helper.slider.sliderElem.rzsp - helper.slider.valueToOffset(expectedValue) - helper.slider.handleHalfDim;
-      helper.fireMousemove(offset, true);
+        position = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
+      helper.fireMousemove(position, true);
 
       expect(helper.scope.slider.min).to.equal(20);
       expect(helper.scope.slider.max).to.equal(40);
@@ -166,9 +166,9 @@
       sinon.spy(helper.slider, 'focusElement');
 
       var expectedValue = 10,
-        offset = helper.slider.sliderElem.rzsp - helper.slider.valueToOffset(expectedValue) - helper.slider.handleHalfDim;
+        position = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
 
-      var event = helper.fireMousedown(helper.slider.fullBar, offset, true);
+      var event = helper.fireMousedown(helper.slider.fullBar, position, true);
 
       expect(helper.scope.slider.min).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
@@ -185,9 +185,9 @@
       sinon.spy(helper.slider, 'focusElement');
 
       var expectedValue = 90,
-        offset = helper.slider.sliderElem.rzsp - helper.slider.valueToOffset(expectedValue) - helper.slider.handleHalfDim;
+        position = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
 
-      var event = helper.fireMousedown(helper.slider.fullBar, offset, true);
+      var event = helper.fireMousedown(helper.slider.fullBar, position, true);
 
       expect(helper.scope.slider.max).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('highValue');
@@ -204,9 +204,9 @@
       sinon.spy(helper.slider, 'focusElement');
 
       var expectedValue = 10,
-        offset = helper.slider.sliderElem.rzsp - helper.slider.valueToOffset(expectedValue) - helper.slider.handleHalfDim;
+        position = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
 
-      var event = helper.fireMousedown(helper.slider.selBar, offset, true);
+      var event = helper.fireMousedown(helper.slider.selBar, position, true);
 
       expect(helper.scope.slider.min).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
@@ -223,9 +223,9 @@
       sinon.spy(helper.slider, 'focusElement');
 
       var expectedValue = 90,
-        offset = helper.slider.sliderElem.rzsp - helper.slider.valueToOffset(expectedValue) - helper.slider.handleHalfDim;
+        position = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
 
-      var event = helper.fireMousedown(helper.slider.selBar, offset, true);
+      var event = helper.fireMousedown(helper.slider.selBar, position, true);
 
       expect(helper.scope.slider.max).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('highValue');
@@ -348,8 +348,8 @@
       sinon.spy(helper.slider, 'callOnChange');
       var event = helper.fireMousedown(helper.slider.minH, 0, true);
       var expectedValue = 50,
-        offset = helper.slider.sliderElem.rzsp - helper.slider.valueToOffset(expectedValue) - helper.slider.handleHalfDim;
-      helper.fireMousemove(offset, true);
+        position = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
+      helper.fireMousemove(position, true);
       expect(helper.scope.slider.min).to.equal(expectedValue);
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnChange.called.should.be.true;
@@ -360,8 +360,8 @@
       sinon.spy(helper.slider, 'callOnChange');
       var event = helper.fireMousedown(helper.slider.maxH, 0, true);
       var expectedValue = 50,
-        offset = helper.slider.sliderElem.rzsp - helper.slider.valueToOffset(expectedValue) - helper.slider.handleHalfDim;
-      helper.fireMousemove(offset, true);
+        position = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
+      helper.fireMousemove(position, true);
       expect(helper.scope.slider.max).to.equal(expectedValue);
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnChange.called.should.be.true;
@@ -374,8 +374,8 @@
 
       var event = helper.fireMousedown(helper.slider.minH, 0, true);
       var expectedValue = 80,
-        offset = helper.slider.sliderElem.rzsp - helper.slider.valueToOffset(expectedValue) - helper.slider.handleHalfDim;
-      helper.fireMousemove(offset, true);
+        position = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
+      helper.fireMousemove(position, true);
 
       expect(helper.scope.slider.min).to.equal(60);
       expect(helper.scope.slider.max).to.equal(80);
@@ -388,8 +388,8 @@
 
       var event = helper.fireMousedown(helper.slider.maxH, 0, true);
       var expectedValue = 20,
-        offset = helper.slider.sliderElem.rzsp - helper.slider.valueToOffset(expectedValue) - helper.slider.handleHalfDim;
-      helper.fireMousemove(offset, true);
+        position = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
+      helper.fireMousemove(position, true);
 
       expect(helper.scope.slider.min).to.equal(20);
       expect(helper.scope.slider.max).to.equal(40);
@@ -402,9 +402,9 @@
       sinon.spy(helper.slider, 'focusElement');
 
       var expectedValue = 10,
-        offset = helper.slider.sliderElem.rzsp - helper.slider.valueToOffset(expectedValue) - helper.slider.handleHalfDim;
+        position = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
 
-      var event = helper.fireMousedown(helper.slider.fullBar, offset, true);
+      var event = helper.fireMousedown(helper.slider.fullBar, position, true);
 
       expect(helper.scope.slider.min).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
@@ -421,9 +421,9 @@
       sinon.spy(helper.slider, 'focusElement');
 
       var expectedValue = 90,
-        offset = helper.slider.sliderElem.rzsp - helper.slider.valueToOffset(expectedValue) - helper.slider.handleHalfDim;
+        position = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
 
-      var event = helper.fireMousedown(helper.slider.fullBar, offset, true);
+      var event = helper.fireMousedown(helper.slider.fullBar, position, true);
 
       expect(helper.scope.slider.max).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('highValue');
@@ -440,9 +440,9 @@
       sinon.spy(helper.slider, 'focusElement');
 
       var expectedValue = 10,
-        offset = helper.slider.sliderElem.rzsp - helper.slider.valueToOffset(expectedValue) - helper.slider.handleHalfDim;
+        position = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
 
-      var event = helper.fireMousedown(helper.slider.selBar, offset, true);
+      var event = helper.fireMousedown(helper.slider.selBar, position, true);
 
       expect(helper.scope.slider.min).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
@@ -459,9 +459,9 @@
       sinon.spy(helper.slider, 'focusElement');
 
       var expectedValue = 90,
-        offset = helper.slider.sliderElem.rzsp - helper.slider.valueToOffset(expectedValue) - helper.slider.handleHalfDim;
+        position = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
 
-      var event = helper.fireMousedown(helper.slider.selBar, offset, true);
+      var event = helper.fireMousedown(helper.slider.selBar, position, true);
 
       expect(helper.scope.slider.max).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('highValue');

@@ -84,9 +84,9 @@
       sinon.spy(helper.slider, 'focusElement');
 
       var expectedValue = 10,
-        offset = helper.getMousePosition(expectedValue);
+        position = helper.getMousePosition(expectedValue);
 
-      var event = helper.fireMousedown(helper.slider.fullBar, offset);
+      var event = helper.fireMousedown(helper.slider.fullBar, position);
 
       expect(helper.scope.slider.min).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
@@ -103,9 +103,9 @@
       sinon.spy(helper.slider, 'focusElement');
 
       var expectedValue = 90,
-        offset = helper.getMousePosition(expectedValue);
+        position = helper.getMousePosition(expectedValue);
 
-      var event = helper.fireMousedown(helper.slider.fullBar, offset);
+      var event = helper.fireMousedown(helper.slider.fullBar, position);
 
       expect(helper.scope.slider.max).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('highValue');
@@ -124,8 +124,8 @@
       helper.fireMousedown(helper.slider.selBar, 0);
 
       var moveValue = 10,
-        offset = helper.slider.valueToOffset(moveValue);
-      helper.fireMousemove(offset);
+        position = helper.slider.valueToPosition(moveValue);
+      helper.fireMousemove(position);
 
       expect(helper.scope.slider.min).to.equal(50);
       expect(helper.scope.slider.max).to.equal(70);
@@ -187,14 +187,14 @@
     it('should a working positionTrackingBar', function() {
       var newMin = 50,
         newMax = 90,
-        minOffset = helper.slider.valueToOffset(newMin),
-        maxOffset = helper.slider.valueToOffset(newMax);
-      helper.slider.positionTrackingBar(newMin, newMax, minOffset, maxOffset);
+        minposition = helper.slider.valueToPosition(newMin),
+        maxposition = helper.slider.valueToPosition(newMax);
+      helper.slider.positionTrackingBar(newMin, newMax, minposition, maxposition);
 
       expect(helper.scope.slider.min).to.equal(50);
       expect(helper.scope.slider.max).to.equal(90);
-      expect(helper.slider.minH.css('left')).to.equal(minOffset + 'px');
-      expect(helper.slider.maxH.css('left')).to.equal(maxOffset + 'px');
+      expect(helper.slider.minH.css('left')).to.equal(minposition + 'px');
+      expect(helper.slider.maxH.css('left')).to.equal(maxposition + 'px');
     });
 
     it('should respect minLimit option', function() {
@@ -262,8 +262,8 @@
       sinon.spy(helper.slider, 'callOnChange');
       var event = helper.fireMousedown(helper.slider.minH, 0);
       var expectedValue = 50,
-          offset = helper.getMousePosition(expectedValue);
-      helper.fireMousemove(offset);
+          position = helper.getMousePosition(expectedValue);
+      helper.fireMousemove(position);
       expect(helper.scope.slider.min).to.equal(expectedValue);
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnChange.called.should.be.true;
@@ -274,8 +274,8 @@
       sinon.spy(helper.slider, 'callOnChange');
       var event = helper.fireMousedown(helper.slider.maxH, 0);
       var expectedValue = 50,
-          offset = helper.getMousePosition(expectedValue);
-      helper.fireMousemove(offset);
+          position = helper.getMousePosition(expectedValue);
+      helper.fireMousemove(position);
       expect(helper.scope.slider.max).to.equal(expectedValue);
       helper.slider.positionTrackingHandle.called.should.be.true;
       helper.slider.callOnChange.called.should.be.true;
@@ -284,8 +284,8 @@
     it('should handle click and drag on minH and switch min/max if needed', function() {
       var event = helper.fireMousedown(helper.slider.minH, 0);
       var expectedValue = 80,
-          offset = helper.getMousePosition(expectedValue);
-      helper.fireMousemove(offset);
+          position = helper.getMousePosition(expectedValue);
+      helper.fireMousemove(position);
 
       expect(helper.scope.slider.min).to.equal(60);
       expect(helper.scope.slider.max).to.equal(80);
@@ -294,8 +294,8 @@
     it('should handle click and drag on maxH and switch min/max if needed', function() {
       var event = helper.fireMousedown(helper.slider.maxH, 0);
       var expectedValue = 20,
-          offset = helper.getMousePosition(expectedValue);
-      helper.fireMousemove(offset);
+          position = helper.getMousePosition(expectedValue);
+      helper.fireMousemove(position);
 
       expect(helper.scope.slider.min).to.equal(20);
       expect(helper.scope.slider.max).to.equal(40);
@@ -308,9 +308,9 @@
       sinon.spy(helper.slider, 'focusElement');
 
       var expectedValue = 10,
-          offset = helper.getMousePosition(expectedValue);
+          position = helper.getMousePosition(expectedValue);
 
-      var event = helper.fireMousedown(helper.slider.fullBar, offset);
+      var event = helper.fireMousedown(helper.slider.fullBar, position);
 
       expect(helper.scope.slider.min).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
@@ -327,9 +327,9 @@
       sinon.spy(helper.slider, 'focusElement');
 
       var expectedValue = 90,
-          offset = helper.getMousePosition(expectedValue);
+          position = helper.getMousePosition(expectedValue);
 
-      var event = helper.fireMousedown(helper.slider.fullBar, offset);
+      var event = helper.fireMousedown(helper.slider.fullBar, position);
 
       expect(helper.scope.slider.max).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('highValue');
@@ -348,8 +348,8 @@
       helper.fireMousedown(helper.slider.selBar, 0);
 
       var moveValue = 10,
-          offset = helper.slider.maxPos - helper.slider.valueToOffset(moveValue);
-      helper.fireMousemove(offset);
+          position = helper.slider.maxPos - helper.slider.valueToPosition(moveValue);
+      helper.fireMousemove(position);
 
       expect(helper.scope.slider.min).to.equal(30);
       expect(helper.scope.slider.max).to.equal(50);
@@ -411,14 +411,14 @@
     it('should a working positionTrackingBar', function() {
       var newMin = 50,
           newMax = 90,
-          minOffset = helper.slider.valueToOffset(newMin),
-          maxOffset = helper.slider.valueToOffset(newMax);
-      helper.slider.positionTrackingBar(newMin, newMax, minOffset, maxOffset);
+          minposition = helper.slider.valueToPosition(newMin),
+          maxposition = helper.slider.valueToPosition(newMax);
+      helper.slider.positionTrackingBar(newMin, newMax, minposition, maxposition);
 
       expect(helper.scope.slider.min).to.equal(50);
       expect(helper.scope.slider.max).to.equal(90);
-      expect(helper.slider.minH.css('left')).to.equal(minOffset + 'px');
-      expect(helper.slider.maxH.css('left')).to.equal(maxOffset + 'px');
+      expect(helper.slider.minH.css('left')).to.equal(minposition + 'px');
+      expect(helper.slider.maxH.css('left')).to.equal(maxposition + 'px');
     });
   });
 }());
