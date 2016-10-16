@@ -253,30 +253,6 @@ app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
     }
   };
 
-  //Slider with custom template in order to use HTML formatting for ticks
-  $scope.slider_custom_template = {
-    value: 100,
-    options: {
-      floor: 0,
-      ceil: 500,
-      step: 100,
-      showTicksValues: true,
-      translate: function (value) {
-        return '<b>Price:</b> $' + value;
-      }
-    }
-  };
-
-  //Slider config with angular directive inside custom template
-  $scope.slider_custom_directive_inside_template = {
-    minValue: 20,
-    maxValue: 80,
-    options: {
-      floor: 0,
-      ceil: 100
-    }
-  };
-
   //Slider config with steps array of letters
   $scope.slider_alphabet = {
     value: 'E',
@@ -302,6 +278,16 @@ app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
       floor: 0,
       ceil: 100,
       showTicks: 10
+    }
+  };
+
+  //Slider with ticksArray
+  $scope.slider_ticks_array = {
+    value: 75,
+    options: {
+      floor: 0,
+      ceil: 100,
+      ticksArray: [0, 10, 25, 50, 100]
     }
   };
 
@@ -369,6 +355,30 @@ app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
       floor: 0,
       ceil: 100,
       showTicksValues: 10
+    }
+  };
+
+  //Slider with custom template in order to use HTML formatting for ticks
+  $scope.slider_custom_template = {
+    value: 100,
+    options: {
+      floor: 0,
+      ceil: 500,
+      step: 100,
+      showTicksValues: true,
+      translate: function(value) {
+        return '<b>Price:</b> $' + value;
+      }
+    }
+  };
+
+  //Slider config with angular directive inside custom template
+  $scope.slider_custom_directive_inside_template = {
+    minValue: 20,
+    maxValue: 80,
+    options: {
+      floor: 0,
+      ceil: 100
     }
   };
 

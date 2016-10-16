@@ -146,15 +146,6 @@
   </article>
 
   <article>
-    <h2>Slider with dynamic tick color</h2>
-    <rzslider
-      rz-slider-model="color_slider_tick.value"
-      rz-slider-options="color_slider_tick.options"
-    ></rzslider>
-    <show-code js-file="color_slider_tick" html-file="singleSlider"></show-code>
-  </article>
-
-  <article>
     <h2>Slider with custom floor/ceil/step</h2>
     <rzslider
       rz-slider-model="slider_floor_ceil.value"
@@ -215,48 +206,6 @@
   </article>
 
   <article>
-    <h2>Slider with custom template to use HTML formatting for ticks</h2>
-    <rzslider
-      rz-slider-model="slider_custom_template.value"
-      rz-slider-options="slider_custom_template.options"
-      rz-slider-tpl-url="custom-template.html"
-    ></rzslider>
-    <i>* You need to include ngSanitize (angular-sanitize.js) in order to use <a href="https://docs.angularjs.org/api/ng/directive/ngBindHtml" target="_blank">ng-bind-html</a></i><br/>
-    <tabset class="code">
-      <tab heading="HTML">
-        <div hljs hljs-include="'snippets/customTemplateSlider.html'" hljs-language="html"></div>
-      </tab>
-      <tab heading="JS">
-        <div hljs hljs-include="'snippets/slider_custom_template.js'" hljs-language="js"></div>
-      </tab>
-      <tab heading="your-custom-template.html">
-        <div hljs hljs-include="'custom-template.html'" hljs-language="html"></div>
-      </tab>
-    </tabset>
-  </article>
-
-  <article>
-    <h2>Slider with angular directive inside custom template</h2>
-    <rzslider
-            rz-slider-model="slider_custom_directive_inside_template.minValue"
-            rz-slider-high="slider_custom_directive_inside_template.maxValue"
-            rz-slider-options="slider_custom_directive_inside_template.options"
-            rz-slider-tpl-url="directive-in-custom-template.html"
-    ></rzslider>
-    <tabset class="code">
-      <tab heading="HTML">
-        <div hljs hljs-include="'snippets/directive_in_custom_template.html'" hljs-language="html"></div>
-      </tab>
-      <tab heading="JS">
-        <div hljs hljs-include="'snippets/directive_in_custom_template.js'" hljs-language="js"></div>
-      </tab>
-      <tab heading="directive-in-custom-template.html">
-        <div hljs hljs-include="'directive-in-custom-template.html'" hljs-language="html"></div>
-      </tab>
-    </tabset>
-  </article>
-
-  <article>
     <h2>Slider with Alphabet</h2>
     Current letter: {{ slider_alphabet.value }}
     <rzslider
@@ -275,7 +224,6 @@
     <show-code js-file="slider_ticks" html-file="singleSlider"></show-code>
   </article>
 
-
   <article>
     <h2>Slider with ticks at intermediate positions</h2>
     <rzslider
@@ -283,6 +231,15 @@
       rz-slider-options="slider_ticks_intermediate.options"
     ></rzslider>
     <show-code js-file="slider_ticks_intermediate" html-file="singleSlider"></show-code>
+  </article>
+
+  <article>
+    <h2>Slider with ticks at specific positions</h2>
+    <rzslider
+      rz-slider-model="slider_ticks_array.value"
+      rz-slider-options="slider_ticks_array.options"
+    ></rzslider>
+    <show-code js-file="slider_ticks_array" html-file="singleSlider"></show-code>
   </article>
 
   <article>
@@ -332,6 +289,57 @@
     ></rzslider>
     <br><br>
     <show-code js-file="range_slider_ticks_values_intermediate" html-file="rangeSlider"></show-code>
+  </article>
+
+  <article>
+    <h2>Slider with dynamic tick color</h2>
+    <rzslider
+      rz-slider-model="color_slider_tick.value"
+      rz-slider-options="color_slider_tick.options"
+    ></rzslider>
+    <show-code js-file="color_slider_tick" html-file="singleSlider"></show-code>
+  </article>
+
+  <article>
+    <h2>Slider with custom template to use HTML formatting for ticks</h2>
+    <rzslider
+      rz-slider-model="slider_custom_template.value"
+      rz-slider-options="slider_custom_template.options"
+      rz-slider-tpl-url="custom-template.html"
+    ></rzslider>
+    <i>* You need to include ngSanitize (angular-sanitize.js) in order to use <a href="https://docs.angularjs.org/api/ng/directive/ngBindHtml" target="_blank">ng-bind-html</a></i><br/>
+    <tabset class="code">
+      <tab heading="HTML">
+        <div hljs hljs-include="'snippets/customTemplateSlider.html'" hljs-language="html"></div>
+      </tab>
+      <tab heading="JS">
+        <div hljs hljs-include="'snippets/slider_custom_template.js'" hljs-language="js"></div>
+      </tab>
+      <tab heading="your-custom-template.html">
+        <div hljs hljs-include="'custom-template.html'" hljs-language="html"></div>
+      </tab>
+    </tabset>
+  </article>
+
+  <article>
+    <h2>Slider with angular directive inside custom template</h2>
+    <rzslider
+      rz-slider-model="slider_custom_directive_inside_template.minValue"
+      rz-slider-high="slider_custom_directive_inside_template.maxValue"
+      rz-slider-options="slider_custom_directive_inside_template.options"
+      rz-slider-tpl-url="directive-in-custom-template.html"
+    ></rzslider>
+    <tabset class="code">
+      <tab heading="HTML">
+        <div hljs hljs-include="'snippets/directive_in_custom_template.html'" hljs-language="html"></div>
+      </tab>
+      <tab heading="JS">
+        <div hljs hljs-include="'snippets/directive_in_custom_template.js'" hljs-language="js"></div>
+      </tab>
+      <tab heading="directive-in-custom-template.html">
+        <div hljs hljs-include="'directive-in-custom-template.html'" hljs-language="html"></div>
+      </tab>
+    </tabset>
   </article>
 
   <article>
