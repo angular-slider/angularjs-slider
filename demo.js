@@ -358,6 +358,43 @@ app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
     }
   };
 
+
+  //Slider config with logarithmic scale
+  $scope.slider_log = {
+    value: 1,
+    options: {
+      floor: 1,
+      ceil: 100,
+      logScale: true,
+      showTicks: true
+    }
+  };
+
+  //Slider config with custom scale
+  $scope.slider_custom_scale = {
+    value: 50,
+    options: {
+      floor: 0,
+      ceil: 100,
+      step: 10,
+      showTicksValues: true,
+      customValueToPosition: function(val, minVal, maxVal) {
+        val = Math.sqrt(val);
+        minVal = Math.sqrt(minVal);
+        maxVal = Math.sqrt(maxVal);
+        var range = maxVal - minVal;
+        return (val - minVal) / range;
+      },
+      customPositionToValue: function(percent, minVal, maxVal) {
+        minVal = Math.sqrt(minVal);
+        maxVal = Math.sqrt(maxVal);
+        var value = percent * (maxVal - minVal) + minVal;
+        return Math.pow(value, 2);
+      }
+    }
+  };
+
+
   //Slider with custom template in order to use HTML formatting for ticks
   $scope.slider_custom_template = {
     value: 100,
