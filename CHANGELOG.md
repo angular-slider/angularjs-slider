@@ -1,10 +1,16 @@
+# 5.6.0 (2016-10-16)
+## Features
+- Add an `ticksArray` to display ticks at specific positions (#426).
+
+To enable this new feature, the way the ticks are rendered has been changed. Now each tick is positioned absolutely using a `transform: translate()` instruction.
+
 # 5.5.1 (2016-09-22)
 ## Fix
 - Prevent losing focus when slider is rerendered (#415).
 
 # 5.5.0 (2016-09-06)
 ## Features
-- Add an autoHideLimitLabels to disable the auto-hiding of limit labels (#405).
+- Add an `autoHideLimitLabels` to disable the auto-hiding of limit labels (#405).
 
 # 5.4.3 (2016-08-07)
 ## Fix

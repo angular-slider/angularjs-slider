@@ -127,27 +127,6 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     }
   };
 
-  //Slider with custom tick formatting
-  $scope.slider_tick_color = {
-    value: 0,
-    options: {
-      ceil: 1200,
-      floor: 0,
-      step: 50,
-      showSelectionBar: true,
-      showTicks: true,
-      getTickColor: function(value){
-        if (value < 300)
-          return 'red';
-        if (value < 600)
-          return 'orange';
-        if (value < 900)
-          return 'yellow';
-        return '#2AE02A';
-      }
-    }
-  };
-
   //Slider config with floor, ceil and step
   $scope.slider_floor_ceil = {
     value: 12,
@@ -228,15 +207,6 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
       }
     }
   };
-  //Slider config with angular directive inside custom template
-  $scope.slider_custom_directive_inside_template = {
-    minValue: 20,
-    maxValue: 80,
-    options: {
-      floor: 0,
-      ceil: 100
-    }
-  };
 
   //Slider config with steps array of letters
   $scope.slider_alphabet = {
@@ -253,6 +223,17 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
       ceil: 10,
       floor: 0,
       showTicks: true
+    }
+  };
+
+  //Slider with ticks at specific positions
+  $scope.slider_ticks_array = {
+    value: 5,
+    options: {
+      ceil: 10,
+      floor: 0,
+      ticksArray: [0, 1, 3, 8, 10],
+      showTicksValues: true
     }
   };
 
@@ -332,6 +313,27 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     }
   };
 
+  //Slider with custom tick formatting
+  $scope.slider_tick_color = {
+    value: 0,
+    options: {
+      ceil: 1200,
+      floor: 0,
+      step: 50,
+      showSelectionBar: true,
+      showTicks: true,
+      getTickColor: function(value){
+        if (value < 300)
+          return 'red';
+        if (value < 600)
+          return 'orange';
+        if (value < 900)
+          return 'yellow';
+        return '#2AE02A';
+      }
+    }
+  };
+
   //Slider with draggable range
   $scope.slider_draggable_range = {
     minValue: 1,
@@ -378,7 +380,8 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
       floor: 0,
       ceil: 10,
       vertical: true,
-      showTicks: true
+      ticksArray: [0, 1, 5, 10],
+      showTicksValues: true
     }
   };
   $scope.verticalSlider4 = {
@@ -519,6 +522,15 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     });
   };
 
+  //Slider config with angular directive inside custom template
+  $scope.slider_custom_directive_inside_template = {
+    minValue: 20,
+    maxValue: 80,
+    options: {
+      floor: 0,
+      ceil: 100
+    }
+  };
 
   //Slider with draggable range
   $scope.slider_all_options = {

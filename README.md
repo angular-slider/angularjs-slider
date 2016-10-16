@@ -220,6 +220,7 @@ The default options are:
     interval: 350,
     showTicks: false,
     showTicksValues: false,
+    ticksArray: null,
     ticksTooltip: null,
     ticksValuesTooltip: null,
     vertical: false,
@@ -339,6 +340,8 @@ Just pass an array with each slider value and that's it; the floor, ceil and ste
 **showTicks** - _Boolean or Number (defaults to false)_: Set to true to display a tick for each step of the slider. Set a number to display ticks at intermediate positions. This number corresponds to the step between each tick.
 
 **showTicksValues** - _Boolean or Number (defaults to false)_: Set to true to display a tick and the step value for each step of the slider. Set a number to display ticks and the step value at intermediate positions. This number corresponds to the step between each tick.
+
+**ticksArray** - _Array (defaults to null)_: Use to display ticks at specific positions. The array contains the index of the ticks that should be displayed. For example, [0, 1, 5] will display a tick for the first, second and sixth values.
 
 **ticksTooltip** - _Function(value) (defaults to null)_: (requires angular-ui bootstrap) Used to display a tooltip when a tick is hovered. Set to a function that returns the tooltip content for a given value.
 

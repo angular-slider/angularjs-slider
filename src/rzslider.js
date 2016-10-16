@@ -58,6 +58,7 @@
       interval: 350,
       showTicks: false,
       showTicksValues: false,
+      ticksArray: null,
       ticksTooltip: null,
       ticksValuesTooltip: null,
       vertical: false,
@@ -546,9 +547,9 @@
           this.options.draggableRange = true;
         }
 
-        this.options.showTicks = this.options.showTicks || this.options.showTicksValues;
+        this.options.showTicks = this.options.showTicks || this.options.showTicksValues || !!this.options.ticksArray;
         this.scope.showTicks = this.options.showTicks; //scope is used in the template
-        if (angular.isNumber(this.options.showTicks))
+        if (angular.isNumber(this.options.showTicks) || this.options.ticksArray)
           this.intermediateTicks = true;
 
         this.options.showSelectionBar = this.options.showSelectionBar || this.options.showSelectionBarEnd
@@ -930,6 +931,10 @@
           this.updateFloorLab();
           this.updateCeilLab();
           this.initHandles();
+          var self = this;
+          $timeout(function() {
+            self.updateTicksScale();
+          });
         }
       },
 
@@ -940,48 +945,61 @@
        */
       updateTicksScale: function() {
         if (!this.options.showTicks) return;
-        var step = this.step;
-        if (this.intermediateTicks)
-          step = this.options.showTicks;
-        var ticksCount = Math.round((this.maxValue - this.minValue) / step) + 1;
-        this.scope.ticks = [];
-        for (var i = 0; i < ticksCount; i++) {
-          var value = this.roundStep(this.minValue + i * step);
+
+        var ticksArray = this.options.ticksArray || this.getTicksArray(),
+          translate = this.options.vertical ? 'translateY' : 'translateX',
+          self = this;
+
+        if(this.options.rightToLeft)
+          ticksArray.reverse();
+
+        this.scope.ticks = ticksArray.map(function(value){
+          var offset = self.valueToOffset(value);
+
+          if (self.options.vertical)
+            offset = self.maxPos - offset;
+
           var tick = {
-            selected: this.isTickSelected(value)
+            selected: self.isTickSelected(value),
+            style: {
+              transform: translate + '(' + offset + 'px)'
+            }
           };
-          if (tick.selected && this.options.getSelectionBarColor) {
-            tick.style = {
-              'background-color': this.getSelectionBarColor()
-            };
+          if (tick.selected && self.options.getSelectionBarColor) {
+            tick.style['background-color'] = self.getSelectionBarColor();
           }
-          if (!tick.selected && this.options.getTickColor) {
-            tick.style = {
-              'background-color': this.getTickColor(value)
+          if (!tick.selected && self.options.getTickColor) {
+            tick.style['background-color'] = self.getTickColor(value);
+          }
+          if (self.options.ticksTooltip) {
+            tick.tooltip = self.options.ticksTooltip(value);
+            tick.tooltipPlacement = self.options.vertical ? 'right' : 'top';
+          }
+          if (self.options.showTicksValues) {
+            tick.value = self.getDisplayValue(value, 'tick-value');
+            if (self.options.ticksValuesTooltip) {
+              tick.valueTooltip = self.options.ticksValuesTooltip(value);
+              tick.valueTooltipPlacement = self.options.vertical ? 'right' : 'top';
             }
           }
-          if (this.options.ticksTooltip) {
-            tick.tooltip = this.options.ticksTooltip(value);
-            tick.tooltipPlacement = this.options.vertical ? 'right' : 'top';
-          }
-          if (this.options.showTicksValues) {
-            tick.value = this.getDisplayValue(value, 'tick-value');
-            if (this.options.ticksValuesTooltip) {
-              tick.valueTooltip = this.options.ticksValuesTooltip(value);
-              tick.valueTooltipPlacement = this.options.vertical ? 'right' : 'top';
-            }
-          }
-          if (this.getLegend) {
-            var legend = this.getLegend(value, this.options.id);
+          if (self.getLegend) {
+            var legend = self.getLegend(value, self.options.id);
             if (legend)
               tick.legend = legend;
           }
-          if (!this.options.rightToLeft) {
-            this.scope.ticks.push(tick);
-          } else {
-            this.scope.ticks.unshift(tick);
-          }
+          return tick;
+        });
+      },
+
+      getTicksArray: function() {
+        var step = this.step,
+          ticksArray = [];
+        if (this.intermediateTicks)
+          step = this.options.showTicks;
+        for (var value = this.minValue; value <= this.maxValue; value += step) {
+          ticksArray.push(value);
         }
+        return ticksArray;
       },
 
       isTickSelected: function(value) {

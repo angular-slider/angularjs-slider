@@ -112,14 +112,6 @@
   </article>
 
   <article>
-    <h2>Slider with dynamic tick color</h2>
-    <rzslider
-      rz-slider-model="slider_tick_color.value"
-      rz-slider-options="slider_tick_color.options"
-    ></rzslider>
-  </article>
-
-  <article>
     <h2>Slider with custom floor/ceil/step</h2>
     <rzslider
       rz-slider-model="slider_floor_ceil.value"
@@ -166,16 +158,6 @@
   </article>
 
   <article>
-    <h2>Slider with angular directive inside custom template</h2>
-    <rzslider
-            rz-slider-model="slider_custom_directive_inside_template.minValue"
-            rz-slider-high="slider_custom_directive_inside_template.maxValue"
-            rz-slider-options="slider_custom_directive_inside_template.options"
-            rz-slider-tpl-url="directiveInCustomTemplate.html"
-    ></rzslider>
-  </article>
-
-  <article>
     <h2>Slider with Alphabet</h2>
     Current letter: {{ slider_alphabet.value }}
     <rzslider
@@ -189,6 +171,14 @@
     <rzslider
       rz-slider-model="slider_ticks.value"
       rz-slider-options="slider_ticks.options"
+    ></rzslider>
+  </article>
+
+  <article>
+    <h2>Slider with ticks at specific positions</h2>
+    <rzslider
+      rz-slider-model="slider_ticks_array.value"
+      rz-slider-options="slider_ticks_array.options"
     ></rzslider>
   </article>
 
@@ -239,6 +229,14 @@
     <rzslider class="with-legend"
       rz-slider-model="slider_ticks_legend.value"
       rz-slider-options="slider_ticks_legend.options"
+    ></rzslider>
+  </article>
+
+  <article>
+    <h2>Slider with dynamic tick color</h2>
+    <rzslider
+      rz-slider-model="slider_tick_color.value"
+      rz-slider-options="slider_tick_color.options"
     ></rzslider>
   </article>
 
@@ -336,6 +334,16 @@
         <rzslider rz-slider-model="tabSliders.slider2.value"></rzslider>
       </tab>
     </tabset>
+  </article>
+
+  <article>
+    <h2>Slider with angular directive inside custom template</h2>
+    <rzslider
+      rz-slider-model="slider_custom_directive_inside_template.minValue"
+      rz-slider-high="slider_custom_directive_inside_template.maxValue"
+      rz-slider-options="slider_custom_directive_inside_template.options"
+      rz-slider-tpl-url="directiveInCustomTemplate.html"
+    ></rzslider>
   </article>
 
   <article>
