@@ -1,7 +1,7 @@
 /*! angularjs-slider - v5.5.1 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-10-13 */
+ 2016-10-16 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -545,7 +545,7 @@
 
         this.options.showTicks = this.options.showTicks || this.options.showTicksValues || !!this.options.ticksArray;
         this.scope.showTicks = this.options.showTicks; //scope is used in the template
-        if (angular.isNumber(this.options.showTicks))
+        if (angular.isNumber(this.options.showTicks) || this.options.ticksArray)
           this.intermediateTicks = true;
 
         this.options.showSelectionBar = this.options.showSelectionBar || this.options.showSelectionBarEnd

@@ -141,6 +141,47 @@
       expect(lastTick.text()).to.equal('100');
     });
 
+    it('should create the correct number of ticks when ticksArray is used', function() {
+      var sliderConf = {
+        value: 50,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          ticksArray: [0, 25, 50, 100]
+        }
+      };
+      helper.createSlider(sliderConf);
+      expect(helper.slider.ticks.hasClass('rz-ticks-values-under')).to.be.false;
+      expect(helper.element[0].querySelectorAll('.rz-tick')).to.have.length(4);
+      expect(helper.element[0].querySelectorAll('.rz-tick-value')).to.have.length(0);
+    });
+
+    it('should create the correct number of ticks when ticksArray is used along with showTicksValues', function() {
+      var sliderConf = {
+        value: 50,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          ticksArray: [0, 25, 50, 100],
+          showTicksValues: true
+        }
+      };
+      helper.createSlider(sliderConf);
+      expect(helper.slider.ticks.hasClass('rz-ticks-values-under')).to.be.true;
+      expect(helper.element[0].querySelectorAll('.rz-tick')).to.have.length(4);
+      expect(helper.element[0].querySelectorAll('.rz-tick-value')).to.have.length(4);
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[0]);
+      expect(firstTick.text()).to.equal('0');
+      var secondTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[1]);
+      expect(secondTick.text()).to.equal('25');
+      var thirdTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[2]);
+      expect(thirdTick.text()).to.equal('50');
+      var lastTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[3]);
+      expect(lastTick.text()).to.equal('100');
+    });
+
     it('should create the correct number of legend items when getLegend is defined', function() {
       var sliderConf = {
         value: 50,

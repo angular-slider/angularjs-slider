@@ -549,7 +549,7 @@
 
         this.options.showTicks = this.options.showTicks || this.options.showTicksValues || !!this.options.ticksArray;
         this.scope.showTicks = this.options.showTicks; //scope is used in the template
-        if (angular.isNumber(this.options.showTicks))
+        if (angular.isNumber(this.options.showTicks) || this.options.ticksArray)
           this.intermediateTicks = true;
 
         this.options.showSelectionBar = this.options.showSelectionBar || this.options.showSelectionBarEnd
