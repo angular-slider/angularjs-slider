@@ -145,8 +145,8 @@ $scope.value = 150;
 ```javascript
 // In your controller
 $scope.slider = {
-  min: 100,
-  max: 180,
+  minValue: 100,
+  maxValue: 180,
   options: {
     floor: 0,
     ceil: 450
