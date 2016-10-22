@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="rzSliderDemo">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AngularJS Touch Slider</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="./lib/bootstrap.min.css">
+  <link rel="stylesheet" href="../dist/rzslider.css"/>
+  <link rel="stylesheet" href="demo.css"/>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+</head>
+
+<body ng-controller="MainCtrl">
+
+<div class="wrapper">
+
+  <article>
+    <h2>Slider with date values</h2>
+    <rzslider
+      rz-slider-model="slider_dates.value"
+      rz-slider-options="slider_dates.options"
+    ></rzslider>
+  </article>
+
+</div>
+
+</body>
+<script src="../node_modules/angular/angular.js"></script>
+<script src="./lib/ui-bootstrap-tpls.js"></script>
+<script src="../dist/rzslider.js"></script>
+<script src="demo.js"></script>
+</html>

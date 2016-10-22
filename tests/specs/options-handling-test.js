@@ -216,6 +216,50 @@
         expect(helper.element[0].querySelectorAll('.rz-tick-legend')).to.have.length(2);
       });
 
+      it('should set correct step/floor/ceil when stepsArray is used with Date using same instances', function() {
+        var dates = [];
+        for (var i = 1; i <= 7; i++) {
+          dates.push(new Date(2016, 7, i));
+        }
+        helper.scope.slider.value = dates[3];
+        helper.scope.slider.options.stepsArray = dates;
+        helper.scope.$digest();
+        expect(helper.slider.options.step).to.equal(1);
+        expect(helper.slider.options.floor).to.equal(0);
+        expect(helper.slider.options.ceil).to.equal(6);
+        expect(helper.slider.lowValue).to.equal(3);
+      });
+
+      it('should set correct step/floor/ceil when stepsArray is used with Date using different instances', function() {
+        var dates = [];
+        for (var i = 1; i <= 7; i++) {
+          dates.push(new Date(2016, 7, i));
+        }
+        helper.scope.slider.value = new Date(2016, 7, 4);
+        helper.scope.slider.options.stepsArray = dates;
+        helper.scope.$digest();
+        expect(helper.slider.options.step).to.equal(1);
+        expect(helper.slider.options.floor).to.equal(0);
+        expect(helper.slider.options.ceil).to.equal(6);
+        expect(helper.slider.lowValue).to.equal(3);
+      });
+
+      it('should set correct step/floor/ceil when stepsArray is used with Object with Date values using different instances', function() {
+        var dates = [];
+        for (var i = 1; i <= 7; i++) {
+          dates.push(new Date(2016, 7, i));
+        }
+        helper.scope.slider.value = new Date(2016, 7, 4);
+        helper.scope.slider.options.stepsArray = dates.map(function(val) {
+          return {value: val};
+        });
+        helper.scope.$digest();
+        expect(helper.slider.options.step).to.equal(1);
+        expect(helper.slider.options.floor).to.equal(0);
+        expect(helper.slider.options.ceil).to.equal(6);
+        expect(helper.slider.lowValue).to.equal(3);
+      });
+
       it('should allow a custom translate function when stepsArray is used', function() {
         helper.scope.slider.options.stepsArray = [
           {value: 'A', 'foo': 'barA'},

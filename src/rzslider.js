@@ -438,9 +438,17 @@
             index = i;
             break;
           }
-          else if (angular.isObject(step) && step.value === modelValue) {
-            index = i;
-            break;
+          else if (angular.isDate(step)) {
+            if (step.getTime() === modelValue.getTime()) {
+              index = i;
+              break;
+            }
+          }
+          else if (angular.isObject(step)) {
+            if (angular.isDate(step.value) && step.value.getTime() === modelValue.getTime() || step.value === modelValue) {
+              index = i;
+              break;
+            }
           }
         }
         return index;
@@ -470,6 +478,8 @@
 
       getStepValue: function(sliderValue) {
         var step = this.options.stepsArray[sliderValue];
+        if (angular.isDate(step))
+          return step;
         if (angular.isObject(step))
           return step.value;
         return step;
@@ -1452,7 +1462,7 @@
 
         val = this.sanitizeValue(val);
         var percent = fn(val, this.minValue, this.maxValue) || 0;
-        if(this.options.rightToLeft)
+        if (this.options.rightToLeft)
           percent = 1 - percent;
         return percent * this.maxPos;
       },
@@ -1478,7 +1488,7 @@
        */
       positionToValue: function(position) {
         var percent = position / this.maxPos;
-        if(this.options.rightToLeft)
+        if (this.options.rightToLeft)
           percent = 1 - percent;
         var fn = this.linearPositionToValue;
         if (this.options.customPositionToValue)
@@ -1530,7 +1540,7 @@
           eventPos = -this.getEventXY(event) + sliderPos;
         else
           eventPos = this.getEventXY(event) - sliderPos;
-        return eventPos * this.options.scale  - this.handleHalfDim; // #346 handleHalfDim is already scaled
+        return eventPos * this.options.scale - this.handleHalfDim; // #346 handleHalfDim is already scaled
       },
 
       /**
