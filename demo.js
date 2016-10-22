@@ -419,6 +419,22 @@ app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
     }
   };
 
+  var dates = [];
+  for (var i = 1; i <= 31; i++) {
+    dates.push(new Date(2016, 7, i));
+  }
+  $scope.slider_dates = {
+    value: new Date(2016, 7, 10),
+    options: {
+      stepsArray: dates,
+      translate: function(date) {
+        if (date != null)
+          return date.toDateString();
+        return '';
+      }
+    }
+  };
+
   //Slider with draggable range
   $scope.slider_draggable_range = {
     minValue: 1,
@@ -513,11 +529,15 @@ app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $modal) {
 
   //Disabled slider
   $scope.disabled_slider = {
-    value: 50,
+    minValue: 20,
+    maxValue: 80,
     options: {
       floor: 0,
       ceil: 100,
-      disabled: true
+      step: 10,
+      disabled: true,
+      showTicks: true, // just to show the disabled style
+      draggableRange: true // just to show the disabled style
     }
   };
 

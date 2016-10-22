@@ -361,6 +361,15 @@
   </article>
 
   <article>
+    <h2>Slider with Date values</h2>
+    <rzslider
+      rz-slider-model="slider_dates.value"
+      rz-slider-options="slider_dates.options"
+    ></rzslider>
+    <show-code js-file="slider_dates" html-file="singleSlider"></show-code>
+  </article>
+
+  <article>
     <h2>Slider with draggable range</h2>
     <rzslider
       rz-slider-model="slider_draggable_range.minValue"
@@ -415,7 +424,8 @@
     <h2>Disabled slider</h2>
     <label>Disabled <input type="checkbox" ng-model="disabled_slider.options.disabled"></label>
     <rzslider
-      rz-slider-model="disabled_slider.value"
+      rz-slider-model="disabled_slider.minValue"
+      rz-slider-high="disabled_slider.maxValue"
       rz-slider-options="disabled_slider.options"
     ></rzslider>
     <show-code js-file="disabled_slider" html-file="disabled_slider"></show-code>
