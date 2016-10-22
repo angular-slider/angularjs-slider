@@ -30,6 +30,18 @@
       cursor: not-allowed;
       background-color: @handleDisabledColor;
     }
+    .rz-bar-wrapper.rz-draggable {
+      cursor: not-allowed;
+    }
+    .rz-bar.rz-selection {
+      background: @barDisabledFillColor;
+    }
+    .rz-ticks .rz-tick {
+      cursor: not-allowed;
+      &.rz-selected {
+        background: @barDisabledFillColor;
+      }
+    }
   }
 
   span {
@@ -98,7 +110,7 @@
     &:hover:after {
       background-color: @handleHoverColor;
     }
-    &.rz-active{
+    &.rz-active {
       z-index: 4;
       &:after {
         background-color: @handleActiveColor;
@@ -116,6 +128,12 @@
     }
     &.rz-limit {
       color: @limitLabelTextColor;
+    }
+    &.rz-floor {
+      left: 0;
+    }
+    &.rz-ceil {
+      right: 0;
     }
   }
 
@@ -209,6 +227,14 @@
       &.rz-selection {
         left: @handleSize/2 !important;
         top: auto;
+      }
+      &.rz-floor {
+        left: auto;
+        bottom: 0;
+      }
+      &.rz-ceil {
+        right: auto;
+        top: 0;
       }
     }
 

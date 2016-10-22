@@ -312,7 +312,8 @@
     <h2>Disabled slider</h2>
     <label>Disabled <input type="checkbox" ng-model="disabled_slider.options.disabled"></label>
     <rzslider
-      rz-slider-model="disabled_slider.value"
+      rz-slider-model="disabled_slider.minValue"
+      rz-slider-high="disabled_slider.maxValue"
       rz-slider-options="disabled_slider.options"
     ></rzslider>
   </article>

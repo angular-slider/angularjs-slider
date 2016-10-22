@@ -479,11 +479,14 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
 
   //Disabled slider
   $scope.disabled_slider = {
-    value: 50,
+    minValue: 20,
+    maxValue: 80,
     options: {
       ceil: 100,
       floor: 0,
-      disabled: true
+      showTicks: 10,
+      disabled: true,
+      draggableRange: true
     }
   };
 
