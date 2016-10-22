@@ -1530,7 +1530,7 @@
           eventPos = -this.getEventXY(event) + sliderPos;
         else
           eventPos = this.getEventXY(event) - sliderPos;
-        return (eventPos - this.handleHalfDim) * this.options.scale;
+        return eventPos * this.options.scale  - this.handleHalfDim; // #346 handleHalfDim is already scaled
       },
 
       /**

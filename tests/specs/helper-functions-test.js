@@ -341,7 +341,7 @@
         helper.slider.sliderElem.rzsp = 10;
         helper.slider.handleHalfDim = 16;
 
-        expect(helper.slider.getEventPosition(event)).to.equal(10);
+        expect(helper.slider.getEventPosition(event)).to.equal(2);
       });
 
       it('should have a valid getEventPosition for vertical sliders with scale option', function() {
@@ -355,7 +355,7 @@
         helper.slider.sliderElem.rzsp = 10;
         helper.slider.handleHalfDim = 16;
 
-        expect(helper.slider.getEventPosition(event)).to.equal(-26);
+        expect(helper.slider.getEventPosition(event)).to.equal(-34);
       });
 
       it('should have a valid getEventNames for desktop', function() {

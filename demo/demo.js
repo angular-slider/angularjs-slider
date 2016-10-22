@@ -13,7 +13,6 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     options: {
       floor: 0,
       ceil: 100,
-      rightToLeft: true,
       step: 1
     }
   };

@@ -1,7 +1,7 @@
 /*! angularjs-slider - v5.7.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-10-16 */
+ 2016-10-22 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -1526,7 +1526,7 @@
           eventPos = -this.getEventXY(event) + sliderPos;
         else
           eventPos = this.getEventXY(event) - sliderPos;
-        return (eventPos - this.handleHalfDim) * this.options.scale;
+        return eventPos * this.options.scale  - this.handleHalfDim; // #346 handleHalfDim is already scaled
       },
 
       /**
