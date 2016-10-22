@@ -1,3 +1,11 @@
+# 5.8.0 (2016-10-22)
+## Features
+- Handle Date object in stepsArray (#424 )
+
+## Fixes
+- Fix style for disabled range slider and ticks (#394)
+- Fix slider goes back when moved and scaled (#346)
+
 # 5.7.0 (2016-10-16)
 ## Features
 - Add a `logScale` option to display the slider using a logarithmic scale (#280).

@@ -301,12 +301,14 @@ $scope.slider = {
 **stepsArray** - _Array_: If you want to display a slider with non linear/number steps.
 Just pass an array with each slider value and that's it; the floor, ceil and step settings of the slider will be computed automatically. By default, the `rz-slider-model` and `rz-slider-high` values will be the value of the selected item in the stepsArray. They can also be bound to the index of the selected item by setting the `bindIndexForStepsArray` option to `true`.
 
-`stepsArray` can also be an array of objects like:
+`stepsArray` can also be an array of objects or Dates like:
 
 ```js
 [
   {value: 'A'}, // the display value will be *A*
-  {value: 10, legend: 'Legend for 10'} // the display value will be 10 and a legend will be displayed under the corresponding tick.
+  {value: 10, legend: 'Legend for 10'}, // the display value will be 10 and a legend will be displayed under the corresponding tick.
+  new Date(2016, 7, 12), // the display value will be the default format of Date. To customize it, use the `translate` option
+  {value: new Date(2016, 7, 12), legend: 'Legend for 10'} // same as above but with a legend
 ]
 ````
 
