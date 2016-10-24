@@ -19,7 +19,11 @@
     // only CommonJS-like environments that support module.exports,
     // like Node.
     // to support bundler like browserify
-    module.exports = factory(require('angular'));
+    var angularObj = require('angular');
+    if ((!angularObj || !angularObj.module) && typeof angular != 'undefined') {
+      angularObj = angular;
+    }
+    module.exports = factory(angularObj);
   } else {
     // Browser globals (root is window)
     factory(root.angular);
