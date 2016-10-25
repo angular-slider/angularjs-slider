@@ -1,6 +1,6 @@
 var app = angular.module('rzSliderDemo', ['rzModule', 'ui.bootstrap']);
 
-app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
+app.controller('MainCtrl', function($scope, $rootScope, $timeout, $uibModal) {
   //Minimal slider config
   $scope.minSlider = {
     value: 10
@@ -517,9 +517,9 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
     }
   };
   $scope.openModal = function() {
-    var modalInstance = $modal.open({
+    var modalInstance = $uibModal.open({
       templateUrl: 'sliderModal.html',
-      controller: function($scope, $modalInstance, values) {
+      controller: function($scope, $uibModalInstance, values) {
         $scope.percentages = JSON.parse(JSON.stringify(values)); //Copy of the object in order to keep original values in $scope.percentages in parent controller.
 
 
@@ -539,10 +539,10 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
           translate: formatToPercentage
         };
         $scope.ok = function() {
-          $modalInstance.close($scope.percentages);
+          $uibModalInstance.close($scope.percentages);
         };
         $scope.cancel = function() {
-          $modalInstance.dismiss();
+          $uibModalInstance.dismiss();
         };
       },
       resolve: {
