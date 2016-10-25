@@ -351,14 +351,14 @@
     <h2>Sliders inside tabs</h2>
     <p>Price 1: {{tabSliders.slider1.value}}</p>
     <p>Price 2: {{tabSliders.slider2.value}}</p>
-    <tabset>
-      <tab heading="Slider 1" select="refreshSlider()">
+    <uib-tabset>
+      <uib-tab heading="Slider 1" select="refreshSlider()">
         <rzslider rz-slider-model="tabSliders.slider1.value"></rzslider>
-      </tab>
-      <tab heading="Slider 2" select="refreshSlider()">
+      </uib-tab>
+      <uib-tab heading="Slider 2" select="refreshSlider()">
         <rzslider rz-slider-model="tabSliders.slider2.value"></rzslider>
-      </tab>
-    </tabset>
+      </uib-tab>
+    </uib-tabset>
   </article>
 
   <article>
