@@ -404,7 +404,7 @@
             if (newValue === oldValue)
               return;
             self.applyOptions(); // need to be called before synchronizing the values
-          	self.applyContainerClasses();
+            self.applyContainerClasses();
             self.syncLowValue();
             if (self.range)
               self.syncHighValue();
@@ -551,10 +551,10 @@
          * Add classes to the container and its verticality
          */
         applyContainerClasses: function(){
-        	this.container.addClass('rzslider-container');
-        	if (this.options.vertical) {
-        		this.container.addClass('rz-vertical');
-        	}
+          this.container.addClass('rzslider-container');
+          if (this.options.vertical) {
+            this.container.addClass('rz-vertical');
+          }
         },
   
         /**
@@ -2246,7 +2246,7 @@
   
         link: function(scope, elem) {
           if(!angular.isDefined(scope.rzSliderTplUrl)){
-          	scope.rzSliderTplUrl = 'rzSliderTpl.html';
+            scope.rzSliderTplUrl = 'rzSliderTpl.html';
           }
           scope.$watch('rzSliderTplUrl', function (value) {
             if (value) {
@@ -2257,9 +2257,9 @@
           function loadTemplate(template) {
               $http.get(template, { cache: $templateCache })
                 .success(function(templateContent) {
-                	elem.html(templateContent);
-                	$compile(elem.contents())(scope);
-                  	scope.slider = new RzSlider(scope, elem); //attach on scope so we can test it
+                  elem.html(templateContent);
+                  $compile(elem.contents())(scope);
+                  scope.slider = new RzSlider(scope, elem); //attach on scope so we can test it
                 });
           }
         }
