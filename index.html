@@ -308,17 +308,17 @@
       rz-slider-tpl-url="custom-template.html"
     ></rzslider>
     <i>* You need to include ngSanitize (angular-sanitize.js) in order to use <a href="https://docs.angularjs.org/api/ng/directive/ngBindHtml" target="_blank">ng-bind-html</a></i><br/>
-    <tabset class="code">
-      <tab heading="HTML">
+    <uib-tabset class="code">
+      <uib-tab heading="HTML">
         <div hljs hljs-include="'snippets/customTemplateSlider.html'" hljs-language="html"></div>
-      </tab>
-      <tab heading="JS">
+      </uib-tab>
+      <uib-tab heading="JS">
         <div hljs hljs-include="'snippets/slider_custom_template.js'" hljs-language="js"></div>
-      </tab>
-      <tab heading="your-custom-template.html">
+      </uib-tab>
+      <uib-tab heading="your-custom-template.html">
         <div hljs hljs-include="'custom-template.html'" hljs-language="html"></div>
-      </tab>
-    </tabset>
+      </uib-tab>
+    </uib-tabset>
   </article>
 
   <article>
@@ -347,17 +347,17 @@
       rz-slider-options="slider_custom_directive_inside_template.options"
       rz-slider-tpl-url="directive-in-custom-template.html"
     ></rzslider>
-    <tabset class="code">
-      <tab heading="HTML">
+    <uib-tabset class="code">
+      <uib-tab heading="HTML">
         <div hljs hljs-include="'snippets/directive_in_custom_template.html'" hljs-language="html"></div>
-      </tab>
-      <tab heading="JS">
+      </uib-tab>
+      <uib-tab heading="JS">
         <div hljs hljs-include="'snippets/directive_in_custom_template.js'" hljs-language="js"></div>
-      </tab>
-      <tab heading="directive-in-custom-template.html">
+      </uib-tab>
+      <uib-tab heading="directive-in-custom-template.html">
         <div hljs hljs-include="'directive-in-custom-template.html'" hljs-language="html"></div>
-      </tab>
-    </tabset>
+      </uib-tab>
+    </uib-tabset>
   </article>
 
   <article>
@@ -461,31 +461,31 @@
     </br>
     <button type="button" ng-click="openModal()" class="btn btn-default btn-lg">Open Modal!</button>
 
-    <tabset class="code">
-      <tab heading="HTML">
+    <uib-tabset class="code">
+      <uib-tab heading="HTML">
         <div hljs hljs-include="'snippets/slider_modal.html'" hljs-language="html"></div>
-      </tab>
-      <tab heading="JS">
+      </uib-tab>
+      <uib-tab heading="JS">
         <div hljs hljs-include="'snippets/slider_modal.js'" hljs-language="js"></div>
       </tab>
-      <tab heading="sliderModal.html">
+      <uib-tab heading="sliderModal.html">
         <div hljs hljs-include="'sliderModal.html'" hljs-language="html"></div>
-      </tab>
-    </tabset>
+      </uib-tab>
+    </uib-tabset>
   </article>
 
   <article>
     <h2>Sliders inside tabs</h2>
     <p>Price 1: {{tabSliders.slider1.value}}</p>
     <p>Price 2: {{tabSliders.slider2.value}}</p>
-    <tabset>
-      <tab heading="Slider 1" select="refreshSlider()">
+    <uib-tabset>
+      <uib-tab heading="Slider 1" select="refreshSlider()">
         <rzslider rz-slider-model="tabSliders.slider1.value"></rzslider>
-      </tab>
-      <tab heading="Slider 2" select="refreshSlider()">
+      </uib-tab>
+      <uib-tab heading="Slider 2" select="refreshSlider()">
         <rzslider rz-slider-model="tabSliders.slider2.value"></rzslider>
-      </tab>
-    </tabset>
+      </uib-tab>
+    </uib-tabset>
     <show-code js-file="tabSliders" html-file="tabSliders"></show-code>
   </article>
 
