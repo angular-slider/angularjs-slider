@@ -8,9 +8,9 @@ $scope.percentages = {
   }
 };
 $scope.openModal = function () {
-  var modalInstance = $modal.open({
+  var modalInstance = $uibModal.open({
     templateUrl: 'slider_modal.html',
-    controller: function ($scope, $modalInstance, values) {
+    controller: function ($scope, $uibModalInstance, values) {
       $scope.percentages = JSON.parse(JSON.stringify(values)); //Copy of the object in order to keep original values in $scope.percentages in parent controller.
 
 
@@ -30,10 +30,10 @@ $scope.openModal = function () {
         translate: formatToPercentage
       };
       $scope.ok = function () {
-        $modalInstance.close($scope.percentages);
+        $uibModalInstance.close($scope.percentages);
       };
       $scope.cancel = function () {
-        $modalInstance.dismiss();
+        $uibModalInstance.dismiss();
       };
     },
     resolve: {
