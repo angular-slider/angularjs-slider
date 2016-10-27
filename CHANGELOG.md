@@ -1,3 +1,7 @@
+# 5.8.1 (2016-10-27)
+## Fix
+- Enable using with Browserify (#436)
+
 # 5.8.0 (2016-10-22)
 ## Features
 - Handle Date object in stepsArray (#424 )
