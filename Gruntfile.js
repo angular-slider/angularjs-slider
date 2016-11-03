@@ -147,6 +147,14 @@ module.exports = function(grunt) {
         configFile: 'karma.conf.js',
         singleRun: true
       }
+    },
+
+    copy: {
+      copyToSass: {
+        files: [
+          {expand: false, src: ['dist/rzslider.css'], dest: 'dist/rzslider.scss'},
+        ]
+      }
     }
   });
 
@@ -159,10 +167,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-serve');
   grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
   grunt.registerTask('default', ['css', 'js']);
   grunt.registerTask('test', ['karma']);
 
-  grunt.registerTask('css', ['recess','concat:css']);
+  grunt.registerTask('css', ['recess','concat:css', 'copy:copyToSass']);
   grunt.registerTask('js', ['ngtemplates', 'replace','concat:js', 'ngAnnotate', 'uglify']);
 };
