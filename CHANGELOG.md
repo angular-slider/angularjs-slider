@@ -1,3 +1,7 @@
+# 5.8.3 (2016-11-03)
+## Improvement
+- Generate a SCSS file (simple copy of the css file) in the dist folder so it can be imported (#449)
+
 # 5.8.2 (2016-11-03)
 ## Fix
 - Fix ceil label positioning (#448)
