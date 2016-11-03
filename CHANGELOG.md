@@ -1,3 +1,7 @@
+# 5.8.2 (2016-11-03)
+## Fix
+- Fix ceil label positioning (#448)
+
 # 5.8.1 (2016-10-27)
 ## Fix
 - Enable using with Browserify (#436)
