@@ -1,3 +1,7 @@
+# 5.8.5 (2016-11-05)
+## Fix
+- Fix overlapping max and ceil labels in some cases (#396)
+
 # 5.8.4 (2016-11-05)
 ## Improvement
 - Refactor autoHiding algorithm for labels (fix #446)

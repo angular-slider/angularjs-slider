@@ -1347,6 +1347,9 @@
           this.showEl(this.minLab);
           this.hideEl(this.cmbLab);
         }
+        if (this.options.autoHideLimitLabels) {
+          this.shFloorCeil();
+        }
       },
 
       /**

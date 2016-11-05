@@ -1,4 +1,4 @@
-/*! angularjs-slider - v5.8.4 - 
+/*! angularjs-slider - v5.8.5 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
  2016-11-05 */
@@ -1342,6 +1342,9 @@
           this.showEl(this.maxLab);
           this.showEl(this.minLab);
           this.hideEl(this.cmbLab);
+        }
+        if (this.options.autoHideLimitLabels) {
+          this.shFloorCeil();
         }
       },
 
