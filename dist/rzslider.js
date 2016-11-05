@@ -1,7 +1,7 @@
-/*! angularjs-slider - v5.8.3 - 
+/*! angularjs-slider - v5.8.4 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-11-03 */
+ 2016-11-05 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -1161,24 +1161,11 @@
         }
         var flHidden = false,
           clHidden = false,
-          isRTL = this.options.rightToLeft,
-          flrLabPos = this.flrLab.rzsp,
-          flrLabDim = this.flrLab.rzsd,
-          minLabPos = this.minLab.rzsp,
-          minLabDim = this.minLab.rzsd,
-          maxLabPos = this.maxLab.rzsp,
-          maxLabDim = this.maxLab.rzsd,
-          cmbLabPos = this.cmbLab.rzsp,
-          cmbLabDim = this.cmbLab.rzsd,
-          ceilLabPos = this.ceilLab.rzsp,
-          halfHandle = this.handleHalfDim,
-          isMinLabAtFloor = isRTL ? minLabPos + minLabDim >= flrLabPos - flrLabDim - 5 : minLabPos <= flrLabPos + flrLabDim + 5,
-          isMinLabAtCeil = isRTL ? minLabPos - minLabDim <= ceilLabPos + halfHandle + 10 : minLabPos + minLabDim >= ceilLabPos - halfHandle - 10,
-          isMaxLabAtFloor = isRTL ? maxLabPos >= flrLabPos - flrLabDim - halfHandle : maxLabPos <= flrLabPos + flrLabDim + halfHandle,
-          isMaxLabAtCeil = isRTL ? maxLabPos - maxLabDim <= ceilLabPos + 10 : maxLabPos + maxLabDim >= ceilLabPos - 10,
-          isCmbLabAtFloor = isRTL ? cmbLabPos >= flrLabPos - flrLabDim - halfHandle : cmbLabPos <= flrLabPos + flrLabDim + halfHandle,
-          isCmbLabAtCeil = isRTL ? cmbLabPos - cmbLabDim <= ceilLabPos + 10 : cmbLabPos + cmbLabDim >= ceilLabPos - 10
-
+          isMinLabAtFloor = this.isLabelBelowFloorLab(this.minLab),
+          isMinLabAtCeil = this.isLabelAboveCeilLab(this.minLab),
+          isMaxLabAtCeil = this.isLabelAboveCeilLab(this.maxLab),
+          isCmbLabAtFloor = this.isLabelBelowFloorLab(this.cmbLab),
+          isCmbLabAtCeil =  this.isLabelAboveCeilLab(this.cmbLab);
 
         if (isMinLabAtFloor) {
           flHidden = true;
@@ -1213,6 +1200,28 @@
             this.showEl(this.flrLab);
           }
         }
+      },
+
+      isLabelBelowFloorLab: function(label) {
+        var isRTL = this.options.rightToLeft,
+          pos = label.rzsp,
+          dim = label.rzsd,
+          floorPos = this.flrLab.rzsp,
+          floorDim = this.flrLab.rzsd;
+        return isRTL ?
+        pos + dim >= floorPos - 2 :
+        pos <= floorPos + floorDim + 2;
+      },
+
+      isLabelAboveCeilLab: function(label) {
+        var isRTL = this.options.rightToLeft,
+          pos = label.rzsp,
+          dim = label.rzsd,
+          ceilPos = this.ceilLab.rzsp,
+          ceilDim = this.ceilLab.rzsd;
+        return isRTL ?
+        pos <= ceilPos + ceilDim + 2 :
+        pos + dim >= ceilPos - 2;
       },
 
       /**

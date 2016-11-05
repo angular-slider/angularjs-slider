@@ -1,3 +1,7 @@
+# 5.8.4 (2016-11-05)
+## Improvement
+- Refactor autoHiding algorithm for labels (fix #446)
+
 # 5.8.3 (2016-11-03)
 ## Improvement
 - Generate a SCSS file (simple copy of the css file) in the dist folder so it can be imported (#449)
