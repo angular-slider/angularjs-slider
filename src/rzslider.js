@@ -981,7 +981,7 @@
           var tick = {
             selected: self.isTickSelected(value),
             style: {
-              transform: translate + '(' + position + 'px)'
+              transform: translate + '(' + Math.round(position) + 'px)'
             }
           };
           if (tick.selected && self.options.getSelectionBarColor) {
