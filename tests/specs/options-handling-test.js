@@ -752,7 +752,7 @@
         };
 
         helper.createRangeSlider(sliderConf);
-        expect(helper.slider.minLab.css('left')).to.equal('-' + (helper.slider.minLab.rzsd / 2 - helper.slider.handleHalfDim) + 'px');
+        expect(helper.slider.minLab.css('left')).to.equal('-' + Math.round(helper.slider.minLab.rzsd / 2 - helper.slider.handleHalfDim) + 'px');
         expect(helper.slider.maxLab.css('left')).to.equal((helper.slider.barDimension - (helper.slider.maxLab.rzsd / 2 + helper.slider.handleHalfDim)) + 'px');
 
         sliderConf.max = 100000001;
