@@ -128,6 +128,26 @@
       expect(helper.scope.slider.min).to.equal(40);
       expect(helper.scope.slider.max).to.equal(40);
     });
+
+    it('should pull minH when moving maxH above maxRange', function () {
+      helper.scope.slider.options.maxRange = 15;
+      helper.scope.$digest();
+
+      helper.fireMousedown(helper.slider.maxH, 0);
+      helper.moveMouseToValue(80);
+      expect(helper.scope.slider.min).to.equal(65);
+      expect(helper.scope.slider.max).to.equal(80);
+    });
+
+    it('should pull maxH when moving minH above maxRange', function () {
+      helper.scope.slider.options.maxRange = 15;
+      helper.scope.$digest();
+
+      helper.fireMousedown(helper.slider.minH, 0);
+      helper.moveMouseToValue(20);
+      expect(helper.scope.slider.min).to.equal(20);
+      expect(helper.scope.slider.max).to.equal(35);
+    });
   });
 
 }());
