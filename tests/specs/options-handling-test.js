@@ -512,8 +512,8 @@
         };
         helper.createRangeSlider(sliderConf);
 
-        var expectedDimension = Math.floor(helper.slider.valueToPosition(6)),
-          actualDimension = Math.floor(helper.slider.selBar[0].getBoundingClientRect().width);
+        var expectedDimension = helper.slider.valueToPosition(6),
+          actualDimension = helper.slider.selBar[0].getBoundingClientRect().width + 1;
         expect(actualDimension).to.equal(expectedDimension);
 
         var expectedPosition = helper.slider.valueToPosition(2) + helper.slider.handleHalfDim;
@@ -1217,8 +1217,8 @@
         };
         helper.createRangeSlider(sliderConf);
 
-        var expectedDimension = Math.floor(helper.slider.valueToPosition(6)),
-          actualDimension = Math.floor(helper.slider.selBar[0].getBoundingClientRect().width);
+        var expectedDimension = helper.slider.valueToPosition(6),
+          actualDimension = helper.slider.selBar[0].getBoundingClientRect().width + 1;
         expect(actualDimension).to.equal(expectedDimension);
 
         var expectedPosition = helper.slider.valueToPosition(2) + helper.slider.handleHalfDim;
