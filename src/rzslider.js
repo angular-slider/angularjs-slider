@@ -2145,17 +2145,33 @@
 
       applyPushRange: function(newValue) {
         var difference = this.tracking === 'lowValue' ? this.highValue - newValue : newValue - this.lowValue,
-          range = this.options.minRange !== null ? this.options.minRange : this.options.step;
-        if (difference < range) {
+          minRange = this.options.minRange !== null ? this.options.minRange : this.options.step,
+          maxRange = this.options.maxRange;
+        // if smaller than minRange
+        if (difference < minRange) {
           if (this.tracking === 'lowValue') {
-            this.highValue = Math.min(newValue + range, this.maxValue);
-            newValue = this.highValue - range;
+            this.highValue = Math.min(newValue + minRange, this.maxValue);
+            newValue = this.highValue - minRange;
             this.applyHighValue();
             this.updateHandles('highValue', this.valueToPosition(this.highValue));
           }
           else {
-            this.lowValue = Math.max(newValue - range, this.minValue);
-            newValue = this.lowValue + range;
+            this.lowValue = Math.max(newValue - minRange, this.minValue);
+            newValue = this.lowValue + minRange;
+            this.applyLowValue();
+            this.updateHandles('lowValue', this.valueToPosition(this.lowValue));
+          }
+          this.updateAriaAttributes();
+        }
+        // if greater than maxRange
+        else if (maxRange !== null && difference > maxRange) {
+          if (this.tracking === 'lowValue') {
+            this.highValue = newValue + maxRange;
+            this.applyHighValue();
+            this.updateHandles('highValue', this.valueToPosition(this.highValue));
+          }
+          else {
+            this.lowValue = newValue - maxRange;
             this.applyLowValue();
             this.updateHandles('lowValue', this.valueToPosition(this.lowValue));
           }
