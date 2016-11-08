@@ -1480,7 +1480,7 @@
         var percent = fn(val, this.minValue, this.maxValue) || 0;
         if (this.options.rightToLeft)
           percent = 1 - percent;
-        return Math.round(percent * this.maxPos);
+        return percent * this.maxPos;
       },
 
       linearValueToPosition: function(val, minVal, maxVal) {
