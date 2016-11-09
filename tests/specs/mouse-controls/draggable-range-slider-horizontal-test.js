@@ -187,8 +187,8 @@
     it('should a working positionTrackingBar', function() {
       var newMin = 50,
         newMax = 90,
-        minposition = helper.slider.valueToPosition(newMin),
-        maxposition = helper.slider.valueToPosition(newMax);
+        minposition = Math.round(helper.slider.valueToPosition(newMin)),
+        maxposition = Math.round(helper.slider.valueToPosition(newMax));
       helper.slider.positionTrackingBar(newMin, newMax, minposition, maxposition);
 
       expect(helper.scope.slider.min).to.equal(50);
@@ -411,8 +411,8 @@
     it('should a working positionTrackingBar', function() {
       var newMin = 50,
           newMax = 90,
-          minposition = helper.slider.valueToPosition(newMin),
-          maxposition = helper.slider.valueToPosition(newMax);
+          minposition = Math.round(helper.slider.valueToPosition(newMin)),
+          maxposition = Math.round(helper.slider.valueToPosition(newMax));
       helper.slider.positionTrackingBar(newMin, newMax, minposition, maxposition);
 
       expect(helper.scope.slider.min).to.equal(50);

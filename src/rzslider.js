@@ -981,7 +981,7 @@
           var tick = {
             selected: self.isTickSelected(value),
             style: {
-              transform: translate + '(' + position + 'px)'
+              transform: translate + '(' + Math.round(position) + 'px)'
             }
           };
           if (tick.selected && self.options.getSelectionBarColor) {
@@ -1418,7 +1418,7 @@
       setPosition: function(elem, pos) {
         elem.rzsp = pos;
         var css = {};
-        css[this.positionProperty] = pos + 'px';
+        css[this.positionProperty] = Math.round(pos) + 'px';
         elem.css(css);
         return pos;
       },
@@ -1448,7 +1448,7 @@
       setDimension: function(elem, dim) {
         elem.rzsd = dim;
         var css = {};
-        css[this.dimensionProperty] = dim + 'px';
+        css[this.dimensionProperty] = Math.round(dim) + 'px';
         elem.css(css);
         return dim;
       },

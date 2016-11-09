@@ -356,7 +356,7 @@
           }
         };
         helper.createSlider(sliderConf);
-        var expectedDimension = helper.slider.valueToPosition(2) + helper.slider.handleHalfDim;
+        var expectedDimension = Math.round(helper.slider.valueToPosition(2)) + helper.slider.handleHalfDim;
         expect(helper.slider.selBar.css('width')).to.equal(expectedDimension + 'px');
         expect(helper.slider.selBar.css('left')).to.equal('0px');
       });
@@ -375,7 +375,7 @@
           actualDimension = Math.floor(helper.slider.selBar[0].getBoundingClientRect().width);
         expect(actualDimension).to.equal(expectedDimension);
 
-        var expectedPosition = helper.slider.valueToPosition(2) + helper.slider.handleHalfDim;
+        var expectedPosition = Math.round(helper.slider.valueToPosition(2)) + helper.slider.handleHalfDim;
         expect(helper.slider.selBar.css('left')).to.equal(expectedPosition + 'px');
       });
 
@@ -389,8 +389,8 @@
           }
         };
         helper.createSlider(sliderConf);
-        var expectedDimension = helper.slider.valueToPosition(5),
-          expectedPosition = helper.slider.valueToPosition(10) + helper.slider.handleHalfDim;
+        var expectedDimension = Math.round(helper.slider.valueToPosition(5)),
+          expectedPosition = Math.round(helper.slider.valueToPosition(10)) + helper.slider.handleHalfDim;
         expect(helper.slider.selBar.css('width')).to.equal(expectedDimension + 'px');
         expect(helper.slider.selBar.css('left')).to.equal(expectedPosition + 'px');
       });
@@ -405,11 +405,11 @@
           }
         };
         helper.createSlider(sliderConf);
-        var expectedDimension = Math.floor(helper.slider.valueToPosition(7)),
-          actualDimension = Math.floor(helper.slider.selBar[0].getBoundingClientRect().width);
+        var expectedDimension = Math.round(helper.slider.valueToPosition(7)),
+          actualDimension = Math.round(helper.slider.selBar[0].getBoundingClientRect().width);
         expect(actualDimension).to.equal(expectedDimension);
 
-        var expectedPosition = helper.slider.valueToPosition(3) + helper.slider.handleHalfDim;
+        var expectedPosition = Math.round(helper.slider.valueToPosition(3)) + helper.slider.handleHalfDim;
         expect(helper.slider.selBar.css('left')).to.equal(expectedPosition + 'px');
       });
 
@@ -512,11 +512,11 @@
         };
         helper.createRangeSlider(sliderConf);
 
-        var expectedDimension = Math.floor(helper.slider.valueToPosition(6)),
-          actualDimension = Math.floor(helper.slider.selBar[0].getBoundingClientRect().width);
+        var expectedDimension = Math.round(helper.slider.valueToPosition(6)),
+          actualDimension = helper.slider.selBar[0].getBoundingClientRect().width;
         expect(actualDimension).to.equal(expectedDimension);
 
-        var expectedPosition = helper.slider.valueToPosition(2) + helper.slider.handleHalfDim;
+        var expectedPosition = Math.round(helper.slider.valueToPosition(2)) + helper.slider.handleHalfDim;
         expect(helper.slider.selBar.css('left')).to.equal(expectedPosition + 'px');
       });
 
@@ -752,8 +752,8 @@
         };
 
         helper.createRangeSlider(sliderConf);
-        expect(helper.slider.minLab.css('left')).to.equal('-' + (helper.slider.minLab.rzsd / 2 - helper.slider.handleHalfDim) + 'px');
-        expect(helper.slider.maxLab.css('left')).to.equal((helper.slider.barDimension - (helper.slider.maxLab.rzsd / 2 + helper.slider.handleHalfDim)) + 'px');
+        expect(helper.slider.minLab.css('left')).to.equal('-' + Math.round(helper.slider.minLab.rzsd / 2 - helper.slider.handleHalfDim) + 'px');
+        expect(helper.slider.maxLab.css('left')).to.equal(Math.round((helper.slider.barDimension - (helper.slider.maxLab.rzsd / 2 + helper.slider.handleHalfDim))) + 'px');
 
         sliderConf.max = 100000001;
         helper.createRangeSlider(sliderConf);
@@ -1124,10 +1124,10 @@
           }
         };
         helper.createSlider(sliderConf);
-        var expectedDimension = Math.floor(helper.slider.valueToPosition(8) + helper.slider.handleHalfDim),
-          actualDimension = Math.floor(helper.slider.selBar[0].getBoundingClientRect().width);
+        var expectedDimension = Math.round(helper.slider.valueToPosition(8) + helper.slider.handleHalfDim),
+          actualDimension = Math.round(helper.slider.selBar[0].getBoundingClientRect().width);
         expect(actualDimension).to.equal(expectedDimension);
-        expect(helper.slider.selBar.css('left')).to.equal(helper.slider.valueToPosition(2) + helper.slider.handleHalfDim + 'px');
+        expect(helper.slider.selBar.css('left')).to.equal(Math.round(helper.slider.valueToPosition(2)) + helper.slider.handleHalfDim + 'px');
       });
 
       it('should set the correct dimension/position for selection bar for single slider with showSelectionBarEnd=true', function() {
@@ -1158,8 +1158,8 @@
           }
         };
         helper.createSlider(sliderConf);
-        var expectedDimension = helper.slider.valueToPosition(15),
-          expectedPosition = helper.slider.valueToPosition(15) + helper.slider.handleHalfDim;
+        var expectedDimension = Math.round(helper.slider.valueToPosition(15)),
+          expectedPosition = Math.round(helper.slider.valueToPosition(15)) + helper.slider.handleHalfDim;
         expect(helper.slider.selBar.css('width')).to.equal(expectedDimension + 'px');
         expect(helper.slider.selBar.css('left')).to.equal(expectedPosition + 'px');
       });
@@ -1175,9 +1175,9 @@
           }
         };
         helper.createSlider(sliderConf);
-        var expectedDimension = Math.floor(helper.slider.valueToPosition(13)),
-          actualDimension = Math.floor(helper.slider.selBar[0].getBoundingClientRect().width),
-          expectedPosition = helper.slider.valueToPosition(10) + helper.slider.handleHalfDim;
+        var expectedDimension = Math.round(helper.slider.valueToPosition(13)),
+          actualDimension = helper.slider.selBar[0].getBoundingClientRect().width,
+          expectedPosition = Math.round(helper.slider.valueToPosition(10)) + helper.slider.handleHalfDim;
         expect(actualDimension).to.equal(expectedDimension);
         expect(helper.slider.selBar.css('left')).to.equal(expectedPosition + 'px');
       });
@@ -1217,11 +1217,11 @@
         };
         helper.createRangeSlider(sliderConf);
 
-        var expectedDimension = Math.floor(helper.slider.valueToPosition(6)),
-          actualDimension = Math.floor(helper.slider.selBar[0].getBoundingClientRect().width);
+        var expectedDimension = Math.round(helper.slider.valueToPosition(6)),
+          actualDimension = helper.slider.selBar[0].getBoundingClientRect().width;
         expect(actualDimension).to.equal(expectedDimension);
 
-        var expectedPosition = helper.slider.valueToPosition(2) + helper.slider.handleHalfDim;
+        var expectedPosition = Math.round(helper.slider.valueToPosition(2)) + helper.slider.handleHalfDim;
         expect(helper.slider.selBar.css('left')).to.equal(expectedPosition + 'px');
       });
 
