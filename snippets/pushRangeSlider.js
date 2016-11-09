@@ -6,6 +6,7 @@ $scope.slider = {
         ceil: 100,
         step: 1,
         minRange: 10,
+        maxRange: 30,
         pushRange: true
     }
 };
