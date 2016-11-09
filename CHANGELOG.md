@@ -1,3 +1,7 @@
+# 5.8.7 (2016-11-09)
+## Fix
+- Add Math.round for positions and dimensions - thanks to @DmitryKrekota (#454)
+
 # 5.8.6 (2016-11-08)
 ## Fix
 - Apply the pushRange with maxRange - thanks to @GuilloOme (#456)

@@ -1,10 +1,10 @@
 {
   "name": "angularjs-slider",
-  "version": "5.8.6",
+  "version": "5.8.7",
   "homepage": "https://github.com/angular-slider/angularjs-slider",
   "authors": [
     "Rafal Zajac <rzajac@gmail.com>",
-    "Valentin Hervieu <valentin@hervieu.me>",
+    "Valentin Hervieu <valentin@hervi.eu>",
     "Jussi Saarivirta <jusasi@gmail.com>"
   ],
   "description": "AngularJS slider directive with no external dependencies. Mobile friendly!",
