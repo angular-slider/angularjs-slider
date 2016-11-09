@@ -1,3 +1,7 @@
+# 5.8.6 (2016-11-08)
+## Fix
+- Apply the pushRange with maxRange - thanks to @GuilloOme (#456)
+
 # 5.8.5 (2016-11-05)
 ## Fix
 - Fix overlapping max and ceil labels in some cases (#396)
