@@ -94,6 +94,19 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $uibModal) {
     }
   };
 
+  //Slider with selection bar gradient
+  $scope.gradient_slider_bar = {
+    minValue: 0,
+    maxValue: 33,
+    options: {
+      showSelectionBar: true,
+      selectionBarGradient: {
+        from: 'white',
+        to: '#0db9f0'
+      }
+    }
+  };
+
   //Slider with selection bar color
   $scope.color_slider_bar = {
     value: 12,
@@ -421,7 +434,11 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $uibModal) {
     options: {
       floor: 0,
       ceil: 100,
-      vertical: true
+      vertical: true,
+      selectionBarGradient: {
+        from: 'white',
+        to: '#0db9f0'
+      }
     }
   };
   $scope.verticalSlider3 = {
