@@ -426,7 +426,12 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $uibModal) {
     options: {
       floor: 0,
       ceil: 10,
-      vertical: true
+      vertical: true,
+      showSelectionBarEnd: true,
+      selectionBarGradient: {
+        from: 'white',
+        to: '#0db9f0'
+      }
     }
   };
   $scope.verticalSlider2 = {
