@@ -99,6 +99,7 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $uibModal) {
     minValue: 0,
     maxValue: 33,
     options: {
+      ceil: 100,
       showSelectionBar: true,
       selectionBarGradient: {
         from: 'white',
