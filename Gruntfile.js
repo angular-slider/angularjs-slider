@@ -1,8 +1,8 @@
 module.exports = function(grunt) {
   var banner = '/*! <%= pkg.name %> - v<%= pkg.version %> - \n' +
-    ' (c) <%= pkg.author %> - \n'+
-    ' <%= pkg.repository.url %> - \n' +
-    ' <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+      ' (c) <%= pkg.author %> - \n' +
+      ' <%= pkg.repository.url %> - \n' +
+      ' <%= grunt.template.today("yyyy-mm-dd") %> */\n',
     minBanner = banner.replace(/\n/g, '') + '\n';
 
   // Project configuration.
@@ -155,6 +155,19 @@ module.exports = function(grunt) {
           {expand: false, src: ['dist/rzslider.css'], dest: 'dist/rzslider.scss'},
         ]
       }
+    },
+    postcss: {
+      options: {
+        map: true,
+        processors: [
+          require('autoprefixer')({
+            browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']
+          })
+        ]
+      },
+      dist: {
+        src: 'dist/rzslider.css'
+      }
     }
   });
 
@@ -168,10 +181,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-serve');
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-postcss');
 
   grunt.registerTask('default', ['css', 'js']);
   grunt.registerTask('test', ['karma']);
 
-  grunt.registerTask('css', ['recess','concat:css', 'copy:copyToSass']);
-  grunt.registerTask('js', ['ngtemplates', 'replace','concat:js', 'ngAnnotate', 'uglify']);
+  grunt.registerTask('css', ['recess', 'concat:css', 'postcss:dist', 'copy:copyToSass']);
+  grunt.registerTask('js', ['ngtemplates', 'replace', 'concat:js', 'ngAnnotate', 'uglify']);
 };

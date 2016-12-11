@@ -1,3 +1,7 @@
+# 5.8.9 (2016-12-11)
+## Improvement
+- Add autoprefixer for CSS builds (#472)
+
 # 5.8.8 (2016-12-11)
 ## Fix
 - Prevent angular being loaded twice when using with browserify (#474)

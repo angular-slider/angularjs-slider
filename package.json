@@ -1,6 +1,6 @@
 {
   "name": "angularjs-slider",
-  "version": "5.8.8",
+  "version": "5.8.9",
   "description": "AngularJS slider directive with no external dependencies. Mobile friendly!.",
   "main": "dist/rzslider.js",
   "repository": {
@@ -23,6 +23,7 @@
   "devDependencies": {
     "angular": "1.4.7",
     "angular-mocks": "1.4.8",
+    "autoprefixer": "^6.5.3",
     "chai": "^3.5.0",
     "codecov.io": "^0.1.6",
     "commitizen": "^2.4.6",
@@ -36,6 +37,7 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-karma": "^0.12.1",
     "grunt-ng-annotate": "^1.0.1",
+    "grunt-postcss": "^0.8.0",
     "grunt-recess": "~0.4.0",
     "grunt-replace": "^0.11.0",
     "grunt-serve": "^0.1.6",
