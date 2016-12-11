@@ -1,3 +1,7 @@
+# 5.8.8 (2016-12-11)
+## Fix
+- Prevent angular being loaded twice when using with browserify (#474)
+
 # 5.8.7 (2016-11-09)
 ## Fix
 - Add Math.round for positions and dimensions - thanks to @DmitryKrekota (#454)
