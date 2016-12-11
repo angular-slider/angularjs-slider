@@ -1,7 +1,7 @@
 /*! angularjs-slider - v5.8.7 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-11-09 */
+ 2016-12-08 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -15,7 +15,7 @@
     // only CommonJS-like environments that support module.exports,
     // like Node.
     // to support bundler like browserify
-    var angularObj = require('angular');
+    var angularObj = angular || require('angular');
     if ((!angularObj || !angularObj.module) && typeof angular != 'undefined') {
       angularObj = angular;
     }
