@@ -242,7 +242,8 @@ The default options are:
     customTemplateScope: null,
     logScale: false,
     customValueToPosition: null,
-    customPositionToValue: null
+    customPositionToValue: null,
+    selectionBarGradient: null
 }
 ````
 
@@ -395,6 +396,7 @@ For custom scales:
 
 **customPositionToValue** - _Function(percent, minVal, maxVal): value_: Function that returns the value for a given position on the slider. The position is a percentage between 0 and 1.
 
+**selectionBarGradient** - _Object (default to null)_: Use to display the selection bar as a gradient. The given object must contain `from` and `to` properties which are colors.
 
 ## Change default options
 If you want the change the default options for all the sliders displayed in your application, you can set them using the `RzSliderOptions.options()` method:

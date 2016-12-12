@@ -413,6 +413,49 @@
         expect(helper.slider.selBar.css('left')).to.equal(expectedPosition + 'px');
       });
 
+      it('should set the correct background position for selection bar for range slider when selectionBarGradient is used with a value {from: "white"; to:"blue"}', function() {
+        var sliderConf = {
+          min: 5,
+          max: 10,
+          options: {
+            floor: 0,
+            ceil: 20,
+            selectionBarGradient: {
+              from: 'white',
+              to: 'blue'
+            }
+          }
+        };
+
+        helper.createRangeSlider(sliderConf);
+
+        var expectedPosition = -(Math.round(helper.slider.valueToPosition(5)) + helper.slider.handleHalfDim) + 'px center',
+          actualPosition = helper.slider.scope.barStyle.backgroundPosition;
+        expect(actualPosition).to.equal(expectedPosition);
+      });
+
+      it('should set the correct gradient for selection bar for slider when selectionBarGradient is used with a value {from: "white"; to:"blue"} and vertical is used with a value true', function() {
+        var sliderConf = {
+          value: 5,
+          options: {
+            floor: 0,
+            ceil: 20,
+            vertical: true,
+            showSelectionBar: true,
+            selectionBarGradient: {
+              from: 'white',
+              to: 'blue'
+            }
+          }
+        };
+
+        helper.createSlider(sliderConf);
+
+        var expectedGradient = 'linear-gradient(to top, white 0%,blue 100%)',
+          actualGradient = helper.slider.scope.barStyle.backgroundImage;
+        expect(actualGradient).to.equal(expectedGradient);
+      });
+
       it('should set alwaysHide on floor/ceil when hideLimitLabels is set to true', function() {
         var sliderConf = {
           value: 10,

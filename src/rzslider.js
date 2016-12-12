@@ -84,7 +84,8 @@
       customTemplateScope: null,
       logScale: false,
       customValueToPosition: null,
-      customPositionToValue: null
+      customPositionToValue: null,
+      selectionBarGradient: null
     };
     var globalOptions = {};
 
@@ -1272,6 +1273,20 @@
           this.scope.barStyle = {
             backgroundColor: color
           };
+        } else if (this.options.selectionBarGradient) {
+          var offset = this.options.showSelectionBarFromValue !== null ? this.valueToPosition(this.options.showSelectionBarFromValue) : 0,
+            reversed = offset - position > 0 ^ isSelectionBarFromRight,
+            direction = this.options.vertical ? (reversed ? 'bottom' : 'top') : (reversed ? 'left' : 'right');
+          this.scope.barStyle = {
+            backgroundImage: 'linear-gradient(to ' + direction + ', ' + this.options.selectionBarGradient.from + ' 0%,' + this.options.selectionBarGradient.to + ' 100%)'
+          };
+          if (this.options.vertical) {
+            this.scope.barStyle.backgroundPosition = 'center ' + (offset + dimension + position + (reversed ? -this.handleHalfDim : 0)) + 'px';
+            this.scope.barStyle.backgroundSize = '100% ' + (this.barDimension - this.handleHalfDim) + 'px';
+          } else {
+            this.scope.barStyle.backgroundPosition = (offset - position + (reversed ? this.handleHalfDim : 0)) + 'px center';
+            this.scope.barStyle.backgroundSize = (this.barDimension - this.handleHalfDim) + 'px 100%';
+          }
         }
       },
 
