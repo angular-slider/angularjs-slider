@@ -1,3 +1,7 @@
+# 5.9.0 (2016-12-12)
+## Features
+- Add selectionBarGradient option to customize the selection bar (#473)
+
 # 5.8.9 (2016-12-11)
 ## Improvement
 - Add autoprefixer for CSS builds (#472)
