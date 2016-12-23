@@ -2,7 +2,8 @@
  * Angular JS slider directive
  *
  * (c) Rafal Zajac <rzajac@gmail.com>
- * http://github.com/rzajac/angularjs-slider
+ * (c) Valentin Hervieu <valentin@hervi.eu>
+ * http://github.com/angular-slider/angularjs-slider
  *
  * Licensed under the MIT license
  */
@@ -27,13 +28,13 @@
       cursor: not-allowed;
       background-color: @handleDisabledColor;
     }
-    .rz-bar-wrapper.rz-draggable {
+    .rz-draggable {
       cursor: not-allowed;
     }
-    .rz-bar.rz-selection {
+    .rz-selection {
       background: @barDisabledFillColor;
     }
-    .rz-ticks .rz-tick {
+    .rz-tick {
       cursor: not-allowed;
       &.rz-selected {
         background: @barDisabledFillColor;
@@ -61,9 +62,10 @@
     width: 100%;
     height: @handleSize;
     z-index: 1;
-    &.rz-draggable {
-      cursor: move;
-    }
+  }
+
+  .rz-draggable {
+    cursor: move;
   }
 
   .rz-bar {
@@ -73,12 +75,12 @@
     z-index: 1;
     background: @barNormalColor;
     .rounded(@barDimension/2);
+  }
 
-    &.rz-selection {
-      z-index: 2;
-      background: @barFillColor;
-      .rounded(@barDimension/2);
-    }
+  .rz-selection {
+    z-index: 2;
+    background: @barFillColor;
+    .rounded(@barDimension/2);
   }
 
   .rz-pointer {
@@ -120,9 +122,6 @@
     bottom: @handleSize/2;
     padding: @bubblePadding;
     color: @labelTextColor;
-    &.rz-selection {
-      top: @handleSize/2;
-    }
     &.rz-limit {
       color: @limitLabelTextColor;
     }
@@ -138,41 +137,43 @@
     margin: 0;
     z-index: 1;
     list-style: none;
+  }
 
-    .rz-tick {
-      text-align: center;
-      cursor: pointer;
-      width: @ticksWidth;
-      height: @ticksHeight;
-      background: @ticksColor;
-      border-radius: 50%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      margin-left: @handleSize / 2 - @ticksWidth / 2; // for centering
-      &.rz-selected {
-        background: @selectedTicksColor;
-      }
-      .rz-tick-value {
-        position: absolute;
-        top: @ticksValuePosition;
-        transform: translate(-50%, 0);
-      }
-      .rz-tick-legend {
-        position: absolute;
-        top: @ticksLegendPosition;
-        transform: translate(-50%, 0);
-        max-width: 50px;
-        white-space: normal;
-      }
+  .rz-ticks-values-under {
+    .rz-tick-value {
+      top: initial;
+      bottom: @ticksValuePosition - 2;
     }
+  }
 
-    &.rz-ticks-values-under {
-      .rz-tick-value {
-        top: initial;
-        bottom: @ticksValuePosition - 2;
-      }
+  .rz-tick {
+    text-align: center;
+    cursor: pointer;
+    width: @ticksWidth;
+    height: @ticksHeight;
+    background: @ticksColor;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: @handleSize / 2 - @ticksWidth / 2; // for centering
+    &.rz-selected {
+      background: @selectedTicksColor;
     }
+  }
+
+  .rz-tick-value {
+    position: absolute;
+    top: @ticksValuePosition;
+    transform: translate(-50%, 0);
+  }
+
+  .rz-tick-legend {
+    position: absolute;
+    top: @ticksLegendPosition;
+    transform: translate(-50%, 0);
+    max-width: 50px;
+    white-space: normal;
   }
 
   &.rz-vertical {
@@ -215,10 +216,6 @@
       left: @handleSize/2 !important;
       margin-left: 3px;
       bottom: 0;
-      &.rz-selection {
-        left: @handleSize/2 !important;
-        top: auto;
-      }
     }
 
     .rz-ticks {
@@ -227,31 +224,29 @@
       left: -(@ticksHeight - @barDimension) / 2;
       top: 0;
       z-index: 1;
-
-      .rz-tick {
-        vertical-align: middle;
-        margin-left: auto;
-        margin-top: @handleSize / 2 - @ticksWidth / 2; // for centering
-        .rz-tick-value {
-          left: @ticksValuePositionOnVertical;
-          top: initial;
-          transform: translate(0, -28%);
-        }
-        .rz-tick-legend {
-          top: initial;
-          right: @ticksLegendPosition;
-          transform: translate(0, -28%);
-          max-width: none;
-          white-space: nowrap;
-        }
-      }
-
-      &.rz-ticks-values-under {
-        .rz-tick-value {
-          bottom: initial;
-          left: initial;
-          right: @ticksValuePositionOnVertical;
-        }
+    }
+    .rz-tick {
+      vertical-align: middle;
+      margin-left: auto;
+      margin-top: @handleSize / 2 - @ticksWidth / 2; // for centering
+    }
+    .rz-tick-value {
+      left: @ticksValuePositionOnVertical;
+      top: initial;
+      transform: translate(0, -28%);
+    }
+    .rz-tick-legend {
+      top: initial;
+      right: @ticksLegendPosition;
+      transform: translate(0, -28%);
+      max-width: none;
+      white-space: nowrap;
+    }
+    .rz-ticks-values-under {
+      .rz-tick-value {
+        bottom: initial;
+        left: initial;
+        right: @ticksValuePositionOnVertical;
       }
     }
   }
