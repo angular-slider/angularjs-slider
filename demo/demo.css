@@ -1,13 +1,45 @@
-* { margin: 0; padding: 0; }
-body { font-family: 'Open Sans', sans-serif; color: #1f2636; font-size: 14px; padding-bottom: 40px; }
-header { background: #0db9f0; color: #fff; margin: -40px; margin-bottom: 40px; text-align: center; padding: 40px 0; }
-h1 { font-weight: 300; }
-h2 {margin-bottom:10px;}
-.wrapper { background: #fff; padding: 40px; }
-article { margin-bottom: 10px; }
-.tab-pane{
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  color: #1f2636;
+  font-size: 14px;
+  padding-bottom: 40px;
+}
+
+header {
+  background: #0db9f0;
+  color: #fff;
+  margin: -40px;
+  margin-bottom: 40px;
+  text-align: center;
+  padding: 40px 0;
+}
+
+h1 {
+  font-weight: 300;
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+.wrapper {
+  background: #fff;
+  padding: 40px;
+}
+
+article {
+  margin-bottom: 10px;
+}
+
+.tab-pane {
   padding-top: 10px;
 }
+
 .field-title {
   width: 100px;
 }
@@ -15,6 +47,52 @@ article { margin-bottom: 10px; }
 .vertical-sliders {
   margin: 0;
 }
+
 .vertical-sliders > div {
   height: 250px;
+}
+
+.custom-slider.rzslider .rz-bar {
+  background: #ffe4d1;
+  height: 2px;
+}
+
+.custom-slider.rzslider .rz-selection {
+  background: orange;
+}
+
+.custom-slider.rzslider .rz-pointer {
+  width: 8px;
+  height: 16px;
+  top: auto; /* to remove the default positioning */
+  bottom: 0;
+  background-color: #333;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.custom-slider.rzslider .rz-pointer:after {
+  display: none;
+}
+
+.custom-slider.rzslider .rz-bubble {
+  bottom: 14px;
+}
+
+.custom-slider.rzslider .rz-limit {
+  font-weight: bold;
+  color: orange;
+}
+
+.custom-slider.rzslider .rz-tick {
+  width: 1px;
+  height: 10px;
+  margin-left: 4px;
+  border-radius: 0;
+  background: #ffe4d1;
+  top: -1px;
+}
+
+.custom-slider.rzslider .rz-tick.rz-selected {
+  background: orange;
 }

@@ -17,6 +17,17 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $uibModal) {
     }
   };
 
+  $scope.customSlider = {
+    minValue: 10,
+    maxValue: 90,
+    options: {
+      floor: 0,
+      ceil: 100,
+      step: 10,
+      showTicks: true
+    }
+  };
+
   //Range slider with minLimit and maxLimit config
   $scope.minMaxLimitSlider = {
     value: 50,
