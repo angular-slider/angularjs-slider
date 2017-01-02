@@ -30,6 +30,9 @@ Slider directive implementation for AngularJS 1.X, without any dependencies: [ht
 
 ![image](https://cloud.githubusercontent.com/assets/2678610/11419099/7f4c0e76-9425-11e5-98c6-615412291df1.png)
 
+**Custom style**
+![image](https://cloud.githubusercontent.com/assets/2678610/21595997/df0bb468-d134-11e6-8272-008baffedccd.png)
+
 ## Examples
 
 - **Various examples:** [http://angular-slider.github.io/angularjs-slider](http://angular-slider.github.io/angularjs-slider/index.html)
