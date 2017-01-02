@@ -41,6 +41,17 @@ app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $uibModal) {
     }
   };
 
+  $scope.customSlider = {
+    minValue: 10,
+    maxValue: 90,
+    options: {
+      floor: 0,
+      ceil: 100,
+      step: 10,
+      showTicks: true
+    }
+  };
+
   $scope.minMaxLimitSlider = {
     value: 50,
     options: {
@@ -115,6 +126,20 @@ app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $uibModal) {
       floor: -10,
       ceil: 10,
       showSelectionBarFromValue: 0
+    }
+  };
+
+  //Slider with selection bar gradient
+  $scope.gradient_slider_bar = {
+    minValue: 0,
+    maxValue: 80,
+    options: {
+      ceil: 100,
+      showSelectionBar: true,
+      selectionBarGradient: {
+        from: 'white',
+        to: '#FC0'
+      }
     }
   };
 

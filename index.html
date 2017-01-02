@@ -62,6 +62,27 @@
   </article>
 
   <article>
+    <h2>Slider with custom style</h2>
+    <rzslider
+      class="custom-slider"
+      data-rz-slider-model="customSlider.minValue"
+      data-rz-slider-high="customSlider.maxValue"
+      data-rz-slider-options="customSlider.options"
+    ></rzslider>
+    <tabset class="code">
+      <tab heading="HTML">
+        <div hljs hljs-include="'snippets/custom_slider.html'" hljs-language="html"></div>
+      </tab>
+      <tab heading="custom-style.css">
+        <div hljs hljs-include="'snippets/custom_slider.css'" hljs-language="css"></div>
+      </tab>
+      <tab heading="JS">
+        <div hljs hljs-include="'snippets/custom_slider.js'" hljs-language="js"></div>
+      </tab>
+    </tabset>
+  </article>
+
+  <article>
     <h2>Range slider with min limit set to 10 and max limit set to 90</h2>
     <rzslider
       rz-slider-model="minMaxLimitSlider.value"
@@ -125,6 +146,16 @@
       rz-slider-options="slider_visible_bar_from_value.options"
     ></rzslider>
     <show-code js-file="slider_visible_bar_from_value" html-file="singleSlider"></show-code>
+  </article>
+
+  <article>
+    <h2>Slider with selection bar gradient</h2>
+    <rzslider
+      rz-slider-model="gradient_slider_bar.minValue"
+      rz-slider-high="gradient_slider_bar.maxValue"
+      rz-slider-options="gradient_slider_bar.options"
+    ></rzslider>
+    <show-code js-file="slider_gradient" html-file="rangeSlider"></show-code>
   </article>
 
   <article>
