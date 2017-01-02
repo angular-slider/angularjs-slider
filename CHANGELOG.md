@@ -1,3 +1,9 @@
+# 6.0.0 (2017-01-02)
+## Refactoring
+- Refactor/simplify the css rules to ease the customisation.
+
+**You might want to check that all your custom styles are still correctly applied...**
+
 # 5.9.0 (2016-12-12)
 ## Features
 - Add selectionBarGradient option to customize the selection bar (#473)
