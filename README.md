@@ -1,6 +1,7 @@
 ## AngularJS 1.X slider directive with no external dependencies
 
 Status:
+![Maintenance](https://img.shields.io/maintenance/no/2016.svg?style=flat-square)
 [![npm version](https://img.shields.io/npm/v/angularjs-slider.svg?style=flat-square)](https://www.npmjs.com/package/angularjs-slider)
 [![npm downloads](https://img.shields.io/npm/dm/angularjs-slider.svg?style=flat-square)](http://npm-stat.com/charts.html?package=angularjs-slider&from=2015-01-01)
 [![Build Status](https://img.shields.io/travis/angular-slider/angularjs-slider/master.svg?style=flat-square)](https://travis-ci.org/angular-slider/angularjs-slider)
@@ -10,6 +11,8 @@ Status:
 Links:
 [![Join the chat at https://gitter.im/rzajac/angularjs-slider](https://img.shields.io/badge/GITTER-join%20chat-1dce73.svg?style=flat-square)](https://gitter.im/rzajac/angularjs-slider?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+
+> I'm looking for a maintainer for this project. I have lost my [Open Source Stamina](https://medium.com/@kentcdodds/open-source-stamina-dafd063f9932#.sfay5wlzp) for this project and I will probably not push any code to this project anymore (unless, I find some motivation later).
 
 Slider directive implementation for AngularJS 1.X, without any dependencies: [http://angular-slider.github.io/angularjs-slider](http://angular-slider.github.io/angularjs-slider/index.html).
 
