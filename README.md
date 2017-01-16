@@ -12,7 +12,7 @@ Links:
 [![Join the chat at https://gitter.im/rzajac/angularjs-slider](https://img.shields.io/badge/GITTER-join%20chat-1dce73.svg?style=flat-square)](https://gitter.im/rzajac/angularjs-slider?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-> I'm looking for a maintainer for this project. I have lost my [Open Source Stamina](https://medium.com/@kentcdodds/open-source-stamina-dafd063f9932#.sfay5wlzp) for this project and I will probably not push any code to this project anymore (unless, I find some motivation later).
+> I'm looking for a maintainer for this project. I have lost my [Open Source Stamina](https://medium.com/@kentcdodds/open-source-stamina-dafd063f9932#.sfay5wlzp) for this project and I will probably not push any code to this project anymore (unless, I find some motivation later). I will try to merge pull requests if some are submitted, but only if they are really clean.
 
 Slider directive implementation for AngularJS 1.X, without any dependencies: [http://angular-slider.github.io/angularjs-slider](http://angular-slider.github.io/angularjs-slider/index.html).
 
