@@ -300,7 +300,7 @@ $scope.slider = {
 };
 ```
 
-**getLegend** - _Function(value, sliderId)_: Use to display legend under ticks. The function will be called with each tick value and returned content will be displayed under the tick as a legend. If the returned value is null, then no legend is displayed under the corresponding tick.
+**getLegend** - _Function(value, sliderId)_: Use to display legend under ticks (thus, it needs to be used along with `showTicks` or `showTicksValues`). The function will be called with each tick value and returned content will be displayed under the tick as a legend. If the returned value is null, then no legend is displayed under the corresponding tick.You can also directly provide the legend values in the `stepsArray` option.
 > In order to get enough space to display legends under the slider, you need to add the `with-legend` class to the slider component. The default margin-bottom is then 40px which is enough for legends that are displayed on 2 lines. If you need more, simply override the style for the class.
 
 **id** - _Any (defaults to null)_: If you want to use the same `translate` function for several sliders, just set the `id` to anything you want, and it will be passed to the `translate(value, sliderId)` function as a second argument.
