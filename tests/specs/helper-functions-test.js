@@ -705,7 +705,15 @@
         expect(helper.slider.positionToValue(1000)).to.equal(-100);
         expect(helper.slider.positionToValue(500)).to.equal(-50);
       });
+      it('should conditionally call callOnChange in applyModel', function() {
+        sinon.spy(helper.slider, 'callOnChange');
+
+        helper.slider.applyModel(false);
+        helper.slider.callOnChange.called.should.be.false;
+
+        helper.slider.applyModel(true);
+        expect(helper.slider.callOnChange.callCount).to.equal(1);
+      });
     });
   });
 }());
-
