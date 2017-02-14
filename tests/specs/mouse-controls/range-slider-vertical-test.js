@@ -115,8 +115,8 @@
         position = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
       helper.fireMousemove(position, true);
       expect(helper.scope.slider.min).to.equal(expectedValue);
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should handle click and drag on maxH correctly when mouse is on the middle', function() {
@@ -127,8 +127,8 @@
         position = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
       helper.fireMousemove(position, true);
       expect(helper.scope.slider.max).to.equal(expectedValue);
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should handle click and drag on minH and switch min/max if needed', function() {
@@ -173,9 +173,9 @@
       expect(helper.scope.slider.min).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
       helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true;
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnStart.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnStart.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should handle click on fullbar and move maxH when click pos is nearer to maxH', function() {
@@ -192,9 +192,9 @@
       expect(helper.scope.slider.max).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('highValue');
       helper.slider.focusElement.calledWith(helper.slider.maxH).should.be.true;
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnStart.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnStart.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should handle click on selbar and move minH when click pos is nearer to minH', function() {
@@ -211,9 +211,9 @@
       expect(helper.scope.slider.min).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
       helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true;
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnStart.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnStart.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should handle click on selbar and move maxH when click pos is nearer to maxH', function() {
@@ -230,9 +230,9 @@
       expect(helper.scope.slider.max).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('highValue');
       helper.slider.focusElement.calledWith(helper.slider.maxH).should.be.true;
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnStart.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnStart.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
   });
 
@@ -351,8 +351,8 @@
         position = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
       helper.fireMousemove(position, true);
       expect(helper.scope.slider.min).to.equal(expectedValue);
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should handle click and drag on maxH correctly when mouse is on the middle', function() {
@@ -363,8 +363,8 @@
         position = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
       helper.fireMousemove(position, true);
       expect(helper.scope.slider.max).to.equal(expectedValue);
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should handle click and drag on minH and switch min/max if needed', function() {
@@ -409,9 +409,9 @@
       expect(helper.scope.slider.min).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
       helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true;
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnStart.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnStart.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should handle click on fullbar and move maxH when click pos is nearer to maxH', function() {
@@ -428,9 +428,9 @@
       expect(helper.scope.slider.max).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('highValue');
       helper.slider.focusElement.calledWith(helper.slider.maxH).should.be.true;
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnStart.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnStart.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should handle click on selbar and move minH when click pos is nearer to minH', function() {
@@ -447,9 +447,9 @@
       expect(helper.scope.slider.min).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
       helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true;
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnStart.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnStart.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should handle click on selbar and move maxH when click pos is nearer to maxH', function() {
@@ -466,10 +466,9 @@
       expect(helper.scope.slider.max).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('highValue');
       helper.slider.focusElement.calledWith(helper.slider.maxH).should.be.true;
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnStart.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnStart.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
   });
 }());
-

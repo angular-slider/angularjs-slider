@@ -81,8 +81,8 @@
 
       helper.fireMousemove(position, true);
       expect(helper.scope.slider.value).to.equal(expectedValue);
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should handle click and drag on minH correctly when mouse is before the slider and previous value was different than 0', function() {
@@ -145,9 +145,9 @@
 
       expect(helper.scope.slider.value).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnStart.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnStart.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should handle click on selbar and move minH', function() {
@@ -162,9 +162,9 @@
 
       expect(helper.scope.slider.value).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnStart.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnStart.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should handle click on ticks and move minH', function() {
@@ -182,9 +182,9 @@
 
       expect(helper.scope.slider.value).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnStart.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnStart.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should handle click on ticks when showTicks is an integer and move minH', function() {
@@ -202,9 +202,9 @@
 
       expect(helper.scope.slider.value).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnStart.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnStart.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
   });
 
@@ -289,8 +289,8 @@
 
       helper.fireMousemove(position, true);
       expect(helper.scope.slider.value).to.equal(expectedValue);
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should handle click and drag on minH correctly when mouse is before the slider and previous value was different than 0', function() {
@@ -353,9 +353,9 @@
 
       expect(helper.scope.slider.value).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnStart.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnStart.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should handle click on selbar and move minH', function() {
@@ -370,9 +370,9 @@
 
       expect(helper.scope.slider.value).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnStart.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnStart.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should handle click on ticks and move minH', function() {
@@ -390,9 +390,9 @@
 
       expect(helper.scope.slider.value).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnStart.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnStart.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should handle click on ticks when showTicks is an integer and move minH', function() {
@@ -410,11 +410,10 @@
 
       expect(helper.scope.slider.value).to.equal(expectedValue);
       expect(helper.slider.tracking).to.equal('lowValue');
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnStart.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnStart.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
   });
 
 }());
-

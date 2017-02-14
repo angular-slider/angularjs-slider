@@ -44,8 +44,8 @@
       var expectedValue = 50;
       helper.moveMouseToValue(expectedValue);
       expect(helper.scope.slider.value).to.equal(expectedValue);
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should do nothing when a click happen on another element than the handle', function() {
@@ -106,8 +106,8 @@
       var expectedValue = 50;
       helper.moveMouseToValue(expectedValue);
       expect(helper.scope.slider.value).to.equal(expectedValue);
-      helper.slider.positionTrackingHandle.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should do nothing when a click happen on another element than the handle', function() {
@@ -124,4 +124,3 @@
     });
   });
 }());
-
