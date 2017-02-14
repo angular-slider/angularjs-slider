@@ -48,8 +48,8 @@
 
       expect(helper.scope.slider.min).to.equal(50);
       expect(helper.scope.slider.max).to.equal(70);
-      helper.slider.positionTrackingBar.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingBar.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should handle click and drag on maxH correctly', function() {
@@ -61,8 +61,8 @@
       helper.fireMousemove(position);
       expect(helper.scope.slider.min).to.equal(50);
       expect(helper.scope.slider.max).to.equal(70);
-      helper.slider.positionTrackingBar.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingBar.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should not handle click on fullbar', function() {
@@ -95,9 +95,9 @@
       expect(helper.scope.slider.max).to.equal(70);
       expect(helper.slider.tracking).to.equal('lowValue');
       helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true;
-      helper.slider.positionTrackingBar.called.should.be.true;
-      helper.slider.callOnStart.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingBar.callCount).to.equal(2);
+      expect(helper.slider.callOnStart.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(2);
     });
 
     it('should handle click on selbar and move range when near 0 and moved left', function() {
@@ -212,8 +212,8 @@
 
       expect(helper.scope.slider.min).to.equal(50);
       expect(helper.scope.slider.max).to.equal(70);
-      helper.slider.positionTrackingBar.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingBar.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should handle click and drag on maxH correctly', function() {
@@ -225,8 +225,8 @@
       helper.fireMousemove(position);
       expect(helper.scope.slider.min).to.equal(50);
       expect(helper.scope.slider.max).to.equal(70);
-      helper.slider.positionTrackingBar.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingBar.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
 
     it('should not handle click on fullbar', function() {
@@ -259,9 +259,9 @@
       expect(helper.scope.slider.max).to.equal(70);
       expect(helper.slider.tracking).to.equal('lowValue');
       helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true;
-      helper.slider.positionTrackingBar.called.should.be.true;
-      helper.slider.callOnStart.called.should.be.true;
-      helper.slider.callOnChange.called.should.be.true;
+      expect(helper.slider.positionTrackingBar.callCount).to.equal(2);
+      expect(helper.slider.callOnStart.callCount).to.equal(1);
+      expect(helper.slider.callOnChange.callCount).to.equal(2);
     });
 
     it('should handle click on selbar and move range when near 0 and moved left', function() {
@@ -328,4 +328,3 @@
     });
   });
 }());
-
