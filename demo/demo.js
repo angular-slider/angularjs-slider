@@ -17,6 +17,19 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $uibModal) {
     }
   };
 
+  //Range slider config
+  $scope.rangeSliderOutside = {
+    minValue: 70,
+    maxValue: 30,
+    options: {
+      floor: 0,
+      ceil: 100,
+      step: 1,
+      showOutRange: true,
+      showSelectionBar: true
+    }
+  };
+
   $scope.customSlider = {
     minValue: 10,
     maxValue: 90,

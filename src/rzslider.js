@@ -85,7 +85,8 @@
       logScale: false,
       customValueToPosition: null,
       customPositionToValue: null,
-      selectionBarGradient: null
+      selectionBarGradient: null,
+      showOutRange : null
     };
     var globalOptions = {};
 
@@ -325,6 +326,7 @@
       // Slider DOM elements wrapped in jqLite
       this.fullBar = null; // The whole slider bar
       this.selBar = null; // Highlight between two handles
+      this.selBar2 = null; // Highlight outside two handles
       this.minH = null; // Left slider handle
       this.maxH = null; // Right slider handle
       this.flrLab = null; // Floor label
@@ -664,27 +666,30 @@
               this.selBar = jElem;
               break;
             case 2:
-              this.minH = jElem;
+              this.selBar2 = jElem;
               break;
             case 3:
-              this.maxH = jElem;
+              this.minH = jElem;
               break;
             case 4:
-              this.flrLab = jElem;
+              this.maxH = jElem;
               break;
             case 5:
-              this.ceilLab = jElem;
+              this.flrLab = jElem;
               break;
             case 6:
-              this.minLab = jElem;
+              this.ceilLab = jElem;
               break;
             case 7:
-              this.maxLab = jElem;
+              this.minLab = jElem;
               break;
             case 8:
-              this.cmbLab = jElem;
+              this.maxLab = jElem;
               break;
             case 9:
+              this.cmbLab = jElem;
+              break;
+            case 10:
               this.ticks = jElem;
               break;
           }
@@ -693,6 +698,9 @@
 
         // Initialize position cache properties
         this.selBar.rzsp = 0;
+        if(this.selBar2) {
+          this.selBar2.rzsp = 0;
+        }
         this.minH.rzsp = 0;
         this.maxH.rzsp = 0;
         this.flrLab.rzsp = 0;
@@ -721,6 +729,9 @@
         this.alwaysHide(this.maxLab, hideLabelsForTicks || !this.range || this.options.hidePointerLabels);
         this.alwaysHide(this.cmbLab, hideLabelsForTicks || !this.range || this.options.hidePointerLabels);
         this.alwaysHide(this.selBar, !this.range && !this.options.showSelectionBar);
+        if(this.selBar2) {
+          this.alwaysHide(this.selBar2, !this.range || !this.options.showSelectionBar || !this.options.showOutRange || this.options.draggableRange);
+        }
 
         if (this.options.vertical)
           this.sliderElem.addClass('rz-vertical');
@@ -1038,7 +1049,7 @@
           else if (this.options.showSelectionBar && value <= this.lowValue)
             return true;
         }
-        if (this.range && value >= this.lowValue && value <= this.highValue)
+        if ( this.range && ((value >= this.lowValue && value <= this.highValue) || (this.highValue < this.lowValue && this.options.showOutRange && ( value >= this.lowValue || value <= this.highValue ))))
           return true;
         return false;
       },
@@ -1101,7 +1112,7 @@
         if (!this.options.boundPointerLabels)
           return nearHandlePos;
 
-        if (this.options.rightToLeft && labelName === 'minLab' || !this.options.rightToLeft && labelName === 'maxLab') {
+        if (this.options.rightToLeft && labelName === 'minLab' || !this.options.rightToLeft && labelName === 'maxLab' && !this.options.showOutRange) {
           return Math.min(nearHandlePos, endOfBarPos);
         } else {
           return Math.min(Math.max(nearHandlePos, 0), endOfBarPos);
@@ -1167,6 +1178,7 @@
         var flHidden = false,
           clHidden = false,
           isMinLabAtFloor = this.isLabelBelowFloorLab(this.minLab),
+          isMaxLabAtFloor = this.isLabelBelowFloorLab(this.maxLab),
           isMinLabAtCeil = this.isLabelAboveCeilLab(this.minLab),
           isMaxLabAtCeil = this.isLabelAboveCeilLab(this.maxLab),
           isCmbLabAtFloor = this.isLabelBelowFloorLab(this.cmbLab),
@@ -1190,7 +1202,7 @@
 
         if (this.range) {
           var hideCeil = this.cmbLabelShown ? isCmbLabAtCeil : isMaxLabAtCeil;
-          var hideFloor = this.cmbLabelShown ? isCmbLabAtFloor : isMinLabAtFloor;
+          var hideFloor = this.cmbLabelShown ? isCmbLabAtFloor : isMinLabAtFloor || isMaxLabAtFloor;
 
           if (hideCeil) {
             this.hideEl(this.ceilLab);
@@ -1236,13 +1248,23 @@
        */
       updateSelectionBar: function() {
         var position = 0,
+          position2 = 0,
           dimension = 0,
+          dimension2 = 0,
           isSelectionBarFromRight = this.options.rightToLeft ? !this.options.showSelectionBarEnd : this.options.showSelectionBarEnd,
           positionForRange = this.options.rightToLeft ? this.maxH.rzsp + this.handleHalfDim : this.minH.rzsp + this.handleHalfDim;
 
         if (this.range) {
-          dimension = Math.abs(this.maxH.rzsp - this.minH.rzsp);
-          position = positionForRange;
+          if(this.options.showOutRange && this.highValue < this.lowValue){
+            dimension = Math.abs(this.maxH.rzsp);
+            position=0;
+            dimension2 = Math.abs(this.fullBar.rzsd - (this.minH.rzsp + this.handleHalfDim));
+            position2 = positionForRange;
+          }
+          else {
+            dimension = Math.abs(this.maxH.rzsp - this.minH.rzsp);
+            position = positionForRange;
+          }
         }
         else {
           if (this.options.showSelectionBarFromValue !== null) {
@@ -1268,6 +1290,10 @@
         }
         this.setDimension(this.selBar, dimension);
         this.setPosition(this.selBar, position);
+        if(this.selBar2 && this.options.showOutRange) {
+          this.setDimension(this.selBar2, dimension2);
+          this.setPosition(this.selBar2, position2);
+        }
         if (this.options.getSelectionBarColor) {
           var color = this.getSelectionBarColor();
           this.scope.barStyle = {
@@ -1326,11 +1352,8 @@
        */
       updateCmbLabel: function() {
         var isLabelOverlap = null;
-        if (this.options.rightToLeft) {
-          isLabelOverlap = this.minLab.rzsp - this.minLab.rzsd - 10 <= this.maxLab.rzsp;
-        } else {
-          isLabelOverlap = this.minLab.rzsp + this.minLab.rzsd + 10 >= this.maxLab.rzsp;
-        }
+          isLabelOverlap = this.minLab.rzsp - this.minLab.rzsd - 10 <= this.maxLab.rzsp && this.minLab.rzsp + this.minLab.rzsd + 10 >= this.maxLab.rzsp;
+
 
         if (isLabelOverlap) {
           var lowTr = this.getDisplayValue(this.lowValue, 'model'),
@@ -1345,7 +1368,7 @@
           this.translateFn(labelVal, this.cmbLab, 'cmb', false);
           var pos = this.options.boundPointerLabels ? Math.min(
             Math.max(
-              this.selBar.rzsp + this.selBar.rzsd / 2 - this.cmbLab.rzsd / 2,
+              ((this.minH.rzsp + this.minH.rzsd + this.maxH.rzsp) / 2) -  (this.cmbLab.rzsd / 2),
               0
             ),
             this.barDimension - this.cmbLab.rzsd
@@ -2084,32 +2107,34 @@
                 newValue = this.applyMinMaxRange(this.lowValue);
             }
             newValue = this.applyMinMaxRange(newValue);
-            /* This is to check if we need to switch the min and max handles */
-            if (this.tracking === 'lowValue' && newValue > this.highValue) {
-              this.lowValue = this.highValue;
-              this.applyLowValue();
-              this.applyModel();
-              this.updateHandles(this.tracking, this.maxH.rzsp);
-              this.updateAriaAttributes();
-              this.tracking = 'highValue';
-              this.minH.removeClass('rz-active');
-              this.maxH.addClass('rz-active');
-              if (this.options.keyboardSupport)
-                this.focusElement(this.maxH);
-              valueChanged = true;
-            }
-            else if (this.tracking === 'highValue' && newValue < this.lowValue) {
-              this.highValue = this.lowValue;
-              this.applyHighValue();
-              this.applyModel();
-              this.updateHandles(this.tracking, this.minH.rzsp);
-              this.updateAriaAttributes();
-              this.tracking = 'lowValue';
-              this.maxH.removeClass('rz-active');
-              this.minH.addClass('rz-active');
-              if (this.options.keyboardSupport)
-                this.focusElement(this.minH);
-              valueChanged = true;
+            if(!this.options.showOutRange) {  // show out range allow max values < min values
+              /* This is to check if we need to switch the min and max handles */
+              if (this.tracking === 'lowValue' && newValue > this.highValue) {
+                this.lowValue = this.highValue;
+                this.applyLowValue();
+                this.applyModel();
+                this.updateHandles(this.tracking, this.maxH.rzsp);
+                this.updateAriaAttributes();
+                this.tracking = 'highValue';
+                this.minH.removeClass('rz-active');
+                this.maxH.addClass('rz-active');
+                if (this.options.keyboardSupport)
+                  this.focusElement(this.maxH);
+                valueChanged = true;
+              }
+              else if (this.tracking === 'highValue' && newValue < this.lowValue) {
+                this.highValue = this.lowValue;
+                this.applyHighValue();
+                this.applyModel();
+                this.updateHandles(this.tracking, this.minH.rzsp);
+                this.updateAriaAttributes();
+                this.tracking = 'lowValue';
+                this.maxH.removeClass('rz-active');
+                this.minH.addClass('rz-active');
+                if (this.options.keyboardSupport)
+                  this.focusElement(this.minH);
+                valueChanged = true;
+              }
             }
           }
         }

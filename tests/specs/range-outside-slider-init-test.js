@@ -1,7 +1,7 @@
 (function() {
   "use strict";
 
-  describe('Range slider initialisation - ', function() {
+  describe('Range outside slider initialisation - ', function() {
     var helper,
       RzSliderOptions,
       $rootScope,
@@ -22,12 +22,14 @@
 
     beforeEach(function() {
       var sliderConf = {
-        min: 10,
-        max: 90,
+        min: 90,
+        max: 10,
         options: {
           floor: 0,
           ceil: 100,
-          step: 10
+          step: 10,
+          showOutRange: true,
+          showSelectionBar: true
         }
       };
       helper.createRangeSlider(sliderConf);
@@ -38,11 +40,12 @@
       expect(helper.slider.range).to.be.true;
       expect(helper.slider.valueRange).to.equal(100);
       expect(helper.slider.maxH.css('display')).to.equal('');
-      expect(helper.slider.selBar2.css('visibility')).to.equal('hidden');
+      expect(helper.slider.selBar2.css('visibility')).to.equal('visible');
     });
 
     it('should watch rzSliderHigh and reflow the slider accordingly', function() {
       sinon.spy(helper.slider, 'onHighHandleChange');
+      helper.scope.slider.min = 10;
       helper.scope.slider.max = 95;
       helper.scope.$digest();
       helper.slider.onHighHandleChange.called.should.be.true;
@@ -73,11 +76,11 @@
     });
 
     it('should round the model value to the step', function() {
-      helper.scope.slider.min = 23;
-      helper.scope.slider.max = 84;
+      helper.scope.slider.min = 84;
+      helper.scope.slider.max = 23;
       helper.scope.$digest();
-      expect(helper.scope.slider.min).to.equal(20);
-      expect(helper.scope.slider.max).to.equal(80);
+      expect(helper.scope.slider.max).to.equal(20);
+      expect(helper.scope.slider.min).to.equal(80);
 
       helper.scope.slider.min = 25;
       helper.scope.slider.max = 95;
