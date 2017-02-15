@@ -1,7 +1,7 @@
-/*! angularjs-slider - v6.0.0 - 
+/*! angularjs-slider - v6.0.1 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2017-01-02 */
+ 2017-02-15 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -2054,7 +2054,7 @@
         this.applyLowValue();
         if (this.range)
           this.applyHighValue();
-        this.applyModel();
+        this.applyModel(true);
         this.updateHandles('lowValue', this.valueToPosition(newMinValue));
         this.updateHandles('highValue', this.valueToPosition(newMaxValue));
       },
@@ -2066,7 +2066,6 @@
        */
       positionTrackingHandle: function(newValue) {
         var valueChanged = false;
-
         newValue = this.applyMinMaxLimit(newValue);
         if (this.range) {
           if (this.options.pushRange) {
@@ -2085,6 +2084,7 @@
             if (this.tracking === 'lowValue' && newValue > this.highValue) {
               this.lowValue = this.highValue;
               this.applyLowValue();
+              this.applyModel();
               this.updateHandles(this.tracking, this.maxH.rzsp);
               this.updateAriaAttributes();
               this.tracking = 'highValue';
@@ -2097,6 +2097,7 @@
             else if (this.tracking === 'highValue' && newValue < this.lowValue) {
               this.highValue = this.lowValue;
               this.applyHighValue();
+              this.applyModel();
               this.updateHandles(this.tracking, this.minH.rzsp);
               this.updateAriaAttributes();
               this.tracking = 'lowValue';
@@ -2115,13 +2116,14 @@
             this.applyLowValue();
           else
             this.applyHighValue();
+          this.applyModel();
           this.updateHandles(this.tracking, this.valueToPosition(newValue));
           this.updateAriaAttributes();
           valueChanged = true;
         }
 
         if (valueChanged)
-          this.applyModel();
+          this.applyModel(true);
       },
 
       applyMinMaxLimit: function(newValue) {
@@ -2195,10 +2197,10 @@
        * Apply the model values using scope.$apply.
        * We wrap it with the internalChange flag to avoid the watchers to be called
        */
-      applyModel: function() {
+      applyModel: function(callOnChange) {
         this.internalChange = true;
         this.scope.$apply();
-        this.callOnChange();
+        callOnChange && this.callOnChange();
         this.internalChange = false;
       },
 

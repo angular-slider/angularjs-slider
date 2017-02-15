@@ -1,3 +1,7 @@
+# 6.0.1 (2017-02-14)
+## Fixes
+- Ensure model value is current when custom translate function runs for tick values
+
 # 6.0.0 (2017-01-02)
 ## Refactoring
 - Refactor/simplify the css rules to ease the customisation.
