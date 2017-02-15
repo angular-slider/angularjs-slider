@@ -1049,7 +1049,7 @@
           else if (this.options.showSelectionBar && value <= this.lowValue)
             return true;
         }
-        if (this.range && value >= this.lowValue && value <= this.highValue)
+        if ( this.range && ((value >= this.lowValue && value <= this.highValue) || (this.highValue < this.lowValue && this.options.showOutRange && ( value >= this.lowValue || value <= this.highValue ))))
           return true;
         return false;
       },
