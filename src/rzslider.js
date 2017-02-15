@@ -666,31 +666,31 @@
               this.selBar = jElem;
               break;
             case 2:
-              this.minH = jElem;
+              this.selBar2 = jElem;
               break;
             case 3:
-              this.maxH = jElem;
+              this.minH = jElem;
               break;
             case 4:
-              this.flrLab = jElem;
+              this.maxH = jElem;
               break;
             case 5:
-              this.ceilLab = jElem;
+              this.flrLab = jElem;
               break;
             case 6:
-              this.minLab = jElem;
+              this.ceilLab = jElem;
               break;
             case 7:
-              this.maxLab = jElem;
+              this.minLab = jElem;
               break;
             case 8:
-              this.cmbLab = jElem;
+              this.maxLab = jElem;
               break;
             case 9:
-              this.ticks = jElem;
+              this.cmbLab = jElem;
               break;
             case 10:
-              this.selBar2 = jElem;
+              this.ticks = jElem;
               break;
           }
 
@@ -1112,7 +1112,7 @@
         if (!this.options.boundPointerLabels)
           return nearHandlePos;
 
-        if (this.options.rightToLeft && labelName === 'minLab' || !this.options.rightToLeft && labelName === 'maxLab') {
+        if (this.options.rightToLeft && labelName === 'minLab' || !this.options.rightToLeft && labelName === 'maxLab' && !this.options.showOutRange) {
           return Math.min(nearHandlePos, endOfBarPos);
         } else {
           return Math.min(Math.max(nearHandlePos, 0), endOfBarPos);
@@ -1178,6 +1178,7 @@
         var flHidden = false,
           clHidden = false,
           isMinLabAtFloor = this.isLabelBelowFloorLab(this.minLab),
+          isMaxLabAtFloor = this.isLabelBelowFloorLab(this.maxLab),
           isMinLabAtCeil = this.isLabelAboveCeilLab(this.minLab),
           isMaxLabAtCeil = this.isLabelAboveCeilLab(this.maxLab),
           isCmbLabAtFloor = this.isLabelBelowFloorLab(this.cmbLab),
@@ -1201,7 +1202,7 @@
 
         if (this.range) {
           var hideCeil = this.cmbLabelShown ? isCmbLabAtCeil : isMaxLabAtCeil;
-          var hideFloor = this.cmbLabelShown ? isCmbLabAtFloor : isMinLabAtFloor;
+          var hideFloor = this.cmbLabelShown ? isCmbLabAtFloor : isMinLabAtFloor || isMaxLabAtFloor;
 
           if (hideCeil) {
             this.hideEl(this.ceilLab);
@@ -1257,7 +1258,7 @@
           if(this.options.showOutRange && this.highValue < this.lowValue){
             dimension = Math.abs(this.maxH.rzsp);
             position=0;
-            dimension2 = Math.abs(this.fullBar.rzsd - this.minH.rzsp);
+            dimension2 = Math.abs(this.fullBar.rzsd - (this.minH.rzsp + this.handleHalfDim));
             position2 = positionForRange;
           }
           else {
@@ -1367,7 +1368,7 @@
           this.translateFn(labelVal, this.cmbLab, 'cmb', false);
           var pos = this.options.boundPointerLabels ? Math.min(
             Math.max(
-              this.selBar.rzsp + this.selBar.rzsd / 2 - this.cmbLab.rzsd / 2,
+              ((this.minH.rzsp + this.minH.rzsd + this.maxH.rzsp) / 2) -  (this.cmbLab.rzsd / 2),
               0
             ),
             this.barDimension - this.cmbLab.rzsd

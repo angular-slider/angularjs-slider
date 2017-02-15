@@ -662,31 +662,31 @@
               this.selBar = jElem;
               break;
             case 2:
-              this.minH = jElem;
+              this.selBar2 = jElem;
               break;
             case 3:
-              this.maxH = jElem;
+              this.minH = jElem;
               break;
             case 4:
-              this.flrLab = jElem;
+              this.maxH = jElem;
               break;
             case 5:
-              this.ceilLab = jElem;
+              this.flrLab = jElem;
               break;
             case 6:
-              this.minLab = jElem;
+              this.ceilLab = jElem;
               break;
             case 7:
-              this.maxLab = jElem;
+              this.minLab = jElem;
               break;
             case 8:
-              this.cmbLab = jElem;
+              this.maxLab = jElem;
               break;
             case 9:
-              this.ticks = jElem;
+              this.cmbLab = jElem;
               break;
             case 10:
-              this.selBar2 = jElem;
+              this.ticks = jElem;
               break;
           }
 
@@ -1108,7 +1108,7 @@
         if (!this.options.boundPointerLabels)
           return nearHandlePos;
 
-        if (this.options.rightToLeft && labelName === 'minLab' || !this.options.rightToLeft && labelName === 'maxLab') {
+        if (this.options.rightToLeft && labelName === 'minLab' || !this.options.rightToLeft && labelName === 'maxLab' && !this.options.showOutRange) {
           return Math.min(nearHandlePos, endOfBarPos);
         } else {
           return Math.min(Math.max(nearHandlePos, 0), endOfBarPos);
@@ -1174,6 +1174,7 @@
         var flHidden = false,
           clHidden = false,
           isMinLabAtFloor = this.isLabelBelowFloorLab(this.minLab),
+          isMaxLabAtFloor = this.isLabelBelowFloorLab(this.maxLab),
           isMinLabAtCeil = this.isLabelAboveCeilLab(this.minLab),
           isMaxLabAtCeil = this.isLabelAboveCeilLab(this.maxLab),
           isCmbLabAtFloor = this.isLabelBelowFloorLab(this.cmbLab),
@@ -1197,7 +1198,7 @@
 
         if (this.range) {
           var hideCeil = this.cmbLabelShown ? isCmbLabAtCeil : isMaxLabAtCeil;
-          var hideFloor = this.cmbLabelShown ? isCmbLabAtFloor : isMinLabAtFloor;
+          var hideFloor = this.cmbLabelShown ? isCmbLabAtFloor : isMinLabAtFloor || isMaxLabAtFloor;
 
           if (hideCeil) {
             this.hideEl(this.ceilLab);
@@ -1253,7 +1254,7 @@
           if(this.options.showOutRange && this.highValue < this.lowValue){
             dimension = Math.abs(this.maxH.rzsp);
             position=0;
-            dimension2 = Math.abs(this.fullBar.rzsd - this.minH.rzsp);
+            dimension2 = Math.abs(this.fullBar.rzsd - (this.minH.rzsp + this.handleHalfDim));
             position2 = positionForRange;
           }
           else {
@@ -1363,7 +1364,7 @@
           this.translateFn(labelVal, this.cmbLab, 'cmb', false);
           var pos = this.options.boundPointerLabels ? Math.min(
             Math.max(
-              this.selBar.rzsp + this.selBar.rzsd / 2 - this.cmbLab.rzsd / 2,
+              ((this.minH.rzsp + this.minH.rzsd + this.maxH.rzsp) / 2) -  (this.cmbLab.rzsd / 2),
               0
             ),
             this.barDimension - this.cmbLab.rzsd
@@ -2349,7 +2350,7 @@
   'use strict';
 
   $templateCache.put('rzSliderTpl.html',
-    "<div class=rzslider><span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span> <span class=\"rz-pointer rz-pointer-min\" ng-style=minPointerStyle></span> <span class=\"rz-pointer rz-pointer-max\" ng-style=maxPointerStyle></span> <span class=\"rz-bubble rz-limit rz-floor\"></span> <span class=\"rz-bubble rz-limit rz-ceil\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul ng-show=showTicks class=rz-ticks><li ng-repeat=\"t in ticks track by $index\" class=rz-tick ng-class=\"{'rz-selected': t.selected}\" ng-style=t.style ng-attr-uib-tooltip=\"{{ t.tooltip }}\" ng-attr-tooltip-placement={{t.tooltipPlacement}} ng-attr-tooltip-append-to-body=\"{{ t.tooltip ? true : undefined}}\"><span ng-if=\"t.value != null\" class=rz-tick-value ng-attr-uib-tooltip=\"{{ t.valueTooltip }}\" ng-attr-tooltip-placement={{t.valueTooltipPlacement}}>{{ t.value }}</span> <span ng-if=\"t.legend != null\" class=rz-tick-legend>{{ t.legend }}</span></li></ul><span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span></div>"
+    "<div class=rzslider><span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span> <span class=\"rz-pointer rz-pointer-min\" ng-style=minPointerStyle></span> <span class=\"rz-pointer rz-pointer-max\" ng-style=maxPointerStyle></span> <span class=\"rz-bubble rz-limit rz-floor\"></span> <span class=\"rz-bubble rz-limit rz-ceil\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul ng-show=showTicks class=rz-ticks><li ng-repeat=\"t in ticks track by $index\" class=rz-tick ng-class=\"{'rz-selected': t.selected}\" ng-style=t.style ng-attr-uib-tooltip=\"{{ t.tooltip }}\" ng-attr-tooltip-placement={{t.tooltipPlacement}} ng-attr-tooltip-append-to-body=\"{{ t.tooltip ? true : undefined}}\"><span ng-if=\"t.value != null\" class=rz-tick-value ng-attr-uib-tooltip=\"{{ t.valueTooltip }}\" ng-attr-tooltip-placement={{t.valueTooltipPlacement}}>{{ t.value }}</span> <span ng-if=\"t.legend != null\" class=rz-tick-legend>{{ t.legend }}</span></li></ul></div>"
   );
 
 }]);
