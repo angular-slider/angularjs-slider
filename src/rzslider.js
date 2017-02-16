@@ -1358,6 +1358,8 @@
           this.showEl(this.cmbLab);
         } else {
           this.cmbLabelShown = false;
+          this.updateHighHandle(this.valueToPosition(this.highValue));
+          this.updateLowHandle(this.valueToPosition(this.lowValue));
           this.showEl(this.maxLab);
           this.showEl(this.minLab);
           this.hideEl(this.cmbLab);
