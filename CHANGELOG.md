@@ -1,3 +1,7 @@
+# 6.0.2 (2017-03-02)
+## Fixes
+- Update the combined labels on separation (#502)
+
 # 6.0.1 (2017-02-14)
 ## Fixes
 - Ensure model value is current when custom translate function runs for tick values

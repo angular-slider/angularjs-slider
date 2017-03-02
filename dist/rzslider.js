@@ -1,7 +1,7 @@
-/*! angularjs-slider - v6.0.1 - 
+/*! angularjs-slider - v6.0.2 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2017-02-15 */
+ 2017-03-02 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -1354,6 +1354,8 @@
           this.showEl(this.cmbLab);
         } else {
           this.cmbLabelShown = false;
+          this.updateHighHandle(this.valueToPosition(this.highValue));
+          this.updateLowHandle(this.valueToPosition(this.lowValue));
           this.showEl(this.maxLab);
           this.showEl(this.minLab);
           this.hideEl(this.cmbLab);
