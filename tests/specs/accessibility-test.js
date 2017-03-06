@@ -243,6 +243,105 @@
       expect(helper.slider.minH.attr('aria-valuenow')).to.equal('2');
       expect(helper.slider.minH.attr('aria-valuetext')).to.equal('C');
     });
+
+    it('should have labelled single slider when option is set', function() {
+      var sliderConf = {
+        value: 10,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          ariaLabel: "test label"
+        }
+      };
+      helper.createSlider(sliderConf);
+      expect(helper.slider.minH.attr('aria-label')).to.equal('test label');
+    });
+
+    it('should have labelled range slider when option is set', function() {
+      var sliderConf = {
+        min: 10,
+        max: 90,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          ariaLabel: "test label",
+          ariaLabelHigh: "test label high"
+        }
+      };
+      helper.createRangeSlider(sliderConf);
+      expect(helper.slider.minH.attr('aria-label')).to.equal('test label');
+      expect(helper.slider.maxH.attr('aria-label')).to.equal('test label high');
+    });
+
+    it('should have labelled by id on single slider when option is set', function() {
+      var sliderConf = {
+        value: 10,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          ariaLabelledBy: "testId"
+        }
+      };
+      helper.createSlider(sliderConf);
+      expect(helper.slider.minH.attr('aria-labelledby')).to.equal('testId');
+    });
+
+    it('should have labelled by id on range slider when option is set', function() {
+      var sliderConf = {
+        min: 10,
+        max: 90,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          ariaLabelledBy: "testId",
+          ariaLabelledByHigh: "testIdHigh"
+        }
+      };
+      helper.createRangeSlider(sliderConf);
+      expect(helper.slider.minH.attr('aria-labelledby')).to.equal('testId');
+      expect(helper.slider.maxH.attr('aria-labelledby')).to.equal('testIdHigh');
+    });
+
+    it('should not have labelled by id on single slider when both options set', function() {
+      var sliderConf = {
+        value: 10,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          ariaLabel: "test label",
+          ariaLabelledBy: "testId"
+        }
+      };
+      helper.createSlider(sliderConf);
+      expect(helper.slider.minH.attr('aria-label')).to.equal('test label');
+      expect(helper.slider.minH.attr('aria-labelledby')).to.equal(undefined);
+    });
+
+    it('should not have labelled by id on range slider when both options set', function() {
+      var sliderConf = {
+        min: 10,
+        max: 90,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          ariaLabel: "test label",
+          ariaLabelHigh: "test label high",
+          ariaLabelledBy: "testId",
+          ariaLabelledByHigh: "testIdHigh"
+        }
+      };
+      helper.createRangeSlider(sliderConf);
+      expect(helper.slider.minH.attr('aria-label')).to.equal('test label');
+      expect(helper.slider.maxH.attr('aria-label')).to.equal('test label high');
+      expect(helper.slider.minH.attr('aria-labelledby')).to.equal(undefined);
+      expect(helper.slider.maxH.attr('aria-labelledby')).to.equal(undefined);
+    });
   });
 }());
 

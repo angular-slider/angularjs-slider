@@ -249,7 +249,11 @@ The default options are:
     logScale: false,
     customValueToPosition: null,
     customPositionToValue: null,
-    selectionBarGradient: null
+    selectionBarGradient: null,
+    ariaLabel: null,
+    ariaLabelledBy: null,
+    ariaLabelHigh: null,
+    ariaLabelledByHigh: null
 }
 ````
 
@@ -403,6 +407,10 @@ For custom scales:
 **customPositionToValue** - _Function(percent, minVal, maxVal): value_: Function that returns the value for a given position on the slider. The position is a percentage between 0 and 1.
 
 **selectionBarGradient** - _Object (default to null)_: Use to display the selection bar as a gradient. The given object must contain `from` and `to` properties which are colors.
+
+**ariaLabel and ariaLabelHigh** - _String (default to null)_: Use to add a label directly to the slider(s) for accessibility. Adds the `aria-label` attribute.
+
+**ariaLabelledBy and ariaLabelledByHigh** - _String (default to null)_: Use instead of ariaLabel and ariaLabelHigh to reference the id of an element which will be used to label the slider(s). Adds the `aria-labelledby` attribute.
 
 ## Change default options
 If you want the change the default options for all the sliders displayed in your application, you can set them using the `RzSliderOptions.options()` method:
