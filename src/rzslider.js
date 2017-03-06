@@ -85,7 +85,11 @@
       logScale: false,
       customValueToPosition: null,
       customPositionToValue: null,
-      selectionBarGradient: null
+      selectionBarGradient: null,
+      ariaLabel: null,
+      ariaLabelledBy: null,
+      ariaLabelHigh: null,
+      ariaLabelledByHigh: null
     };
     var globalOptions = {};
 
@@ -897,6 +901,10 @@
           this.minH.attr('tabindex', '');
         if (this.options.vertical)
           this.minH.attr('aria-orientation', 'vertical');
+        if (this.options.ariaLabel)
+          this.minH.attr('aria-label', this.options.ariaLabel);
+        else if (this.options.ariaLabelledBy)
+          this.minH.attr('aria-labelledby', this.options.ariaLabelledBy);
 
         if (this.range) {
           this.maxH.attr('role', 'slider');
@@ -906,6 +914,10 @@
             this.maxH.attr('tabindex', '');
           if (this.options.vertical)
             this.maxH.attr('aria-orientation', 'vertical');
+          if (this.options.ariaLabelHigh)
+            this.maxH.attr('aria-label', this.options.ariaLabelHigh);
+          else if (this.options.ariaLabelledByHigh)
+            this.maxH.attr('aria-labelledby', this.options.ariaLabelledByHigh);
         }
       },
 
