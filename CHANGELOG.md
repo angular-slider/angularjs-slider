@@ -1,3 +1,7 @@
+# 6.1.0 (2017-03-06)
+## Features
+- Add labelling options for a11y (#505)
+
 # 6.0.2 (2017-03-02)
 ## Fixes
 - Update the combined labels on separation (#502)
