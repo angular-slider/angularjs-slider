@@ -994,7 +994,7 @@
           var tick = {
             selected: self.isTickSelected(value),
             style: {
-              '--webkit-transform': translate + '(' + Math.round(position) + 'px)',
+              '-webkit-transform': translate + '(' + Math.round(position) + 'px)',
               'transform': translate + '(' + Math.round(position) + 'px)'
             }
           };
