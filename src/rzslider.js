@@ -994,8 +994,8 @@
           var tick = {
             selected: self.isTickSelected(value),
             style: {
-              webkitTransform: translate + '(' + Math.round(position) + 'px)',
-              transform: translate + '(' + Math.round(position) + 'px)'
+              '--webkit-transform': translate + '(' + Math.round(position) + 'px)',
+              'transform': translate + '(' + Math.round(position) + 'px)'
             }
           };
           if (tick.selected && self.options.getSelectionBarColor) {
