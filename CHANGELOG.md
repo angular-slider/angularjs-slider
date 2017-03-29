@@ -1,3 +1,7 @@
+# 6.1.1 (2017-03-29)
+## Fixes
+- Add vendor prefixes for transform property in JS code (#518)
+
 # 6.1.0 (2017-03-06)
 ## Features
 - Add labelling options for a11y (#505)
