@@ -1,7 +1,7 @@
 /*! angularjs-slider - v6.1.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2017-03-27 */
+ 2017-03-29 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -987,11 +987,15 @@
           if (self.options.vertical)
             position = self.maxPos - position;
 
+          var translation = translate + '(' + Math.round(position) + 'px)';
           var tick = {
             selected: self.isTickSelected(value),
             style: {
-              '-webkit-transform': translate + '(' + Math.round(position) + 'px)',
-              'transform': translate + '(' + Math.round(position) + 'px)'
+              '-webkit-transform': translation,
+              '-moz-transform': translation,
+              '-o-transform': translation,
+              '-ms-transform': translation,
+              'transform': translation
             }
           };
           if (tick.selected && self.options.getSelectionBarColor) {

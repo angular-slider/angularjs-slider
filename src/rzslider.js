@@ -991,11 +991,15 @@
           if (self.options.vertical)
             position = self.maxPos - position;
 
+          var translation = translate + '(' + Math.round(position) + 'px)';
           var tick = {
             selected: self.isTickSelected(value),
             style: {
-              '-webkit-transform': translate + '(' + Math.round(position) + 'px)',
-              'transform': translate + '(' + Math.round(position) + 'px)'
+              '-webkit-transform': translation,
+              '-moz-transform': translation,
+              '-o-transform': translation,
+              '-ms-transform': translation,
+              'transform': translation
             }
           };
           if (tick.selected && self.options.getSelectionBarColor) {
