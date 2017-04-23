@@ -5,6 +5,14 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $uibModal) {
   $scope.minSlider = {
     value: 10
   };
+  $scope.debugSlider = {
+    value: 50,
+    options: {
+      floor: 0,
+      ceil: 100,
+      showSelectionBar: true
+    }
+  };
 
   //Range slider config
   $scope.rangeSlider = {

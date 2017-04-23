@@ -1,7 +1,7 @@
 /*! angularjs-slider - v6.1.1 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2017-03-29 */
+ 2017-04-23 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -1275,7 +1275,7 @@
             dimension = Math.abs(this.maxPos - this.minH.rzsp) + this.handleHalfDim;
             position = this.minH.rzsp + this.handleHalfDim;
           } else {
-            dimension = Math.abs(this.maxH.rzsp - this.minH.rzsp) + this.handleHalfDim;
+            dimension = this.minH.rzsp + this.handleHalfDim;
             position = 0;
           }
         }

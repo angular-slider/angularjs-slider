@@ -1279,7 +1279,7 @@
             dimension = Math.abs(this.maxPos - this.minH.rzsp) + this.handleHalfDim;
             position = this.minH.rzsp + this.handleHalfDim;
           } else {
-            dimension = Math.abs(this.maxH.rzsp - this.minH.rzsp) + this.handleHalfDim;
+            dimension = this.minH.rzsp + this.handleHalfDim;
             position = 0;
           }
         }
