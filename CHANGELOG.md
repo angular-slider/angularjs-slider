@@ -1,3 +1,8 @@
+#530
+# 6.1.2 (2017-05-15)
+## Fixes
+- Fix ticks and values at intermediate positions on IE (#531)
+
 # 6.1.1 (2017-03-29)
 ## Fixes
 - Add vendor prefixes for transform property in JS code (#518)
