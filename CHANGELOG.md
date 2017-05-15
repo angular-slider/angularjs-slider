@@ -1,4 +1,3 @@
-#530
 # 6.1.2 (2017-05-15)
 ## Fixes
 - Fix ticks and values at intermediate positions on IE (#531)
