@@ -1,0 +1,32 @@
+@mixin rounded($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+
+$radius: 2px;
+$handleActiveColor: #451aff;
+$handleHoverColor: #fff;
+$labelTextColor: #55637d;
+$handleBgColor: #0db9f0;
+$handleInnerColor: #fff;
+$handleDisabledColor: #d8e0f3;
+$limitLabelTextColor: $labelTextColor;
+$barFillColor: $handleBgColor;
+$barNormalColor: #d8e0f3;
+
+$ticksColor: $barNormalColor;
+$selectedTicksColor: $barFillColor;
+$ticksWidth: 10px;
+$ticksHeight: 10px;
+$ticksValuePosition: -30px;
+$ticksLegendPosition: 24px;
+$ticksValuePositionOnVertical: 22px;
+
+$handleSize: 32px;
+$handlePointerSize: 8px;
+$bubblePadding: 1px 3px;
+$barDimension: 4px;
+
+$withLegendMargin: 40px;

@@ -1,0 +1,258 @@
+/**
+ * Angular JS slider directive
+ *
+ * (c) Rafal Zajac <rzajac$gmail.com>
+ * http://github.com/rzajac/angularjs-slider
+ *
+ * Licensed under the MIT license
+ */
+@import 'variables';
+
+
+
+
+.rzslider {
+  display: inline-block;
+  position: relative;
+  height: $barDimension;
+  width: 100%;
+  margin: 35px 0 15px 0;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  &.with-legend {
+    margin-bottom: $withLegendMargin;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+    .rz-pointer {
+      cursor: not-allowed;
+      background-color: $handleDisabledColor;
+    }
+  }
+
+  span {
+    white-space: nowrap;
+    position: absolute;
+    display: inline-block;
+  }
+
+  .rz-base {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+  }
+
+  .rz-bar-wrapper {
+    left: 0;
+    box-sizing: border-box;
+    margin-top: -$handleSize / 2;
+    padding-top: $handleSize / 2;
+    width: 100%;
+    height: $handleSize;
+    z-index: 1;
+    &.rz-draggable {
+      cursor: move;
+    }
+  }
+
+  .rz-bar {
+    left: 0;
+    width: 100%;
+    height: $barDimension;
+    z-index: 1;
+    background: $barNormalColor;
+    @include rounded($barDimension/2);
+
+    &.rz-selection {
+      z-index: 2;
+      background: $barFillColor;
+      @include rounded($barDimension/2);
+    }
+  }
+
+  .rz-pointer {
+    cursor: pointer;
+    width: $handleSize;
+    height: $handleSize;
+    top: -$handleSize/2 + $barDimension/2;
+    background-color: $handleBgColor;
+    z-index: 3;
+    @include rounded($handleSize/2);
+    //  -webkit-transition:all linear 0.15s;
+    //  -moz-transition:all linear 0.15s;
+    //  -o-transition:all linear 0.15s;
+    //  transition:all linear 0.15s;
+
+    &:after {
+      content: '';
+      width: $handlePointerSize;
+      height: $handlePointerSize;
+      position: absolute;
+      top: $handleSize/2 - $handlePointerSize/2;
+      left: $handleSize/2 - $handlePointerSize/2;
+      @include rounded($handlePointerSize/2);
+      background: $handleInnerColor;
+    }
+    &:hover:after {
+      background-color: $handleHoverColor;
+    }
+    &.rz-active{
+      z-index: 4;
+      &:after {
+        background-color: $handleActiveColor;
+      }
+    }
+  }
+
+  .rz-bubble {
+    cursor: default;
+    bottom: $handleSize/2;
+    padding: $bubblePadding;
+    color: $labelTextColor;
+    &.rz-selection {
+      top: $handleSize/2;
+    }
+    &.rz-limit {
+      color: $limitLabelTextColor;
+    }
+  }
+
+  .rz-ticks {
+    box-sizing: border-box;
+    width: 100%;
+    height: 0;
+    position: absolute;
+    left: 0;
+    top: -($ticksHeight - $barDimension) / 2;
+    margin: 0;
+    padding: 0 ($handleSize - $ticksWidth) / 2;
+    z-index: 1;
+    list-style: none;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+
+    .rz-tick {
+      text-align: center;
+      cursor: pointer;
+      width: $ticksWidth;
+      height: $ticksHeight;
+      background: $ticksColor;
+      border-radius: 50%;
+      &.rz-selected {
+        background: $selectedTicksColor;
+      }
+      .rz-tick-value {
+        position: absolute;
+        top: $ticksValuePosition;
+        transform: translate(-50%, 0);
+      }
+      .rz-tick-legend {
+        position: absolute;
+        top: $ticksLegendPosition;
+        transform: translate(-50%, 0);
+        max-width: 50px;
+        white-space: normal;
+      }
+    }
+
+    &.rz-ticks-values-under {
+      .rz-tick-value {
+        top: initial;
+        bottom: $ticksValuePosition - 10;
+      }
+    }
+  }
+
+  &.rz-vertical {
+    position: relative;
+    width: $barDimension;
+    height: 100%;
+    margin: 0 20px;
+    padding: 0;
+    vertical-align: baseline;
+
+    .rz-base {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+    }
+
+    .rz-bar-wrapper {
+      top: auto;
+      left: 0;
+      margin: 0 0 0 -$handleSize / 2;
+      padding: 0 0 0 $handleSize / 2;
+      height: 100%;
+      width: $handleSize;
+    }
+
+    .rz-bar {
+      bottom: 0;
+      left: auto;
+      width: $barDimension;
+      height: 100%;
+    }
+
+    .rz-pointer {
+      left: -$handleSize/2 + $barDimension/2 !important;
+      top: auto;
+      bottom: 0;
+    }
+
+    .rz-bubble {
+      left: $handleSize/2 !important;
+      margin-left: 3px;
+      bottom: 0;
+      &.rz-selection {
+        left: $handleSize/2 !important;
+        top: auto;
+      }
+    }
+
+    .rz-ticks {
+      height: 100%;
+      width: 0;
+      left: -($ticksHeight - $barDimension) / 2;
+      top: 0;
+      padding: ($handleSize - $ticksWidth) / 2 0;
+      z-index: 1;
+      -webkit-flex-direction: column-reverse;
+      -ms-flex-direction: column-reverse;
+      flex-direction: column-reverse;
+
+      .rz-tick {
+        vertical-align: middle;
+        .rz-tick-value {
+          left: $ticksValuePositionOnVertical;
+          top: initial;
+          transform: translate(0, -28%);
+        }
+        .rz-tick-legend {
+          top: initial;
+          right: $ticksLegendPosition;
+          transform: translate(0, -28%);
+          max-width: none;
+          white-space: nowrap;
+        }
+      }
+
+      &.rz-ticks-values-under {
+        .rz-tick-value {
+          bottom: initial;
+          left: initial;
+          right: $ticksValuePositionOnVertical - 10;
+        }
+      }
+    }
+  }
+}
+
