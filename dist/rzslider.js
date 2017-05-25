@@ -1,7 +1,7 @@
 /*! angularjs-slider - v6.1.2 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2017-05-15 */
+ 2017-05-25 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -158,7 +158,7 @@
 
   .factory('RzSlider', ['$timeout', '$document', '$window', '$compile', 'RzSliderOptions', 'rzThrottle', function($timeout, $document, $window, $compile, RzSliderOptions, rzThrottle) {
     'use strict';
-
+    
     /**
      * Slider
      *
@@ -458,7 +458,7 @@
         }
         return index;
       },
-
+      
       syncLowValue: function() {
         if (this.options.stepsArray) {
           if (!this.options.bindIndexForStepsArray)
@@ -1560,32 +1560,46 @@
        * Get the X-coordinate or Y-coordinate of an event
        *
        * @param {Object} event  The event
+       * @param targetTouchId The identifier of the touch for that we will get the x and y coordinates
        * @returns {number}
        */
-      getEventXY: function(event) {
+      getEventXY: function(event, targetTouchId) {
         /* http://stackoverflow.com/a/12336075/282882 */
         //noinspection JSLint
         var clientXY = this.options.vertical ? 'clientY' : 'clientX';
         if (event[clientXY] !== undefined) {
           return event[clientXY];
         }
-
-        return event.originalEvent === undefined ?
-          event.touches[0][clientXY] : event.originalEvent.touches[0][clientXY];
+        
+      	var eventXY;  
+      	var touches = event.originalEvent === undefined ? event.touches : event.originalEvent.touches;
+      	
+      	if (targetTouchId !== undefined) {
+	  		for (var i = 0; i < touches.length; i++) {
+				if (touches[i].identifier == targetTouchId) {
+					return touches[i][clientXY];
+				}
+			}
+      	}
+  		
+  		// If the target touch was not found in the event
+  		// returns the coordinates of the first touch
+      	return touches[0][clientXY];
       },
 
       /**
        * Compute the event position depending on whether the slider is horizontal or vertical
        * @param event
+       * @param targetTouchId If targetTouchId is provided it will be considered the position of that 
        * @returns {number}
        */
-      getEventPosition: function(event) {
+      getEventPosition: function(event, targetTouchId) {
         var sliderPos = this.sliderElem.rzsp,
           eventPos = 0;
         if (this.options.vertical)
-          eventPos = -this.getEventXY(event) + sliderPos;
+          eventPos = -this.getEventXY(event, targetTouchId) + sliderPos;
         else
-          eventPos = this.getEventXY(event) - sliderPos;
+          eventPos = this.getEventXY(event, targetTouchId) - sliderPos;
         return eventPos * this.options.scale - this.handleHalfDim; // #346 handleHalfDim is already scaled
       },
 
@@ -1763,8 +1777,19 @@
         ehEnd = angular.bind(this, this.onEnd, ehMove);
 
         $document.on(eventNames.moveEvent, ehMove);
-        $document.one(eventNames.endEvent, ehEnd);
+        
+        $document.on(eventNames.endEvent, ehEnd);
+        this.ehEndToBeRemovedOnEnd = ehEnd;
         this.callOnStart();
+        
+        var changedTouches = event.originalEvent === undefined ? event.changedTouches : event.originalEvent.changedTouches;
+        if (changedTouches) {
+			// Store the touch identifier
+			if (!this.touchId) {
+				this.isDragging = true;
+				this.touchId = changedTouches[0].identifier;
+			}
+		}
       },
 
       /**
@@ -1776,7 +1801,22 @@
        * @returns {undefined}
        */
       onMove: function(pointer, event, fromTick) {
-        var newPos = this.getEventPosition(event),
+      	var changedTouches = event.originalEvent === undefined ? event.changedTouches : event.originalEvent.changedTouches;
+    	var touchForThisSlider;  
+    	if (changedTouches) {
+    		for (var i = 0; i < changedTouches.length; i++) {
+    			if (changedTouches[i].identifier == this.touchId) {
+    				touchForThisSlider = changedTouches[i];
+    				break;
+    			}
+    		}
+    	}
+    	
+    	if (changedTouches && !touchForThisSlider) {
+    		return;
+    	}
+    	
+        var newPos = this.getEventPosition(event, touchForThisSlider ? touchForThisSlider.identifier : undefined),
           newValue,
           ceilValue = this.options.rightToLeft ? this.minValue : this.maxValue,
           flrValue = this.options.rightToLeft ? this.maxValue : this.minValue;
@@ -1794,7 +1834,7 @@
         }
         this.positionTrackingHandle(newValue);
       },
-
+      
       /**
        * onEnd event handler
        *
@@ -1803,6 +1843,16 @@
        * @returns {undefined}
        */
       onEnd: function(ehMove, event) {
+    	var changedTouches = event.originalEvent === undefined ? event.changedTouches : event.originalEvent.changedTouches;
+    	if (changedTouches && changedTouches[0].identifier != this.touchId) {
+    		return;
+    	}
+    	this.isDragging = false;
+		this.touchId = null;
+		
+		// Touch event, the listener was added by us so we need to remove it
+		$document.off("touchend", this.ehEndToBeRemovedOnEnd);
+    	
         var moveEventName = this.getEventNames(event).moveEvent;
 
         if (!this.options.keyboardSupport) {
@@ -1842,9 +1892,11 @@
       onPointerBlur: function(pointer) {
         pointer.off('keydown');
         pointer.off('keyup');
-        this.tracking = '';
         pointer.removeClass('rz-active');
-        this.currentFocusElement = null
+        if (!this.isDragging) {
+	        this.tracking = '';
+	        this.currentFocusElement = null
+        }
       },
 
       /**
