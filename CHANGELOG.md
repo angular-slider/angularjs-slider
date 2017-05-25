@@ -1,3 +1,7 @@
+# 6.2.0 (2017-05-25)
+## New Feature
+- Handle multi touch events on separate sliders (#535). Thanks @daniela-mateescu :)
+
 # 6.1.2 (2017-05-15)
 ## Fixes
 - Fix ticks and values at intermediate positions on IE (#531)
