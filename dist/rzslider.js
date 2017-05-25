@@ -1,4 +1,4 @@
-/*! angularjs-slider - v6.1.2 - 
+/*! angularjs-slider - v6.2.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
  2017-05-25 */
@@ -158,7 +158,7 @@
 
   .factory('RzSlider', ['$timeout', '$document', '$window', '$compile', 'RzSliderOptions', 'rzThrottle', function($timeout, $document, $window, $compile, RzSliderOptions, rzThrottle) {
     'use strict';
-    
+
     /**
      * Slider
      *
@@ -458,7 +458,7 @@
         }
         return index;
       },
-      
+
       syncLowValue: function() {
         if (this.options.stepsArray) {
           if (!this.options.bindIndexForStepsArray)
@@ -1183,7 +1183,7 @@
           isMinLabAtCeil = this.isLabelAboveCeilLab(this.minLab),
           isMaxLabAtCeil = this.isLabelAboveCeilLab(this.maxLab),
           isCmbLabAtFloor = this.isLabelBelowFloorLab(this.cmbLab),
-          isCmbLabAtCeil =  this.isLabelAboveCeilLab(this.cmbLab);
+          isCmbLabAtCeil = this.isLabelAboveCeilLab(this.cmbLab);
 
         if (isMinLabAtFloor) {
           flHidden = true;
@@ -1227,8 +1227,8 @@
           floorPos = this.flrLab.rzsp,
           floorDim = this.flrLab.rzsd;
         return isRTL ?
-        pos + dim >= floorPos - 2 :
-        pos <= floorPos + floorDim + 2;
+          pos + dim >= floorPos - 2 :
+          pos <= floorPos + floorDim + 2;
       },
 
       isLabelAboveCeilLab: function(label) {
@@ -1238,8 +1238,8 @@
           ceilPos = this.ceilLab.rzsp,
           ceilDim = this.ceilLab.rzsd;
         return isRTL ?
-        pos <= ceilPos + ceilDim + 2 :
-        pos + dim >= ceilPos - 2;
+          pos <= ceilPos + ceilDim + 2 :
+          pos + dim >= ceilPos - 2;
       },
 
       /**
@@ -1555,12 +1555,16 @@
         return Math.exp(value);
       },
 
+      getEventAttr: function(event, attr) {
+        return event.originalEvent === undefined ? event[attr] : event.originalEvent[attr]
+      },
+
       // Events
       /**
        * Get the X-coordinate or Y-coordinate of an event
        *
        * @param {Object} event  The event
-       * @param targetTouchId The identifier of the touch for that we will get the x and y coordinates
+       * @param targetTouchId The identifier of the touch with the X/Y coordinates
        * @returns {number}
        */
       getEventXY: function(event, targetTouchId) {
@@ -1570,27 +1574,26 @@
         if (event[clientXY] !== undefined) {
           return event[clientXY];
         }
-        
-      	var eventXY;  
-      	var touches = event.originalEvent === undefined ? event.touches : event.originalEvent.touches;
-      	
-      	if (targetTouchId !== undefined) {
-	  		for (var i = 0; i < touches.length; i++) {
-				if (touches[i].identifier == targetTouchId) {
-					return touches[i][clientXY];
-				}
-			}
-      	}
-  		
-  		// If the target touch was not found in the event
-  		// returns the coordinates of the first touch
-      	return touches[0][clientXY];
+
+        var touches = this.getEventAttr(event, 'touches');
+
+        if (targetTouchId !== undefined) {
+          for (var i = 0; i < touches.length; i++) {
+            if (touches[i].identifier === targetTouchId) {
+              return touches[i][clientXY];
+            }
+          }
+        }
+
+        // If no target touch or the target touch was not found in the event
+        // returns the coordinates of the first touch
+        return touches[0][clientXY];
       },
 
       /**
        * Compute the event position depending on whether the slider is horizontal or vertical
        * @param event
-       * @param targetTouchId If targetTouchId is provided it will be considered the position of that 
+       * @param targetTouchId If targetTouchId is provided it will be considered the position of that
        * @returns {number}
        */
       getEventPosition: function(event, targetTouchId) {
@@ -1616,7 +1619,7 @@
           endEvent: ''
         };
 
-        if (event.touches || (event.originalEvent !== undefined && event.originalEvent.touches)) {
+        if (this.getEventAttr(event, 'touches')) {
           eventNames.moveEvent = 'touchmove';
           eventNames.endEvent = 'touchend';
         } else {
@@ -1777,19 +1780,19 @@
         ehEnd = angular.bind(this, this.onEnd, ehMove);
 
         $document.on(eventNames.moveEvent, ehMove);
-        
+
         $document.on(eventNames.endEvent, ehEnd);
         this.ehEndToBeRemovedOnEnd = ehEnd;
         this.callOnStart();
-        
-        var changedTouches = event.originalEvent === undefined ? event.changedTouches : event.originalEvent.changedTouches;
+
+        var changedTouches = this.getEventAttr(event, 'changedTouches');
         if (changedTouches) {
-			// Store the touch identifier
-			if (!this.touchId) {
-				this.isDragging = true;
-				this.touchId = changedTouches[0].identifier;
-			}
-		}
+          // Store the touch identifier
+          if (!this.touchId) {
+            this.isDragging = true;
+            this.touchId = changedTouches[0].identifier;
+          }
+        }
       },
 
       /**
@@ -1801,21 +1804,21 @@
        * @returns {undefined}
        */
       onMove: function(pointer, event, fromTick) {
-      	var changedTouches = event.originalEvent === undefined ? event.changedTouches : event.originalEvent.changedTouches;
-    	var touchForThisSlider;  
-    	if (changedTouches) {
-    		for (var i = 0; i < changedTouches.length; i++) {
-    			if (changedTouches[i].identifier == this.touchId) {
-    				touchForThisSlider = changedTouches[i];
-    				break;
-    			}
-    		}
-    	}
-    	
-    	if (changedTouches && !touchForThisSlider) {
-    		return;
-    	}
-    	
+        var changedTouches = this.getEventAttr(event, 'changedTouches');
+        var touchForThisSlider;
+        if (changedTouches) {
+          for (var i = 0; i < changedTouches.length; i++) {
+            if (changedTouches[i].identifier === this.touchId) {
+              touchForThisSlider = changedTouches[i];
+              break;
+            }
+          }
+        }
+
+        if (changedTouches && !touchForThisSlider) {
+          return;
+        }
+
         var newPos = this.getEventPosition(event, touchForThisSlider ? touchForThisSlider.identifier : undefined),
           newValue,
           ceilValue = this.options.rightToLeft ? this.minValue : this.maxValue,
@@ -1834,7 +1837,7 @@
         }
         this.positionTrackingHandle(newValue);
       },
-      
+
       /**
        * onEnd event handler
        *
@@ -1843,16 +1846,16 @@
        * @returns {undefined}
        */
       onEnd: function(ehMove, event) {
-    	var changedTouches = event.originalEvent === undefined ? event.changedTouches : event.originalEvent.changedTouches;
-    	if (changedTouches && changedTouches[0].identifier != this.touchId) {
-    		return;
-    	}
-    	this.isDragging = false;
-		this.touchId = null;
-		
-		// Touch event, the listener was added by us so we need to remove it
-		$document.off("touchend", this.ehEndToBeRemovedOnEnd);
-    	
+        var changedTouches = this.getEventAttr(event, 'changedTouches');
+        if (changedTouches && changedTouches[0].identifier !== this.touchId) {
+          return;
+        }
+        this.isDragging = false;
+        this.touchId = null;
+
+        // Touch event, the listener was added by us so we need to remove it
+        $document.off("touchend", this.ehEndToBeRemovedOnEnd);
+
         var moveEventName = this.getEventNames(event).moveEvent;
 
         if (!this.options.keyboardSupport) {
@@ -1894,8 +1897,8 @@
         pointer.off('keyup');
         pointer.removeClass('rz-active');
         if (!this.isDragging) {
-	        this.tracking = '';
-	        this.currentFocusElement = null
+          this.tracking = '';
+          this.currentFocusElement = null
         }
       },
 
