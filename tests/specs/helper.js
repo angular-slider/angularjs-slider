@@ -95,7 +95,74 @@
       };
       $document.triggerHandler(event);
     };
+    
+    h.fireTouchstartWithOriginalEvent = function(element, position, touchIdentifier, touchesIds, vertical) {
+    	var event = {type:'touchstart', originalEvent: this.getTouchEvent('touchstart', position, vertical, touchIdentifier, touchesIds, sinon.stub())};
 
+        element.triggerHandler(event);
+        return event;
+      };
+      
+    h.fireTouchstartWithoutOriginalEvent = function(element, position, touchIdentifier, touchesIds, vertical) {
+    	var event = this.getTouchEvent('touchstart', position, vertical, touchIdentifier, touchesIds, sinon.stub());
+
+        element.triggerHandler(event);
+        return event;
+    }; 
+    
+    h.fireTouchmoveWithOriginalEvent = function(position, touchIdentifier, touchesIds, vertical) {
+    	var event = {type:'touchmove', originalEvent: this.getTouchEvent('touchmove', position, vertical, touchIdentifier, touchesIds)};
+
+    	$document.triggerHandler(event);
+        return event;
+    }; 
+    
+    h.fireTouchmoveWithoutOriginalEvent = function(position, touchIdentifier, touchesIds, vertical) {
+    	var event = this.getTouchEvent('touchmove', position, vertical, touchIdentifier, touchesIds);
+
+    	$document.triggerHandler(event);
+        return event;
+    }; 
+      
+    h.fireTouchendWithOriginalEvent = function(touchIdentifier, touchesIds, vertical) {
+    	var event = {type:'touchend', originalEvent: this.getTouchEvent('touchend', 0, vertical, touchIdentifier, touchesIds)};
+
+    	$document.triggerHandler(event);
+        return event;
+    }; 
+    
+    h.fireTouchendWithoutOriginalEvent = function(touchIdentifier, touchesIds, vertical) {
+    	var event = this.getTouchEvent('touchend', 0, vertical, touchIdentifier, touchesIds);
+
+    	$document.triggerHandler(event);
+        return event;
+    }; 
+    
+    h.getTouchEvent = function(type, position, vertical, changedTouchId, touchesIds, preventDefaultAndStopPropagation) {
+    	var positionProp = vertical ? 'clientY' : 'clientX';
+    	
+    	var changedTouches = [{identifier:changedTouchId}];
+    	changedTouches[0][positionProp] = position;
+    	
+    	var touches = [];
+    	for (var i = 0; i < touchesIds.length; i++) {
+    		var touch = {identifier: touchesIds[i]};
+    		if (touch.identifier == changedTouchId) {
+    			touch[positionProp] = position;
+    		}
+    		touches.push(touch);
+    	}
+    	
+        var originalEvent = {
+          type: type,
+          preventDefault: preventDefaultAndStopPropagation,
+          stopPropagation: preventDefaultAndStopPropagation,
+          changedTouches: changedTouches,
+          touches: touches
+        };
+        return originalEvent;
+    }  
+    
     h.pressKeydown = function(element, key, options) {
       options = options || {};
       key = key.toUpperCase();
@@ -129,7 +196,7 @@
     h.moveMouseToValue = function(value) {
       h.fireMousemove(h.getMousePosition(value));
     };
-
+    
     return h;
   });
 }());

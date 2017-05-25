@@ -414,6 +414,101 @@
       expect(helper.slider.callOnStart.callCount).to.equal(1);
       expect(helper.slider.callOnChange.callCount).to.equal(1);
     });
+    
+    it('should handle touch start, touch move and touch end correctly when multitouch with originalEvent', function() {
+    	sinon.spy(helper.slider, 'positionTrackingHandle');
+        sinon.spy(helper.slider, 'callOnChange');
+        // Touch start for the slider
+        var eventOnSlider = helper.fireTouchstartWithOriginalEvent(helper.slider.minH, 0, 0, [0], true);
+        
+        var expectedValue = 50;
+        var touchPositionForSlider = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
+        
+        // Touch move for the slider
+        helper.fireTouchmoveWithOriginalEvent(touchPositionForSlider, 0, [0, 1], true);
+        
+        // Simultaneous touch move but not on slider
+        var otherTouchPosition = touchPositionForSlider + 100;
+        helper.fireTouchmoveWithOriginalEvent(otherTouchPosition, 1, [0, 1], true);
+        
+        // The slider does not react
+        expect(helper.scope.slider.value).to.equal(expectedValue);
+        expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+        expect(helper.slider.callOnChange.callCount).to.equal(1);
+        
+        // The other simultaneous touch ends
+        helper.fireTouchendWithOriginalEvent(1, [0,1], true);
+        
+        var expectedValue = 60;
+        var touchPositionForSlider = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
+        // Touch move for the slider
+        helper.fireTouchmoveWithOriginalEvent(touchPositionForSlider, 0, [0, 1], true);
+        
+        // Can still drag the slider
+        expect(helper.scope.slider.value).to.equal(expectedValue);
+        expect(helper.slider.positionTrackingHandle.callCount).to.equal(2);
+        expect(helper.slider.callOnChange.callCount).to.equal(2);
+        
+        // Slider touch ends
+        helper.fireTouchendWithOriginalEvent(0, [0,1], true);
+        
+        // Touch move for the slider
+        var touchPositionForSlider = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(70) - helper.slider.handleHalfDim;
+        helper.fireTouchmoveWithOriginalEvent(touchPositionForSlider, 0, [0, 1], true);
+        
+        //Can not drag the slider anymore
+        expect(helper.scope.slider.value).to.equal(expectedValue);
+        expect(helper.slider.positionTrackingHandle.callCount).to.equal(2);
+        expect(helper.slider.callOnChange.callCount).to.equal(2);
+    });
+    
+    it('should handle touch start, touch move and touch end correctly when multitouch without originalEvent', function() {
+    	sinon.spy(helper.slider, 'positionTrackingHandle');
+        sinon.spy(helper.slider, 'callOnChange');
+        
+        // Touch start for the slider
+        var eventOnSlider = helper.fireTouchstartWithoutOriginalEvent(helper.slider.minH, 0, 0, [0], true);
+        var expectedValue = 50;
+        var touchPositionForSlider = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
+        
+        // Touch move for slider
+        helper.fireTouchmoveWithoutOriginalEvent(touchPositionForSlider, 0, [0, 1], true);
+        
+        // Simultaneous touch move but not on slider
+        var otherTouchPosition = touchPositionForSlider + 100;
+        helper.fireTouchmoveWithoutOriginalEvent(otherTouchPosition, 1, [0, 1], true);
+        
+        // The slider does not react
+        expect(helper.scope.slider.value).to.equal(expectedValue);
+        expect(helper.slider.positionTrackingHandle.callCount).to.equal(1);
+        expect(helper.slider.callOnChange.callCount).to.equal(1);
+        
+        // The other simultaneous touch ends
+        helper.fireTouchendWithoutOriginalEvent(1, [0,1], true);
+        
+        var expectedValue = 60;
+        var touchPositionForSlider = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(expectedValue) - helper.slider.handleHalfDim;
+        // Touch move for slider
+        helper.fireTouchmoveWithoutOriginalEvent(touchPositionForSlider, 0, [0, 1], true);
+        
+        // Can still drag the slider
+        expect(helper.scope.slider.value).to.equal(expectedValue);
+        expect(helper.slider.positionTrackingHandle.callCount).to.equal(2);
+        expect(helper.slider.callOnChange.callCount).to.equal(2);
+        
+        // Slider touch ends
+        helper.fireTouchendWithoutOriginalEvent(0, [0,1], true);
+        
+        // Touch move for the slider
+        var touchPositionForSlider = helper.slider.sliderElem.rzsp - helper.slider.valueToPosition(70) - helper.slider.handleHalfDim;
+        
+        // Can not drag the slider anymore
+        helper.fireTouchmoveWithoutOriginalEvent(touchPositionForSlider, 0, [0, 1], true);
+        
+        expect(helper.scope.slider.value).to.equal(expectedValue);
+        expect(helper.slider.positionTrackingHandle.callCount).to.equal(2);
+        expect(helper.slider.callOnChange.callCount).to.equal(2);
+    });
   });
 
 }());
