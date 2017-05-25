@@ -1777,12 +1777,10 @@
           this.focusElement(pointer);
 
         ehMove = angular.bind(this, this.dragging.active ? this.onDragMove : this.onMove, pointer);
-        ehEnd = angular.bind(this, this.onEnd, ehMove);
+        ehEnd = angular.bind(this, this.onEnd, ehMove, ehEnd);
 
-        $document.on(eventNames.moveEvent, ehMove);
-
+        $document.on(eventNames.moveEvent, ehMove)
         $document.on(eventNames.endEvent, ehEnd);
-        this.ehEndToBeRemovedOnEnd = ehEnd;
         this.callOnStart();
 
         var changedTouches = this.getEventAttr(event, 'changedTouches');
@@ -1842,21 +1840,17 @@
        * onEnd event handler
        *
        * @param {Event}    event    The event
-       * @param {Function} ehMove   The the bound move event handler
+       * @param {Function} ehMove   The bound move event handler
+       * @param {Function} ehEnd   The bound end event handler
        * @returns {undefined}
        */
-      onEnd: function(ehMove, event) {
+      onEnd: function(ehMove, ehEnd, event) {
         var changedTouches = this.getEventAttr(event, 'changedTouches');
         if (changedTouches && changedTouches[0].identifier !== this.touchId) {
           return;
         }
         this.isDragging = false;
         this.touchId = null;
-
-        // Touch event, the listener was added by us so we need to remove it
-        $document.off("touchend", this.ehEndToBeRemovedOnEnd);
-
-        var moveEventName = this.getEventNames(event).moveEvent;
 
         if (!this.options.keyboardSupport) {
           this.minH.removeClass('rz-active');
@@ -1865,7 +1859,9 @@
         }
         this.dragging.active = false;
 
-        $document.off(moveEventName, ehMove);
+        var eventName = this.getEventNames(event);
+        $document.off(eventName.moveEvent, ehMove);
+        $document.off(eventName.endEvent, ehEnd);
         this.callOnEnd();
       },
 
