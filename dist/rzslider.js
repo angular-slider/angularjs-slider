@@ -1,7 +1,7 @@
 /*! angularjs-slider - v6.2.1 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2017-05-25 */
+ 2017-05-26 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -1777,10 +1777,12 @@
           this.focusElement(pointer);
 
         ehMove = angular.bind(this, this.dragging.active ? this.onDragMove : this.onMove, pointer);
-        ehEnd = angular.bind(this, this.onEnd, ehMove, ehEnd);
+        ehEnd = angular.bind(this, this.onEnd, ehMove);
 
         $document.on(eventNames.moveEvent, ehMove)
         $document.on(eventNames.endEvent, ehEnd);
+        this.endHandlerToBeRemovedOnEnd = ehEnd;
+
         this.callOnStart();
 
         var changedTouches = this.getEventAttr(event, 'changedTouches');
@@ -1841,10 +1843,9 @@
        *
        * @param {Event}    event    The event
        * @param {Function} ehMove   The bound move event handler
-       * @param {Function} ehEnd   The bound end event handler
        * @returns {undefined}
        */
-      onEnd: function(ehMove, ehEnd, event) {
+      onEnd: function(ehMove, event) {
         var changedTouches = this.getEventAttr(event, 'changedTouches');
         if (changedTouches && changedTouches[0].identifier !== this.touchId) {
           return;
@@ -1861,7 +1862,9 @@
 
         var eventName = this.getEventNames(event);
         $document.off(eventName.moveEvent, ehMove);
-        $document.off(eventName.endEvent, ehEnd);
+        console.info(eventName.endEvent, this.endHandlerToBeRemovedOnEnd)
+        $document.off(eventName.endEvent, this.endHandlerToBeRemovedOnEnd);
+        this.endHandlerToBeRemovedOnEnd = null;
         this.callOnEnd();
       },
 
