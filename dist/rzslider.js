@@ -1,4 +1,4 @@
-/*! angularjs-slider - v6.2.1 - 
+/*! angularjs-slider - v6.2.2 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
  2017-05-26 */
@@ -1862,7 +1862,6 @@
 
         var eventName = this.getEventNames(event);
         $document.off(eventName.moveEvent, ehMove);
-        console.info(eventName.endEvent, this.endHandlerToBeRemovedOnEnd)
         $document.off(eventName.endEvent, this.endHandlerToBeRemovedOnEnd);
         this.endHandlerToBeRemovedOnEnd = null;
         this.callOnEnd();

@@ -1,3 +1,7 @@
+# 6.2.2 (2017-05-16)
+## Fixes
+- Fix (again) onEnd event de-registration.
+
 # 6.2.1 (2017-05-15)
 ## Fixes
 - Fix onEnd event being sent several times on non-mobiles devices (#536)
