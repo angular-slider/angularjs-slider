@@ -1,3 +1,7 @@
+# 6.2.3 (2017-07-08)
+## Tooling
+- Add Typescript definition file.
+
 # 6.2.2 (2017-05-16)
 ## Fixes
 - Fix (again) onEnd event de-registration.
