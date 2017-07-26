@@ -1052,8 +1052,12 @@
             if (value >= this.lowValue)
               return true;
           }
-          else if (this.options.showSelectionBar && value <= this.lowValue)
+          else if (this.options.showSelectionBar && value <= this.lowValue) {
             return true;
+          }
+          else if (this.options.showSelectionBarSingle && value == this.lowValue) {
+            return true;
+          }
         }
         if (this.range && value >= this.lowValue && value <= this.highValue)
           return true;
