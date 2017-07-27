@@ -272,6 +272,31 @@
       expect(lastTick.hasClass('rz-selected')).to.be.true;
     });
 
+    it('should set rz-selected class to specific tick above the model value if showSelectionBarSingle is true', function() {
+      var sliderConf = {
+        value: 50,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          showSelectionBarSingle: true,
+          showTicksValues: true,
+          showTicks: true
+        }
+      };
+      helper.createSlider(sliderConf);
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[0]);
+      expect(firstTick.hasClass('rz-selected')).to.be.false;
+      var fifthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[4]);
+      expect(fifthTick.hasClass('rz-selected')).to.be.false;
+      var sixthTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[5]);
+      expect(sixthTick.hasClass('rz-selected')).to.be.true;
+      var seventhTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[6]);
+      expect(seventhTick.hasClass('rz-selected')).to.be.false;
+      var lastTick = angular.element(helper.element[0].querySelectorAll('.rz-tick')[10]);
+      expect(lastTick.hasClass('rz-selected')).to.be.false;
+    });
+
     it('should set rz-selected class to correct ticks if showSelectionBarFromValue is used and the model is on the right', function() {
       var sliderConf = {
         value: 50,
