@@ -1,3 +1,7 @@
+# 6.3.0 (2017-08-07)
+## Feature
+- Handle different values for `showTicks` and `showTicksValues` (#550).
+
 # 6.2.3 (2017-07-08)
 ## Tooling
 - Add Typescript definition file.

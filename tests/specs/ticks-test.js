@@ -141,6 +141,30 @@
       expect(lastTick.text()).to.equal('100');
     });
 
+    it('should create the correct number of ticks/values when showTick and showTicksValues' +
+    ' are integers with different values', function() {
+      var sliderConf = {
+        value: 50,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          showTicksValues: 20,
+          showTicks: 10
+        }
+      };
+      helper.createSlider(sliderConf);
+      expect(helper.slider.ticks.hasClass('rz-ticks-values-under')).to.be.true;
+      expect(helper.element[0].querySelectorAll('.rz-tick')).to.have.length(11);
+      expect(helper.element[0].querySelectorAll('.rz-tick-value')).to.have.length(6);
+      var firstTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[0]);
+      expect(firstTick.text()).to.equal('0');
+      var secondTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[1]);
+      expect(secondTick.text()).to.equal('20');
+      var lastTick = angular.element(helper.element[0].querySelectorAll('.rz-tick-value')[5]);
+      expect(lastTick.text()).to.equal('100');
+    });
+
     it('should create the correct number of ticks when ticksArray is used', function() {
       var sliderConf = {
         value: 50,

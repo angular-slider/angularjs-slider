@@ -8,8 +8,11 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $uibModal) {
   $scope.debugSlider = {
     value: 50,
     options: {
+      showTicks: 5,
+      showTicksValues: 10,
       floor: 0,
       ceil: 100,
+      step: 5,
       showSelectionBar: true
     }
   };

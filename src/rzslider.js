@@ -1012,7 +1012,7 @@
             tick.tooltip = self.options.ticksTooltip(value);
             tick.tooltipPlacement = self.options.vertical ? 'right' : 'top';
           }
-          if (self.options.showTicksValues) {
+          if (self.options.showTicksValues === true || value % self.options.showTicksValues === 0) {
             tick.value = self.getDisplayValue(value, 'tick-value');
             if (self.options.ticksValuesTooltip) {
               tick.valueTooltip = self.options.ticksValuesTooltip(value);

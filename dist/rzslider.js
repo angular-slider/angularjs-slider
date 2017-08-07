@@ -1,7 +1,7 @@
-/*! angularjs-slider - v6.2.3 - 
+/*! angularjs-slider - v6.3.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2017-07-08 */
+ 2017-08-07 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -1008,7 +1008,7 @@
             tick.tooltip = self.options.ticksTooltip(value);
             tick.tooltipPlacement = self.options.vertical ? 'right' : 'top';
           }
-          if (self.options.showTicksValues) {
+          if (self.options.showTicksValues === true || value % self.options.showTicksValues === 0) {
             tick.value = self.getDisplayValue(value, 'tick-value');
             if (self.options.ticksValuesTooltip) {
               tick.valueTooltip = self.options.ticksValuesTooltip(value);
