@@ -77,6 +77,16 @@
     .rounded(@barDimension/2);
   }
 
+  .rz-bar-wrapper.rz-transparent .rz-bar {
+    background: transparent;
+  }
+  .rz-bar-wrapper.rz-left-out-selection .rz-bar {
+    background: @barLeftOutSelectionColor;
+  }
+  .rz-bar-wrapper.rz-right-out-selection .rz-bar {
+    background: @barRightOutSelectionColor;
+  }
+
   .rz-selection {
     z-index: 2;
     background: @barFillColor;
