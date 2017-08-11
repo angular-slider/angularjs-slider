@@ -1512,8 +1512,8 @@
       it('should visualize left/right outer selection', function() {
         helper.scope.slider.min = 30;
         helper.scope.slider.max = 70;
-        helper.scope.options.showOuterSelectionBars = true;
-        helper.scope.options.rightToLeft = true;
+        helper.scope.slider.options.showOuterSelectionBars = true;
+        helper.scope.slider.options.rightToLeft = true;
         helper.scope.$digest();
         expect(helper.slider.leftOutSelBar.css('visibility')).to.equal('visible');
         expect(helper.slider.rightOutSelBar.css('visibility')).to.equal('visible');
