@@ -1,7 +1,7 @@
 /*! angularjs-slider - v6.3.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2017-08-08 */
+ 2017-08-11 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -1295,10 +1295,17 @@
         this.setDimension(this.selBar, dimension);
         this.setPosition(this.selBar, position);
         if (this.range && this.options.showOuterSelectionBars) {
-          this.setDimension(this.leftOutSelBar, position);
-          this.setPosition(this.leftOutSelBar, 0);
-          this.setDimension(this.rightOutSelBar, this.getDimension(this.fullBar) - (position + dimension));
-          this.setPosition(this.rightOutSelBar, position + dimension);
+          if (this.options.rightToLeft) {
+            this.setDimension(this.rightOutSelBar, position);
+            this.setPosition(this.rightOutSelBar, 0);
+            this.setDimension(this.leftOutSelBar, this.getDimension(this.fullBar) - (position + dimension));
+            this.setPosition(this.leftOutSelBar, position + dimension);
+          } else {
+            this.setDimension(this.leftOutSelBar, position);
+            this.setPosition(this.leftOutSelBar, 0);
+            this.setDimension(this.rightOutSelBar, this.getDimension(this.fullBar) - (position + dimension));
+            this.setPosition(this.rightOutSelBar, position + dimension);
+          }
         }
         if (this.options.getSelectionBarColor) {
           var color = this.getSelectionBarColor();
