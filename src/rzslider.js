@@ -1299,10 +1299,17 @@
         this.setDimension(this.selBar, dimension);
         this.setPosition(this.selBar, position);
         if (this.range && this.options.showOuterSelectionBars) {
-          this.setDimension(this.leftOutSelBar, position);
-          this.setPosition(this.leftOutSelBar, 0);
-          this.setDimension(this.rightOutSelBar, this.getDimension(this.fullBar) - (position + dimension));
-          this.setPosition(this.rightOutSelBar, position + dimension);
+          if (this.options.rightToLeft) {
+            this.setDimension(this.rightOutSelBar, position);
+            this.setPosition(this.rightOutSelBar, 0);
+            this.setDimension(this.leftOutSelBar, this.getDimension(this.fullBar) - (position + dimension));
+            this.setPosition(this.leftOutSelBar, position + dimension);
+          } else {
+            this.setDimension(this.leftOutSelBar, position);
+            this.setPosition(this.leftOutSelBar, 0);
+            this.setDimension(this.rightOutSelBar, this.getDimension(this.fullBar) - (position + dimension));
+            this.setPosition(this.rightOutSelBar, position + dimension);
+          }
         }
         if (this.options.getSelectionBarColor) {
           var color = this.getSelectionBarColor();
