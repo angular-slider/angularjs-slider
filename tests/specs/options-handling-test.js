@@ -1508,6 +1508,31 @@
         expect(helper.scope.slider.min).to.equal(0);
         expect(helper.scope.slider.max).to.equal(100);
       });
+
+      it('should visualize left/right outer selection', function() {
+        helper.scope.slider.min = 30;
+        helper.scope.slider.max = 70;
+        helper.scope.slider.options.showOuterSelectionBars = true;
+        helper.scope.slider.options.rightToLeft = false;
+        helper.scope.$digest();
+        expect(helper.slider.leftOutSelBar.css('visibility')).to.equal('visible');
+        expect(helper.slider.rightOutSelBar.css('visibility')).to.equal('visible');
+        expect(helper.slider.fullBar.hasClass('rz-transparent')).to.be.true;
+      });
+
+      it('should swap left/right outer selection in rightToLeft mode', function() {
+        helper.scope.slider.min = 30;
+        helper.scope.slider.max = 70;
+        helper.scope.slider.options.showOuterSelectionBars = true;
+        helper.scope.slider.options.rightToLeft = true;
+        helper.scope.$digest();
+        expect(helper.slider.leftOutSelBar.css('visibility')).to.equal('visible');
+        expect(helper.slider.rightOutSelBar.css('visibility')).to.equal('visible');
+        expect(helper.slider.fullBar.hasClass('rz-transparent')).to.be.true;
+        // rightToLeft checking
+        expect(parseInt(helper.slider.rightOutSelBar.css('left'))).to.be.below(parseInt(helper.slider.leftOutSelBar.css('left')));
+      });
+    
     });
 
     describe('options expression specific - ', function() {

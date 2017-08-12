@@ -217,6 +217,7 @@ The default options are:
     draggableRangeOnly: false,
     showSelectionBar: false,
     showSelectionBarEnd: false,
+    showOuterSelectionBars: false,
     showSelectionBarFromValue: null,
     hidePointerLabels: false,
     hideLimitLabels: false,
@@ -332,6 +333,8 @@ Just pass an array with each slider value and that's it; the floor, ceil and ste
 **showSelectionBar** - _Boolean (defaults to false)_: Set to true to always show the selection bar before the slider handle.
 
 **showSelectionBarEnd** - _Boolean (defaults to false)_: Set to true to always show the selection bar after the slider handle.
+
+**showOuterSelectionBars** - _Boolean (defaults to false)_: Only for range slider. Set to true to visualize in different colour the areas on the left/right (top/bottom for vertical range slider) of selection bar between the handles.
 
 **showSelectionBarFromValue** - _Number (defaults to null)_: Set a number to draw the selection bar between this value and the slider handle.
 

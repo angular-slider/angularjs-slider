@@ -1,16 +1,18 @@
 <div class="rzslider">
-<span class="rz-bar-wrapper"><span class="rz-bar"></span></span> <!-- // 0 The slider bar -->
+<span class="rz-bar-wrapper rz-left-out-selection"><span class=rz-bar></span></span> <!-- // 0 (left) Highlight outside two handles -->
+<span class="rz-bar-wrapper rz-right-out-selection"><span class=rz-bar></span></span> <!-- // 1 (right) Highlight outside two handles -->
+<span class="rz-bar-wrapper"><span class="rz-bar"></span></span> <!-- // 2 The slider bar -->
 <span class="rz-bar-wrapper">
   <span class="rz-bar rz-selection" ng-style="barStyle"></span>
-</span> <!-- // 1 Highlight between two handles -->
-<span class="rz-pointer rz-pointer-min" ng-style=minPointerStyle></span> <!-- // 2 Left slider handle -->
-<span class="rz-pointer rz-pointer-max" ng-style=maxPointerStyle></span> <!-- // 3 Right slider handle -->
-<span class="rz-bubble rz-limit rz-floor"></span> <!-- // 4 Floor label -->
-<span class="rz-bubble rz-limit rz-ceil"></span> <!-- // 5 Ceiling label -->
-<span class="rz-bubble"></span> <!-- // 6 Label above left slider handle -->
-<span class="rz-bubble"></span> <!-- // 7 Label above right slider handle -->
-<span class="rz-bubble"></span> <!-- // 8 Range label when the slider handles are close ex. 15 - 17 -->
-<ul ng-show="showTicks" class="rz-ticks"> <!-- // 9 The ticks -->
+</span> <!-- // 3 Highlight between two handles -->
+<span class="rz-pointer rz-pointer-min" ng-style=minPointerStyle></span> <!-- // 4 Left slider handle -->
+<span class="rz-pointer rz-pointer-max" ng-style=maxPointerStyle></span> <!-- // 5 Right slider handle -->
+<span class="rz-bubble rz-limit rz-floor"></span> <!-- // 6 Floor label -->
+<span class="rz-bubble rz-limit rz-ceil"></span> <!-- // 7 Ceiling label -->
+<span class="rz-bubble"></span> <!-- // 8 Label above left slider handle -->
+<span class="rz-bubble"></span> <!-- // 9 Label above right slider handle -->
+<span class="rz-bubble"></span> <!-- // 10 Range label when the slider handles are close ex. 15 - 17 -->
+<ul ng-show="showTicks" class="rz-ticks"> <!-- // 11 The ticks -->
   <li ng-repeat="t in ticks track by $index" class="rz-tick"
       ng-class="{'rz-selected': t.selected}" ng-style="t.style"
       ng-attr-uib-tooltip="{{ t.tooltip }}" ng-attr-tooltip-placement="{{t.tooltipPlacement}}"

@@ -1,7 +1,7 @@
 /*! angularjs-slider - v6.3.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2017-08-07 */
+ 2017-08-11 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -50,6 +50,7 @@
       showSelectionBar: false,
       showSelectionBarEnd: false,
       showSelectionBarFromValue: null,
+      showOuterSelectionBars: false,
       hidePointerLabels: false,
       hideLimitLabels: false,
       autoHideLimitLabels: true,
@@ -658,33 +659,39 @@
 
           switch (index) {
             case 0:
-              this.fullBar = jElem;
+              this.leftOutSelBar = jElem;
               break;
             case 1:
-              this.selBar = jElem;
+              this.rightOutSelBar = jElem;
               break;
             case 2:
-              this.minH = jElem;
+              this.fullBar = jElem;
               break;
             case 3:
-              this.maxH = jElem;
+              this.selBar = jElem;
               break;
             case 4:
-              this.flrLab = jElem;
+              this.minH = jElem;
               break;
             case 5:
-              this.ceilLab = jElem;
+              this.maxH = jElem;
               break;
             case 6:
-              this.minLab = jElem;
+              this.flrLab = jElem;
               break;
             case 7:
-              this.maxLab = jElem;
+              this.ceilLab = jElem;
               break;
             case 8:
-              this.cmbLab = jElem;
+              this.minLab = jElem;
               break;
             case 9:
+              this.maxLab = jElem;
+              break;
+            case 10:
+              this.cmbLab = jElem;
+              break;
+            case 11:
               this.ticks = jElem;
               break;
           }
@@ -721,6 +728,12 @@
         this.alwaysHide(this.maxLab, hideLabelsForTicks || !this.range || this.options.hidePointerLabels);
         this.alwaysHide(this.cmbLab, hideLabelsForTicks || !this.range || this.options.hidePointerLabels);
         this.alwaysHide(this.selBar, !this.range && !this.options.showSelectionBar);
+        this.alwaysHide(this.leftOutSelBar, !this.range || !this.options.showOuterSelectionBars);
+        this.alwaysHide(this.rightOutSelBar, !this.range || !this.options.showOuterSelectionBars);
+
+        if ( this.range && this.options.showOuterSelectionBars ) {
+          this.fullBar.addClass('rz-transparent');
+        }
 
         if (this.options.vertical)
           this.sliderElem.addClass('rz-vertical');
@@ -1281,6 +1294,19 @@
         }
         this.setDimension(this.selBar, dimension);
         this.setPosition(this.selBar, position);
+        if (this.range && this.options.showOuterSelectionBars) {
+          if (this.options.rightToLeft) {
+            this.setDimension(this.rightOutSelBar, position);
+            this.setPosition(this.rightOutSelBar, 0);
+            this.setDimension(this.leftOutSelBar, this.getDimension(this.fullBar) - (position + dimension));
+            this.setPosition(this.leftOutSelBar, position + dimension);
+          } else {
+            this.setDimension(this.leftOutSelBar, position);
+            this.setPosition(this.leftOutSelBar, 0);
+            this.setDimension(this.rightOutSelBar, this.getDimension(this.fullBar) - (position + dimension));
+            this.setPosition(this.rightOutSelBar, position + dimension);
+          }
+        }
         if (this.options.getSelectionBarColor) {
           var color = this.getSelectionBarColor();
           this.scope.barStyle = {
@@ -2397,7 +2423,7 @@
   'use strict';
 
   $templateCache.put('rzSliderTpl.html',
-    "<div class=rzslider><span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span> <span class=\"rz-pointer rz-pointer-min\" ng-style=minPointerStyle></span> <span class=\"rz-pointer rz-pointer-max\" ng-style=maxPointerStyle></span> <span class=\"rz-bubble rz-limit rz-floor\"></span> <span class=\"rz-bubble rz-limit rz-ceil\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul ng-show=showTicks class=rz-ticks><li ng-repeat=\"t in ticks track by $index\" class=rz-tick ng-class=\"{'rz-selected': t.selected}\" ng-style=t.style ng-attr-uib-tooltip=\"{{ t.tooltip }}\" ng-attr-tooltip-placement={{t.tooltipPlacement}} ng-attr-tooltip-append-to-body=\"{{ t.tooltip ? true : undefined}}\"><span ng-if=\"t.value != null\" class=rz-tick-value ng-attr-uib-tooltip=\"{{ t.valueTooltip }}\" ng-attr-tooltip-placement={{t.valueTooltipPlacement}}>{{ t.value }}</span> <span ng-if=\"t.legend != null\" class=rz-tick-legend>{{ t.legend }}</span></li></ul></div>"
+    "<div class=rzslider><span class=\"rz-bar-wrapper rz-left-out-selection\"><span class=rz-bar></span></span> <span class=\"rz-bar-wrapper rz-right-out-selection\"><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span> <span class=\"rz-pointer rz-pointer-min\" ng-style=minPointerStyle></span> <span class=\"rz-pointer rz-pointer-max\" ng-style=maxPointerStyle></span> <span class=\"rz-bubble rz-limit rz-floor\"></span> <span class=\"rz-bubble rz-limit rz-ceil\"></span> <span class=rz-bubble></span> <span class=rz-bubble></span> <span class=rz-bubble></span><ul ng-show=showTicks class=rz-ticks><li ng-repeat=\"t in ticks track by $index\" class=rz-tick ng-class=\"{'rz-selected': t.selected}\" ng-style=t.style ng-attr-uib-tooltip=\"{{ t.tooltip }}\" ng-attr-tooltip-placement={{t.tooltipPlacement}} ng-attr-tooltip-append-to-body=\"{{ t.tooltip ? true : undefined}}\"><span ng-if=\"t.value != null\" class=rz-tick-value ng-attr-uib-tooltip=\"{{ t.valueTooltip }}\" ng-attr-tooltip-placement={{t.valueTooltipPlacement}}>{{ t.value }}</span> <span ng-if=\"t.legend != null\" class=rz-tick-legend>{{ t.legend }}</span></li></ul></div>"
   );
 
 }]);

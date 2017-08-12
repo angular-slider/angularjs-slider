@@ -34,7 +34,7 @@
     });
 
     it('should exist compiled and with correct config', function() {
-      expect(helper.element.find('span')).to.have.length(11);
+      expect(helper.element.find('span')).to.have.length(15);
       expect(helper.slider.range).to.be.true;
       expect(helper.slider.valueRange).to.equal(100);
       expect(helper.slider.maxH.css('display')).to.equal('');

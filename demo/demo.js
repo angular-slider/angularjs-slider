@@ -88,6 +88,17 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $uibModal) {
     }
   };
 
+  $scope.outerBarsRangeSlider = {
+    minValue: 30,
+    maxValue: 70,
+    options: {
+      floor: 0,
+      ceil: 100,
+      step: 1,
+      showOuterSelectionBars: true
+    }
+  };
+
   //Slider with selection bar
   $scope.slider_visible_bar = {
     value: 10,
