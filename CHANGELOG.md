@@ -1,3 +1,7 @@
+# 6.4.0 (2017-08-12)
+## Feature
+- Add the `showOuterSelectionBars` option (#553).
+
 # 6.3.0 (2017-08-07)
 ## Feature
 - Handle different values for `showTicks` and `showTicksValues` (#550).
