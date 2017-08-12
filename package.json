@@ -16,7 +16,15 @@
     "commit": "git-cz",
     "build": "grunt",
     "test": "grunt test",
-    "report-coverage": "cat ./tests/coverage/lcov.info | codecov"
+    "report-coverage": "cat ./tests/coverage/lcov.info | codecov",
+    "format": "prettier --single-quote --no-semi --write \"{src,tests,demo}/{,!(lib)/**}/*.{js,less,css}\"",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "{src,tests,demo}/{,!(lib)/**}/*.{js,less,css}": [
+      "prettier --single-quote --no-semi --write",
+      "git add"
+    ]
   },
   "peerDependencies": {
     "angular": "^1.2.x"
@@ -42,6 +50,7 @@
     "grunt-recess": "~0.4.0",
     "grunt-replace": "^0.11.0",
     "grunt-serve": "^0.1.6",
+    "husky": "^0.14.3",
     "karma": "^1.3.0",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^0.2.2",
@@ -51,8 +60,10 @@
     "karma-ng-html2js-preprocessor": "^0.2.0",
     "karma-phantomjs-launcher": "^1.0.2",
     "karma-sinon": "^1.0.4",
+    "lint-staged": "^4.0.3",
     "mocha": "^3.1.2",
     "phantomjs": "^1.9.19",
+    "prettier": "^1.5.3",
     "recess": "~1.1.9",
     "sinon": "^1.17.2"
   },

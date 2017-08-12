@@ -1,5 +1,5 @@
-(function() {
-  "use strict";
+;(function() {
+  'use strict'
 
   /**
    * Your test file should end with "-test.js" to be executed.
@@ -7,23 +7,22 @@
    */
 
   describe('Test group description - ', function() {
-    var helper,
-      RzSliderOptions,
-      $rootScope,
-      $timeout;
+    var helper, RzSliderOptions, $rootScope, $timeout
 
-    beforeEach(module('test-helper'));
+    beforeEach(module('test-helper'))
 
-    beforeEach(inject(function(TestHelper, _RzSliderOptions_, _$rootScope_, _$timeout_) {
-      helper = TestHelper;
-      RzSliderOptions = _RzSliderOptions_;
-      $rootScope = _$rootScope_;
-      $timeout = _$timeout_;
-    }));
+    beforeEach(
+      inject(function(TestHelper, _RzSliderOptions_, _$rootScope_, _$timeout_) {
+        helper = TestHelper
+        RzSliderOptions = _RzSliderOptions_
+        $rootScope = _$rootScope_
+        $timeout = _$timeout_
+      })
+    )
 
     afterEach(function() {
-      helper.clean();
-    });
+      helper.clean()
+    })
 
     /*
      The slider that will be used for each test.
@@ -37,13 +36,10 @@
           ceil: 100,
           step: 10
         }
-      };
-      helper.createSlider(sliderConf);
-    });
+      }
+      helper.createSlider(sliderConf)
+    })
 
-    it('should be true', function() {
-
-    });
-  });
-}());
-
+    it('should be true', function() {})
+  })
+})()
