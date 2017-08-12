@@ -1,6 +1,8 @@
 ## Reporting issues
 Make sure the report is accompanied by a reproducible demo. The ideal demo is created by forking [our standard jsFiddle](http://jsfiddle.net/cwhgLcjv/), adding your own code and stripping it down to an absolute minimum needed to demonstrate the bug.
 
+## Prettier
+This project use [Prettier](https://github.com/prettier/prettier) for its code formatting. The goal is to be sure that all code pushed to this repository has the same style. A git hook is set up to format all the edited files on commit.
 
 ## Submittting a Pull Request
 
