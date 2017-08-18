@@ -84,6 +84,8 @@ declare module "angular" {
             showSelectionBar?: boolean;
             /** Boolean (defaults to false): Set to true to always show the selection bar after the slider handle. */
             showSelectionBarEnd?: boolean;
+            /** Boolean (defaults to false): Only for range slider. Set to true to visualize in different colour the areas on the left/right (top/bottom for vertical range slider) of selection bar between the handles. */
+            showOuterSelectionBars?: boolean;
             /** Number (defaults to null): Set a number to draw the selection bar between this value and the slider handle. */
             showSelectionBarFromValue?: number;
             /**
@@ -108,6 +110,8 @@ declare module "angular" {
             hidePointerLabels?: boolean;
             /** Boolean (defaults to false): Set to true to hide min / max labels */
             hideLimitLabels?: boolean;
+            /** Boolean (defaults to true): Set to false to disable the auto- hiding behavior of the limit labels. */
+            autoHideLimitLabels?: boolean;
             /** Boolean (defaults to false): Set to true to make the slider read-only. */
             readOnly?: boolean;
             /** Boolean (defaults to false): Set to true to disable the slider. */
@@ -171,6 +175,22 @@ declare module "angular" {
             keyboardSupport?: boolean;
             /** Object (default to null): The properties defined in this object will be exposed in the slider template under custom.X. */
             customTemplateScope?: any;
+            /** Boolean (defaults to false): Set to true to use a logarithmic scale to display the slider. */
+            logScale?: boolean;
+            /** Function(val, minVal, maxVal): percent: Function that returns the position on the slider for a given value.The position must be a percentage between 0 and 1. */
+            customValueToPosition?: (val: number, minVal: number, maxVal: number) => number;
+            /** Function(percent, minVal, maxVal): value: Function that returns the value for a given position on the slider. The position is a percentage between 0 and 1. */
+            customPositionToValue?: (percent: number, minVal: number, maxVal: number) => number;
+            /** Object(default to null): Use to display the selection bar as a gradient. The given object must contain from and to properties which are colors. */
+            selectionBarGradient?: {from: string, to: string};
+            /** String(default to null): Use to add a label directly to the slider(s) for accessibility. Adds the aria-label attribute. */
+            ariaLabel?: string;
+            /** String(default to null): Use to add a label directly to the slider(s) for accessibility. Adds the aria-label attribute. */
+            ariaLabelHigh?: string;
+            /** String(default to null): Use instead of ariaLabel and ariaLabelHigh to reference the id of an element which will be used to label the slider(s). Adds the aria-labelledby attribute. */
+            ariaLabelledBy?: string;
+            /** String(default to null): Use instead of ariaLabel and ariaLabelHigh to reference the id of an element which will be used to label the slider(s). Adds the aria-labelledby attribute. */
+            ariaLabelledByHigh?: string;
         }
     }
 }
