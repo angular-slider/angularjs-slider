@@ -1,7 +1,7 @@
 ## AngularJS 1.X slider directive with no external dependencies
 
 Status:
-![Maintenance](https://img.shields.io/maintenance/no/2016.svg?style=flat-square)
+![Maintenance](https://img.shields.io/maintenance/support-only/2017.svg?style=flat-square)
 [![npm version](https://img.shields.io/npm/v/angularjs-slider.svg?style=flat-square)](https://www.npmjs.com/package/angularjs-slider)
 [![npm downloads](https://img.shields.io/npm/dm/angularjs-slider.svg?style=flat-square)](http://npm-stat.com/charts.html?package=angularjs-slider&from=2015-01-01)
 [![Build Status](https://img.shields.io/travis/angular-slider/angularjs-slider/master.svg?style=flat-square)](https://travis-ci.org/angular-slider/angularjs-slider)
