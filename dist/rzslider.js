@@ -1,7 +1,7 @@
 /*! angularjs-slider - v6.4.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2017-08-18 */
+ 2017-09-07 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 ;(function(root, factory) {
@@ -75,6 +75,7 @@
         onChange: null,
         onEnd: null,
         rightToLeft: false,
+        reversedControls: false,
         boundPointerLabels: true,
         mergeRangeLabelsIfSame: false,
         customTemplateScope: null,
@@ -2111,6 +2112,13 @@
             increasePage = currentValue + this.valueRange / 10,
             decreasePage = currentValue - this.valueRange / 10
 
+          if (this.options.reversedControls){
+            increaseStep = currentValue - this.step
+            decreaseStep = currentValue + this.step
+            increasePage = currentValue - this.valueRange / 10
+            decreasePage = currentValue + this.valueRange / 10
+          }
+
           //Left to right default actions
           var actions = {
             UP: increaseStep,
@@ -2119,8 +2127,8 @@
             RIGHT: increaseStep,
             PAGEUP: increasePage,
             PAGEDOWN: decreasePage,
-            HOME: this.minValue,
-            END: this.maxValue
+            HOME: this.options.reversedControls ? this.maxValue : this.minValue,
+            END: this.options.reversedControls ? this.minValue : this.maxValue
           }
           //right to left means swapping right and left arrows
           if (this.options.rightToLeft) {
