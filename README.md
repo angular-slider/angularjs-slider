@@ -244,6 +244,7 @@ The default options are:
     onChange: null,
     onEnd: null,
     rightToLeft: false,
+    reversedControls: false,
     boundPointerLabels: true,
     mergeRangeLabelsIfSame: false,
     customTemplateScope: null,
@@ -399,6 +400,14 @@ _Changing this value at runtime is not currently supported._
   - Home: minimum value
   - End: maximum value
 
+**reversedControls** - _Boolean (defaults to false)_: Set to true to reverse keyboard navigation:
+  - Right/top arrows: -1
+  - Left/bottom arrows: +1
+  - Page-up: -10%
+  - Page-down: +10%
+  - End: minimum value
+  - Home: maximum value
+  
 **customTemplateScope** - _Object (default to null)_: The properties defined in this object will be exposed in the slider template under `custom.X`.
 
 **logScale** - _Boolean (defaults to false)_: Set to true to use a logarithmic scale to display the slider.

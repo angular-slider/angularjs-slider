@@ -79,6 +79,7 @@
         onChange: null,
         onEnd: null,
         rightToLeft: false,
+        reversedControls: false,
         boundPointerLabels: true,
         mergeRangeLabelsIfSame: false,
         customTemplateScope: null,
@@ -2115,6 +2116,13 @@
             increasePage = currentValue + this.valueRange / 10,
             decreasePage = currentValue - this.valueRange / 10
 
+          if (this.options.reversedControls) {
+            increaseStep = currentValue - this.step
+            decreaseStep = currentValue + this.step
+            increasePage = currentValue - this.valueRange / 10
+            decreasePage = currentValue + this.valueRange / 10
+          }
+
           //Left to right default actions
           var actions = {
             UP: increaseStep,
@@ -2123,8 +2131,8 @@
             RIGHT: increaseStep,
             PAGEUP: increasePage,
             PAGEDOWN: decreasePage,
-            HOME: this.minValue,
-            END: this.maxValue
+            HOME: this.options.reversedControls ? this.maxValue : this.minValue,
+            END: this.options.reversedControls ? this.minValue : this.maxValue
           }
           //right to left means swapping right and left arrows
           if (this.options.rightToLeft) {
