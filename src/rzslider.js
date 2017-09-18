@@ -424,6 +424,7 @@
             if (self.internalChange) return
             if (newValue === oldValue) return
             thrLow()
+            self.callOnChange()
           })
 
           this.scope.$watch('rzSliderHigh', function(newValue, oldValue) {
