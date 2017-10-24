@@ -40,6 +40,7 @@
         precision: 0,
         minRange: null,
         maxRange: null,
+        restrictedRange: null,
         pushRange: false,
         minLimit: null,
         maxLimit: null,
@@ -374,6 +375,7 @@
           this.setDisabledState()
           this.calcViewDimensions()
           this.setMinAndMax()
+          this.updateRestrictionBar()
           this.addAccessibility()
           this.updateCeilLab()
           this.updateFloorLab()
@@ -680,27 +682,30 @@
                   this.selBar = jElem
                   break
                 case 4:
-                  this.minH = jElem
+                  this.restrictedBar = jElem
                   break
                 case 5:
-                  this.maxH = jElem
+                  this.minH = jElem
                   break
                 case 6:
-                  this.flrLab = jElem
+                  this.maxH = jElem
                   break
                 case 7:
-                  this.ceilLab = jElem
+                  this.flrLab = jElem
                   break
                 case 8:
-                  this.minLab = jElem
+                  this.ceilLab = jElem
                   break
                 case 9:
-                  this.maxLab = jElem
+                  this.minLab = jElem
                   break
                 case 10:
-                  this.cmbLab = jElem
+                  this.maxLab = jElem
                   break
                 case 11:
+                  this.cmbLab = jElem
+                  break
+                case 12:
                   this.ticks = jElem
                   break
               }
@@ -710,6 +715,7 @@
 
           // Initialize position cache properties
           this.selBar.rzsp = 0
+          this.restrictedBar.rzsp = 0
           this.minH.rzsp = 0
           this.maxH.rzsp = 0
           this.flrLab.rzsp = 0
@@ -753,6 +759,7 @@
             this.selBar,
             !this.range && !this.options.showSelectionBar
           )
+          this.alwaysHide(this.restrictedBar, !this.options.restrictedRange)
           this.alwaysHide(
             this.leftOutSelBar,
             !this.range || !this.options.showOuterSelectionBars
@@ -1307,6 +1314,26 @@
             ceilPos = this.ceilLab.rzsp,
             ceilDim = this.ceilLab.rzsd
           return isRTL ? pos <= ceilPos + ceilDim + 2 : pos + dim >= ceilPos - 2
+        },
+
+        /**
+        * Update restricted area bar
+        *
+        * @returns {undefined}
+        */
+        updateRestrictionBar: function() {
+          var position = 0,
+            dimension = 0
+          if (this.options.restrictedRange) {
+            var from = this.valueToPosition(this.options.restrictedRange.from),
+              to = this.valueToPosition(this.options.restrictedRange.to)
+            dimension = Math.abs(to - from)
+            position = this.options.rightToLeft
+              ? to + this.handleHalfDim
+              : from + this.handleHalfDim
+            this.setDimension(this.restrictedBar, dimension)
+            this.setPosition(this.restrictedBar, position)
+          }
         },
 
         /**
@@ -2373,6 +2400,7 @@
         positionTrackingHandle: function(newValue) {
           var valueChanged = false
           newValue = this.applyMinMaxLimit(newValue)
+          newValue = this.applyRestrictedRange(newValue)
           if (this.range) {
             if (this.options.pushRange) {
               newValue = this.applyPushRange(newValue)
@@ -2455,6 +2483,22 @@
               if (this.tracking === 'lowValue')
                 return this.highValue - this.options.maxRange
               else return this.lowValue + this.options.maxRange
+            }
+          }
+          return newValue
+        },
+
+        applyRestrictedRange: function(newValue) {
+          if (
+            this.options.restrictedRange != null &&
+            newValue > this.options.restrictedRange.from &&
+            newValue < this.options.restrictedRange.to
+          ) {
+            if (this.tracking === 'lowValue') {
+              return this.options.restrictedRange.from
+            }
+            if (this.tracking === 'highValue') {
+              return this.options.restrictedRange.to
             }
           }
           return newValue

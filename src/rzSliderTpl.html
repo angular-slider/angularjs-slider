@@ -15,21 +15,25 @@
   <span class="rz-bar-wrapper">
     <span class="rz-bar rz-selection" ng-style="barStyle"></span>
   </span>
-  <!-- // 4 Left slider handle -->
+  <!-- // 4 Restricted area -->
+  <span class="rz-bar-wrapper">
+    <span class="rz-bar rz-restricted" ng-style="restrictionStyle"></span>
+  </span>
+  <!-- // 5 Left slider handle -->
   <span class="rz-pointer rz-pointer-min" ng-style=minPointerStyle></span>
-  <!-- // 5 Right slider handle -->
+  <!-- // 6 Right slider handle -->
   <span class="rz-pointer rz-pointer-max" ng-style=maxPointerStyle></span>
-  <!-- // 6 Floor label -->
+  <!-- // 7 Floor label -->
   <span class="rz-bubble rz-limit rz-floor"></span>
-  <!-- // 7 Ceiling label -->
+  <!-- // 8 Ceiling label -->
   <span class="rz-bubble rz-limit rz-ceil"></span>
-  <!-- // 8 Label above left slider handle -->
+  <!-- // 9 Label above left slider handle -->
   <span class="rz-bubble rz-model-value"></span>
-  <!-- // 9 Label above right slider handle -->
+  <!-- // 10 Label above right slider handle -->
   <span class="rz-bubble rz-model-high"></span>
-  <!-- // 10 Range label when the slider handles are close ex. 15 - 17 -->
+  <!-- // 11 Range label when the slider handles are close ex. 15 - 17 -->
   <span class="rz-bubble"></span>
-  <!-- // 11 The ticks -->
+  <!-- // 12 The ticks -->
   <ul ng-show="showTicks" class="rz-ticks">
     <li ng-repeat="t in ticks track by $index" class="rz-tick" ng-class="{'rz-selected': t.selected}" ng-style="t.style" ng-attr-uib-tooltip="{{ t.tooltip }}"
       ng-attr-tooltip-placement="{{t.tooltipPlacement}}" ng-attr-tooltip-append-to-body="{{ t.tooltip ? true : undefined}}">

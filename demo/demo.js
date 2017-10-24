@@ -1,3 +1,4 @@
+'use strict'
 var app = angular.module('rzSliderDemo', ['rzModule', 'ui.bootstrap'])
 
 app.controller('MainCtrl', function($scope, $rootScope, $timeout, $uibModal) {
@@ -5,6 +6,7 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $uibModal) {
   $scope.minSlider = {
     value: 10
   }
+
   $scope.debugSlider = {
     value: 50,
     options: {
@@ -51,6 +53,20 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $uibModal) {
     }
   }
 
+  $scope.restrictedRangeSlider = {
+    minValue: 10,
+    maxValue: 90,
+    options: {
+      restrictedRange: {
+        from: 30,
+        to: 70
+      },
+      floor: 0,
+      ceil: 100,
+      step: 1
+    }
+  }
+
   //Range slider with minRange and maxRange config
   $scope.minMaxRangeSlider = {
     minValue: 40,
@@ -84,7 +100,9 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $uibModal) {
       floor: 0,
       ceil: 100,
       minRange: 10,
-      pushRange: true
+      pushRange: true,
+      minLimit: 10,
+      maxLimit: 90
     }
   }
 
