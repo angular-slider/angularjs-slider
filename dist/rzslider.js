@@ -1,7 +1,7 @@
 /*! angularjs-slider - v6.4.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2017-10-07 */
+ 2017-10-24 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 ;(function(root, factory) {
@@ -36,6 +36,7 @@
         precision: 0,
         minRange: null,
         maxRange: null,
+        restrictedRange: null,
         pushRange: false,
         minLimit: null,
         maxLimit: null,
@@ -370,6 +371,7 @@
           this.setDisabledState()
           this.calcViewDimensions()
           this.setMinAndMax()
+          this.updateRestrictionBar();
           this.addAccessibility()
           this.updateCeilLab()
           this.updateFloorLab()
@@ -676,27 +678,30 @@
                   this.selBar = jElem
                   break
                 case 4:
+                  this.restrictedBar = jElem;
+                  break;
+                case 5:
                   this.minH = jElem
                   break
-                case 5:
+                case 6:
                   this.maxH = jElem
                   break
-                case 6:
+                case 7:
                   this.flrLab = jElem
                   break
-                case 7:
+                case 8:
                   this.ceilLab = jElem
                   break
-                case 8:
+                case 9:
                   this.minLab = jElem
                   break
-                case 9:
+                case 10:
                   this.maxLab = jElem
                   break
-                case 10:
+                case 11:
                   this.cmbLab = jElem
                   break
-                case 11:
+                case 12:
                   this.ticks = jElem
                   break
               }
@@ -706,6 +711,7 @@
 
           // Initialize position cache properties
           this.selBar.rzsp = 0
+          this.restrictedBar.rzsp = 0;
           this.minH.rzsp = 0
           this.maxH.rzsp = 0
           this.flrLab.rzsp = 0
@@ -749,6 +755,10 @@
             this.selBar,
             !this.range && !this.options.showSelectionBar
           )
+          this.alwaysHide(
+            this.restrictedBar,
+            !this.options.restrictedRange
+          );
           this.alwaysHide(
             this.leftOutSelBar,
             !this.range || !this.options.showOuterSelectionBars
@@ -1303,6 +1313,26 @@
             ceilPos = this.ceilLab.rzsp,
             ceilDim = this.ceilLab.rzsd
           return isRTL ? pos <= ceilPos + ceilDim + 2 : pos + dim >= ceilPos - 2
+        },
+
+        /**
+        * Update restricted area bar
+        *
+        * @returns {undefined}
+        */
+        updateRestrictionBar: function() {
+          var position = 0,
+            dimension = 0;
+          if(this.options.restrictedRange) {
+            var from = this.valueToPosition(this.options.restrictedRange.from),
+              to = this.valueToPosition(this.options.restrictedRange.to);
+            dimension = Math.abs(to - from);
+            position = this.options.rightToLeft ? 
+              to + this.handleHalfDim :
+              from + this.handleHalfDim;
+            this.setDimension(this.restrictedBar, dimension);
+            this.setPosition(this.restrictedBar, position);
+          }
         },
 
         /**
@@ -2369,6 +2399,7 @@
         positionTrackingHandle: function(newValue) {
           var valueChanged = false
           newValue = this.applyMinMaxLimit(newValue)
+          newValue = this.applyRestrictedRange(newValue);
           if (this.range) {
             if (this.options.pushRange) {
               newValue = this.applyPushRange(newValue)
@@ -2456,6 +2487,20 @@
           return newValue
         },
 
+        applyRestrictedRange: function(newValue) {
+          if(this.options.restrictedRange != null && 
+            newValue > this.options.restrictedRange.from &&
+            newValue < this.options.restrictedRange.to) {
+            if(this.tracking === 'lowValue') {
+              return this.options.restrictedRange.from;
+            }
+            if(this.tracking === 'highValue') {
+              return this.options.restrictedRange.to;
+            }
+          }
+          return newValue;
+        },
+        
         applyPushRange: function(newValue) {
           var difference =
               this.tracking === 'lowValue'
@@ -2654,7 +2699,7 @@
   'use strict';
 
   $templateCache.put('rzSliderTpl.html',
-    "<div class=rzslider><span class=\"rz-bar-wrapper rz-left-out-selection\"><span class=rz-bar></span></span> <span class=\"rz-bar-wrapper rz-right-out-selection\"><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span> <span class=\"rz-pointer rz-pointer-min\" ng-style=minPointerStyle></span> <span class=\"rz-pointer rz-pointer-max\" ng-style=maxPointerStyle></span> <span class=\"rz-bubble rz-limit rz-floor\"></span> <span class=\"rz-bubble rz-limit rz-ceil\"></span> <span class=\"rz-bubble rz-model-value\"></span> <span class=\"rz-bubble rz-model-high\"></span> <span class=rz-bubble></span><ul ng-show=showTicks class=rz-ticks><li ng-repeat=\"t in ticks track by $index\" class=rz-tick ng-class=\"{'rz-selected': t.selected}\" ng-style=t.style ng-attr-uib-tooltip=\"{{ t.tooltip }}\" ng-attr-tooltip-placement={{t.tooltipPlacement}} ng-attr-tooltip-append-to-body=\"{{ t.tooltip ? true : undefined}}\"><span ng-if=\"t.value != null\" class=rz-tick-value ng-attr-uib-tooltip=\"{{ t.valueTooltip }}\" ng-attr-tooltip-placement={{t.valueTooltipPlacement}}>{{ t.value }}</span> <span ng-if=\"t.legend != null\" class=rz-tick-legend>{{ t.legend }}</span></li></ul></div>"
+    "<div class=rzslider><span class=\"rz-bar-wrapper rz-left-out-selection\"><span class=rz-bar></span></span> <span class=\"rz-bar-wrapper rz-right-out-selection\"><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-restricted\" ng-style=restrictionStyle></span></span> <span class=\"rz-pointer rz-pointer-min\" ng-style=minPointerStyle></span> <span class=\"rz-pointer rz-pointer-max\" ng-style=maxPointerStyle></span> <span class=\"rz-bubble rz-limit rz-floor\"></span> <span class=\"rz-bubble rz-limit rz-ceil\"></span> <span class=\"rz-bubble rz-model-value\"></span> <span class=\"rz-bubble rz-model-high\"></span> <span class=rz-bubble></span><ul ng-show=showTicks class=rz-ticks><li ng-repeat=\"t in ticks track by $index\" class=rz-tick ng-class=\"{'rz-selected': t.selected}\" ng-style=t.style ng-attr-uib-tooltip=\"{{ t.tooltip }}\" ng-attr-tooltip-placement={{t.tooltipPlacement}} ng-attr-tooltip-append-to-body=\"{{ t.tooltip ? true : undefined}}\"><span ng-if=\"t.value != null\" class=rz-tick-value ng-attr-uib-tooltip=\"{{ t.valueTooltip }}\" ng-attr-tooltip-placement={{t.valueTooltipPlacement}}>{{ t.value }}</span> <span ng-if=\"t.legend != null\" class=rz-tick-legend>{{ t.legend }}</span></li></ul></div>"
   );
 
 }]);
