@@ -100,9 +100,7 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $uibModal) {
       floor: 0,
       ceil: 100,
       minRange: 10,
-      pushRange: true,
-      minLimit: 10,
-      maxLimit: 90
+      pushRange: true
     }
   }
 
