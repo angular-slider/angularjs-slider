@@ -1,7 +1,7 @@
 /*! angularjs-slider - v6.4.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2017-10-24 */
+ 2017-10-25 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 ;(function(root, factory) {
@@ -371,7 +371,7 @@
           this.setDisabledState()
           this.calcViewDimensions()
           this.setMinAndMax()
-          this.updateRestrictionBar();
+          this.updateRestrictionBar()
           this.addAccessibility()
           this.updateCeilLab()
           this.updateFloorLab()
@@ -637,6 +637,7 @@
           this.manageEventsBindings()
           this.setDisabledState()
           this.calcViewDimensions()
+          this.updateRestrictionBar()
           this.refocusPointerIfNeeded()
         },
 
@@ -678,8 +679,8 @@
                   this.selBar = jElem
                   break
                 case 4:
-                  this.restrictedBar = jElem;
-                  break;
+                  this.restrictedBar = jElem
+                  break
                 case 5:
                   this.minH = jElem
                   break
@@ -711,7 +712,7 @@
 
           // Initialize position cache properties
           this.selBar.rzsp = 0
-          this.restrictedBar.rzsp = 0;
+          this.restrictedBar.rzsp = 0
           this.minH.rzsp = 0
           this.maxH.rzsp = 0
           this.flrLab.rzsp = 0
@@ -755,10 +756,7 @@
             this.selBar,
             !this.range && !this.options.showSelectionBar
           )
-          this.alwaysHide(
-            this.restrictedBar,
-            !this.options.restrictedRange
-          );
+          this.alwaysHide(this.restrictedBar, !this.options.restrictedRange)
           this.alwaysHide(
             this.leftOutSelBar,
             !this.range || !this.options.showOuterSelectionBars
@@ -1322,16 +1320,16 @@
         */
         updateRestrictionBar: function() {
           var position = 0,
-            dimension = 0;
-          if(this.options.restrictedRange) {
+            dimension = 0
+          if (this.options.restrictedRange) {
             var from = this.valueToPosition(this.options.restrictedRange.from),
-              to = this.valueToPosition(this.options.restrictedRange.to);
-            dimension = Math.abs(to - from);
-            position = this.options.rightToLeft ? 
-              to + this.handleHalfDim :
-              from + this.handleHalfDim;
-            this.setDimension(this.restrictedBar, dimension);
-            this.setPosition(this.restrictedBar, position);
+              to = this.valueToPosition(this.options.restrictedRange.to)
+            dimension = Math.abs(to - from)
+            position = this.options.rightToLeft
+              ? to + this.handleHalfDim
+              : from + this.handleHalfDim
+            this.setDimension(this.restrictedBar, dimension)
+            this.setPosition(this.restrictedBar, position)
           }
         },
 
@@ -2399,7 +2397,7 @@
         positionTrackingHandle: function(newValue) {
           var valueChanged = false
           newValue = this.applyMinMaxLimit(newValue)
-          newValue = this.applyRestrictedRange(newValue);
+          newValue = this.applyRestrictedRange(newValue)
           if (this.range) {
             if (this.options.pushRange) {
               newValue = this.applyPushRange(newValue)
@@ -2488,19 +2486,21 @@
         },
 
         applyRestrictedRange: function(newValue) {
-          if(this.options.restrictedRange != null && 
+          if (
+            this.options.restrictedRange != null &&
             newValue > this.options.restrictedRange.from &&
-            newValue < this.options.restrictedRange.to) {
-            if(this.tracking === 'lowValue') {
-              return this.options.restrictedRange.from;
+            newValue < this.options.restrictedRange.to
+          ) {
+            if (this.tracking === 'lowValue') {
+              return this.options.restrictedRange.from
             }
-            if(this.tracking === 'highValue') {
-              return this.options.restrictedRange.to;
+            if (this.tracking === 'highValue') {
+              return this.options.restrictedRange.to
             }
           }
-          return newValue;
+          return newValue
         },
-        
+
         applyPushRange: function(newValue) {
           var difference =
               this.tracking === 'lowValue'
