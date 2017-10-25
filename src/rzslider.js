@@ -641,6 +641,7 @@
           this.manageEventsBindings()
           this.setDisabledState()
           this.calcViewDimensions()
+          this.updateRestrictionBar()
           this.refocusPointerIfNeeded()
         },
 
