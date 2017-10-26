@@ -165,14 +165,24 @@ declare module "angular" {
             vertical?: boolean;
             /**
              * Boolean (defaults to true): Handles are focusable (on click or with tab) and can be modified using the following keyboard controls:
-             * Left/bottom arrows: -1
-             * Right/top arrows: +1
-             * Page-down: -10%
-             * Page-up: +10%
-             * Home: minimum value
-             * End: maximum value
+             *   - Left/bottom arrows: -1
+             *   - Right/top arrows: +1
+             *   - Page-down: -10%
+             *   - Page-up: +10%
+             *   - Home: minimum value
+             *   - End: maximum value
              */
             keyboardSupport?: boolean;
+            /**
+             * Boolean (defaults to false): Set to true to reverse keyboard navigation:
+             *  - Right/top arrows: -1
+             *  - Left/bottom arrows: +1
+             *  - Page-up: -10%
+             *  - Page-down: +10%
+             *  - End: minimum value
+             *  - Home: maximum value
+             */
+            reversedControls?: boolean;
             /** Object (default to null): The properties defined in this object will be exposed in the slider template under custom.X. */
             customTemplateScope?: any;
             /** Boolean (defaults to false): Set to true to use a logarithmic scale to display the slider. */
