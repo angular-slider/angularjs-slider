@@ -408,7 +408,7 @@
 
           // Watchers (order is important because in case of simultaneous change,
           // watchers will be called in the same order)
-          this.scope.$watch(
+          this.scope.$watchCollection(
             'rzSliderOptions()',
             function(newValue, oldValue) {
               if (newValue === oldValue) return
@@ -416,8 +416,7 @@
               self.syncLowValue()
               if (self.range) self.syncHighValue()
               self.resetSlider()
-            },
-            true
+            }
           )
 
           this.scope.$watch('rzSliderModel', function(newValue, oldValue) {
