@@ -1,7 +1,7 @@
 /*! angularjs-slider - v6.4.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2017-10-25 */
+ 2017-11-14 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 ;(function(root, factory) {
@@ -2491,11 +2491,16 @@
             newValue > this.options.restrictedRange.from &&
             newValue < this.options.restrictedRange.to
           ) {
+            var halfWidth = (this.options.restrictedRange.to - this.options.restrictedRange.from) / 2;
             if (this.tracking === 'lowValue') {
-              return this.options.restrictedRange.from
+              return newValue > this.options.restrictedRange.from + halfWidth ?
+                this.options.restrictedRange.to :
+                this.options.restrictedRange.from;
             }
             if (this.tracking === 'highValue') {
-              return this.options.restrictedRange.to
+              return newValue < this.options.restrictedRange.to - halfWidth ?
+                this.options.restrictedRange.from :
+                this.options.restrictedRange.to;
             }
           }
           return newValue

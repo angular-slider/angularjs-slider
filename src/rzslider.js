@@ -2495,11 +2495,19 @@
             newValue > this.options.restrictedRange.from &&
             newValue < this.options.restrictedRange.to
           ) {
+            var halfWidth =
+              (this.options.restrictedRange.to -
+                this.options.restrictedRange.from) /
+              2
             if (this.tracking === 'lowValue') {
-              return this.options.restrictedRange.from
+              return newValue > this.options.restrictedRange.from + halfWidth
+                ? this.options.restrictedRange.to
+                : this.options.restrictedRange.from
             }
             if (this.tracking === 'highValue') {
-              return this.options.restrictedRange.to
+              return newValue < this.options.restrictedRange.to - halfWidth
+                ? this.options.restrictedRange.from
+                : this.options.restrictedRange.to
             }
           }
           return newValue
