@@ -1,3 +1,7 @@
+# 6.4.1 (2017-11-17)
+## Bug fix
+- Options: react to changes of options of Function type (#590)
+
 # 6.4.0 (2017-08-12)
 ## Feature
 - Add the `showOuterSelectionBars` option (#553).
