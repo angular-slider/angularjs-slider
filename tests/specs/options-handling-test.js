@@ -1678,5 +1678,30 @@
         expect(helper.slider.maxValue).to.equal(1000)
       })
     })
+
+    describe('reacting to changes - ', function() {
+      beforeEach(function() {
+        var sliderConf = {
+          value: 10,
+          options: {
+            floor: 0,
+            ceil: 100,
+            step: 10,
+            translate: function(val) {
+              return val + '%'
+            }
+          }
+        }
+        helper.createSlider(sliderConf)
+      })
+
+      it('should react to changes of options which are functions', function() {
+        helper.scope.slider.options.translate = function(val) {
+          return val + '$'
+        }
+        helper.scope.$digest()
+        expect(helper.slider.customTrFn(100)).to.equal('100$')
+      })
+    })
   })
 })()

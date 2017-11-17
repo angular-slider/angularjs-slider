@@ -1,7 +1,7 @@
 /*! angularjs-slider - v6.4.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2017-10-25 */
+ 2017-11-14 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 ;(function(root, factory) {
@@ -404,7 +404,7 @@
 
           // Watchers (order is important because in case of simultaneous change,
           // watchers will be called in the same order)
-          this.scope.$watch(
+          this.scope.$watchCollection(
             'rzSliderOptions()',
             function(newValue, oldValue) {
               if (newValue === oldValue) return
@@ -412,8 +412,7 @@
               self.syncLowValue()
               if (self.range) self.syncHighValue()
               self.resetSlider()
-            },
-            true
+            }
           )
 
           this.scope.$watch('rzSliderModel', function(newValue, oldValue) {
