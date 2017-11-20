@@ -96,9 +96,9 @@ Directly use (replace `X.X.X` by the version you want to use):
 
 ### Imports
 ```html
-<link rel="stylesheet" type="text/css" href="/path/to/slider/rzslider.css"/>
+<link rel="stylesheet" type="text/css" href="/path/to/angular-slider/dist/rzslider.css"/>
 <script src="/path/to/angularjs/angular.min.js"></script>
-<script src="/path/to/slider/rzslider.min.js"></script>
+<script src="/path/to/angular-slider/dist/rzslider.min.js"></script>
 ```
 
 ### Module
