@@ -79,6 +79,11 @@ By default, the slider value is always rounded to the nearest step. A side effec
 ```
 npm i angularjs-slider
 ```
+#### Typescript Support
+Typescript definition files are provided with this project. To use them, be sure you have the angular type definition peer dependency installed.
+```
+npm i @types/angular
+```
 or
 ### Bower
 ```
