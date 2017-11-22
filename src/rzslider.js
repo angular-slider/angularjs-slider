@@ -2656,4 +2656,4 @@
   /*templateReplacement*/
 
   return module.name
-})
+});
