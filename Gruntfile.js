@@ -95,11 +95,13 @@ module.exports = function(grunt) {
       options: {
         stripBanners: true,
         banner: banner,
-        footer: ';', // to prevent error when people concat the file and don't use the min version
       },
       js: {
         src: ['dist/rzslider.js'],
         dest: 'dist/rzslider.js',
+        options: {
+          footer: ';', // to prevent error when people concat the file and don't use the min version
+        },
       },
       css: {
         src: ['dist/rzslider.css'],

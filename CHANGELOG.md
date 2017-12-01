@@ -1,3 +1,7 @@
+# 6.4.3 (2017-12-01)
+## Bug fix
+- Remove the semicolon at the end of the `dist/rzslider.css` file. It was introduced by previous release.
+
 # 6.4.2 (2017-11-30)
 ## Bug fix
 - Add a semicolon at the end of the `dist/rzslider.js` file. It avoids errors when people concat this file with other libs without using the minified version.
