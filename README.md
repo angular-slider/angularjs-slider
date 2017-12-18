@@ -38,6 +38,8 @@ Slider directive implementation for AngularJS 1.X, without any dependencies: [ht
 
 ## Examples
 
+- **Simple example for single slider:** [http://jsfiddle.net/cwhgLcjv](http://jsfiddle.net/cwhgLcjv/)
+- **Simple example for double slider:** [http://jsfiddle.net/ye1kpfrj](http://jsfiddle.net/ye1kpfrj/)
 - **Various examples:** [http://angular-slider.github.io/angularjs-slider](http://angular-slider.github.io/angularjs-slider/index.html)
 - **Same examples with live code:** https://jsfiddle.net/ValentinH/954eve2L/
 
