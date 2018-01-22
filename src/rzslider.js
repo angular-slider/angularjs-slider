@@ -90,20 +90,20 @@
         ariaLabel: null,
         ariaLabelledBy: null,
         ariaLabelHigh: null,
-        ariaLabelledByHigh: null
+        ariaLabelledByHigh: null,
       }
       var globalOptions = {}
 
       var factory = {}
       /**
-     * `options({})` allows global configuration of all sliders in the
-     * application.
-     *
-     *   var app = angular.module( 'App', ['rzModule'], function( RzSliderOptions ) {
-     *     // show ticks for all sliders
-     *     RzSliderOptions.options( { showTicks: true } );
-     *   });
-     */
+       * `options({})` allows global configuration of all sliders in the
+       * application.
+       *
+       *   var app = angular.module( 'App', ['rzModule'], function( RzSliderOptions ) {
+       *     // show ticks for all sliders
+       *     RzSliderOptions.options( { showTicks: true } );
+       *   });
+       */
       factory.options = function(value) {
         angular.extend(globalOptions, value)
       }
@@ -116,15 +116,15 @@
     })
     .factory('rzThrottle', function($timeout) {
       /**
-     * rzThrottle
-     *
-     * Taken from underscore project
-     *
-     * @param {Function} func
-     * @param {number} wait
-     * @param {ThrottleOptions} options
-     * @returns {Function}
-     */
+       * rzThrottle
+       *
+       * Taken from underscore project
+       *
+       * @param {Function} func
+       * @param {number} wait
+       * @param {ThrottleOptions} options
+       * @returns {Function}
+       */
       return function(func, wait, options) {
         'use strict'
         /* istanbul ignore next */
@@ -172,166 +172,166 @@
       'use strict'
 
       /**
-     * Slider
-     *
-     * @param {ngScope} scope            The AngularJS scope
-     * @param {Element} sliderElem The slider directive element wrapped in jqLite
-     * @constructor
-     */
+       * Slider
+       *
+       * @param {ngScope} scope            The AngularJS scope
+       * @param {Element} sliderElem The slider directive element wrapped in jqLite
+       * @constructor
+       */
       var Slider = function(scope, sliderElem) {
         /**
-       * The slider's scope
-       *
-       * @type {ngScope}
-       */
+         * The slider's scope
+         *
+         * @type {ngScope}
+         */
         this.scope = scope
 
         /**
-       * The slider inner low value (linked to rzSliderModel)
-       * @type {number}
-       */
+         * The slider inner low value (linked to rzSliderModel)
+         * @type {number}
+         */
         this.lowValue = 0
 
         /**
-       * The slider inner high value (linked to rzSliderHigh)
-       * @type {number}
-       */
+         * The slider inner high value (linked to rzSliderHigh)
+         * @type {number}
+         */
         this.highValue = 0
 
         /**
-       * Slider element wrapped in jqLite
-       *
-       * @type {jqLite}
-       */
+         * Slider element wrapped in jqLite
+         *
+         * @type {jqLite}
+         */
         this.sliderElem = sliderElem
 
         /**
-       * Slider type
-       *
-       * @type {boolean} Set to true for range slider
-       */
+         * Slider type
+         *
+         * @type {boolean} Set to true for range slider
+         */
         this.range =
           this.scope.rzSliderModel !== undefined &&
           this.scope.rzSliderHigh !== undefined
 
         /**
-       * Values recorded when first dragging the bar
-       *
-       * @type {Object}
-       */
+         * Values recorded when first dragging the bar
+         *
+         * @type {Object}
+         */
         this.dragging = {
           active: false,
           value: 0,
           difference: 0,
           position: 0,
           lowLimit: 0,
-          highLimit: 0
+          highLimit: 0,
         }
 
         /**
-       * property that handle position (defaults to left for horizontal)
-       * @type {string}
-       */
+         * property that handle position (defaults to left for horizontal)
+         * @type {string}
+         */
         this.positionProperty = 'left'
 
         /**
-       * property that handle dimension (defaults to width for horizontal)
-       * @type {string}
-       */
+         * property that handle dimension (defaults to width for horizontal)
+         * @type {string}
+         */
         this.dimensionProperty = 'width'
 
         /**
-       * Half of the width or height of the slider handles
-       *
-       * @type {number}
-       */
+         * Half of the width or height of the slider handles
+         *
+         * @type {number}
+         */
         this.handleHalfDim = 0
 
         /**
-       * Maximum position the slider handle can have
-       *
-       * @type {number}
-       */
+         * Maximum position the slider handle can have
+         *
+         * @type {number}
+         */
         this.maxPos = 0
 
         /**
-       * Precision
-       *
-       * @type {number}
-       */
+         * Precision
+         *
+         * @type {number}
+         */
         this.precision = 0
 
         /**
-       * Step
-       *
-       * @type {number}
-       */
+         * Step
+         *
+         * @type {number}
+         */
         this.step = 1
 
         /**
-       * The name of the handle we are currently tracking
-       *
-       * @type {string}
-       */
+         * The name of the handle we are currently tracking
+         *
+         * @type {string}
+         */
         this.tracking = ''
 
         /**
-       * Minimum value (floor) of the model
-       *
-       * @type {number}
-       */
+         * Minimum value (floor) of the model
+         *
+         * @type {number}
+         */
         this.minValue = 0
 
         /**
-       * Maximum value (ceiling) of the model
-       *
-       * @type {number}
-       */
+         * Maximum value (ceiling) of the model
+         *
+         * @type {number}
+         */
         this.maxValue = 0
 
         /**
-       * The delta between min and max value
-       *
-       * @type {number}
-       */
+         * The delta between min and max value
+         *
+         * @type {number}
+         */
         this.valueRange = 0
 
         /**
-       * If showTicks/showTicksValues options are number.
-       * In this case, ticks values should be displayed below the slider.
-       * @type {boolean}
-       */
+         * If showTicks/showTicksValues options are number.
+         * In this case, ticks values should be displayed below the slider.
+         * @type {boolean}
+         */
         this.intermediateTicks = false
 
         /**
-       * Set to true if init method already executed
-       *
-       * @type {boolean}
-       */
+         * Set to true if init method already executed
+         *
+         * @type {boolean}
+         */
         this.initHasRun = false
 
         /**
-       * Used to call onStart on the first keydown event
-       *
-       * @type {boolean}
-       */
+         * Used to call onStart on the first keydown event
+         *
+         * @type {boolean}
+         */
         this.firstKeyDown = false
 
         /**
-       * Internal flag to prevent watchers to be called when the sliders value are modified internally.
-       * @type {boolean}
-       */
+         * Internal flag to prevent watchers to be called when the sliders value are modified internally.
+         * @type {boolean}
+         */
         this.internalChange = false
 
         /**
-       * Internal flag to keep track of the visibility of combo label
-       * @type {boolean}
-       */
+         * Internal flag to keep track of the visibility of combo label
+         * @type {boolean}
+         */
         this.cmbLabelShown = false
 
         /**
-       * Internal variable to keep track of the focus element
-       */
+         * Internal variable to keep track of the focus element
+         */
         this.currentFocusElement = null
 
         // Slider DOM elements wrapped in jqLite
@@ -353,10 +353,10 @@
       // Add instance methods
       Slider.prototype = {
         /**
-       * Initialize slider
-       *
-       * @returns {undefined}
-       */
+         * Initialize slider
+         *
+         * @returns {undefined}
+         */
         init: function() {
           var thrLow,
             thrHigh,
@@ -541,8 +541,8 @@
         },
 
         /**
-       * Read the user options and apply them to the slider model
-       */
+         * Read the user options and apply them to the slider model
+         */
         applyOptions: function() {
           var sliderOptions
           if (this.scope.rzSliderOptions)
@@ -624,10 +624,10 @@
         },
 
         /**
-       * Resets slider
-       *
-       * @returns {undefined}
-       */
+         * Resets slider
+         *
+         * @returns {undefined}
+         */
         resetSlider: function() {
           this.manageElementsStyle()
           this.addAccessibility()
@@ -652,12 +652,12 @@
         },
 
         /**
-       * Set the slider children to variables for easy access
-       *
-       * Run only once during initialization
-       *
-       * @returns {undefined}
-       */
+         * Set the slider children to variables for easy access
+         *
+         * Run only once during initialization
+         *
+         * @returns {undefined}
+         */
         initElemHandles: function() {
           // Assign all slider elements to object properties for easy access
           angular.forEach(
@@ -719,8 +719,8 @@
         },
 
         /**
-       * Update each elements style based on options
-       */
+         * Update each elements style based on options
+         */
         manageElementsStyle: function() {
           if (!this.range) this.maxH.css('display', 'none')
           else this.maxH.css('display', '')
@@ -781,10 +781,10 @@
         },
 
         /**
-       * Manage the events bindings based on readOnly and disabled options
-       *
-       * @returns {undefined}
-       */
+         * Manage the events bindings based on readOnly and disabled options
+         *
+         * @returns {undefined}
+         */
         manageEventsBindings: function() {
           if (this.options.disabled || this.options.readOnly)
             this.unbindEvents()
@@ -792,10 +792,10 @@
         },
 
         /**
-       * Set the disabled state based on rzSliderDisabled
-       *
-       * @returns {undefined}
-       */
+         * Set the disabled state based on rzSliderDisabled
+         *
+         * @returns {undefined}
+         */
         setDisabledState: function() {
           if (this.options.disabled) {
             this.sliderElem.attr('disabled', 'disabled')
@@ -805,22 +805,22 @@
         },
 
         /**
-       * Reset label values
-       *
-       * @return {undefined}
-       */
+         * Reset label values
+         *
+         * @return {undefined}
+         */
         resetLabelsValue: function() {
           this.minLab.rzsv = undefined
           this.maxLab.rzsv = undefined
         },
 
         /**
-       * Initialize slider handles positions and labels
-       *
-       * Run only once during initialization and every time view port changes size
-       *
-       * @returns {undefined}
-       */
+         * Initialize slider handles positions and labels
+         *
+         * Run only once during initialization and every time view port changes size
+         *
+         * @returns {undefined}
+         */
         initHandles: function() {
           this.updateLowHandle(this.valueToPosition(this.lowValue))
 
@@ -837,14 +837,14 @@
         },
 
         /**
-       * Translate value to human readable format
-       *
-       * @param {number|string} value
-       * @param {jqLite} label
-       * @param {String} which
-       * @param {boolean} [useCustomTr]
-       * @returns {undefined}
-       */
+         * Translate value to human readable format
+         *
+         * @param {number|string} value
+         * @param {jqLite} label
+         * @param {String} which
+         * @param {boolean} [useCustomTr]
+         * @returns {undefined}
+         */
         translateFn: function(value, label, which, useCustomTr) {
           useCustomTr = useCustomTr === undefined ? true : useCustomTr
 
@@ -881,10 +881,10 @@
         },
 
         /**
-       * Set maximum and minimum values for the slider and ensure the model and high
-       * value match these limits
-       * @returns {undefined}
-       */
+         * Set maximum and minimum values for the slider and ensure the model and high
+         * value match these limits
+         * @returns {undefined}
+         */
         setMinAndMax: function() {
           this.step = +this.options.step
           this.precision = +this.options.precision
@@ -916,12 +916,12 @@
         },
 
         /**
-       * Adds accessibility attributes
-       *
-       * Run only once during initialization
-       *
-       * @returns {undefined}
-       */
+         * Adds accessibility attributes
+         *
+         * Run only once during initialization
+         *
+         * @returns {undefined}
+         */
         addAccessibility: function() {
           this.minH.attr('role', 'slider')
           this.updateAriaAttributes()
@@ -956,8 +956,8 @@
         },
 
         /**
-       * Updates aria attributes according to current values
-       */
+         * Updates aria attributes according to current values
+         */
         updateAriaAttributes: function() {
           this.minH.attr({
             'aria-valuenow': this.scope.rzSliderModel,
@@ -967,7 +967,7 @@
               'model'
             ),
             'aria-valuemin': this.minValue,
-            'aria-valuemax': this.maxValue
+            'aria-valuemax': this.maxValue,
           })
           if (this.range) {
             this.maxH.attr({
@@ -978,18 +978,18 @@
                 'high'
               ),
               'aria-valuemin': this.minValue,
-              'aria-valuemax': this.maxValue
+              'aria-valuemax': this.maxValue,
             })
           }
         },
 
         /**
-       * Calculate dimensions that are dependent on view port size
-       *
-       * Run once during initialization and every time view port changes size.
-       *
-       * @returns {undefined}
-       */
+         * Calculate dimensions that are dependent on view port size
+         *
+         * Run once during initialization and every time view port changes size.
+         *
+         * @returns {undefined}
+         */
         calcViewDimensions: function() {
           var handleWidth = this.getDimension(this.minH)
 
@@ -1015,10 +1015,10 @@
         },
 
         /**
-       * Update the ticks position
-       *
-       * @returns {undefined}
-       */
+         * Update the ticks position
+         *
+         * @returns {undefined}
+         */
         updateTicksScale: function() {
           if (!this.options.showTicks) return
 
@@ -1041,8 +1041,8 @@
                 '-moz-transform': translation,
                 '-o-transform': translation,
                 '-ms-transform': translation,
-                transform: translation
-              }
+                transform: translation,
+              },
             }
             if (tick.selected && self.options.getSelectionBarColor) {
               tick.style['background-color'] = self.getSelectionBarColor()
@@ -1115,10 +1115,10 @@
         },
 
         /**
-       * Update position of the floor label
-       *
-       * @returns {undefined}
-       */
+         * Update position of the floor label
+         *
+         * @returns {undefined}
+         */
         updateFloorLab: function() {
           this.translateFn(this.minValue, this.flrLab, 'floor')
           this.getDimension(this.flrLab)
@@ -1129,10 +1129,10 @@
         },
 
         /**
-       * Update position of the ceiling label
-       *
-       * @returns {undefined}
-       */
+         * Update position of the ceiling label
+         *
+         * @returns {undefined}
+         */
         updateCeilLab: function() {
           this.translateFn(this.maxValue, this.ceilLab, 'ceil')
           this.getDimension(this.ceilLab)
@@ -1143,11 +1143,11 @@
         },
 
         /**
-       * Update slider handles and label positions
-       *
-       * @param {string} which
-       * @param {number} newPos
-       */
+         * Update slider handles and label positions
+         *
+         * @param {string} which
+         * @param {number} newPos
+         */
         updateHandles: function(which, newPos) {
           if (which === 'lowValue') this.updateLowHandle(newPos)
           else this.updateHighHandle(newPos)
@@ -1158,13 +1158,13 @@
         },
 
         /**
-       * Helper function to work out the position for handle labels depending on RTL or not
-       *
-       * @param {string} labelName maxLab or minLab
-       * @param newPos
-       *
-       * @returns {number}
-       */
+         * Helper function to work out the position for handle labels depending on RTL or not
+         *
+         * @param {string} labelName maxLab or minLab
+         * @param newPos
+         *
+         * @returns {number}
+         */
         getHandleLabelPos: function(labelName, newPos) {
           var labelRzsd = this[labelName].rzsd,
             nearHandlePos = newPos - labelRzsd / 2 + this.handleHalfDim,
@@ -1183,11 +1183,11 @@
         },
 
         /**
-       * Update low slider handle position and label
-       *
-       * @param {number} newPos
-       * @returns {undefined}
-       */
+         * Update low slider handle position and label
+         *
+         * @param {number} newPos
+         * @returns {undefined}
+         */
         updateLowHandle: function(newPos) {
           this.setPosition(this.minH, newPos)
           this.translateFn(this.lowValue, this.minLab, 'model')
@@ -1199,7 +1199,7 @@
           if (this.options.getPointerColor) {
             var pointercolor = this.getPointerColor('min')
             this.scope.minPointerStyle = {
-              backgroundColor: pointercolor
+              backgroundColor: pointercolor,
             }
           }
 
@@ -1209,11 +1209,11 @@
         },
 
         /**
-       * Update high slider handle position and label
-       *
-       * @param {number} newPos
-       * @returns {undefined}
-       */
+         * Update high slider handle position and label
+         *
+         * @param {number} newPos
+         * @returns {undefined}
+         */
         updateHighHandle: function(newPos) {
           this.setPosition(this.maxH, newPos)
           this.translateFn(this.highValue, this.maxLab, 'high')
@@ -1225,7 +1225,7 @@
           if (this.options.getPointerColor) {
             var pointercolor = this.getPointerColor('max')
             this.scope.maxPointerStyle = {
-              backgroundColor: pointercolor
+              backgroundColor: pointercolor,
             }
           }
           if (this.options.autoHideLimitLabels) {
@@ -1234,10 +1234,10 @@
         },
 
         /**
-       * Show/hide floor/ceiling label
-       *
-       * @returns {undefined}
-       */
+         * Show/hide floor/ceiling label
+         *
+         * @returns {undefined}
+         */
         shFloorCeil: function() {
           // Show based only on hideLimitLabels if pointer labels are hidden
           if (this.options.hidePointerLabels) {
@@ -1309,10 +1309,10 @@
         },
 
         /**
-       * Update slider selection bar, combined label and range label
-       *
-       * @returns {undefined}
-       */
+         * Update slider selection bar, combined label and range label
+         *
+         * @returns {undefined}
+         */
         updateSelectionBar: function() {
           var position = 0,
             dimension = 0,
@@ -1373,7 +1373,7 @@
           if (this.options.getSelectionBarColor) {
             var color = this.getSelectionBarColor()
             this.scope.barStyle = {
-              backgroundColor: color
+              backgroundColor: color,
             }
           } else if (this.options.selectionBarGradient) {
             var offset =
@@ -1392,7 +1392,7 @@
                 this.options.selectionBarGradient.from +
                 ' 0%,' +
                 this.options.selectionBarGradient.to +
-                ' 100%)'
+                ' 100%)',
             }
             if (this.options.vertical) {
               this.scope.barStyle.backgroundPosition =
@@ -1417,9 +1417,9 @@
         },
 
         /**
-       * Wrapper around the getSelectionBarColor of the user to pass to
-       * correct parameters
-       */
+         * Wrapper around the getSelectionBarColor of the user to pass to
+         * correct parameters
+         */
         getSelectionBarColor: function() {
           if (this.range)
             return this.options.getSelectionBarColor(
@@ -1430,9 +1430,9 @@
         },
 
         /**
-       * Wrapper around the getPointerColor of the user to pass to
-       * correct parameters
-       */
+         * Wrapper around the getPointerColor of the user to pass to
+         * correct parameters
+         */
         getPointerColor: function(pointerType) {
           if (pointerType === 'max') {
             return this.options.getPointerColor(
@@ -1447,18 +1447,18 @@
         },
 
         /**
-       * Wrapper around the getTickColor of the user to pass to
-       * correct parameters
-       */
+         * Wrapper around the getTickColor of the user to pass to
+         * correct parameters
+         */
         getTickColor: function(value) {
           return this.options.getTickColor(value)
         },
 
         /**
-       * Update combined label position and value
-       *
-       * @returns {undefined}
-       */
+         * Update combined label position and value
+         *
+         * @returns {undefined}
+         */
         updateCmbLabel: function() {
           var isLabelOverlap = null
           if (this.options.rightToLeft) {
@@ -1513,11 +1513,11 @@
         },
 
         /**
-       * Return the translated value if a translate function is provided else the original value
-       * @param value
-       * @param which if it's min or max handle
-       * @returns {*}
-       */
+         * Return the translated value if a translate function is provided else the original value
+         * @param value
+         * @param which if it's min or max handle
+         * @returns {*}
+         */
         getDisplayValue: function(value, which) {
           if (this.options.stepsArray && !this.options.bindIndexForStepsArray) {
             value = this.getStepValue(value)
@@ -1526,12 +1526,12 @@
         },
 
         /**
-       * Round value to step and precision based on minValue
-       *
-       * @param {number} value
-       * @param {number} customStep a custom step to override the defined step
-       * @returns {number}
-       */
+         * Round value to step and precision based on minValue
+         *
+         * @param {number} value
+         * @param {number} customStep a custom step to override the defined step
+         * @returns {number}
+         */
         roundStep: function(value, customStep) {
           var step = customStep ? customStep : this.step,
             steppedDifference = parseFloat(
@@ -1545,40 +1545,40 @@
         },
 
         /**
-       * Hide element
-       *
-       * @param element
-       * @returns {jqLite} The jqLite wrapped DOM element
-       */
+         * Hide element
+         *
+         * @param element
+         * @returns {jqLite} The jqLite wrapped DOM element
+         */
         hideEl: function(element) {
           return element.css({
-            visibility: 'hidden'
+            visibility: 'hidden',
           })
         },
 
         /**
-       * Show element
-       *
-       * @param element The jqLite wrapped DOM element
-       * @returns {jqLite} The jqLite
-       */
+         * Show element
+         *
+         * @param element The jqLite wrapped DOM element
+         * @returns {jqLite} The jqLite
+         */
         showEl: function(element) {
           if (!!element.rzAlwaysHide) {
             return element
           }
 
           return element.css({
-            visibility: 'visible'
+            visibility: 'visible',
           })
         },
 
         /**
-       * Set element left/top position depending on whether slider is horizontal or vertical
-       *
-       * @param {jqLite} elem The jqLite wrapped DOM element
-       * @param {number} pos
-       * @returns {number}
-       */
+         * Set element left/top position depending on whether slider is horizontal or vertical
+         *
+         * @param {jqLite} elem The jqLite wrapped DOM element
+         * @param {number} pos
+         * @returns {number}
+         */
         setPosition: function(elem, pos) {
           elem.rzsp = pos
           var css = {}
@@ -1588,11 +1588,11 @@
         },
 
         /**
-       * Get element width/height depending on whether slider is horizontal or vertical
-       *
-       * @param {jqLite} elem The jqLite wrapped DOM element
-       * @returns {number}
-       */
+         * Get element width/height depending on whether slider is horizontal or vertical
+         *
+         * @param {jqLite} elem The jqLite wrapped DOM element
+         * @returns {number}
+         */
         getDimension: function(elem) {
           var val = elem[0].getBoundingClientRect()
           if (this.options.vertical)
@@ -1602,12 +1602,12 @@
         },
 
         /**
-       * Set element width/height depending on whether slider is horizontal or vertical
-       *
-       * @param {jqLite} elem  The jqLite wrapped DOM element
-       * @param {number} dim
-       * @returns {number}
-       */
+         * Set element width/height depending on whether slider is horizontal or vertical
+         *
+         * @param {jqLite} elem  The jqLite wrapped DOM element
+         * @param {number} dim
+         * @returns {number}
+         */
         setDimension: function(elem, dim) {
           elem.rzsd = dim
           var css = {}
@@ -1617,21 +1617,21 @@
         },
 
         /**
-       * Returns a value that is within slider range
-       *
-       * @param {number} val
-       * @returns {number}
-       */
+         * Returns a value that is within slider range
+         *
+         * @param {number} val
+         * @returns {number}
+         */
         sanitizeValue: function(val) {
           return Math.min(Math.max(val, this.minValue), this.maxValue)
         },
 
         /**
-       * Translate value to pixel position
-       *
-       * @param {number} val
-       * @returns {number}
-       */
+         * Translate value to pixel position
+         *
+         * @param {number} val
+         * @returns {number}
+         */
         valueToPosition: function(val) {
           var fn = this.linearValueToPosition
           if (this.options.customValueToPosition)
@@ -1658,11 +1658,11 @@
         },
 
         /**
-       * Translate position to model value
-       *
-       * @param {number} position
-       * @returns {number}
-       */
+         * Translate position to model value
+         *
+         * @param {number} position
+         * @returns {number}
+         */
         positionToValue: function(position) {
           var percent = position / this.maxPos
           if (this.options.rightToLeft) percent = 1 - percent
@@ -1692,12 +1692,12 @@
 
         // Events
         /**
-       * Get the X-coordinate or Y-coordinate of an event
-       *
-       * @param {Object} event  The event
-       * @param targetTouchId The identifier of the touch with the X/Y coordinates
-       * @returns {number}
-       */
+         * Get the X-coordinate or Y-coordinate of an event
+         *
+         * @param {Object} event  The event
+         * @param targetTouchId The identifier of the touch with the X/Y coordinates
+         * @returns {number}
+         */
         getEventXY: function(event, targetTouchId) {
           /* http://stackoverflow.com/a/12336075/282882 */
           //noinspection JSLint
@@ -1722,11 +1722,11 @@
         },
 
         /**
-       * Compute the event position depending on whether the slider is horizontal or vertical
-       * @param event
-       * @param targetTouchId If targetTouchId is provided it will be considered the position of that
-       * @returns {number}
-       */
+         * Compute the event position depending on whether the slider is horizontal or vertical
+         * @param event
+         * @param targetTouchId If targetTouchId is provided it will be considered the position of that
+         * @returns {number}
+         */
         getEventPosition: function(event, targetTouchId) {
           var sliderPos = this.sliderElem.rzsp,
             eventPos = 0
@@ -1737,16 +1737,16 @@
         },
 
         /**
-       * Get event names for move and event end
-       *
-       * @param {Event}    event    The event
-       *
-       * @return {{moveEvent: string, endEvent: string}}
-       */
+         * Get event names for move and event end
+         *
+         * @param {Event}    event    The event
+         *
+         * @return {{moveEvent: string, endEvent: string}}
+         */
         getEventNames: function(event) {
           var eventNames = {
             moveEvent: '',
-            endEvent: ''
+            endEvent: '',
           }
 
           if (this.getEventAttr(event, 'touches')) {
@@ -1761,11 +1761,11 @@
         },
 
         /**
-       * Get the handle closest to an event.
-       *
-       * @param event {Event} The event
-       * @returns {jqLite} The handle closest to the event.
-       */
+         * Get the handle closest to an event.
+         *
+         * @param event {Event} The event
+         * @returns {jqLite} The handle closest to the event.
+         */
         getNearestHandle: function(event) {
           if (!this.range) {
             return this.minH
@@ -1784,20 +1784,20 @@
         },
 
         /**
-       * Wrapper function to focus an angular element
-       *
-       * @param el {AngularElement} the element to focus
-       */
+         * Wrapper function to focus an angular element
+         *
+         * @param el {AngularElement} the element to focus
+         */
         focusElement: function(el) {
           var DOM_ELEMENT = 0
           el[DOM_ELEMENT].focus()
         },
 
         /**
-       * Bind mouse and touch events to slider handles
-       *
-       * @returns {undefined}
-       */
+         * Bind mouse and touch events to slider handles
+         *
+         * @returns {undefined}
+         */
         bindEvents: function() {
           var barTracking, barStart, barMove
 
@@ -1927,10 +1927,10 @@
         },
 
         /**
-       * Unbind mouse and touch events to slider handles
-       *
-       * @returns {undefined}
-       */
+         * Unbind mouse and touch events to slider handles
+         *
+         * @returns {undefined}
+         */
         unbindEvents: function() {
           this.minH.off()
           this.maxH.off()
@@ -1940,19 +1940,18 @@
         },
 
         /**
-       * onStart event handler
-       *
-       * @param {?Object} pointer The jqLite wrapped DOM element; if null, the closest handle is used
-       * @param {?string} ref     The name of the handle being changed; if null, the closest handle's value is modified
-       * @param {Event}   event   The event
-       * @returns {undefined}
-       */
+         * onStart event handler
+         *
+         * @param {?Object} pointer The jqLite wrapped DOM element; if null, the closest handle is used
+         * @param {?string} ref     The name of the handle being changed; if null, the closest handle's value is modified
+         * @param {Event}   event   The event
+         * @returns {undefined}
+         */
         onStart: function(pointer, ref, event) {
           var ehMove,
             ehEnd,
             eventNames = this.getEventNames(event)
 
-          event.stopPropagation()
           event.preventDefault()
 
           // We have to do this in case the HTML where the sliders are on
@@ -1994,13 +1993,13 @@
         },
 
         /**
-       * onMove event handler
-       *
-       * @param {jqLite} pointer
-       * @param {Event}  event The event
-       * @param {boolean}  fromTick if the event occured on a tick or not
-       * @returns {undefined}
-       */
+         * onMove event handler
+         *
+         * @param {jqLite} pointer
+         * @param {Event}  event The event
+         * @param {boolean}  fromTick if the event occured on a tick or not
+         * @returns {undefined}
+         */
         onMove: function(pointer, event, fromTick) {
           var changedTouches = this.getEventAttr(event, 'changedTouches')
           var touchForThisSlider
@@ -2041,12 +2040,12 @@
         },
 
         /**
-       * onEnd event handler
-       *
-       * @param {Event}    event    The event
-       * @param {Function} ehMove   The bound move event handler
-       * @returns {undefined}
-       */
+         * onEnd event handler
+         *
+         * @param {Event}    event    The event
+         * @param {Function} ehMove   The bound move event handler
+         * @returns {undefined}
+         */
         onEnd: function(ehMove, event) {
           var changedTouches = this.getEventAttr(event, 'changedTouches')
           if (changedTouches && changedTouches[0].identifier !== this.touchId) {
@@ -2083,7 +2082,7 @@
 
           this.currentFocusElement = {
             pointer: pointer,
-            ref: ref
+            ref: ref,
           }
         },
 
@@ -2103,12 +2102,12 @@
         },
 
         /**
-       * Key actions helper function
-       *
-       * @param {number} currentValue value of the slider
-       *
-       * @returns {?Object} action value mappings
-       */
+         * Key actions helper function
+         *
+         * @param {number} currentValue value of the slider
+         *
+         * @returns {?Object} action value mappings
+         */
         getKeyActions: function(currentValue) {
           var increaseStep = currentValue + this.step,
             decreaseStep = currentValue - this.step,
@@ -2131,7 +2130,7 @@
             PAGEUP: increasePage,
             PAGEDOWN: decreasePage,
             HOME: this.options.reversedControls ? this.maxValue : this.minValue,
-            END: this.options.reversedControls ? this.minValue : this.maxValue
+            END: this.options.reversedControls ? this.minValue : this.maxValue,
           }
           //right to left means swapping right and left arrows
           if (this.options.rightToLeft) {
@@ -2157,7 +2156,7 @@
               33: 'PAGEUP',
               34: 'PAGEDOWN',
               36: 'HOME',
-              35: 'END'
+              35: 'END',
             },
             actions = this.getKeyActions(currentValue),
             key = keys[keyCode],
@@ -2200,15 +2199,15 @@
         },
 
         /**
-       * onDragStart event handler
-       *
-       * Handles dragging of the middle bar.
-       *
-       * @param {Object} pointer The jqLite wrapped DOM element
-       * @param {string} ref     One of the refLow, refHigh values
-       * @param {Event}  event   The event
-       * @returns {undefined}
-       */
+         * onDragStart event handler
+         *
+         * Handles dragging of the middle bar.
+         *
+         * @param {Object} pointer The jqLite wrapped DOM element
+         * @param {string} ref     One of the refLow, refHigh values
+         * @param {Event}  event   The event
+         * @returns {undefined}
+         */
         onDragStart: function(pointer, ref, event) {
           var position = this.getEventPosition(event)
           this.dragging = {
@@ -2220,24 +2219,24 @@
               : position - this.minH.rzsp,
             highLimit: this.options.rightToLeft
               ? position - this.maxH.rzsp
-              : this.maxH.rzsp - position
+              : this.maxH.rzsp - position,
           }
 
           this.onStart(pointer, ref, event)
         },
 
         /**
-       * getValue helper function
-       *
-       * gets max or min value depending on whether the newPos is outOfBounds above or below the bar and rightToLeft
-       *
-       * @param {string} type 'max' || 'min' The value we are calculating
-       * @param {number} newPos  The new position
-       * @param {boolean} outOfBounds Is the new position above or below the max/min?
-       * @param {boolean} isAbove Is the new position above the bar if out of bounds?
-       *
-       * @returns {number}
-       */
+         * getValue helper function
+         *
+         * gets max or min value depending on whether the newPos is outOfBounds above or below the bar and rightToLeft
+         *
+         * @param {string} type 'max' || 'min' The value we are calculating
+         * @param {number} newPos  The new position
+         * @param {boolean} outOfBounds Is the new position above or below the max/min?
+         * @param {boolean} isAbove Is the new position above the bar if out of bounds?
+         *
+         * @returns {number}
+         */
         getValue: function(type, newPos, outOfBounds, isAbove) {
           var isRTL = this.options.rightToLeft,
             value = null
@@ -2285,14 +2284,14 @@
         },
 
         /**
-       * onDragMove event handler
-       *
-       * Handles dragging of the middle bar.
-       *
-       * @param {jqLite} pointer
-       * @param {Event}  event The event
-       * @returns {undefined}
-       */
+         * onDragMove event handler
+         *
+         * Handles dragging of the middle bar.
+         *
+         * @param {jqLite} pointer
+         * @param {Event}  event The event
+         * @returns {undefined}
+         */
         onDragMove: function(pointer, event) {
           var newPos = this.getEventPosition(event),
             newMinValue,
@@ -2334,11 +2333,11 @@
         },
 
         /**
-       * Set the new value and position for the entire bar
-       *
-       * @param {number} newMinValue   the new minimum value
-       * @param {number} newMaxValue   the new maximum value
-       */
+         * Set the new value and position for the entire bar
+         *
+         * @param {number} newMinValue   the new minimum value
+         * @param {number} newMaxValue   the new maximum value
+         */
         positionTrackingBar: function(newMinValue, newMaxValue) {
           if (
             this.options.minLimit != null &&
@@ -2365,10 +2364,10 @@
         },
 
         /**
-       * Set the new value and position to the current tracking handle
-       *
-       * @param {number} newValue new model value
-       */
+         * Set the new value and position to the current tracking handle
+         *
+         * @param {number} newValue new model value
+         */
         positionTrackingHandle: function(newValue) {
           var valueChanged = false
           newValue = this.applyMinMaxLimit(newValue)
@@ -2512,9 +2511,9 @@
         },
 
         /**
-       * Apply the model values using scope.$apply.
-       * We wrap it with the internalChange flag to avoid the watchers to be called
-       */
+         * Apply the model values using scope.$apply.
+         * We wrap it with the internalChange flag to avoid the watchers to be called
+         */
         applyModel: function(callOnChange) {
           this.internalChange = true
           this.scope.$apply()
@@ -2523,11 +2522,11 @@
         },
 
         /**
-       * Call the onStart callback if defined
-       * The callback call is wrapped in a $evalAsync to ensure that its result will be applied to the scope.
-       *
-       * @returns {undefined}
-       */
+         * Call the onStart callback if defined
+         * The callback call is wrapped in a $evalAsync to ensure that its result will be applied to the scope.
+         *
+         * @returns {undefined}
+         */
         callOnStart: function() {
           if (this.options.onStart) {
             var self = this,
@@ -2544,11 +2543,11 @@
         },
 
         /**
-       * Call the onChange callback if defined
-       * The callback call is wrapped in a $evalAsync to ensure that its result will be applied to the scope.
-       *
-       * @returns {undefined}
-       */
+         * Call the onChange callback if defined
+         * The callback call is wrapped in a $evalAsync to ensure that its result will be applied to the scope.
+         *
+         * @returns {undefined}
+         */
         callOnChange: function() {
           if (this.options.onChange) {
             var self = this,
@@ -2565,11 +2564,11 @@
         },
 
         /**
-       * Call the onEnd callback if defined
-       * The callback call is wrapped in a $evalAsync to ensure that its result will be applied to the scope.
-       *
-       * @returns {undefined}
-       */
+         * Call the onEnd callback if defined
+         * The callback call is wrapped in a $evalAsync to ensure that its result will be applied to the scope.
+         *
+         * @returns {undefined}
+         */
         callOnEnd: function() {
           if (this.options.onEnd) {
             var self = this,
@@ -2584,7 +2583,7 @@
             })
           }
           this.scope.$emit('slideEnded')
-        }
+        },
       }
 
       return Slider
@@ -2599,16 +2598,16 @@
           rzSliderModel: '=?',
           rzSliderHigh: '=?',
           rzSliderOptions: '&?',
-          rzSliderTplUrl: '@'
+          rzSliderTplUrl: '@',
         },
 
         /**
-       * Return template URL
-       *
-       * @param {jqLite} elem
-       * @param {Object} attrs
-       * @return {string}
-       */
+         * Return template URL
+         *
+         * @param {jqLite} elem
+         * @param {Object} attrs
+         * @return {string}
+         */
         templateUrl: function(elem, attrs) {
           //noinspection JSUnresolvedVariable
           return attrs.rzSliderTplUrl || 'rzSliderTpl.html'
@@ -2616,7 +2615,7 @@
 
         link: function(scope, elem) {
           scope.slider = new RzSlider(scope, elem) //attach on scope so we can test it
-        }
+        },
       }
     })
 
