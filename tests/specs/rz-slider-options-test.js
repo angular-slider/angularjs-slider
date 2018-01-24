@@ -22,7 +22,7 @@
     it('should have a correct getOptions method that apply custom options', function() {
       var defaultOpts = RzSliderOptions.getOptions()
       var customOpts = {
-        showTicks: true
+        showTicks: true,
       }
 
       var expectedOpts = angular.extend({}, defaultOpts, customOpts)
@@ -33,7 +33,7 @@
     it('should have a correct options method to update the global options', function() {
       var defaultOpts = RzSliderOptions.getOptions()
       var globalOpts = {
-        showTicks: true
+        showTicks: true,
       }
       RzSliderOptions.options(globalOpts)
 

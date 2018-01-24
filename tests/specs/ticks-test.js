@@ -25,8 +25,8 @@
         options: {
           floor: 0,
           ceil: 100,
-          step: 10
-        }
+          step: 10,
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.element[0].querySelectorAll('.rz-tick')).to.have.length(0)
@@ -39,8 +39,8 @@
           floor: 0,
           ceil: 100,
           step: 10,
-          showTicks: true
-        }
+          showTicks: true,
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.element[0].querySelectorAll('.rz-tick')).to.have.length(11)
@@ -53,8 +53,8 @@
           floor: 0,
           ceil: 100,
           step: 10,
-          showTicks: 20
-        }
+          showTicks: 20,
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.element[0].querySelectorAll('.rz-tick')).to.have.length(6)
@@ -67,8 +67,8 @@
           floor: 0,
           ceil: 100,
           step: 10,
-          showTicksValues: true
-        }
+          showTicksValues: true,
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.element[0].querySelectorAll('.rz-tick')).to.have.length(11)
@@ -90,8 +90,8 @@
         value: 'C',
         options: {
           stepsArray: ['A', 'B', 'C', 'D', 'E'],
-          showTicksValues: true
-        }
+          showTicksValues: true,
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.element[0].querySelectorAll('.rz-tick')).to.have.length(5)
@@ -118,8 +118,8 @@
         options: {
           stepsArray: ['A', 'B', 'C', 'D', 'E'],
           bindIndexForStepsArray: true,
-          showTicksValues: true
-        }
+          showTicksValues: true,
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.element[0].querySelectorAll('.rz-tick')).to.have.length(5)
@@ -147,8 +147,8 @@
           floor: 0,
           ceil: 100,
           step: 10,
-          showTicksValues: 20
-        }
+          showTicksValues: 20,
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.slider.ticks.hasClass('rz-ticks-values-under')).to.be.true
@@ -181,8 +181,8 @@
             ceil: 100,
             step: 10,
             showTicksValues: 20,
-            showTicks: 10
-          }
+            showTicks: 10,
+          },
         }
         helper.createSlider(sliderConf)
         expect(helper.slider.ticks.hasClass('rz-ticks-values-under')).to.be.true
@@ -214,8 +214,8 @@
           floor: 0,
           ceil: 100,
           step: 10,
-          ticksArray: [0, 25, 50, 100]
-        }
+          ticksArray: [0, 25, 50, 100],
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.slider.ticks.hasClass('rz-ticks-values-under')).to.be.false
@@ -233,8 +233,8 @@
           ceil: 100,
           step: 10,
           ticksArray: [0, 25, 50, 100],
-          showTicksValues: true
-        }
+          showTicksValues: true,
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.slider.ticks.hasClass('rz-ticks-values-under')).to.be.true
@@ -270,8 +270,8 @@
           showTicks: true,
           getLegend: function(value) {
             return 'Legend for ' + value
-          }
-        }
+          },
+        },
       }
       helper.createSlider(sliderConf)
       expect(
@@ -298,8 +298,8 @@
           getLegend: function(value) {
             if (value % 20 === 0) return 'Legend for ' + value
             return null
-          }
-        }
+          },
+        },
       }
       helper.createSlider(sliderConf)
       expect(
@@ -323,8 +323,8 @@
           ceil: 100,
           step: 10,
           showTicks: true,
-          showSelectionBar: true
-        }
+          showSelectionBar: true,
+        },
       }
       helper.createSlider(sliderConf)
       var firstTick = angular.element(
@@ -353,8 +353,8 @@
           ceil: 100,
           step: 10,
           showTicks: true,
-          showSelectionBarEnd: true
-        }
+          showSelectionBarEnd: true,
+        },
       }
       helper.createSlider(sliderConf)
       var firstTick = angular.element(
@@ -387,8 +387,8 @@
           ceil: 100,
           step: 10,
           showTicks: true,
-          showSelectionBarFromValue: 30
-        }
+          showSelectionBarFromValue: 30,
+        },
       }
       helper.createSlider(sliderConf)
       var firstTick = angular.element(
@@ -428,8 +428,8 @@
           ceil: 100,
           step: 10,
           showTicks: true,
-          showSelectionBarFromValue: 70
-        }
+          showSelectionBarFromValue: 70,
+        },
       }
       helper.createSlider(sliderConf)
       var firstTick = angular.element(
@@ -470,8 +470,8 @@
           floor: 0,
           ceil: 100,
           step: 10,
-          showTicks: true
-        }
+          showTicks: true,
+        },
       }
       helper.createRangeSlider(sliderConf)
       var firstTick = angular.element(
@@ -504,8 +504,8 @@
           getSelectionBarColor: function(value) {
             if (value <= 50) return 'red'
             else return 'green'
-          }
-        }
+          },
+        },
       }
       helper.createSlider(sliderConf)
       var firstTick = angular.element(
@@ -528,8 +528,8 @@
           showTicks: true,
           ticksTooltip: function(value) {
             return 'tooltip for ' + value
-          }
-        }
+          },
+        },
       }
       helper.createSlider(sliderConf)
       var firstTick = angular.element(
@@ -554,8 +554,8 @@
           showTicks: true,
           ticksTooltip: function(value) {
             return 'tooltip for ' + value
-          }
-        }
+          },
+        },
       }
       helper.createSlider(sliderConf)
       var firstTick = angular.element(
@@ -579,8 +579,8 @@
           showTicksValues: true,
           ticksValuesTooltip: function(value) {
             return 'tooltip for ' + value
-          }
-        }
+          },
+        },
       }
       helper.createSlider(sliderConf)
       var firstTick = angular.element(
@@ -605,8 +605,8 @@
           showTicksValues: true,
           ticksValuesTooltip: function(value) {
             return 'tooltip for ' + value
-          }
-        }
+          },
+        },
       }
       helper.createSlider(sliderConf)
       var firstTick = angular.element(
@@ -648,8 +648,8 @@
           step: 10,
           showTicks: true,
           showSelectionBar: true,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createSlider(sliderConf)
       var firstTick = angular.element(
@@ -679,8 +679,8 @@
           step: 10,
           showTicks: true,
           showSelectionBarEnd: true,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createSlider(sliderConf)
       var firstTick = angular.element(
@@ -714,8 +714,8 @@
           step: 10,
           showTicks: true,
           showSelectionBarFromValue: 30,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createSlider(sliderConf)
       var firstTick = angular.element(
@@ -756,8 +756,8 @@
           step: 10,
           showTicks: true,
           showSelectionBarFromValue: 70,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createSlider(sliderConf)
       var firstTick = angular.element(
@@ -803,8 +803,8 @@
             if (value <= 50) return 'red'
             else return 'green'
           },
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createSlider(sliderConf)
       var firstTick = angular.element(
@@ -828,8 +828,8 @@
           ticksTooltip: function(value) {
             return 'tooltip for ' + value
           },
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createSlider(sliderConf)
       var firstTick = angular.element(
@@ -855,8 +855,8 @@
           ticksTooltip: function(value) {
             return 'tooltip for ' + value
           },
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createSlider(sliderConf)
       var firstTick = angular.element(
@@ -881,8 +881,8 @@
           ticksValuesTooltip: function(value) {
             return 'tooltip for ' + value
           },
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createSlider(sliderConf)
       var firstTick = angular.element(
@@ -908,8 +908,8 @@
           ticksValuesTooltip: function(value) {
             return 'tooltip for ' + value
           },
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createSlider(sliderConf)
       var firstTick = angular.element(

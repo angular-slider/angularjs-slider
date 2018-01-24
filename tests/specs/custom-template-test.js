@@ -28,8 +28,8 @@
         options: {
           floor: 0,
           ceil: 100,
-          step: 10
-        }
+          step: 10,
+        },
       }
       helper.createRangeSliderWithCustomTemplate(sliderConf, url)
       expect(helper.slider.flrLab.text()).to.equal('test- 0')
@@ -43,8 +43,8 @@
         options: {
           floor: 0,
           ceil: 100,
-          step: 10
-        }
+          step: 10,
+        },
       }
       helper.createRangeSliderWithCustomTemplate(sliderConf, url)
       expect(helper.slider.minLab.text()).to.equal('test- 10')
@@ -58,8 +58,8 @@
         options: {
           floor: 0,
           ceil: 100,
-          step: 10
-        }
+          step: 10,
+        },
       }
       helper.createRangeSliderWithCustomTemplate(sliderConf, url)
       expect(helper.slider.cmbLab.text()).to.equal('test- 50 - 50')

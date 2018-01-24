@@ -24,8 +24,8 @@
         value: 50,
         options: {
           floor: 0,
-          ceil: 100
-        }
+          ceil: 100,
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.slider.flrLab.css('visibility')).to.equal('visible')
@@ -37,8 +37,8 @@
         value: 0,
         options: {
           floor: 0,
-          ceil: 100
-        }
+          ceil: 100,
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.slider.flrLab.css('visibility')).to.equal('hidden')
@@ -50,8 +50,8 @@
         value: 100,
         options: {
           floor: 0,
-          ceil: 100
-        }
+          ceil: 100,
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.slider.flrLab.css('visibility')).to.equal('visible')
@@ -64,8 +64,8 @@
         options: {
           floor: 0,
           ceil: 100,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.slider.flrLab.css('visibility')).to.equal('visible')
@@ -78,8 +78,8 @@
         options: {
           floor: 0,
           ceil: 100,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.slider.flrLab.css('visibility')).to.equal('hidden')
@@ -92,8 +92,8 @@
         options: {
           floor: 0,
           ceil: 100,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.slider.flrLab.css('visibility')).to.equal('visible')
@@ -106,8 +106,8 @@
         max: 100,
         options: {
           floor: 0,
-          ceil: 100
-        }
+          ceil: 100,
+        },
       }
       helper.createRangeSlider(sliderConf)
       expect(helper.slider.flrLab.css('visibility')).to.equal('hidden')
@@ -121,8 +121,8 @@
         options: {
           floor: 0,
           ceil: 100,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createRangeSlider(sliderConf)
       expect(helper.slider.flrLab.css('visibility')).to.equal('hidden')
@@ -139,8 +139,8 @@
           translate: function(v, _, which) {
             if (which != 'model' && which != 'high') return v
             return "I'm whatever long text ==============================================================================================================================================================="
-          }
-        }
+          },
+        },
       }
 
       helper.createRangeSlider(sliderConf)
@@ -158,9 +158,9 @@
           translate: function(v, _, which) {
             if (which != 'model' && which != 'high') return v
             return "I'm whatever long text ==============================================================================================================================================================="
-          }
+          },
         },
-        rightToLeft: true
+        rightToLeft: true,
       }
       helper.createRangeSlider(sliderConf)
       expect(helper.slider.flrLab.css('visibility')).to.equal('hidden')

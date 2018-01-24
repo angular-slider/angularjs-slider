@@ -25,8 +25,8 @@
         options: {
           floor: 0,
           ceil: 1000,
-          step: 10
-        }
+          step: 10,
+        },
       }
       helper.createSlider(sliderConf)
       helper.slider.minH.triggerHandler('focus')
@@ -40,8 +40,8 @@
         options: {
           floor: 0,
           ceil: 1000,
-          step: 10
-        }
+          step: 10,
+        },
       }
       helper.createSlider(sliderConf)
       helper.slider.minH.triggerHandler('focus')
@@ -55,8 +55,8 @@
         options: {
           floor: 0,
           ceil: 100,
-          disabled: true
-        }
+          disabled: true,
+        },
       }
       helper.createSlider(sliderConf)
       helper.slider.minH.triggerHandler('focus')
@@ -70,8 +70,8 @@
         options: {
           floor: 0,
           ceil: 100,
-          readOnly: true
-        }
+          readOnly: true,
+        },
       }
       helper.createSlider(sliderConf)
       helper.slider.minH.triggerHandler('focus')
@@ -87,8 +87,8 @@
           floor: 0,
           ceil: 100,
           step: 1,
-          minRange: 10
-        }
+          minRange: 10,
+        },
       }
       helper.createRangeSlider(sliderConf)
       //try to move minH right
@@ -110,8 +110,8 @@
           floor: 0,
           ceil: 100,
           step: 1,
-          minRange: 10
-        }
+          minRange: 10,
+        },
       }
       helper.createRangeSlider(sliderConf)
 
@@ -134,8 +134,8 @@
           floor: 0,
           ceil: 100,
           step: 1,
-          maxRange: 10
-        }
+          maxRange: 10,
+        },
       }
       helper.createRangeSlider(sliderConf)
       //try to move minH left
@@ -157,8 +157,8 @@
           floor: 0,
           ceil: 100,
           step: 1,
-          maxRange: 10
-        }
+          maxRange: 10,
+        },
       }
       helper.createRangeSlider(sliderConf)
 
@@ -180,8 +180,8 @@
           floor: 0,
           ceil: 100,
           step: 1,
-          minLimit: 10
-        }
+          minLimit: 10,
+        },
       }
       helper.createSlider(sliderConf)
       //try to move minH right
@@ -197,8 +197,8 @@
           floor: 0,
           ceil: 100,
           step: 1,
-          minLimit: 10
-        }
+          minLimit: 10,
+        },
       }
       helper.createSlider(sliderConf)
       //try to move minH left
@@ -214,8 +214,8 @@
           floor: 0,
           ceil: 100,
           step: 1,
-          maxLimit: 90
-        }
+          maxLimit: 90,
+        },
       }
       helper.createSlider(sliderConf)
       //try to move minH left
@@ -231,8 +231,8 @@
           floor: 0,
           ceil: 100,
           step: 1,
-          maxLimit: 90
-        }
+          maxLimit: 90,
+        },
       }
       helper.createSlider(sliderConf)
       //try to move minH right
@@ -247,8 +247,8 @@
         options: {
           floor: 0,
           ceil: 100,
-          step: 1
-        }
+          step: 1,
+        },
       }
       helper.createSlider(sliderConf)
       //try to move minH right
@@ -287,8 +287,8 @@
           floor: 0,
           ceil: 1000,
           step: 10,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createSlider(sliderConf)
       helper.slider.minH.triggerHandler('focus')
@@ -303,8 +303,8 @@
           floor: 0,
           ceil: 1000,
           step: 10,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createSlider(sliderConf)
       helper.slider.minH.triggerHandler('focus')
@@ -319,8 +319,8 @@
           floor: 0,
           ceil: 100,
           disabled: true,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createSlider(sliderConf)
       helper.slider.minH.triggerHandler('focus')
@@ -335,8 +335,8 @@
           floor: 0,
           ceil: 100,
           readOnly: true,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createSlider(sliderConf)
       helper.slider.minH.triggerHandler('focus')
@@ -353,8 +353,8 @@
           ceil: 100,
           step: 1,
           minRange: 10,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createRangeSlider(sliderConf)
       //try to move minH left ( increase in rtl )
@@ -377,8 +377,8 @@
           ceil: 100,
           step: 1,
           minRange: 10,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createRangeSlider(sliderConf)
 
@@ -402,8 +402,8 @@
           ceil: 100,
           step: 1,
           maxRange: 10,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createRangeSlider(sliderConf)
       //try to move minH right ( increase in rtl )
@@ -426,8 +426,8 @@
           ceil: 100,
           step: 1,
           maxRange: 10,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createRangeSlider(sliderConf)
 

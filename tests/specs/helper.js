@@ -14,7 +14,7 @@
     var h = {
       element: null,
       scope: null,
-      parent: null
+      parent: null,
     }
 
     h.createSlider = function(sliderObj) {
@@ -70,7 +70,10 @@
       )
       h.element = $compile(template)(h.scope)
       h.parent.append(h.element)
-      angular.element(document).find('body').append(h.parent)
+      angular
+        .element(document)
+        .find('body')
+        .append(h.parent)
       h.scope.$digest()
       h.slider = h.element.isolateScope().slider
     }
@@ -87,7 +90,7 @@
       var event = {
         type: 'mousedown',
         preventDefault: sinon.stub(),
-        stopPropagation: sinon.stub()
+        stopPropagation: sinon.stub(),
       }
       event[positionProp] = position
 
@@ -98,7 +101,7 @@
     h.fireMousemove = function(position, vertical) {
       var positionProp = vertical ? 'clientY' : 'clientX'
       var event = {
-        type: 'mousemove'
+        type: 'mousemove',
       }
       event[positionProp] = position
 
@@ -107,7 +110,7 @@
 
     h.fireMouseup = function() {
       var event = {
-        type: 'mouseup'
+        type: 'mouseup',
       }
       $document.triggerHandler(event)
     }
@@ -128,7 +131,7 @@
           touchIdentifier,
           touchesIds,
           sinon.stub()
-        )
+        ),
       }
 
       element.triggerHandler(event)
@@ -169,7 +172,7 @@
           vertical,
           touchIdentifier,
           touchesIds
-        )
+        ),
       }
 
       $document.triggerHandler(event)
@@ -207,7 +210,7 @@
           vertical,
           touchIdentifier,
           touchesIds
-        )
+        ),
       }
 
       $document.triggerHandler(event)
@@ -258,7 +261,7 @@
         preventDefault: preventDefaultAndStopPropagation,
         stopPropagation: preventDefaultAndStopPropagation,
         changedTouches: changedTouches,
-        touches: touches
+        touches: touches,
       }
       return originalEvent
     }
@@ -267,7 +270,7 @@
       options = options || {}
       key = key.toUpperCase()
       var event = {
-        type: 'keydown'
+        type: 'keydown',
       }
       var keys = {
         UP: 38,
@@ -278,7 +281,7 @@
         PAGEDOWN: 34,
         HOME: 36,
         END: 35,
-        SPACE: 32
+        SPACE: 32,
       }
       var keyCode = keys[key]
       if (options.oldAPI) event.which = keyCode

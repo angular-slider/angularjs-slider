@@ -25,8 +25,8 @@
         options: {
           floor: 0,
           ceil: 200,
-          vertical: true
-        }
+          vertical: true,
+        },
       }
       helper.createSlider(sliderConf)
     })
@@ -81,8 +81,8 @@
           floor: 0,
           ceil: 200,
           vertical: true,
-          reversedControls: true
-        }
+          reversedControls: true,
+        },
       }
       helper.createSlider(sliderConf)
     })
@@ -137,8 +137,8 @@
           floor: 0,
           ceil: 200,
           vertical: true,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createSlider(sliderConf)
     })
@@ -196,8 +196,8 @@
           ceil: 200,
           vertical: true,
           rightToLeft: true,
-          reversedControls: true
-        }
+          reversedControls: true,
+        },
       }
       helper.createSlider(sliderConf)
     })

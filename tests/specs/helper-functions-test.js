@@ -26,8 +26,8 @@
           options: {
             floor: 0,
             ceil: 100,
-            step: 10
-          }
+            step: 10,
+          },
         }
         helper.createSlider(sliderConf)
       })
@@ -256,7 +256,7 @@
 
       it('should have a valid getEventXY for horizontal sliders on desktop browsers', function() {
         var event = {
-          clientX: 12
+          clientX: 12,
         }
         expect(helper.slider.getEventXY(event)).to.equal(12)
       })
@@ -265,7 +265,7 @@
         helper.scope.slider.options.vertical = true
         helper.scope.$digest()
         var event = {
-          clientY: 12
+          clientY: 12,
         }
         expect(helper.slider.getEventXY(event)).to.equal(12)
       })
@@ -274,9 +274,9 @@
         var event = {
           touches: [
             {
-              clientX: 12
-            }
-          ]
+              clientX: 12,
+            },
+          ],
         }
         expect(helper.slider.getEventXY(event)).to.equal(12)
       })
@@ -286,10 +286,10 @@
           originalEvent: {
             touches: [
               {
-                clientX: 12
-              }
-            ]
-          }
+                clientX: 12,
+              },
+            ],
+          },
         }
         expect(helper.slider.getEventXY(event)).to.equal(12)
       })
@@ -300,9 +300,9 @@
         var event = {
           touches: [
             {
-              clientY: 12
-            }
-          ]
+              clientY: 12,
+            },
+          ],
         }
         expect(helper.slider.getEventXY(event)).to.equal(12)
       })
@@ -314,10 +314,10 @@
           originalEvent: {
             touches: [
               {
-                clientY: 12
-              }
-            ]
-          }
+                clientY: 12,
+              },
+            ],
+          },
         }
         expect(helper.slider.getEventXY(event)).to.equal(12)
       })
@@ -376,12 +376,12 @@
       it('should have a valid getEventNames for desktop', function() {
         var event = {
           clientX: 10,
-          clientY: 100
+          clientY: 100,
         }
         var eventNames = helper.slider.getEventNames(event)
         expect(eventNames).to.deep.equal({
           moveEvent: 'mousemove',
-          endEvent: 'mouseup'
+          endEvent: 'mouseup',
         })
       })
 
@@ -390,14 +390,14 @@
           touches: [
             {
               clientX: 10,
-              clientY: 100
-            }
-          ]
+              clientY: 100,
+            },
+          ],
         }
         var eventNames = helper.slider.getEventNames(event)
         expect(eventNames).to.deep.equal({
           moveEvent: 'touchmove',
-          endEvent: 'touchend'
+          endEvent: 'touchend',
         })
       })
 
@@ -407,15 +407,15 @@
             touches: [
               {
                 clientX: 10,
-                clientY: 100
-              }
-            ]
-          }
+                clientY: 100,
+              },
+            ],
+          },
         }
         var eventNames = helper.slider.getEventNames(event)
         expect(eventNames).to.deep.equal({
           moveEvent: 'touchmove',
-          endEvent: 'touchend'
+          endEvent: 'touchend',
         })
       })
 
@@ -430,8 +430,8 @@
       it('should have a valid focusElement', function() {
         var el = [
           {
-            focus: sinon.spy()
-          }
+            focus: sinon.spy(),
+          },
         ]
         helper.slider.focusElement(el)
         el[0].focus.called.should.be.true
@@ -446,8 +446,8 @@
           options: {
             floor: 0,
             ceil: 100,
-            step: 10
-          }
+            step: 10,
+          },
         }
         helper.createRangeSlider(sliderConf)
         sinon.stub(helper.slider, 'getEventPosition').returns(46)
@@ -469,8 +469,8 @@
           options: {
             floor: 0,
             ceil: 100,
-            step: 10
-          }
+            step: 10,
+          },
         }
         helper.createRangeSlider(sliderConf)
         sinon.stub(helper.slider, 'getEventPosition').returns(66)
@@ -491,8 +491,8 @@
           options: {
             floor: 0,
             ceil: 100,
-            step: 10
-          }
+            step: 10,
+          },
         }
         helper.createSlider(sliderConf)
         helper.slider.onStart = sinon.spy()
@@ -534,8 +534,8 @@
           options: {
             floor: 0,
             ceil: 100,
-            step: 10
-          }
+            step: 10,
+          },
         }
         helper.createSlider(sliderConf)
         helper.slider.onStart = sinon.spy()
@@ -573,8 +573,8 @@
           options: {
             floor: 0,
             ceil: 100,
-            step: 10
-          }
+            step: 10,
+          },
         }
         helper.createRangeSlider(sliderConf)
         helper.slider.onStart = sinon.spy()
@@ -617,8 +617,8 @@
           options: {
             floor: 0,
             ceil: 100,
-            step: 10
-          }
+            step: 10,
+          },
         }
         helper.createRangeSlider(sliderConf)
         helper.slider.onStart = sinon.spy()
@@ -656,8 +656,8 @@
           options: {
             floor: 0,
             ceil: 100,
-            step: 10
-          }
+            step: 10,
+          },
         }
         helper.createRangeSlider(sliderConf)
         helper.slider.onStart = sinon.spy()
@@ -688,8 +688,8 @@
             floor: 0,
             ceil: 100,
             step: 10,
-            rightToLeft: true
-          }
+            rightToLeft: true,
+          },
         }
         helper.createSlider(sliderConf)
       })

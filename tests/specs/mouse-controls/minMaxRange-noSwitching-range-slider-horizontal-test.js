@@ -28,8 +28,8 @@
           ceil: 100,
           minRange: 10,
           maxRange: 50,
-          noSwitching: true
-        }
+          noSwitching: true,
+        },
       }
       helper.createRangeSlider(sliderConf)
     })
@@ -148,8 +148,8 @@
           ceil: 100,
           minRange: 10,
           noSwitching: true,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createRangeSlider(sliderConf)
     })

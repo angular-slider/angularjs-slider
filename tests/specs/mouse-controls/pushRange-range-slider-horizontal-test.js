@@ -26,8 +26,8 @@
         options: {
           floor: 0,
           ceil: 100,
-          pushRange: true
-        }
+          pushRange: true,
+        },
       }
       helper.createRangeSlider(sliderConf)
     })

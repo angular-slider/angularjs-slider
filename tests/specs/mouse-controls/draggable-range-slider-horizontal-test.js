@@ -26,8 +26,8 @@
         options: {
           floor: 0,
           ceil: 100,
-          draggableRange: true
-        }
+          draggableRange: true,
+        },
       }
       helper.createRangeSlider(sliderConf)
     })
@@ -250,8 +250,8 @@
           floor: 0,
           ceil: 100,
           draggableRange: true,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createRangeSlider(sliderConf)
     })

@@ -26,8 +26,8 @@
           floor: 0,
           ceil: 100,
           showTicks: true,
-          onlyBindHandles: true
-        }
+          onlyBindHandles: true,
+        },
       }
       helper.createSlider(sliderConf)
     })
@@ -87,8 +87,8 @@
           ceil: 100,
           showTicks: true,
           onlyBindHandles: true,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createSlider(sliderConf)
     })

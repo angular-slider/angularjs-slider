@@ -25,8 +25,8 @@
         max: 100,
         options: {
           floor: 0,
-          ceil: 200
-        }
+          ceil: 200,
+        },
       }
       helper.createRangeSlider(sliderConf)
     })
@@ -174,8 +174,8 @@
         options: {
           floor: 0,
           ceil: 200,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createRangeSlider(sliderConf)
     })

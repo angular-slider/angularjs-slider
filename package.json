@@ -8,7 +8,10 @@
     "type": "git",
     "url": "https://github.com/angular-slider/angularjs-slider"
   },
-  "keywords": ["angular", "slider"],
+  "keywords": [
+    "angular",
+    "slider"
+  ],
   "scripts": {
     "start": "http-server ./ -c-1",
     "commit": "git-cz",
@@ -65,7 +68,7 @@
     "lint-staged": "^4.0.3",
     "mocha": "^3.1.2",
     "phantomjs": "^1.9.19",
-    "prettier": "^1.5.3",
+    "prettier": "^1.10.2",
     "recess": "~1.1.9",
     "sinon": "^1.17.2"
   },

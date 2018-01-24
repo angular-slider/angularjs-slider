@@ -26,8 +26,8 @@
           options: {
             floor: 0,
             ceil: 100,
-            step: 10
-          }
+            step: 10,
+          },
         }
         helper.createSlider(sliderConf)
       })
@@ -142,7 +142,7 @@
           { value: 'B' },
           { value: 'C' },
           { value: 'D' },
-          { value: 'E' }
+          { value: 'E' },
         ]
         helper.scope.$digest()
         expect(helper.slider.options.step).to.equal(1)
@@ -158,7 +158,7 @@
           { value: 'B' },
           { value: 'C' },
           { value: 'D' },
-          { value: 'E' }
+          { value: 'E' },
         ]
         helper.scope.slider.options.bindIndexForStepsArray = true
         helper.scope.$digest()
@@ -175,7 +175,7 @@
           { value: 'B', legend: 'Legend B' },
           { value: 'C' },
           { value: 'D', legend: 'Legend D' },
-          { value: 'E' }
+          { value: 'E' },
         ]
         helper.scope.slider.options.showTicks = true
         helper.scope.$digest()
@@ -200,7 +200,7 @@
           { value: 'B', legend: 'Legend B' },
           { value: 'C' },
           { value: 'D', legend: 'Legend D' },
-          { value: 'E' }
+          { value: 'E' },
         ]
         helper.scope.slider.options.bindIndexForStepsArray = true
         helper.scope.slider.options.showTicks = true
@@ -267,7 +267,7 @@
         helper.scope.slider.options.stepsArray = [
           { value: 'A', foo: 'barA' },
           { value: 'B', foo: 'barB' },
-          { value: 'C', foo: 'barC' }
+          { value: 'C', foo: 'barC' },
         ]
         helper.scope.slider.options.translate = function(
           value,
@@ -289,7 +289,7 @@
         helper.scope.slider.options.stepsArray = [
           { foo: 'barA' },
           { foo: 'barB' },
-          { foo: 'barC' }
+          { foo: 'barC' },
         ]
         helper.scope.slider.options.bindIndexForStepsArray = true
         helper.scope.slider.options.translate = function(
@@ -338,8 +338,8 @@
             step: 10,
             translate: function(v) {
               return 'custom value'
-            }
-          }
+            },
+          },
         }
         helper.createSlider(sliderConf)
         expect(helper.slider.customTrFn(0)).to.equal('custom value')
@@ -348,7 +348,7 @@
 
       it('should set maxValue to rzSliderModel if no ceil is set for a single slider', function() {
         var sliderConf = {
-          value: 10
+          value: 10,
         }
         helper.createSlider(sliderConf)
         expect(helper.slider.maxValue).to.equal(10)
@@ -357,7 +357,7 @@
       it('should set maxValue to rzSliderHigh if no ceil is set for a range slider', function() {
         var sliderConf = {
           min: 10,
-          max: 100
+          max: 100,
         }
         helper.createRangeSlider(sliderConf)
         expect(helper.slider.maxValue).to.equal(100)
@@ -369,8 +369,8 @@
           options: {
             floor: 0,
             ceil: 10,
-            showSelectionBar: true
-          }
+            showSelectionBar: true,
+          },
         }
         helper.createSlider(sliderConf)
         var expectedDimension =
@@ -388,8 +388,8 @@
           options: {
             floor: 0,
             ceil: 10,
-            showSelectionBarEnd: true
-          }
+            showSelectionBarEnd: true,
+          },
         }
         helper.createSlider(sliderConf)
         var expectedDimension = Math.floor(
@@ -414,8 +414,8 @@
           options: {
             floor: 0,
             ceil: 20,
-            showSelectionBarFromValue: 10
-          }
+            showSelectionBarFromValue: 10,
+          },
         }
         helper.createSlider(sliderConf)
         var expectedDimension = Math.round(helper.slider.valueToPosition(5)),
@@ -436,8 +436,8 @@
           options: {
             floor: 0,
             ceil: 20,
-            showSelectionBarFromValue: 10
-          }
+            showSelectionBarFromValue: 10,
+          },
         }
         helper.createSlider(sliderConf)
         var expectedDimension = Math.round(helper.slider.valueToPosition(7)),
@@ -463,9 +463,9 @@
             ceil: 20,
             selectionBarGradient: {
               from: 'white',
-              to: 'blue'
-            }
-          }
+              to: 'blue',
+            },
+          },
         }
 
         helper.createRangeSlider(sliderConf)
@@ -489,9 +489,9 @@
             showSelectionBar: true,
             selectionBarGradient: {
               from: 'white',
-              to: 'blue'
-            }
-          }
+              to: 'blue',
+            },
+          },
         }
 
         helper.createSlider(sliderConf)
@@ -505,8 +505,8 @@
         var sliderConf = {
           value: 10,
           options: {
-            hideLimitLabels: true
-          }
+            hideLimitLabels: true,
+          },
         }
         helper.createSlider(sliderConf)
         expect(helper.slider.flrLab.rzAlwaysHide).to.be.true
@@ -517,8 +517,8 @@
         var sliderConf = {
           value: 10,
           options: {
-            hidePointerLabels: true
-          }
+            hidePointerLabels: true,
+          },
         }
         helper.createSlider(sliderConf)
         expect(helper.slider.minLab.rzAlwaysHide).to.be.true
@@ -529,8 +529,8 @@
           min: 10,
           max: 100,
           options: {
-            hidePointerLabels: true
-          }
+            hidePointerLabels: true,
+          },
         }
         helper.createRangeSlider(sliderConf)
         expect(helper.slider.minLab.rzAlwaysHide).to.be.true
@@ -544,8 +544,8 @@
           options: {
             floor: 0,
             ceil: 100,
-            hidePointerLabels: true
-          }
+            hidePointerLabels: true,
+          },
         }
         helper.createSlider(sliderConf)
         expect(helper.slider.flrLab.css('visibility')).to.equal('visible')
@@ -559,8 +559,8 @@
           options: {
             floor: 0,
             ceil: 100,
-            hidePointerLabels: true
-          }
+            hidePointerLabels: true,
+          },
         }
         helper.createRangeSlider(sliderConf)
         expect(helper.slider.flrLab.css('visibility')).to.equal('visible')
@@ -577,8 +577,8 @@
             getSelectionBarColor: function(v) {
               if (v < 5) return 'red'
               return 'green'
-            }
-          }
+            },
+          },
         }
         helper.createSlider(sliderConf)
         var selBarChild = angular.element(
@@ -597,8 +597,8 @@
           max: 8,
           options: {
             floor: 0,
-            ceil: 10
-          }
+            ceil: 10,
+          },
         }
         helper.createRangeSlider(sliderConf)
 
@@ -625,8 +625,8 @@
             getSelectionBarColor: function(min, max) {
               if (max - min < 5) return 'red'
               return 'green'
-            }
-          }
+            },
+          },
         }
         helper.createRangeSlider(sliderConf)
         var selBarChild = angular.element(
@@ -645,8 +645,8 @@
           value: 10,
           options: {
             id: 'test',
-            onStart: sinon.spy()
-          }
+            onStart: sinon.spy(),
+          },
         }
         helper.createSlider(sliderConf)
 
@@ -662,8 +662,8 @@
           value: 10,
           options: {
             id: 'test',
-            onStart: sinon.spy()
-          }
+            onStart: sinon.spy(),
+          },
         }
         helper.createSlider(sliderConf)
 
@@ -679,8 +679,8 @@
           value: 10,
           options: {
             id: 'test',
-            onChange: sinon.spy()
-          }
+            onChange: sinon.spy(),
+          },
         }
         helper.createSlider(sliderConf)
 
@@ -696,8 +696,8 @@
           value: 10,
           options: {
             id: 'test',
-            onEnd: sinon.spy()
-          }
+            onEnd: sinon.spy(),
+          },
         }
         helper.createSlider(sliderConf)
 
@@ -718,8 +718,8 @@
             getPointerColor: function(v) {
               if (v < 5) return 'red'
               return 'green'
-            }
-          }
+            },
+          },
         }
         helper.createSlider(sliderConf)
         var minHChild = angular.element(helper.slider.minH[0])
@@ -740,8 +740,8 @@
             getPointerColor: function(v) {
               if (v < 5) return 'red'
               return 'green'
-            }
-          }
+            },
+          },
         }
         helper.createRangeSlider(sliderConf)
         var minHChild = angular.element(helper.slider.minH[0]),
@@ -773,8 +773,8 @@
                 if (v < 5) return 'blue'
                 return 'orange'
               }
-            }
-          }
+            },
+          },
         }
         helper.createRangeSlider(sliderConf)
         var minHChild = angular.element(helper.slider.minH[0]),
@@ -804,8 +804,8 @@
                 if (v < 5) return 'blue'
                 return 'orange'
               }
-            }
-          }
+            },
+          },
         }
         helper.createRangeSlider(sliderConf)
         var minHChild = angular.element(helper.slider.minH[0]),
@@ -829,8 +829,8 @@
             getTickColor: function(v) {
               if (v < 5) return 'red'
               return 'green'
-            }
-          }
+            },
+          },
         }
         helper.createRangeSlider(sliderConf)
         expect(helper.element[0].querySelectorAll('.rz-tick')).to.have.length(
@@ -853,8 +853,8 @@
           options: {
             floor: 100000000,
             ceil: 100001000,
-            boundPointerLabels: false
-          }
+            boundPointerLabels: false,
+          },
         }
 
         helper.createRangeSlider(sliderConf)
@@ -887,8 +887,8 @@
           options: {
             floor: 0,
             ceil: 100,
-            step: 10
-          }
+            step: 10,
+          },
         }
         helper.createRangeSlider(sliderConf)
       })
@@ -975,7 +975,7 @@
           { value: 'B' },
           { value: 'C' },
           { value: 'D' },
-          { value: 'E' }
+          { value: 'E' },
         ]
         helper.scope.$digest()
         expect(helper.slider.options.step).to.equal(1)
@@ -993,7 +993,7 @@
           { value: 'B' },
           { value: 'C' },
           { value: 'D' },
-          { value: 'E' }
+          { value: 'E' },
         ]
         helper.scope.slider.options.bindIndexForStepsArray = true
         helper.scope.$digest()
@@ -1025,7 +1025,7 @@
       it('should safely handle null expressions', function() {
         var sliderConf = {
           value: 10,
-          optionsExpression: 'thisDoesntExist'
+          optionsExpression: 'thisDoesntExist',
         }
 
         helper.createSlider(sliderConf)
@@ -1039,10 +1039,10 @@
           options: function() {
             return {
               floor: 1,
-              ceil: 1000
+              ceil: 1000,
             }
           },
-          optionsExpression: 'slider.options()'
+          optionsExpression: 'slider.options()',
         }
 
         helper.createSlider(sliderConf)
@@ -1079,8 +1079,8 @@
             floor: 0,
             ceil: 100,
             step: 10,
-            rightToLeft: true
-          }
+            rightToLeft: true,
+          },
         }
         helper.createSlider(sliderConf)
       })
@@ -1202,8 +1202,8 @@
             translate: function(v) {
               return 'custom value'
             },
-            rightToLeft: true
-          }
+            rightToLeft: true,
+          },
         }
         helper.createSlider(sliderConf)
         expect(helper.slider.customTrFn(0)).to.equal('custom value')
@@ -1213,7 +1213,7 @@
       it('should set maxValue to rzSliderModel if no ceil is set for a single slider', function() {
         var sliderConf = {
           value: 10,
-          rightToLeft: true
+          rightToLeft: true,
         }
         helper.createSlider(sliderConf)
         expect(helper.slider.maxValue).to.equal(10)
@@ -1223,7 +1223,7 @@
         var sliderConf = {
           min: 10,
           max: 100,
-          rightToLeft: true
+          rightToLeft: true,
         }
         helper.createRangeSlider(sliderConf)
         expect(helper.slider.maxValue).to.equal(100)
@@ -1236,8 +1236,8 @@
             floor: 0,
             ceil: 10,
             showSelectionBar: true,
-            rightToLeft: true
-          }
+            rightToLeft: true,
+          },
         }
         helper.createSlider(sliderConf)
         var expectedDimension = Math.round(
@@ -1261,8 +1261,8 @@
             floor: 0,
             ceil: 10,
             showSelectionBarEnd: true,
-            rightToLeft: true
-          }
+            rightToLeft: true,
+          },
         }
         helper.createSlider(sliderConf)
         var expectedDimension = Math.floor(
@@ -1282,8 +1282,8 @@
             floor: 0,
             ceil: 20,
             showSelectionBarFromValue: 10,
-            rightToLeft: true
-          }
+            rightToLeft: true,
+          },
         }
         helper.createSlider(sliderConf)
         var expectedDimension = Math.round(helper.slider.valueToPosition(15)),
@@ -1305,8 +1305,8 @@
             floor: 0,
             ceil: 20,
             showSelectionBarFromValue: 10,
-            rightToLeft: true
-          }
+            rightToLeft: true,
+          },
         }
         helper.createSlider(sliderConf)
         var expectedDimension = Math.round(helper.slider.valueToPosition(13)),
@@ -1332,8 +1332,8 @@
               if (v < 5) return 'red'
               return 'green'
             },
-            rightToLeft: true
-          }
+            rightToLeft: true,
+          },
         }
         helper.createSlider(sliderConf)
         var selBarChild = angular.element(
@@ -1352,9 +1352,9 @@
           max: 8,
           options: {
             floor: 0,
-            ceil: 10
+            ceil: 10,
           },
-          rightToLeft: true
+          rightToLeft: true,
         }
         helper.createRangeSlider(sliderConf)
 
@@ -1382,8 +1382,8 @@
               if (max - min < 5) return 'red'
               return 'green'
             },
-            rightToLeft: true
-          }
+            rightToLeft: true,
+          },
         }
         helper.createRangeSlider(sliderConf)
         var selBarChild = angular.element(
@@ -1403,8 +1403,8 @@
           options: {
             id: 'test',
             onStart: sinon.spy(),
-            rightToLeft: true
-          }
+            rightToLeft: true,
+          },
         }
         helper.createSlider(sliderConf)
 
@@ -1419,8 +1419,8 @@
           options: {
             id: 'test',
             onChange: sinon.spy(),
-            rightToLeft: true
-          }
+            rightToLeft: true,
+          },
         }
         helper.createSlider(sliderConf)
 
@@ -1435,8 +1435,8 @@
           options: {
             id: 'test',
             onEnd: sinon.spy(),
-            rightToLeft: true
-          }
+            rightToLeft: true,
+          },
         }
         helper.createSlider(sliderConf)
 
@@ -1456,8 +1456,8 @@
               if (v < 5) return 'red'
               return 'green'
             },
-            rightToLeft: true
-          }
+            rightToLeft: true,
+          },
         }
         helper.createSlider(sliderConf)
         var minHChild = angular.element(helper.slider.minH[0])
@@ -1479,8 +1479,8 @@
               if (v < 5) return 'red'
               return 'green'
             },
-            rightToLeft: true
-          }
+            rightToLeft: true,
+          },
         }
         helper.createRangeSlider(sliderConf)
         var minHChild = angular.element(helper.slider.minH[0]),
@@ -1513,8 +1513,8 @@
                 return 'orange'
               }
             },
-            rightToLeft: true
-          }
+            rightToLeft: true,
+          },
         }
         helper.createRangeSlider(sliderConf)
         var minHChild = angular.element(helper.slider.minH[0]),
@@ -1545,8 +1545,8 @@
                 return 'orange'
               }
             },
-            rightToLeft: true
-          }
+            rightToLeft: true,
+          },
         }
         helper.createRangeSlider(sliderConf)
         var minHChild = angular.element(helper.slider.minH[0]),
@@ -1566,9 +1566,9 @@
           options: {
             customTemplateScope: {
               a: 1,
-              b: 'test'
-            }
-          }
+              b: 'test',
+            },
+          },
         }
         helper.createSlider(sliderConf)
         expect(helper.slider.scope.custom.a).to.equal(1)
@@ -1585,8 +1585,8 @@
             floor: 0,
             ceil: 100,
             step: 10,
-            rightToLeft: true
-          }
+            rightToLeft: true,
+          },
         }
         helper.createRangeSlider(sliderConf)
       })
@@ -1652,7 +1652,7 @@
       it('should safely handle null expressions', function() {
         var sliderConf = {
           value: 10,
-          optionsExpression: 'thisDoesntExist'
+          optionsExpression: 'thisDoesntExist',
         }
 
         helper.createSlider(sliderConf)
@@ -1666,10 +1666,10 @@
           options: function() {
             return {
               floor: 1,
-              ceil: 1000
+              ceil: 1000,
             }
           },
-          optionsExpression: 'slider.options()'
+          optionsExpression: 'slider.options()',
         }
 
         helper.createSlider(sliderConf)
@@ -1689,8 +1689,8 @@
             step: 10,
             translate: function(val) {
               return val + '%'
-            }
-          }
+            },
+          },
         }
         helper.createSlider(sliderConf)
       })

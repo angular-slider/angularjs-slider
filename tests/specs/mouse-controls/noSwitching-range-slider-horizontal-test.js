@@ -26,8 +26,8 @@
         options: {
           floor: 0,
           ceil: 100,
-          noSwitching: true
-        }
+          noSwitching: true,
+        },
       }
       helper.createRangeSlider(sliderConf)
     })
@@ -103,8 +103,8 @@
           floor: 0,
           ceil: 100,
           noSwitching: true,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createRangeSlider(sliderConf)
     })

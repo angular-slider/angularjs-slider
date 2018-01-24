@@ -25,8 +25,8 @@
         options: {
           floor: 0,
           ceil: 100,
-          step: 10
-        }
+          step: 10,
+        },
       }
       helper.createSlider(sliderConf)
     })

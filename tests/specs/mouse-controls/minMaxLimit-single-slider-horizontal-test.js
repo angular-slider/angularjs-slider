@@ -26,8 +26,8 @@
           floor: 0,
           ceil: 100,
           minLimit: 40,
-          maxLimit: 60
-        }
+          maxLimit: 60,
+        },
       }
       helper.createSlider(sliderConf)
     })
@@ -91,8 +91,8 @@
           ceil: 100,
           minLimit: 40,
           maxLimit: 60,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createSlider(sliderConf)
     })

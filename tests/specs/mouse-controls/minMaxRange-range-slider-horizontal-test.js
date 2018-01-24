@@ -26,8 +26,8 @@
         options: {
           floor: 0,
           ceil: 100,
-          minRange: 10
-        }
+          minRange: 10,
+        },
       }
       helper.createRangeSlider(sliderConf)
     })
@@ -106,8 +106,8 @@
         options: {
           floor: 0,
           ceil: 100,
-          maxRange: 10
-        }
+          maxRange: 10,
+        },
       }
       helper.createRangeSlider(sliderConf)
     })
@@ -171,8 +171,8 @@
           floor: 0,
           ceil: 100,
           minRange: 10,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createRangeSlider(sliderConf)
     })

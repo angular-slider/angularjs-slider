@@ -27,8 +27,8 @@
           ceil: 200,
           onStart: sinon.spy(),
           onChange: sinon.spy(),
-          onEnd: sinon.spy()
-        }
+          onEnd: sinon.spy(),
+        },
       }
       helper.createSlider(sliderConf)
     })
@@ -165,8 +165,8 @@
         options: {
           floor: 0,
           ceil: 200,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createSlider(sliderConf)
     })
@@ -275,8 +275,8 @@
           onStart: sinon.spy(),
           onChange: sinon.spy(),
           onEnd: sinon.spy(),
-          reversedControls: true
-        }
+          reversedControls: true,
+        },
       }
       helper.createSlider(sliderConf)
     })
@@ -414,8 +414,8 @@
           floor: 0,
           ceil: 200,
           rightToLeft: true,
-          reversedControls: true
-        }
+          reversedControls: true,
+        },
       }
       helper.createSlider(sliderConf)
     })

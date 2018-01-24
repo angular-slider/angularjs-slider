@@ -26,8 +26,8 @@
         options: {
           floor: 0,
           ceil: 100,
-          draggableRangeOnly: true
-        }
+          draggableRangeOnly: true,
+        },
       }
       helper.createRangeSlider(sliderConf)
     })
@@ -189,8 +189,8 @@
           floor: 0,
           ceil: 100,
           draggableRangeOnly: true,
-          leftToRight: true
-        }
+          leftToRight: true,
+        },
       }
       helper.createRangeSlider(sliderConf)
     })

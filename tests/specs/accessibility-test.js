@@ -25,8 +25,8 @@
         options: {
           floor: 0,
           ceil: 100,
-          step: 10
-        }
+          step: 10,
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.slider.minH.attr('role')).to.equal('slider')
@@ -49,8 +49,8 @@
           floor: 0,
           ceil: 100,
           step: 10,
-          vertical: true
-        }
+          vertical: true,
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.slider.minH.attr('role')).to.equal('slider')
@@ -74,8 +74,8 @@
         options: {
           floor: 0,
           ceil: 100,
-          step: 10
-        }
+          step: 10,
+        },
       }
       helper.createRangeSlider(sliderConf)
       expect(helper.slider.minH.attr('role')).to.equal('slider')
@@ -110,8 +110,8 @@
           floor: 0,
           ceil: 100,
           step: 10,
-          vertical: true
-        }
+          vertical: true,
+        },
       }
       helper.createRangeSlider(sliderConf)
       expect(helper.slider.minH.attr('role')).to.equal('slider')
@@ -147,8 +147,8 @@
           floor: 0,
           ceil: 100,
           step: 10,
-          keyboardSupport: false
-        }
+          keyboardSupport: false,
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.slider.minH.attr('role')).to.equal('slider')
@@ -172,8 +172,8 @@
           floor: 0,
           ceil: 100,
           step: 10,
-          keyboardSupport: false
-        }
+          keyboardSupport: false,
+        },
       }
       helper.createRangeSlider(sliderConf)
       expect(helper.slider.minH.attr('role')).to.equal('slider')
@@ -204,8 +204,8 @@
       var sliderConf = {
         value: 'B',
         options: {
-          stepsArray: ['A', 'B', 'C']
-        }
+          stepsArray: ['A', 'B', 'C'],
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.slider.minH.attr('role')).to.equal('slider')
@@ -226,8 +226,8 @@
         value: 1,
         options: {
           stepsArray: ['A', 'B', 'C'],
-          bindIndexForStepsArray: true
-        }
+          bindIndexForStepsArray: true,
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.slider.minH.attr('role')).to.equal('slider')
@@ -250,8 +250,8 @@
           floor: 0,
           ceil: 100,
           step: 10,
-          ariaLabel: 'test label'
-        }
+          ariaLabel: 'test label',
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.slider.minH.attr('aria-label')).to.equal('test label')
@@ -266,8 +266,8 @@
           ceil: 100,
           step: 10,
           ariaLabel: 'test label',
-          ariaLabelHigh: 'test label high'
-        }
+          ariaLabelHigh: 'test label high',
+        },
       }
       helper.createRangeSlider(sliderConf)
       expect(helper.slider.minH.attr('aria-label')).to.equal('test label')
@@ -281,8 +281,8 @@
           floor: 0,
           ceil: 100,
           step: 10,
-          ariaLabelledBy: 'testId'
-        }
+          ariaLabelledBy: 'testId',
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.slider.minH.attr('aria-labelledby')).to.equal('testId')
@@ -297,8 +297,8 @@
           ceil: 100,
           step: 10,
           ariaLabelledBy: 'testId',
-          ariaLabelledByHigh: 'testIdHigh'
-        }
+          ariaLabelledByHigh: 'testIdHigh',
+        },
       }
       helper.createRangeSlider(sliderConf)
       expect(helper.slider.minH.attr('aria-labelledby')).to.equal('testId')
@@ -313,8 +313,8 @@
           ceil: 100,
           step: 10,
           ariaLabel: 'test label',
-          ariaLabelledBy: 'testId'
-        }
+          ariaLabelledBy: 'testId',
+        },
       }
       helper.createSlider(sliderConf)
       expect(helper.slider.minH.attr('aria-label')).to.equal('test label')
@@ -332,8 +332,8 @@
           ariaLabel: 'test label',
           ariaLabelHigh: 'test label high',
           ariaLabelledBy: 'testId',
-          ariaLabelledByHigh: 'testIdHigh'
-        }
+          ariaLabelledByHigh: 'testIdHigh',
+        },
       }
       helper.createRangeSlider(sliderConf)
       expect(helper.slider.minH.attr('aria-label')).to.equal('test label')

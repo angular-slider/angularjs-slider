@@ -26,8 +26,8 @@
           options: {
             floor: 0,
             ceil: 100,
-            step: 10
-          }
+            step: 10,
+          },
         }
         helper.createSlider(sliderConf)
       })
@@ -59,8 +59,8 @@
             floor: 1,
             ceil: 100,
             step: 10,
-            logScale: true
-          }
+            logScale: true,
+          },
         }
         helper.createSlider(sliderConf)
       })
@@ -120,8 +120,8 @@
               maxVal = Math.sqrt(maxVal)
               var value = percent * (maxVal - minVal) + minVal
               return Math.pow(value, 2)
-            }
-          }
+            },
+          },
         }
         helper.createSlider(sliderConf)
       })
