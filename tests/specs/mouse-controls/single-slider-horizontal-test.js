@@ -24,8 +24,8 @@
         value: 0,
         options: {
           floor: 0,
-          ceil: 100
-        }
+          ceil: 100,
+        },
       }
       helper.createSlider(sliderConf)
     })
@@ -45,7 +45,6 @@
       helper.slider.callOnStart.called.should.be.true
       helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true
       event.preventDefault.called.should.be.true
-      event.stopPropagation.called.should.be.true
       expect(helper.slider.tracking).to.equal('lowValue')
       expect(helper.slider.minH.hasClass('rz-active')).to.be.true
     })
@@ -64,7 +63,6 @@
       helper.slider.callOnStart.called.should.be.true
       helper.slider.focusElement.called.should.be.false
       event.preventDefault.called.should.be.true
-      event.stopPropagation.called.should.be.true
       expect(helper.slider.tracking).to.equal('lowValue')
       expect(helper.slider.minH.hasClass('rz-active')).to.be.true
     })
@@ -228,8 +226,8 @@
         options: {
           floor: 0,
           ceil: 100,
-          rightToLeft: true
-        }
+          rightToLeft: true,
+        },
       }
       helper.createSlider(sliderConf)
     })
@@ -249,7 +247,6 @@
       helper.slider.callOnStart.called.should.be.true
       helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true
       event.preventDefault.called.should.be.true
-      event.stopPropagation.called.should.be.true
       expect(helper.slider.tracking).to.equal('lowValue')
       expect(helper.slider.minH.hasClass('rz-active')).to.be.true
     })
@@ -268,7 +265,6 @@
       helper.slider.callOnStart.called.should.be.true
       helper.slider.focusElement.called.should.be.false
       event.preventDefault.called.should.be.true
-      event.stopPropagation.called.should.be.true
       expect(helper.slider.tracking).to.equal('lowValue')
       expect(helper.slider.minH.hasClass('rz-active')).to.be.true
     })
@@ -470,7 +466,7 @@
       // Touch move for the slider
       helper.fireTouchmoveWithoutOriginalEvent(touchPositionForSlider, 0, [
         0,
-        1
+        1,
       ])
 
       // Simultaneous touch move but not on slider
@@ -490,7 +486,7 @@
       // Touch move for slider
       helper.fireTouchmoveWithoutOriginalEvent(touchPositionForSlider, 0, [
         0,
-        1
+        1,
       ])
 
       // Can still drag the slider
@@ -505,7 +501,7 @@
       var touchPositionForSlider = helper.getMousePosition(70)
       helper.fireTouchmoveWithoutOriginalEvent(touchPositionForSlider, 0, [
         0,
-        1
+        1,
       ])
 
       // Can not drag the slider anymore
