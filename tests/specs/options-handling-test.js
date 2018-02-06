@@ -1646,6 +1646,39 @@
           parseInt(helper.slider.leftOutSelBar.css('left'))
         )
       })
+
+      it('should use the default separator when labels overlap', function() {
+        helper.scope.slider.min = -1
+        helper.scope.slider.max = 1
+        helper.scope.slider.options.floor = -100
+        helper.scope.slider.options.ceil = +100
+        helper.scope.slider.options.step = 1
+        helper.scope.slider.options.rightToLeft = false
+        helper.scope.$digest()
+        expect(helper.slider.cmbLab.text()).to.equal('-1 - 1')
+      })
+
+      it('should use the custom separator when labels overlap, and labelOverlapSeparator is set', function() {
+        helper.scope.slider.min = -1
+        helper.scope.slider.max = 1
+        helper.scope.slider.options.floor = -100
+        helper.scope.slider.options.ceil = +100
+        helper.scope.slider.options.step = 1
+        helper.scope.slider.options.rightToLeft = false
+        helper.scope.slider.options.labelOverlapSeparator = ' .. '
+        helper.scope.$digest()
+        expect(helper.slider.cmbLab.text()).to.equal('-1 .. 1')
+      })
+      it('should use the custom separator when labels overlap, and labelOverlapSeparator is set, in RTL mode', function() {
+        helper.scope.slider.min = -1
+        helper.scope.slider.max = 1
+        helper.scope.slider.options.floor = -100
+        helper.scope.slider.options.ceil = +100
+        helper.scope.slider.options.step = 1
+        helper.scope.slider.options.labelOverlapSeparator = ' .. '
+        helper.scope.$digest()
+        expect(helper.slider.cmbLab.text()).to.equal('1 .. -1')
+      })
     })
 
     describe('options expression specific - ', function() {

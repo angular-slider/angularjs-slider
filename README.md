@@ -275,6 +275,7 @@ The default options are:
     reversedControls: false,
     boundPointerLabels: true,
     mergeRangeLabelsIfSame: false,
+    labelOverlapSeparator: ' - ',
     customTemplateScope: null,
     logScale: false,
     customValueToPosition: null,
@@ -412,6 +413,8 @@ Just pass an array with each slider value and that's it; the floor, ceil and ste
 **boundPointerLabels** - _Boolean (defaults to true)_: Set to true to keep the slider labels inside the slider bounds.
 
 **mergeRangeLabelsIfSame** - _Boolean (defaults to false)_: Set to true to merge the range labels if they are the same. For instance, if min and max are 50, the label will be "50 - 50" if `mergeRangeLabelsIfSame: false`, else "50".
+
+**labelOverlapSeparator** - _String (defaults to ' - ')_: Separator to use when the labels overlap. For instance, if min and max are -1 and 1, the label will be "-1 .. 1" if `labelOverlapSeparator: ' .. '`.
 
 **onStart** - _Function(sliderId, modelValue, highValue, pointerType)_: Function to be called when a slider update is started. If an id was set in the options, then it's passed to this callback. This callback is called before any update on the model. `pointerType` is either 'min' or 'max' depending on which handle is used.
 
