@@ -1,3 +1,9 @@
+# 6.5.0 (2018-02-06)
+
+## Feature
+
+* feat($compile): adds labelOverlapSeparator as an option (#616)
+
 # 6.4.4 (2018-01-24)
 
 ## Bug fix
