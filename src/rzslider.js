@@ -82,6 +82,7 @@
         reversedControls: false,
         boundPointerLabels: true,
         mergeRangeLabelsIfSame: false,
+        labelOverlapSeparator: ' - ',
         customTemplateScope: null,
         logScale: false,
         customValueToPosition: null,
@@ -1477,8 +1478,8 @@
               labelVal = lowTr
             } else {
               labelVal = this.options.rightToLeft
-                ? highTr + ' - ' + lowTr
-                : lowTr + ' - ' + highTr
+                ? highTr + this.options.labelOverlapSeparator + lowTr
+                : lowTr + this.options.labelOverlapSeparator + highTr
             }
 
             this.translateFn(labelVal, this.cmbLab, 'cmb', false)

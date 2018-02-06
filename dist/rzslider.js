@@ -1,7 +1,7 @@
-/*! angularjs-slider - v6.4.3 - 
+/*! angularjs-slider - v6.4.4 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2018-01-22 */
+ 2018-02-06 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 ;(function(root, factory) {
@@ -78,6 +78,7 @@
         reversedControls: false,
         boundPointerLabels: true,
         mergeRangeLabelsIfSame: false,
+        labelOverlapSeparator: ' - ',
         customTemplateScope: null,
         logScale: false,
         customValueToPosition: null,
@@ -1473,8 +1474,8 @@
               labelVal = lowTr
             } else {
               labelVal = this.options.rightToLeft
-                ? highTr + ' - ' + lowTr
-                : lowTr + ' - ' + highTr
+                ? highTr + this.options.labelOverlapSeparator + lowTr
+                : lowTr + this.options.labelOverlapSeparator + highTr
             }
 
             this.translateFn(labelVal, this.cmbLab, 'cmb', false)
