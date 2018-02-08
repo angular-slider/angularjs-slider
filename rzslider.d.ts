@@ -146,6 +146,8 @@ declare module "angular" {
             boundPointerLabels?: boolean;
             /** Boolean (defaults to false): Set to true to merge the range labels if they are the same. For instance, if min and max are 50, the label will be "50 - 50" if mergeRangeLabelsIfSame: false, else "50". */
             mergeRangeLabelsIfSame?: boolean;
+            /** String (defaults to ' - '): Separator to use when the labels overlap. For instance, if min and max are -1 and 1, the label will be "-1 .. 1" if `labelOverlapSeparator: ' .. '`. */
+            labelOverlapSeparator?: string;
             /** Function(sliderId, modelValue, highValue, pointerType): Function to be called when a slider update is started. If an id was set in the options, then it's passed to this callback. This callback is called before any update on the model. pointerType is either 'min' or 'max' depending on which handle is used. */
             onStart?: RzCallback;
             /**
