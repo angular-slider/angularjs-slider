@@ -1,3 +1,9 @@
+# 6.5.1 (2018-03-30)
+
+## Bug fix
+
+* revert: onStart: Remove stop propagation call so events will bubble up (#612)
+
 # 6.5.0 (2018-02-06)
 
 ## Feature
