@@ -1953,6 +1953,7 @@
             ehEnd,
             eventNames = this.getEventNames(event)
 
+          event.stopPropagation()
           event.preventDefault()
 
           // We have to do this in case the HTML where the sliders are on

@@ -47,6 +47,7 @@
       helper.slider.callOnStart.called.should.be.true
       helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true
       event.preventDefault.called.should.be.true
+      event.stopPropagation.called.should.be.true
       expect(helper.slider.tracking).to.equal('lowValue')
       expect(helper.slider.minH.hasClass('rz-active')).to.be.true
     })
@@ -65,6 +66,7 @@
       helper.slider.callOnStart.called.should.be.true
       helper.slider.focusElement.called.should.be.false
       event.preventDefault.called.should.be.true
+      event.stopPropagation.called.should.be.true
       expect(helper.slider.tracking).to.equal('lowValue')
       expect(helper.slider.minH.hasClass('rz-active')).to.be.true
     })
@@ -80,6 +82,7 @@
       helper.slider.callOnStart.called.should.be.true
       helper.slider.focusElement.calledWith(helper.slider.maxH).should.be.true
       event.preventDefault.called.should.be.true
+      event.stopPropagation.called.should.be.true
       expect(helper.slider.tracking).to.equal('highValue')
       expect(helper.slider.maxH.hasClass('rz-active')).to.be.true
     })
@@ -98,6 +101,7 @@
       helper.slider.callOnStart.called.should.be.true
       helper.slider.focusElement.called.should.be.false
       event.preventDefault.called.should.be.true
+      event.stopPropagation.called.should.be.true
       expect(helper.slider.tracking).to.equal('highValue')
       expect(helper.slider.maxH.hasClass('rz-active')).to.be.true
     })
@@ -302,6 +306,7 @@
       helper.slider.callOnStart.called.should.be.true
       helper.slider.focusElement.calledWith(helper.slider.minH).should.be.true
       event.preventDefault.called.should.be.true
+      event.stopPropagation.called.should.be.true
       expect(helper.slider.tracking).to.equal('lowValue')
       expect(helper.slider.minH.hasClass('rz-active')).to.be.true
     })
@@ -320,6 +325,7 @@
       helper.slider.callOnStart.called.should.be.true
       helper.slider.focusElement.called.should.be.false
       event.preventDefault.called.should.be.true
+      event.stopPropagation.called.should.be.true
       expect(helper.slider.tracking).to.equal('lowValue')
       expect(helper.slider.minH.hasClass('rz-active')).to.be.true
     })
@@ -335,6 +341,7 @@
       helper.slider.callOnStart.called.should.be.true
       helper.slider.focusElement.calledWith(helper.slider.maxH).should.be.true
       event.preventDefault.called.should.be.true
+      event.stopPropagation.called.should.be.true
       expect(helper.slider.tracking).to.equal('highValue')
       expect(helper.slider.maxH.hasClass('rz-active')).to.be.true
     })
@@ -353,6 +360,7 @@
       helper.slider.callOnStart.called.should.be.true
       helper.slider.focusElement.called.should.be.false
       event.preventDefault.called.should.be.true
+      event.stopPropagation.called.should.be.true
       expect(helper.slider.tracking).to.equal('highValue')
       expect(helper.slider.maxH.hasClass('rz-active')).to.be.true
     })
