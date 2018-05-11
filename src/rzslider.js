@@ -450,7 +450,9 @@
           var index = 0
           for (var i = 0; i < this.options.stepsArray.length; i++) {
             var step = this.options.stepsArray[i]
-            if (step === modelValue) {
+            var lastStep = i > 0 ? this.options.stepsArray[i - 1] : 0;
+
+            if (step === modelValue || (modelValue > lastStep && modelValue < step)) {
               index = i
               break
             } else if (angular.isDate(step)) {
