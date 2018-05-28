@@ -294,7 +294,7 @@ The default options are:
 
 **step** - _Number (defaults to 1)_: Step between each value.
 
-**precision** - _Number (defaults to 0)_: The precision to display values with. The `toFixed()` is used internally for this.
+**precision** - _Number (defaults to 0)_: The precision to display values with (number of decimals to be displayed). The `toFixed()` is used internally for this.
 
 **minLimit** - _Number (defaults to null)_: The minimum value authorized on the slider.
 
