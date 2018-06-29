@@ -18,14 +18,14 @@
     "build": "grunt",
     "test": "grunt test",
     "report-coverage": "cat ./tests/coverage/lcov.info | codecov",
-    "format": "prettier --single-quote --no-semi --write \"{src,tests,demo}/{,!(lib)/**}/*.{js,less,css}\"",
+    "format": "prettier --write \"{src,tests,demo}/{,!(lib)/**}/*.{js,less,css}\"",
     "precommit": "lint-staged",
     "e2e": "npm start & cypress run",
     "cypress:open": "cypress open"
   },
   "lint-staged": {
     "{src,tests,demo}/{,!(lib)/**}/*.{js,less,css}": [
-      "prettier --single-quote --no-semi --write",
+      "prettier --write",
       "git add"
     ]
   },
@@ -68,7 +68,7 @@
     "lint-staged": "^4.0.3",
     "mocha": "^3.1.2",
     "phantomjs": "^1.9.19",
-    "prettier": "^1.10.2",
+    "prettier": "^1.13.7",
     "recess": "~1.1.9",
     "sinon": "^1.17.2"
   },

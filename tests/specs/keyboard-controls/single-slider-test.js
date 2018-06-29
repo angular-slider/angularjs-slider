@@ -6,14 +6,17 @@
 
     beforeEach(module('test-helper'))
 
-    beforeEach(
-      inject(function(TestHelper, _RzSliderOptions_, _$rootScope_, _$timeout_) {
-        helper = TestHelper
-        RzSliderOptions = _RzSliderOptions_
-        $rootScope = _$rootScope_
-        $timeout = _$timeout_
-      })
-    )
+    beforeEach(inject(function(
+      TestHelper,
+      _RzSliderOptions_,
+      _$rootScope_,
+      _$timeout_
+    ) {
+      helper = TestHelper
+      RzSliderOptions = _RzSliderOptions_
+      $rootScope = _$rootScope_
+      $timeout = _$timeout_
+    }))
 
     afterEach(function() {
       helper.clean()
@@ -146,14 +149,17 @@
 
     beforeEach(module('test-helper'))
 
-    beforeEach(
-      inject(function(TestHelper, _RzSliderOptions_, _$rootScope_, _$timeout_) {
-        helper = TestHelper
-        RzSliderOptions = _RzSliderOptions_
-        $rootScope = _$rootScope_
-        $timeout = _$timeout_
-      })
-    )
+    beforeEach(inject(function(
+      TestHelper,
+      _RzSliderOptions_,
+      _$rootScope_,
+      _$timeout_
+    ) {
+      helper = TestHelper
+      RzSliderOptions = _RzSliderOptions_
+      $rootScope = _$rootScope_
+      $timeout = _$timeout_
+    }))
 
     afterEach(function() {
       helper.clean()
@@ -253,14 +259,17 @@
 
     beforeEach(module('test-helper'))
 
-    beforeEach(
-      inject(function(TestHelper, _RzSliderOptions_, _$rootScope_, _$timeout_) {
-        helper = TestHelper
-        RzSliderOptions = _RzSliderOptions_
-        $rootScope = _$rootScope_
-        $timeout = _$timeout_
-      })
-    )
+    beforeEach(inject(function(
+      TestHelper,
+      _RzSliderOptions_,
+      _$rootScope_,
+      _$timeout_
+    ) {
+      helper = TestHelper
+      RzSliderOptions = _RzSliderOptions_
+      $rootScope = _$rootScope_
+      $timeout = _$timeout_
+    }))
 
     afterEach(function() {
       helper.clean()
@@ -394,14 +403,17 @@
 
     beforeEach(module('test-helper'))
 
-    beforeEach(
-      inject(function(TestHelper, _RzSliderOptions_, _$rootScope_, _$timeout_) {
-        helper = TestHelper
-        RzSliderOptions = _RzSliderOptions_
-        $rootScope = _$rootScope_
-        $timeout = _$timeout_
-      })
-    )
+    beforeEach(inject(function(
+      TestHelper,
+      _RzSliderOptions_,
+      _$rootScope_,
+      _$timeout_
+    ) {
+      helper = TestHelper
+      RzSliderOptions = _RzSliderOptions_
+      $rootScope = _$rootScope_
+      $timeout = _$timeout_
+    }))
 
     afterEach(function() {
       helper.clean()
