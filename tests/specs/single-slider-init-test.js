@@ -6,14 +6,17 @@
 
     beforeEach(module('test-helper'))
 
-    beforeEach(
-      inject(function(TestHelper, _RzSliderOptions_, _$rootScope_, _$timeout_) {
-        helper = TestHelper
-        RzSliderOptions = _RzSliderOptions_
-        $rootScope = _$rootScope_
-        $timeout = _$timeout_
-      })
-    )
+    beforeEach(inject(function(
+      TestHelper,
+      _RzSliderOptions_,
+      _$rootScope_,
+      _$timeout_
+    ) {
+      helper = TestHelper
+      RzSliderOptions = _RzSliderOptions_
+      $rootScope = _$rootScope_
+      $timeout = _$timeout_
+    }))
 
     afterEach(function() {
       helper.clean()
@@ -32,7 +35,7 @@
     })
 
     it('should exist compiled and with correct config', function() {
-      expect(helper.element.find('span')).to.have.length(15)
+      expect(helper.element.find('span')).to.have.length(17)
       expect(helper.slider.range).to.be.false
       expect(helper.slider.valueRange).to.equal(100)
       expect(helper.slider.maxH.css('display')).to.equal('none')
@@ -83,27 +86,25 @@
       helper.slider.onLowHandleChange.called.should.be.true
     })
 
-    it(
-      'should call calcViewDimensions() on window resize event',
-      inject(function($window) {
-        sinon.spy(helper.slider, 'calcViewDimensions')
-        angular.element($window).triggerHandler('resize')
-        helper.slider.calcViewDimensions.called.should.be.true
-      })
-    )
+    it('should call calcViewDimensions() on window resize event', inject(function(
+      $window
+    ) {
+      sinon.spy(helper.slider, 'calcViewDimensions')
+      angular.element($window).triggerHandler('resize')
+      helper.slider.calcViewDimensions.called.should.be.true
+    }))
 
-    it(
-      'should unregister all dom events on $destroy',
-      inject(function($window) {
-        sinon.spy(helper.slider, 'calcViewDimensions')
-        sinon.spy(helper.slider, 'unbindEvents')
+    it('should unregister all dom events on $destroy', inject(function(
+      $window
+    ) {
+      sinon.spy(helper.slider, 'calcViewDimensions')
+      sinon.spy(helper.slider, 'unbindEvents')
 
-        helper.scope.$broadcast('$destroy')
-        angular.element($window).triggerHandler('resize')
+      helper.scope.$broadcast('$destroy')
+      angular.element($window).triggerHandler('resize')
 
-        helper.slider.calcViewDimensions.called.should.be.false
-        helper.slider.unbindEvents.called.should.be.true
-      })
-    )
+      helper.slider.calcViewDimensions.called.should.be.false
+      helper.slider.unbindEvents.called.should.be.true
+    }))
   })
 })()

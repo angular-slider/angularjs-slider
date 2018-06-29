@@ -1,7 +1,7 @@
 /*! angularjs-slider - v6.5.1 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2018-03-30 */
+ 2018-06-29 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 ;(function(root, factory) {
@@ -36,6 +36,7 @@
         precision: 0,
         minRange: null,
         maxRange: null,
+        restrictedRange: null,
         pushRange: false,
         minLimit: null,
         maxLimit: null,
@@ -371,6 +372,7 @@
           this.setDisabledState()
           this.calcViewDimensions()
           this.setMinAndMax()
+          this.updateRestrictionBar()
           this.addAccessibility()
           this.updateCeilLab()
           this.updateFloorLab()
@@ -635,6 +637,7 @@
           this.manageEventsBindings()
           this.setDisabledState()
           this.calcViewDimensions()
+          this.updateRestrictionBar()
           this.refocusPointerIfNeeded()
         },
 
@@ -676,27 +679,30 @@
                   this.selBar = jElem
                   break
                 case 4:
-                  this.minH = jElem
+                  this.restrictedBar = jElem
                   break
                 case 5:
-                  this.maxH = jElem
+                  this.minH = jElem
                   break
                 case 6:
-                  this.flrLab = jElem
+                  this.maxH = jElem
                   break
                 case 7:
-                  this.ceilLab = jElem
+                  this.flrLab = jElem
                   break
                 case 8:
-                  this.minLab = jElem
+                  this.ceilLab = jElem
                   break
                 case 9:
-                  this.maxLab = jElem
+                  this.minLab = jElem
                   break
                 case 10:
-                  this.cmbLab = jElem
+                  this.maxLab = jElem
                   break
                 case 11:
+                  this.cmbLab = jElem
+                  break
+                case 12:
                   this.ticks = jElem
                   break
               }
@@ -753,6 +759,7 @@
             this.leftOutSelBar,
             !this.range || !this.options.showOuterSelectionBars
           )
+          this.alwaysHide(this.restrictedBar, !this.options.restrictedRange)
           this.alwaysHide(
             this.rightOutSelBar,
             !this.range || !this.options.showOuterSelectionBars
@@ -1306,6 +1313,26 @@
         },
 
         /**
+         * Update restricted area bar
+         *
+         * @returns {undefined}
+         */
+        updateRestrictionBar: function() {
+          var position = 0,
+            dimension = 0
+          if (this.options.restrictedRange) {
+            var from = this.valueToPosition(this.options.restrictedRange.from),
+              to = this.valueToPosition(this.options.restrictedRange.to)
+            dimension = Math.abs(to - from)
+            position = this.options.rightToLeft
+              ? to + this.handleHalfDim
+              : from + this.handleHalfDim
+            this.setDimension(this.restrictedBar, dimension)
+            this.setPosition(this.restrictedBar, position)
+          }
+        },
+
+        /**
          * Update slider selection bar, combined label and range label
          *
          * @returns {undefined}
@@ -1379,8 +1406,12 @@
                   : 0,
               reversed = (offset - position > 0) ^ isSelectionBarFromRight,
               direction = this.options.vertical
-                ? reversed ? 'bottom' : 'top'
-                : reversed ? 'left' : 'right'
+                ? reversed
+                  ? 'bottom'
+                  : 'top'
+                : reversed
+                  ? 'left'
+                  : 'right'
             this.scope.barStyle = {
               backgroundImage:
                 'linear-gradient(to ' +
@@ -1775,9 +1806,8 @@
           else if (!this.options.rightToLeft)
             //if event is at the same distance from min/max then if it's at left of minH, we return minH else maxH
             return position < this.minH.rzsp ? this.minH : this.maxH
-          else
-            //reverse in rtl
-            return position > this.minH.rzsp ? this.minH : this.maxH
+          //reverse in rtl
+          else return position > this.minH.rzsp ? this.minH : this.maxH
         },
 
         /**
@@ -2369,6 +2399,7 @@
         positionTrackingHandle: function(newValue) {
           var valueChanged = false
           newValue = this.applyMinMaxLimit(newValue)
+          newValue = this.applyRestrictedRange(newValue)
           if (this.range) {
             if (this.options.pushRange) {
               newValue = this.applyPushRange(newValue)
@@ -2451,6 +2482,30 @@
               if (this.tracking === 'lowValue')
                 return this.highValue - this.options.maxRange
               else return this.lowValue + this.options.maxRange
+            }
+          }
+          return newValue
+        },
+
+        applyRestrictedRange: function(newValue) {
+          if (
+            this.options.restrictedRange != null &&
+            newValue > this.options.restrictedRange.from &&
+            newValue < this.options.restrictedRange.to
+          ) {
+            var halfWidth =
+              (this.options.restrictedRange.to -
+                this.options.restrictedRange.from) /
+              2
+            if (this.tracking === 'lowValue') {
+              return newValue > this.options.restrictedRange.from + halfWidth
+                ? this.options.restrictedRange.to
+                : this.options.restrictedRange.from
+            }
+            if (this.tracking === 'highValue') {
+              return newValue < this.options.restrictedRange.to - halfWidth
+                ? this.options.restrictedRange.from
+                : this.options.restrictedRange.to
             }
           }
           return newValue
@@ -2654,7 +2709,7 @@
   'use strict';
 
   $templateCache.put('rzSliderTpl.html',
-    "<div class=rzslider><span class=\"rz-bar-wrapper rz-left-out-selection\"><span class=rz-bar></span></span> <span class=\"rz-bar-wrapper rz-right-out-selection\"><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span> <span class=\"rz-pointer rz-pointer-min\" ng-style=minPointerStyle></span> <span class=\"rz-pointer rz-pointer-max\" ng-style=maxPointerStyle></span> <span class=\"rz-bubble rz-limit rz-floor\"></span> <span class=\"rz-bubble rz-limit rz-ceil\"></span> <span class=\"rz-bubble rz-model-value\"></span> <span class=\"rz-bubble rz-model-high\"></span> <span class=rz-bubble></span><ul ng-show=showTicks class=rz-ticks><li ng-repeat=\"t in ticks track by $index\" class=rz-tick ng-class=\"{'rz-selected': t.selected}\" ng-style=t.style ng-attr-uib-tooltip=\"{{ t.tooltip }}\" ng-attr-tooltip-placement={{t.tooltipPlacement}} ng-attr-tooltip-append-to-body=\"{{ t.tooltip ? true : undefined}}\"><span ng-if=\"t.value != null\" class=rz-tick-value ng-attr-uib-tooltip=\"{{ t.valueTooltip }}\" ng-attr-tooltip-placement={{t.valueTooltipPlacement}}>{{ t.value }}</span> <span ng-if=\"t.legend != null\" class=rz-tick-legend>{{ t.legend }}</span></li></ul></div>"
+    "<div class=rzslider><span class=\"rz-bar-wrapper rz-left-out-selection\"><span class=rz-bar></span></span> <span class=\"rz-bar-wrapper rz-right-out-selection\"><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=rz-bar></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-selection\" ng-style=barStyle></span></span> <span class=rz-bar-wrapper><span class=\"rz-bar rz-restricted\" ng-style=restrictionStyle></span></span> <span class=\"rz-pointer rz-pointer-min\" ng-style=minPointerStyle></span> <span class=\"rz-pointer rz-pointer-max\" ng-style=maxPointerStyle></span> <span class=\"rz-bubble rz-limit rz-floor\"></span> <span class=\"rz-bubble rz-limit rz-ceil\"></span> <span class=\"rz-bubble rz-model-value\"></span> <span class=\"rz-bubble rz-model-high\"></span> <span class=rz-bubble></span><ul ng-show=showTicks class=rz-ticks><li ng-repeat=\"t in ticks track by $index\" class=rz-tick ng-class=\"{'rz-selected': t.selected}\" ng-style=t.style ng-attr-uib-tooltip=\"{{ t.tooltip }}\" ng-attr-tooltip-placement={{t.tooltipPlacement}} ng-attr-tooltip-append-to-body=\"{{ t.tooltip ? true : undefined}}\"><span ng-if=\"t.value != null\" class=rz-tick-value ng-attr-uib-tooltip=\"{{ t.valueTooltip }}\" ng-attr-tooltip-placement={{t.valueTooltipPlacement}}>{{ t.value }}</span> <span ng-if=\"t.legend != null\" class=rz-tick-legend>{{ t.legend }}</span></li></ul></div>"
   );
 
 }]);
