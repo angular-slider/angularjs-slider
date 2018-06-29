@@ -233,6 +233,7 @@ The default options are:
     precision: 0,
     minLimit: null,
     maxLimit: null,
+    restrictedRange: null,
     minRange: null,
     maxRange: null,
     pushRange: false,
@@ -299,6 +300,8 @@ The default options are:
 **minLimit** - _Number (defaults to null)_: The minimum value authorized on the slider.
 
 **maxLimit** - _Number (defaults to null)_: The maximum value authorized on the slider.
+
+**restrictedRange** - _Object (defaults to null)_: Has two _Number_ properties, _from_ and _to_ that determine the bounds of an area that is not authorized for values. _Applies to range slider only._
 
 **minRange** - _Number (defaults to null)_: The minimum range authorized on the slider. _Applies to range slider only._
 
