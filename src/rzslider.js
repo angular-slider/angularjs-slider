@@ -713,6 +713,16 @@
             },
             this
           )
+
+          // Initialize position cache properties
+          this.selBar.rzsp = 0
+          this.minH.rzsp = 0
+          this.maxH.rzsp = 0
+          this.flrLab.rzsp = 0
+          this.ceilLab.rzsp = 0
+          this.minLab.rzsp = 0
+          this.maxLab.rzsp = 0
+          this.cmbLab.rzsp = 0
         },
 
         /**
