@@ -63,6 +63,7 @@ app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $uibModal) {
     }
   };
 
+  
   $scope.minRangeSlider = {
     minValue: 40,
     maxValue: 60,
@@ -74,7 +75,20 @@ app.controller('MainCtrl', function ($scope, $rootScope, $timeout, $uibModal) {
       maxRange: 50
     }
   };
-
+  
+  $scope.restrictedRangeSlider = {
+    minValue: 10,
+    maxValue: 90,
+    options: {
+      restrictedRange: {
+        from: 30,
+        to: 70,
+      },
+      floor: 0,
+      ceil: 100,
+      step: 1,
+    },
+  }
   //Range slider with noSwitching config
   $scope.noSwitchingSlider = {
     minValue: 10,

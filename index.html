@@ -38,7 +38,6 @@
           <li>Compatibility with jQuery Lite, ie. without full jQuery</li>
         </ul>
       </p>
-      <div id="code-sponsor-widget"></div>
       <hr>
     </article>
 
@@ -83,12 +82,22 @@
       <h2>Range slider with min limit set to 10 and max limit set to 90</h2>
       <rzslider rz-slider-model="minMaxLimitSlider.value" rz-slider-options="minMaxLimitSlider.options"></rzslider>
       <show-code js-file="minMaxLimitSlider" html-file="singleSlider"></show-code>
-    </article>
+    </article>  
 
     <article>
       <h2>Range slider with a minimal range set to 10 and maximum of 50</h2>
       <rzslider rz-slider-model="minRangeSlider.minValue" rz-slider-high="minRangeSlider.maxValue" rz-slider-options="minRangeSlider.options"></rzslider>
       <show-code js-file="minRangeSlider" html-file="rangeSlider"></show-code>
+    </article>
+
+    <article>
+      <h2>Range slider with restricted area from 30 to 70</h2>
+      <rzslider
+        rz-slider-model="restrictedRangeSlider.minValue"
+        rz-slider-high="restrictedRangeSlider.maxValue"
+        rz-slider-options="restrictedRangeSlider.options"
+      ></rzslider>
+      <show-code js-file="restrictedRangeSlider" html-file="rangeSlider"></show-code>
     </article>
 
     <article>
@@ -468,6 +477,5 @@
 <script src="lib/angular-highlightjs.min.js"></script>
 <script src="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.js"></script>
 <script src="demo.js"></script>
-<script type="text/javascript" src="https://app.codesponsor.io/scripts/TMZmSjv9N28ys9vQRYBNSw?theme=light&width=500&height=150"></script>
 
 </html>

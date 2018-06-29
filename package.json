@@ -1,0 +1,15 @@
+{
+  "name": "angularjs-slider-demo",
+  "version": "1.0.0",
+  "main": "index.html",
+  "repository": "git@github.com:angular-slider/angularjs-slider.git",
+  "author": "Valentin Hervieu <valentin@hervi.eu>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "http-server ./ -c-1"
+  },
+  "devDependencies": {
+    "http-server": "^0.11.1"
+  }
+}
