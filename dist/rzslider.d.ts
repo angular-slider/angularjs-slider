@@ -25,6 +25,11 @@ declare module "angular" {
             minLimit?: number;
             /** Number (defaults to null): The maximum value authorized on the slider. */
             maxLimit?: number;
+            /**
+             * Object(defaults to null): Has two _Number_ properties, _from_ and _to_ that determine
+             * the bounds of an area that is not authorized for values. _Applies to range slider only._
+             */
+            restrictedRange?: { from: number, to: number } 
             /** Number (defaults to null): The minimum range authorized on the slider. Applies to range slider only. */
             minRange?: number;
             /** Number (defaults to null): The maximum range authorized on the slider. Applies to range slider only. */
