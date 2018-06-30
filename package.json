@@ -43,6 +43,7 @@
     "cz-conventional-changelog": "^1.1.5",
     "grunt": "~0.4.2",
     "grunt-angular-templates": "^0.5.7",
+    "grunt-cli": "^1.2.0",
     "grunt-contrib-concat": "^0.5.1",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-mincss": "~0.3.2",

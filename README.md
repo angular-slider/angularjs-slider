@@ -16,14 +16,14 @@ Links:
 
 Slider directive implementation for AngularJS 1.X, without any dependencies: [http://angular-slider.github.io/angularjs-slider](http://angular-slider.github.io/angularjs-slider/index.html).
 
-* Mobile friendly
-* Fast
-* Well documented
-* Customizable
-* Simple to use
-* Keyboard support
-* Compatibility with jQuery Lite, ie. with full jQuery ( Thanks Jusas! https://github.com/Jusas)
-* Supports right to left
+- Mobile friendly
+- Fast
+- Well documented
+- Customizable
+- Simple to use
+- Keyboard support
+- Compatibility with jQuery Lite, ie. with full jQuery ( Thanks Jusas! https://github.com/Jusas)
+- Supports right to left
 
 **Horizontal**
 
@@ -38,10 +38,10 @@ Slider directive implementation for AngularJS 1.X, without any dependencies: [ht
 
 ## Examples
 
-* **Simple example for single slider:** [http://jsfiddle.net/cwhgLcjv](http://jsfiddle.net/cwhgLcjv/)
-* **Simple example for double slider:** [http://jsfiddle.net/ye1kpfrj](http://jsfiddle.net/ye1kpfrj/)
-* **Various examples:** [http://angular-slider.github.io/angularjs-slider](http://angular-slider.github.io/angularjs-slider/index.html)
-* **Same examples with live code:** https://jsfiddle.net/ValentinH/954eve2L/
+- **Simple example for single slider:** [http://jsfiddle.net/cwhgLcjv](http://jsfiddle.net/cwhgLcjv/)
+- **Simple example for double slider:** [http://jsfiddle.net/ye1kpfrj](http://jsfiddle.net/ye1kpfrj/)
+- **Various examples:** [http://angular-slider.github.io/angularjs-slider](http://angular-slider.github.io/angularjs-slider/index.html)
+- **Same examples with live code:** https://jsfiddle.net/ValentinH/954eve2L/
 
 ## Reporting issues
 
@@ -84,6 +84,12 @@ By default, the slider value is always rounded to the nearest step. A side effec
 npm i angularjs-slider
 ```
 
+or
+
+```
+yarn add angularjs-slider
+```
+
 #### Typescript Support
 
 Typescript definition files are provided with this project. To use them, be sure you have the angular type definition peer dependency installed.
@@ -106,8 +112,8 @@ or
 
 Directly use (replace `X.X.X` by the version you want to use):
 
-* `https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/X.X.X/rzslider.min.js`
-* `https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/X.X.X/rzslider.min.css`
+- `https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/X.X.X/rzslider.min.js`
+- `https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/X.X.X/rzslider.min.css`
 
 ## Project integration
 
@@ -209,11 +215,11 @@ $scope.slider = {
 
 The following variables are available in the template as scope variables.
 
-* `floorLabel`: The value set to `floor` in `rz-slider-options`
-* `ceilLabel`: The value set to `ceil` in `rz-slider-options`
-* `modelLabel`: The value set to `rz-slider-model`
-* `highLabel`: The value set to `rz-slider-high`
-* `cmbLabel`: The text shown when the two handlers are close to each other. (e.g. "30-40")
+- `floorLabel`: The value set to `floor` in `rz-slider-options`
+- `ceilLabel`: The value set to `ceil` in `rz-slider-options`
+- `modelLabel`: The value set to `rz-slider-model`
+- `highLabel`: The value set to `rz-slider-high`
+- `cmbLabel`: The text shown when the two handlers are close to each other. (e.g. "30-40")
 
 The library replaces the HTML contents of label elements in the template by default, if you want to stop this behaviour and tweak label HTML on your own, you need to set `no-label-injection` class on the elements you're customizing.
 
@@ -312,11 +318,11 @@ The default options are:
 **translate** - _Function(value, sliderId, label)_: Custom translate function. Use this if you want to translate values displayed on the slider.
 `sliderId` can be used to determine the slider for which we are translating the value. `label` is a string that can take the following values:
 
-* _'model'_: the model label
-* _'high'_: the high label
-* _'floor'_: the floor label
-* _'ceil'_: the ceil label
-* _'tick-value'_: the ticks labels
+- _'model'_: the model label
+- _'high'_: the high label
+- _'floor'_: the floor label
+- _'ceil'_: the ceil label
+- _'tick-value'_: the ticks labels
 
 For example if you want to display dollar amounts instead of just numbers:
 
@@ -432,21 +438,21 @@ _Changing this value at runtime is not currently supported._
 
 **keyboardSupport** - _Boolean (defaults to true)_: Handles are focusable (on click or with tab) and can be modified using the following keyboard controls:
 
-* Left/bottom arrows: -1
-* Right/top arrows: +1
-* Page-down: -10%
-* Page-up: +10%
-* Home: minimum value
-* End: maximum value
+- Left/bottom arrows: -1
+- Right/top arrows: +1
+- Page-down: -10%
+- Page-up: +10%
+- Home: minimum value
+- End: maximum value
 
 **reversedControls** - _Boolean (defaults to false)_: Set to true to reverse keyboard navigation:
 
-* Right/top arrows: -1
-* Left/bottom arrows: +1
-* Page-up: -10%
-* Page-down: +10%
-* End: minimum value
-* Home: maximum value
+- Right/top arrows: -1
+- Left/bottom arrows: +1
+- Page-up: -10%
+- Page-down: +10%
+- End: minimum value
+- Home: maximum value
 
 **customTemplateScope** - _Object (default to null)_: The properties defined in this object will be exposed in the slider template under `custom.X`.
 
