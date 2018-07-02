@@ -1,8 +1,11 @@
-# 6.5.0 (2018-06-29)
+# 6.6.0 (2018-06-29)
 
 ## Feature
 
 - feat(range): adds the `restrictedRange` option (#638, thanks @DanielReid)
+
+## ⚠️ Unwanted breaking change ⚠️ 
+Sorry for this, but this version is breaking if you are using the `rz-slider-tpl-url` attribute. You need to update your template to have the correct number of elements.
 
 # 6.5.1 (2018-03-30)
 
