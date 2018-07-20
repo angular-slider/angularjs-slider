@@ -1,5 +1,9 @@
 ## AngularJS 1.X slider directive with no external dependencies
 
+Looking for an Angular version (> 1.X)? We got you covered: https://github.com/angular-slider/ng5-slider (Thanks [@piotrdz](https://github.com/piotrdz) :heart: )!
+
+<hr />
+
 Status:
 ![Maintenance](https://img.shields.io/maintenance/support-only/2017.svg?style=flat-square)
 [![npm version](https://img.shields.io/npm/v/angularjs-slider.svg?style=flat-square)](https://www.npmjs.com/package/angularjs-slider)
