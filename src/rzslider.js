@@ -1037,12 +1037,19 @@
           if (this.options.rightToLeft) ticksArray.reverse()
 
           this.scope.ticks = ticksArray.map(function(value) {
+            var legend = null;
+            if (angular.isObject(value)) {
+              legend = value.legend;
+              value = value.value
+            }
+
             var position = self.valueToPosition(value)
 
             if (self.options.vertical) position = self.maxPos - position
 
             var translation = translate + '(' + Math.round(position) + 'px)'
             var tick = {
+              legend: legend,
               selected: self.isTickSelected(value),
               style: {
                 '-webkit-transform': translation,
@@ -1075,7 +1082,7 @@
               }
             }
             if (self.getLegend) {
-              var legend = self.getLegend(value, self.options.id)
+              legend = self.getLegend(value, self.options.id)
               if (legend) tick.legend = legend
             }
             return tick
