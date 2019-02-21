@@ -263,6 +263,39 @@
       expect(lastTick.text()).to.equal('100')
     })
 
+    it('should create the correct number of ticks when ticksArray is used as array of objects', function() {
+      var sliderConf = {
+        value: 50,
+        options: {
+          floor: 0,
+          ceil: 100,
+          step: 10,
+          ticksArray: [
+            { value: 0, legend: 'Bad' },
+            { value: 50, legend: 'Average' },
+            { value: 100, legend: 'Excellent' },
+          ],
+        },
+      }
+      helper.createSlider(sliderConf)
+      expect(helper.element[0].querySelectorAll('.rz-tick')).to.have.length(3)
+      expect(
+        helper.element[0].querySelectorAll('.rz-tick-value')
+      ).to.have.length(0)
+
+      expect(
+        helper.element[0].querySelectorAll('.rz-tick-legend')
+      ).to.have.length(3)
+      var firstLegend = angular.element(
+        helper.element[0].querySelectorAll('.rz-tick-legend')[0]
+      )
+      expect(firstLegend.text()).to.equal('Bad')
+      var lastLegend = angular.element(
+        helper.element[0].querySelectorAll('.rz-tick-legend')[2]
+      )
+      expect(lastLegend.text()).to.equal('Excellent')
+    })
+
     it('should create the correct number of legend items when getLegend is defined', function() {
       var sliderConf = {
         value: 50,

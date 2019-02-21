@@ -1,7 +1,7 @@
 /*! angularjs-slider - v6.6.1 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2018-06-30 */
+ 2019-02-21 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 ;(function(root, factory) {
@@ -1033,12 +1033,19 @@
           if (this.options.rightToLeft) ticksArray.reverse()
 
           this.scope.ticks = ticksArray.map(function(value) {
+            var legend = null;
+            if (angular.isObject(value)) {
+              legend = value.legend;
+              value = value.value
+            }
+
             var position = self.valueToPosition(value)
 
             if (self.options.vertical) position = self.maxPos - position
 
             var translation = translate + '(' + Math.round(position) + 'px)'
             var tick = {
+              legend: legend,
               selected: self.isTickSelected(value),
               style: {
                 '-webkit-transform': translation,
@@ -1071,7 +1078,7 @@
               }
             }
             if (self.getLegend) {
-              var legend = self.getLegend(value, self.options.id)
+              legend = self.getLegend(value, self.options.id)
               if (legend) tick.legend = legend
             }
             return tick
