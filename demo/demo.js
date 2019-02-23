@@ -649,6 +649,7 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $uibModal) {
       disabled: false,
       showTicks: false,
       showTicksValues: false,
+      vertical: false,
     },
   }
   $scope.toggleHighValue = function() {

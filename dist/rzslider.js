@@ -604,6 +604,9 @@
           if (this.options.vertical) {
             this.positionProperty = 'bottom'
             this.dimensionProperty = 'height'
+          } else {
+            this.positionProperty = 'left'
+            this.dimensionProperty = 'width'
           }
 
           if (this.options.customTemplateScope)
@@ -638,6 +641,7 @@
          * @returns {undefined}
          */
         resetSlider: function() {
+          this.resetLabelsValue()
           this.manageElementsStyle()
           this.addAccessibility()
           this.setMinAndMax()
@@ -779,7 +783,11 @@
             this.fullBar.addClass('rz-transparent')
           }
 
-          if (this.options.vertical) this.sliderElem.addClass('rz-vertical')
+          if (this.options.vertical) {
+            this.sliderElem.addClass('rz-vertical')
+          } else {
+            this.sliderElem.removeClass('rz-vertical')
+          }
 
           if (this.options.draggableRange) this.selBar.addClass('rz-draggable')
           else this.selBar.removeClass('rz-draggable')
@@ -826,6 +834,14 @@
         resetLabelsValue: function() {
           this.minLab.rzsv = undefined
           this.maxLab.rzsv = undefined
+          this.flrLab.rzsv = undefined
+          this.ceilLab.rzsv = undefined
+          this.cmbLab.rzsv = undefined
+          this.resetPosition(this.flrLab)
+          this.resetPosition(this.ceilLab)
+          this.resetPosition(this.cmbLab)
+          this.resetPosition(this.minLab)
+          this.resetPosition(this.maxLab)
         },
 
         /**
@@ -945,8 +961,11 @@
           )
             this.minH.attr('tabindex', '0')
           else this.minH.attr('tabindex', '')
-          if (this.options.vertical)
+          if (this.options.vertical) {
             this.minH.attr('aria-orientation', 'vertical')
+          } else {
+            this.minH.attr('aria-orientation', 'horizontal')
+          }
           if (this.options.ariaLabel)
             this.minH.attr('aria-label', this.options.ariaLabel)
           else if (this.options.ariaLabelledBy)
@@ -962,6 +981,7 @@
             else this.maxH.attr('tabindex', '')
             if (this.options.vertical)
               this.maxH.attr('aria-orientation', 'vertical')
+            else this.maxH.attr('aria-orientation', 'horizontal')
             if (this.options.ariaLabelHigh)
               this.maxH.attr('aria-label', this.options.ariaLabelHigh)
             else if (this.options.ariaLabelledByHigh)
@@ -1630,6 +1650,13 @@
           css[this.positionProperty] = Math.round(pos) + 'px'
           elem.css(css)
           return pos
+        },
+
+        resetPosition: function(elem) {
+          elem.css({
+            left: null,
+            bottom: null,
+          })
         },
 
         /**
