@@ -373,6 +373,7 @@
             floor: 0,
             ceil: 10,
             showSelectionBar: true,
+            disableAnimation: true,
           },
         }
         helper.createSlider(sliderConf)
@@ -392,6 +393,7 @@
             floor: 0,
             ceil: 10,
             showSelectionBarEnd: true,
+            disableAnimation: true,
           },
         }
         helper.createSlider(sliderConf)
@@ -418,6 +420,7 @@
             floor: 0,
             ceil: 20,
             showSelectionBarFromValue: 10,
+            disableAnimation: true,
           },
         }
         helper.createSlider(sliderConf)
@@ -440,6 +443,7 @@
             floor: 0,
             ceil: 20,
             showSelectionBarFromValue: 10,
+            disableAnimation: true,
           },
         }
         helper.createSlider(sliderConf)
@@ -601,6 +605,7 @@
           options: {
             floor: 0,
             ceil: 10,
+            disableAnimation: true,
           },
         }
         helper.createRangeSlider(sliderConf)
@@ -1243,6 +1248,7 @@
             ceil: 10,
             showSelectionBar: true,
             rightToLeft: true,
+            disableAnimation: true,
           },
         }
         helper.createSlider(sliderConf)
@@ -1268,6 +1274,7 @@
             ceil: 10,
             showSelectionBarEnd: true,
             rightToLeft: true,
+            disableAnimation: true,
           },
         }
         helper.createSlider(sliderConf)
@@ -1312,6 +1319,7 @@
             ceil: 20,
             showSelectionBarFromValue: 10,
             rightToLeft: true,
+            disableAnimation: true,
           },
         }
         helper.createSlider(sliderConf)
@@ -1359,6 +1367,7 @@
           options: {
             floor: 0,
             ceil: 10,
+            disableAnimation: true,
           },
           rightToLeft: true,
         }
