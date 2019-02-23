@@ -21,11 +21,13 @@
     "format": "prettier --write \"{src,tests,demo}/{,!(lib)/**}/*.{js,less,css}\"",
     "precommit": "lint-staged",
     "e2e": "npm start & cypress run",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "npm:publish": "np"
   },
   "lint-staged": {
     "{src,tests,demo}/{,!(lib)/**}/*.{js,less,css}": [
       "prettier --write",
+      "npm run build",
       "git add"
     ]
   },
@@ -68,6 +70,7 @@
     "karma-sinon": "^1.0.4",
     "lint-staged": "^4.0.3",
     "mocha": "^3.1.2",
+    "np": "^4.0.2",
     "phantomjs": "^1.9.19",
     "prettier": "^1.13.7",
     "recess": "~1.1.9",
@@ -76,7 +79,9 @@
   "author": "Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com>",
   "license": "MIT",
   "readmeFilename": "README.md",
-  "czConfig": {
-    "path": "node_modules/cz-conventional-changelog"
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
   }
 }
