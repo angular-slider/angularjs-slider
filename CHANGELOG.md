@@ -1,8 +1,12 @@
-# 7.0.0 (not-released-yet)
+# 7.0.0 (2019-02-23)
 
 ## Feature
 
 - feat(transition): slider moves are now animated. (this can be disabled via the `disableAnimation` option)
+
+## Bug fix
+
+- fix(vertical): Support switching between horizontal and vertical
 
 ## Breaking change
 
