@@ -19,14 +19,13 @@
     "test": "grunt test",
     "report-coverage": "cat ./tests/coverage/lcov.info | codecov",
     "format": "prettier --write \"{src,tests,demo}/{,!(lib)/**}/*.{js,less,css}\"",
-    "precommit": "lint-staged",
+    "precommit": "npm run build && git add dist && lint-staged",
     "e2e": "npm start & cypress run",
     "cypress:open": "cypress open"
   },
   "lint-staged": {
     "{src,tests,demo}/{,!(lib)/**}/*.{js,less,css}": [
       "prettier --write",
-      "npm run build",
       "git add"
     ]
   },

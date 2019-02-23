@@ -132,7 +132,7 @@ Directly use (replace `X.X.X` by the version you want to use):
 ### Module
 
 ```javascript
-angular.module('yourApp', ['rzModule'])
+angular.module('yourApp', ['rzSlider'])
 ```
 
 ### Single slider
@@ -479,7 +479,7 @@ For custom scales:
 If you want the change the default options for all the sliders displayed in your application, you can set them using the `RzSliderOptions.options()` method:
 
 ```js
-angular.module('App', ['rzModule']).run(function(RzSliderOptions) {
+angular.module('App', ['rzSlider']).run(function(RzSliderOptions) {
   // show ticks for all sliders
   RzSliderOptions.options({ showTicks: true })
 })

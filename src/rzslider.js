@@ -31,7 +31,7 @@
 })(this, function(angular) {
   'use strict'
   var module = angular
-    .module('rzModule', [])
+    .module('rzSlider', [])
     .factory('RzSliderOptions', function() {
       var defaultOptions = {
         floor: 0,
@@ -101,7 +101,7 @@
        * `options({})` allows global configuration of all sliders in the
        * application.
        *
-       *   var app = angular.module( 'App', ['rzModule'], function( RzSliderOptions ) {
+       *   var app = angular.module( 'App', ['rzSlider'], function( RzSliderOptions ) {
        *     // show ticks for all sliders
        *     RzSliderOptions.options( { showTicks: true } );
        *   });
@@ -1037,9 +1037,9 @@
           if (this.options.rightToLeft) ticksArray.reverse()
 
           this.scope.ticks = ticksArray.map(function(value) {
-            var legend = null;
+            var legend = null
             if (angular.isObject(value)) {
-              legend = value.legend;
+              legend = value.legend
               value = value.value
             }
 

@@ -1,6 +1,6 @@
 ;(function() {
   'use strict'
-  var helperModule = angular.module('test-helper', ['rzModule', 'appTemplates'])
+  var helperModule = angular.module('test-helper', ['rzSlider', 'appTemplates'])
 
   helperModule.factory('TestHelper', function(
     RzSlider,

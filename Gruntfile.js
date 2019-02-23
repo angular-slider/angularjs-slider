@@ -59,7 +59,7 @@ module.exports = function(grunt) {
             removeScriptTypeAttributes: true,
             removeStyleLinkTypeAttributes: true,
           },
-          module: 'rzModule',
+          module: 'rzSlider',
           url: function(url) {
             return url.replace('src/', '')
           },
