@@ -1,5 +1,5 @@
 //You need to import the ngSanitize module:
-angular.module('app', ['rzModule', 'ngSanitize']);
+angular.module('app', ['rzSlider', 'ngSanitize']);
 
 
 $scope.slider = {

@@ -1,4 +1,4 @@
-var app = angular.module('rzSliderDemo', ['rzModule', 'ui.bootstrap', 'hljs', 'ngSanitize']);
+var app = angular.module('rzSliderDemo', ['rzSlider', 'ui.bootstrap', 'hljs', 'ngSanitize']);
 
 app.directive('showCode', function () {
   return {
