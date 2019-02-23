@@ -42,14 +42,14 @@ Slider directive implementation for AngularJS 1.X, without any dependencies: [ht
 
 ## Examples
 
-- **Simple example for single slider:** [http://jsfiddle.net/cwhgLcjv](http://jsfiddle.net/cwhgLcjv/)
-- **Simple example for double slider:** [http://jsfiddle.net/ye1kpfrj](http://jsfiddle.net/ye1kpfrj/)
+- **Simple example for single slider:** [http://jsfiddle.net/ValentinH/qjvxn4fc/](http://jsfiddle.net/ValentinH/qjvxn4fc/)
+- **Simple example for double slider:** [http://jsfiddle.net/ValentinH/hnyL2axs/](http://jsfiddle.net/ValentinH/hnyL2axs/)
 - **Various examples:** [http://angular-slider.github.io/angularjs-slider](http://angular-slider.github.io/angularjs-slider/index.html)
 - **Same examples with live code:** https://jsfiddle.net/ValentinH/954eve2L/
 
 ## Reporting issues
 
-Make sure the report is accompanied by a reproducible demo. The ideal demo is created by forking [our standard jsFiddle](http://jsfiddle.net/cwhgLcjv/), adding your own code and stripping it down to an absolute minimum needed to demonstrate the bug.
+Make sure the report is accompanied by a reproducible demo. The ideal demo is created by forking [our standard jsFiddle](http://jsfiddle.net/ValentinH/qjvxn4fc/), adding your own code and stripping it down to an absolute minimum needed to demonstrate the bug.
 
 ## Common issues
 
@@ -70,9 +70,9 @@ vm.refreshSlider = function() {
 
 if you get some flickering issues, you can try to replace to `$timeout` call by `$scope.$$postDigest` as suggested by @maknapp in [this issue](https://github.com/angular-slider/angularjs-slider/issues/79#issuecomment-219213647).
 
-**ng-show-example**: http://jsfiddle.net/3jjye1cL/
+**ng-show-example**: http://jsfiddle.net/ValentinH/nzL6ax43/
 
-**UI-Boostrap tabs example**: http://jsfiddle.net/0f7sd7dw/
+**UI-Boostrap tabs example**: http://jsfiddle.net/ValentinH/bo23er5w/
 
 ### Decimal value can't be typed in an input field linked to the slider
 
