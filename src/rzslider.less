@@ -18,6 +18,10 @@
   vertical-align: middle;
   user-select: none;
 
+  &.noanimate * {
+    transition: none !important;
+  }
+
   &.with-legend {
     margin-bottom: @withLegendMargin;
   }
@@ -62,6 +66,7 @@
     width: 100%;
     height: @handleSize;
     z-index: 1;
+    transition: all linear @animationDuration;
   }
 
   .rz-draggable {
@@ -91,6 +96,7 @@
     z-index: 2;
     background: @barFillColor;
     .rounded(@barDimension / 2);
+    transition: background-color linear @animationDuration;
   }
 
   .rz-restricted {
@@ -107,10 +113,7 @@
     background-color: @handleBgColor;
     z-index: 3;
     .rounded(@handleSize / 2);
-    //  -webkit-transition:all linear 0.15s;
-    //  -moz-transition:all linear 0.15s;
-    //  -o-transition:all linear 0.15s;
-    //  transition:all linear 0.15s;
+    transition: all linear @animationDuration;
 
     &:after {
       content: '';
@@ -138,8 +141,10 @@
     bottom: @handleSize / 2;
     padding: @bubblePadding;
     color: @labelTextColor;
+    transition: all linear @animationDuration;
     &.rz-limit {
       color: @limitLabelTextColor;
+      transition: none;
     }
   }
 
@@ -173,6 +178,7 @@
     top: 0;
     left: 0;
     margin-left: @handleSize / 2 - @ticksWidth / 2; // for centering
+    transition: background-color linear @animationDuration;
     &.rz-selected {
       background: @selectedTicksColor;
     }

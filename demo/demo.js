@@ -464,11 +464,6 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $uibModal) {
       floor: 0,
       ceil: 10,
       vertical: true,
-      showSelectionBarEnd: true,
-      selectionBarGradient: {
-        from: 'white',
-        to: '#0db9f0',
-      },
     },
   }
   $scope.verticalSlider2 = {
@@ -478,10 +473,6 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $uibModal) {
       floor: 0,
       ceil: 100,
       vertical: true,
-      selectionBarGradient: {
-        from: 'white',
-        to: '#0db9f0',
-      },
     },
   }
   $scope.verticalSlider3 = {

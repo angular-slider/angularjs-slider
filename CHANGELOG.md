@@ -1,3 +1,13 @@
+# 7.0.0 (not-released-yet)
+
+## Feature
+
+- feat(transition): slider moves are now animated. (this can be disabled via the `disableAnimation` option)
+
+## Breaking change
+
+The module name was renamed from `rzModule` to `rzSlider`.
+
 # 6.7.0 (2019-02-23)
 
 ## Feature

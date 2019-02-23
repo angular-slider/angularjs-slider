@@ -72,6 +72,7 @@
         enforceRange: false,
         noSwitching: false,
         onlyBindHandles: false,
+        disableAnimation: false,
         onStart: null,
         onChange: null,
         onEnd: null,
@@ -332,6 +333,11 @@
          */
         this.currentFocusElement = null
 
+        /**
+         * Internal variable to know if we are already moving
+         */
+        this.moving = false
+
         // Slider DOM elements wrapped in jqLite
         this.fullBar = null // The whole slider bar
         this.selBar = null // Highlight between two handles
@@ -386,6 +392,10 @@
           angular.element($window).on('resize', calcDimFn)
 
           this.initHasRun = true
+
+          if (this.options.disableAnimation) {
+            this.sliderElem.addClass('noanimate')
+          }
 
           // Watch for changes to the model
           thrLow = rzThrottle(function() {
@@ -2036,6 +2046,12 @@
          * @returns {undefined}
          */
         onMove: function(pointer, event, fromTick) {
+          if (!this.options.disableAnimation) {
+            if (this.moving) {
+              this.sliderElem.addClass('noanimate')
+            }
+          }
+          this.moving = true
           var changedTouches = this.getEventAttr(event, 'changedTouches')
           var touchForThisSlider
           if (changedTouches) {
@@ -2082,6 +2098,10 @@
          * @returns {undefined}
          */
         onEnd: function(ehMove, event) {
+          this.moving = false
+          if (!this.options.disableAnimation) {
+            this.sliderElem.removeClass('noanimate')
+          }
           var changedTouches = this.getEventAttr(event, 'changedTouches')
           if (changedTouches && changedTouches[0].identifier !== this.touchId) {
             return
@@ -2328,6 +2348,12 @@
          * @returns {undefined}
          */
         onDragMove: function(pointer, event) {
+          if (!this.options.disableAnimation) {
+            if (this.moving) {
+              this.sliderElem.addClass('noanimate')
+            }
+          }
+          this.moving = true
           var newPos = this.getEventPosition(event),
             newMinValue,
             newMaxValue,
