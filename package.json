@@ -1,6 +1,6 @@
 {
   "name": "angularjs-slider",
-  "version": "6.6.1",
+  "version": "6.7.0",
   "description": "AngularJS slider directive with no external dependencies. Mobile friendly!.",
   "main": "dist/rzslider.js",
   "types": "dist/rzslider.d.ts",
@@ -21,8 +21,7 @@
     "format": "prettier --write \"{src,tests,demo}/{,!(lib)/**}/*.{js,less,css}\"",
     "precommit": "lint-staged",
     "e2e": "npm start & cypress run",
-    "cypress:open": "cypress open",
-    "npm:publish": "np"
+    "cypress:open": "cypress open"
   },
   "lint-staged": {
     "{src,tests,demo}/{,!(lib)/**}/*.{js,less,css}": [
@@ -70,7 +69,6 @@
     "karma-sinon": "^1.0.4",
     "lint-staged": "^4.0.3",
     "mocha": "^3.1.2",
-    "np": "^4.0.2",
     "phantomjs": "^1.9.19",
     "prettier": "^1.13.7",
     "recess": "~1.1.9",
