@@ -2674,6 +2674,7 @@
               )
             })
           }
+          this.scope.$emit('slideChanged')
         },
 
         /**
