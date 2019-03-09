@@ -208,6 +208,8 @@ declare module "angular" {
             ariaLabelledBy?: string;
             /** String(default to null): Use instead of ariaLabel and ariaLabelHigh to reference the id of an element which will be used to label the slider(s). Adds the aria-labelledby attribute. */
             ariaLabelledByHigh?: string;
+            /** Boolean (defaults to false): Set to true to disable slider animation. */
+            disableAnimation?: boolean;
         }
     }
 }
