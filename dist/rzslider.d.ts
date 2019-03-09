@@ -75,7 +75,7 @@ declare module "angular" {
              * {value: 10, legend: 'Legend for 10'} // the display value will be 10 and a legend will be displayed under the corresponding tick.
              * ]
              */
-            stepsArray?: any[];
+            stepsArray?: number[] | Array<{value: number; legend?: string}>;
             /**
              * Boolean (defaults to false): Set to true to bind the index of the selected item to rz-slider-model and rz-slider-high.
              * (This was the default behavior prior to 4.0).
@@ -131,8 +131,8 @@ declare module "angular" {
             showTicks?: boolean | number;
             /** Boolean or Number (defaults to false): Set to true to display a tick and the step value for each step of the slider. Set an integer to display ticks and the step value at intermediate positions. */
             showTicksValues?: boolean | number;
-            /** Array (defaults to null): Use to display ticks at specific positions. The array contains the index of the ticks that should be displayed. For example, [0, 1, 5] will display a tick for the first, second and sixth values. */
-            ticksArray?: number[];
+            /** Array (defaults to null): Use to display ticks at specific positions. The array contains the index of the ticks that should be displayed. For example, [0, 1, 5] will display a tick for the first, second and sixth values. It also supports the { value: 0, legend: 'Bad' } format to display a legend for each tick. */
+            ticksArray?: number[] | Array<{value: number; legend?: string}>;
             /** Function(value) (defaults to null): (requires angular-ui bootstrap) Used to display a tooltip when a tick is hovered. Set to a function that returns the tooltip content for a given value. */
             ticksTooltip?: (value: number) => string;
             /** Function(value) (defaults to null): Same as ticksTooltip but for ticks values. */
