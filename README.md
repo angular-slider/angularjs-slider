@@ -295,7 +295,8 @@ The default options are:
     ariaLabel: null,
     ariaLabelledBy: null,
     ariaLabelHigh: null,
-    ariaLabelledByHigh: null
+    ariaLabelledByHigh: null,
+    disableAnimation: false
 }
 ```
 
@@ -473,6 +474,8 @@ For custom scales:
 **ariaLabel and ariaLabelHigh** - _String (default to null)_: Use to add a label directly to the slider(s) for accessibility. Adds the `aria-label` attribute.
 
 **ariaLabelledBy and ariaLabelledByHigh** - _String (default to null)_: Use instead of ariaLabel and ariaLabelHigh to reference the id of an element which will be used to label the slider(s). Adds the `aria-labelledby` attribute.
+
+**disableAnimation** - _Boolean (defaults to false)_: Set to true to disable slider animation.
 
 ## Change default options
 
