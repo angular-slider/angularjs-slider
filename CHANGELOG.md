@@ -1,3 +1,9 @@
+# 7.0.1 (2021-09-06)
+
+## Bug fix
+
+- chore(styles): add parentheses around division-like expr's (#679)
+
 # 7.0.0 (2019-02-23)
 
 ## Feature
@@ -38,7 +44,7 @@ Sorry for this, but this version is breaking if you are using the `rz-slider-tpl
 
 ## Feature
 
-- feat($compile): adds labelOverlapSeparator as an option (#616)
+- feat(\$compile): adds labelOverlapSeparator as an option (#616)
 
 # 6.4.4 (2018-01-24)
 
@@ -490,9 +496,9 @@ rzslider {
 
 ## Performance improvements
 
-- Remove the $timeout call in the init method (#223).
-- Remove the $timeout call in the onStart callback.
-- Remove the $timeout call in the onChange callback (#229).
+- Remove the \$timeout call in the init method (#223).
+- Remove the \$timeout call in the onStart callback.
+- Remove the \$timeout call in the onChange callback (#229).
 
 # 2.4.0 (2015-12-30)
 
