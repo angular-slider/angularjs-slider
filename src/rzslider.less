@@ -61,8 +61,8 @@
   .rz-bar-wrapper {
     left: 0;
     box-sizing: border-box;
-    margin-top: -@handleSize / 2;
-    padding-top: @handleSize / 2;
+    margin-top: (-@handleSize / 2);
+    padding-top: (@handleSize / 2);
     width: 100%;
     height: @handleSize;
     z-index: 1;
@@ -79,7 +79,7 @@
     height: @barDimension;
     z-index: 1;
     background: @barNormalColor;
-    .rounded(@barDimension / 2);
+    .rounded((@barDimension / 2));
   }
 
   .rz-bar-wrapper.rz-transparent .rz-bar {
@@ -95,24 +95,24 @@
   .rz-selection {
     z-index: 2;
     background: @barFillColor;
-    .rounded(@barDimension / 2);
+    .rounded((@barDimension / 2));
     transition: background-color linear @animationDuration;
   }
 
   .rz-restricted {
     z-index: 3;
     background: @restrictedBarColor;
-    .rounded(@barDimension / 2);
+    .rounded((@barDimension / 2));
   }
 
   .rz-pointer {
     cursor: pointer;
     width: @handleSize;
     height: @handleSize;
-    top: -@handleSize / 2 + @barDimension / 2;
+    top: (-@handleSize / 2 + @barDimension / 2);
     background-color: @handleBgColor;
     z-index: 3;
-    .rounded(@handleSize / 2);
+    .rounded((@handleSize / 2));
     transition: all linear @animationDuration;
 
     &:after {
@@ -120,9 +120,9 @@
       width: @handlePointerSize;
       height: @handlePointerSize;
       position: absolute;
-      top: @handleSize / 2 - @handlePointerSize / 2;
-      left: @handleSize / 2 - @handlePointerSize / 2;
-      .rounded(@handlePointerSize / 2);
+      top: (@handleSize / 2 - @handlePointerSize / 2);
+      left: (@handleSize / 2 - @handlePointerSize / 2);
+      .rounded((@handlePointerSize / 2));
       background: @handleInnerColor;
     }
     &:hover:after {
@@ -138,7 +138,7 @@
 
   .rz-bubble {
     cursor: default;
-    bottom: @handleSize / 2;
+    bottom: (@handleSize / 2);
     padding: @bubblePadding;
     color: @labelTextColor;
     transition: all linear @animationDuration;
@@ -154,7 +154,7 @@
     height: 0;
     position: absolute;
     left: 0;
-    top: -(@ticksHeight - @barDimension) / 2;
+    top: (-(@ticksHeight - @barDimension) / 2);
     margin: 0;
     z-index: 1;
     list-style: none;
@@ -163,7 +163,7 @@
   .rz-ticks-values-under {
     .rz-tick-value {
       top: auto;
-      bottom: @ticksValuePosition - 2;
+      bottom: (@ticksValuePosition - 2);
     }
   }
 
@@ -177,7 +177,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    margin-left: @handleSize / 2 - @ticksWidth / 2; // for centering
+    margin-left: (@handleSize / 2 - @ticksWidth / 2); // for centering
     transition: background-color linear @animationDuration;
     &.rz-selected {
       background: @selectedTicksColor;
@@ -215,8 +215,8 @@
     .rz-bar-wrapper {
       top: auto;
       left: 0;
-      margin: 0 0 0 -@handleSize / 2;
-      padding: 0 0 0 @handleSize / 2;
+      margin: 0 0 0 (-@handleSize / 2);
+      padding: 0 0 0 (@handleSize / 2);
       height: 100%;
       width: @handleSize;
     }
@@ -229,13 +229,13 @@
     }
 
     .rz-pointer {
-      left: -@handleSize / 2 + @barDimension / 2 !important;
+      left: (-@handleSize / 2 + @barDimension / 2) !important;
       top: auto;
       bottom: 0;
     }
 
     .rz-bubble {
-      left: @handleSize / 2 !important;
+      left: (@handleSize / 2) !important;
       margin-left: 3px;
       bottom: 0;
     }
@@ -243,14 +243,14 @@
     .rz-ticks {
       height: 100%;
       width: 0;
-      left: -(@ticksHeight - @barDimension) / 2;
+      left: (-(@ticksHeight - @barDimension) / 2);
       top: 0;
       z-index: 1;
     }
     .rz-tick {
       vertical-align: middle;
       margin-left: auto;
-      margin-top: @handleSize / 2 - @ticksWidth / 2; // for centering
+      margin-top: (@handleSize / 2 - @ticksWidth / 2); // for centering
     }
     .rz-tick-value {
       left: @ticksValuePositionOnVertical;
