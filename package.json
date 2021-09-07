@@ -12,6 +12,9 @@
     "angular",
     "slider"
   ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "start": "http-server ./ -c-1",
     "commit": "git-cz",
