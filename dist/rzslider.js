@@ -1,7 +1,7 @@
 /*! angularjs-slider - v7.0.1 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervi.eu>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2021-09-07 */
+ 2022-04-26 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 ;(function(root, factory) {
@@ -350,7 +350,7 @@
         this.maxLab = null // Label above the high value
         this.cmbLab = null // Combined label
         this.ticks = null // The ticks
-        
+
         // Initialize slider
         this.init()
       }
@@ -676,11 +676,11 @@
          *
          * @returns {undefined}
          */        
-        checkIfRestrictedBarIsMultiple: function(jElem) {
+         checkIfRestrictedBarIsMultiple: function(elem, jElem) {
           this.restrictedBar = [];
           if(Array.isArray(this.options.restrictedRange)) {
             this.restrictedBar[0] = jElem;
-            var mainDiv = document.getElementsByClassName("rzslider")[0];
+            var mainDiv = elem.parentElement;
             for(var i=1; i < this.options.restrictedRange.length; i++) {
               var sp = document.createElement("span");
               sp.setAttribute("class","rz-bar-wrapper");
@@ -811,7 +811,7 @@
             for(var r in this.restrictedBar) {
               this.alwaysHide(this.restrictedBar[r], !this.options.restrictedRange[r])
             }
-          }        
+          }
 
           this.alwaysHide(
             this.rightOutSelBar,
@@ -1411,7 +1411,7 @@
             }
           }
         },
-        
+
         /**
          * Update slider selection bar, combined label and range label
          *
@@ -2234,7 +2234,7 @@
          * 
          * @returns {number} currentValue value of the slider       
          */        
-        skipRestrictedRanges: function (key, currentValue) {
+         skipRestrictedRanges: function (key, currentValue) {
           if (this.options.restrictedRange && Array.isArray(this.options.restrictedRange)) {            
             for (var i in this.options.restrictedRange) {
               var range = this.options.restrictedRange[i];
@@ -2268,7 +2268,7 @@
           }
 
           return currentValue;
-        },
+        },        
 
         /**
          * Key actions helper function
