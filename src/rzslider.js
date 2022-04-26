@@ -681,7 +681,8 @@
          * @returns {undefined}
          */
 
-        checkIfRestrictedBarIsMultiple: function(elem, jElem) {
+        checkIfRestrictedBarIsMultiple: function(elem) {
+          var jElem = angular.element(elem)
           this.restrictedBar = []
           if (Array.isArray(this.options.restrictedRange)) {
             this.restrictedBar[0] = jElem
@@ -697,6 +698,7 @@
           } else if (this.options.restrictedRange) {
             this.restrictedBar[0] = jElem
           } else {
+            elem.style.visibility = 'hidden'
             this.restrictedBar = null
           }
         },
@@ -729,7 +731,7 @@
                   this.selBar = jElem
                   break
                 case 4:
-                  this.checkIfRestrictedBarIsMultiple(jElem)
+                  this.checkIfRestrictedBarIsMultiple(elem)
                   break
                 case 5:
                   this.minH = jElem
