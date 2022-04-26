@@ -244,6 +244,7 @@ The default options are:
     minLimit: null,
     maxLimit: null,
     restrictedRange: null,
+    skipRestrictedRangesWithArrowKeys: null,
     minRange: null,
     maxRange: null,
     pushRange: false,

@@ -387,7 +387,7 @@
           this.manageEventsBindings()
 
           // Multiple restricted range count
-          this.scope.restrictedRangeCount = 0;
+          this.scope.restrictedRangeCount = 0
 
           // Recalculate slider view dimensions
           this.scope.$on('reCalcViewDimensions', calcDimFn)
@@ -524,8 +524,8 @@
         },
 
         /*
-       * Reflow the slider when the low handle changes (called with throttle)
-       */
+         * Reflow the slider when the low handle changes (called with throttle)
+         */
         onLowHandleChange: function() {
           this.syncLowValue()
           if (this.range) this.syncHighValue()
@@ -540,8 +540,8 @@
         },
 
         /*
-       * Reflow the slider when the high handle changes (called with throttle)
-       */
+         * Reflow the slider when the high handle changes (called with throttle)
+         */
         onHighHandleChange: function() {
           this.syncLowValue()
           this.syncHighValue()
@@ -675,26 +675,25 @@
          * Run only once during initialization and only in case 4
          *
          * @returns {undefined}
-         */        
-         checkIfRestrictedBarIsMultiple: function(elem, jElem) {
-          this.restrictedBar = [];
-          if(Array.isArray(this.options.restrictedRange)) {
-            this.restrictedBar[0] = jElem;
-            var mainDiv = elem.parentElement;
-            for(var i=1; i < this.options.restrictedRange.length; i++) {
-              var sp = document.createElement("span");
-              sp.setAttribute("class","rz-bar-wrapper");
-              sp.innerHTML = '<span class="rz-bar rz-restricted" ng-style="restrictionStyle"></span>';
-              mainDiv.appendChild(sp);
+         */
+
+        checkIfRestrictedBarIsMultiple: function(elem, jElem) {
+          this.restrictedBar = []
+          if (Array.isArray(this.options.restrictedRange)) {
+            this.restrictedBar[0] = jElem
+            var mainDiv = elem.parentElement
+            for (var i = 1; i < this.options.restrictedRange.length; i++) {
+              var sp = document.createElement('span')
+              sp.setAttribute('class', 'rz-bar-wrapper')
+              sp.innerHTML =
+                '<span class="rz-bar rz-restricted" ng-style="restrictionStyle"></span>'
+              mainDiv.appendChild(sp)
               this.restrictedBar[i] = angular.element(sp)
             }
-          }
-          else 
-          if (this.options.restrictedRange) {
+          } else if (this.options.restrictedRange) {
             this.restrictedBar[0] = jElem
-          }
-          else {
-            this.restrictedBar = null;
+          } else {
+            this.restrictedBar = null
           }
         },
 
@@ -726,7 +725,7 @@
                   this.selBar = jElem
                   break
                 case 4:
-                  this.checkIfRestrictedBarIsMultiple(jElem);
+                  this.checkIfRestrictedBarIsMultiple(jElem)
                   break
                 case 5:
                   this.minH = jElem
@@ -807,9 +806,12 @@
             !this.range || !this.options.showOuterSelectionBars
           )
 
-          if(Array.isArray(this.options.restrictedRange)) {
-            for(var r in this.restrictedBar) {
-              this.alwaysHide(this.restrictedBar[r], !this.options.restrictedRange[r])
+          if (Array.isArray(this.options.restrictedRange)) {
+            for (var r in this.restrictedBar) {
+              this.alwaysHide(
+                this.restrictedBar[r],
+                !this.options.restrictedRange[r]
+              )
             }
           }
 
@@ -1395,19 +1397,25 @@
          */
         updateRestrictionBar: function() {
           var position = 0,
-              dimension = 0;
+            dimension = 0
           if (this.options.restrictedRange) {
-            this.options.restrictedRange = !Array.isArray(this.options.restrictedRange) ? [this.options.restrictedRange] : this.options.restrictedRange;
+            this.options.restrictedRange = !Array.isArray(
+              this.options.restrictedRange
+            )
+              ? [this.options.restrictedRange]
+              : this.options.restrictedRange
             this.scope.restrictedRangeCount = this.options.restrictedRange.length
-            for(var i in this.options.restrictedRange) {
-              var from = this.valueToPosition(this.options.restrictedRange[i].from),
-              to = this.valueToPosition(this.options.restrictedRange[i].to)
+            for (var i in this.options.restrictedRange) {
+              var from = this.valueToPosition(
+                  this.options.restrictedRange[i].from
+                ),
+                to = this.valueToPosition(this.options.restrictedRange[i].to)
               dimension = Math.abs(to - from)
               position = this.options.rightToLeft
                 ? to + this.handleHalfDim
                 : from + this.handleHalfDim
-                this.setDimension(this.restrictedBar[i], dimension)
-                this.setPosition(this.restrictedBar[i], position)               
+              this.setDimension(this.restrictedBar[i], dimension)
+              this.setPosition(this.restrictedBar[i], position)
             }
           }
         },
@@ -1490,8 +1498,8 @@
                   ? 'bottom'
                   : 'top'
                 : reversed
-                  ? 'left'
-                  : 'right'
+                ? 'left'
+                : 'right'
             this.scope.barStyle = {
               backgroundImage:
                 'linear-gradient(to ' +
@@ -2227,48 +2235,54 @@
         },
 
         /**
-         * Skip restricted range function when arrow keys use 
+         * Skip restricted range function when arrow keys use
          *
          * @param {number} currentValue value of the slider
          * @param {number} key arrow key used
-         * 
-         * @returns {number} currentValue value of the slider       
-         */        
-         skipRestrictedRanges: function (key, currentValue) {
-          if (this.options.restrictedRange && Array.isArray(this.options.restrictedRange)) {            
+         *
+         * @returns {number} currentValue value of the slider
+         */
+
+        skipRestrictedRanges: function(key, currentValue) {
+          if (
+            this.options.restrictedRange &&
+            Array.isArray(this.options.restrictedRange)
+          ) {
             for (var i in this.options.restrictedRange) {
-              var range = this.options.restrictedRange[i];
+              var range = this.options.restrictedRange[i]
               // if it first or last value
-              if(
-                  (
-                    range.from === 0 && 
-                    currentValue === 0 && 
-                    [37,40].includes(key) // LEFT or DOWN
-                  ) 
-                  ||
-                  (
-                    range.to >= this.options.restrictedRange[this.options.restrictedRange.length-1].to && 
-                    currentValue >= this.options.restrictedRange[this.options.restrictedRange.length-1].to && 
-                    [38,39].includes(key) // UP or RIGHT
-                  ) 
-                ) 
-                {
-                  return currentValue;
-                }
+              if (
+                (range.from === 0 &&
+                  currentValue === 0 &&
+                  [37, 40].includes(key)) || // LEFT or DOWN
+                (range.to >=
+                  this.options.restrictedRange[
+                    this.options.restrictedRange.length - 1
+                  ].to &&
+                  currentValue >=
+                    this.options.restrictedRange[
+                      this.options.restrictedRange.length - 1
+                    ].to &&
+                  [38, 39].includes(key)) // UP or RIGHT
+              ) {
+                return currentValue
+              }
 
               if (range.to >= currentValue && currentValue >= range.from) {
-                if(Math.abs(range.to - currentValue) > Math.abs(range.from - currentValue)) {
-                  currentValue = range.to;
+                if (
+                  Math.abs(range.to - currentValue) >
+                  Math.abs(range.from - currentValue)
+                ) {
+                  currentValue = range.to
+                } else {
+                  currentValue = range.from
                 }
-                else {
-                  currentValue = range.from;
-                }
-              }            
+              }
             }
           }
 
-          return currentValue;
-        },        
+          return currentValue
+        },
 
         /**
          * Key actions helper function
@@ -2315,22 +2329,24 @@
         },
 
         onKeyboardEvent: function(event) {
-          var keyCode = event.keyCode || event.which;
-          var currentValue = this[this.tracking];
-          currentValue = this.options.skipRestrictedRangesWithArrowKeys ? this.skipRestrictedRanges(keyCode, currentValue) : currentValue;
+          var keyCode = event.keyCode || event.which
+          var currentValue = this[this.tracking]
+          currentValue = this.options.skipRestrictedRangesWithArrowKeys
+            ? this.skipRestrictedRanges(keyCode, currentValue)
+            : currentValue
           var keys = {
-            38: 'UP',
-            40: 'DOWN',
-            37: 'LEFT',
-            39: 'RIGHT',
-            33: 'PAGEUP',
-            34: 'PAGEDOWN',
-            36: 'HOME',
-            35: 'END',
-          },
-          actions = this.getKeyActions(currentValue),
-          key = keys[keyCode],
-          action = actions[key];
+              38: 'UP',
+              40: 'DOWN',
+              37: 'LEFT',
+              39: 'RIGHT',
+              33: 'PAGEUP',
+              34: 'PAGEDOWN',
+              36: 'HOME',
+              35: 'END',
+            },
+            actions = this.getKeyActions(currentValue),
+            key = keys[keyCode],
+            action = actions[key]
           if (action == null || this.tracking === '') return
           event.preventDefault()
 
@@ -2636,7 +2652,7 @@
         },
 
         applyRestrictedRange: function(newValue) {
-          for(var i in this.options.restrictedRange) {
+          for (var i in this.options.restrictedRange) {
             if (
               this.options.restrictedRange[i] != null &&
               newValue > this.options.restrictedRange[i].from &&
@@ -2647,7 +2663,8 @@
                   this.options.restrictedRange[i].from) /
                 2
               if (this.tracking === 'lowValue') {
-                return newValue > this.options.restrictedRange[i].from + halfWidth
+                return newValue >
+                  this.options.restrictedRange[i].from + halfWidth
                   ? this.options.restrictedRange[i].to
                   : this.options.restrictedRange[i].from
               }
