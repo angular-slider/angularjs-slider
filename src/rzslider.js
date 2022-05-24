@@ -390,9 +390,6 @@
           this.initHandles()
           this.manageEventsBindings()
 
-          // Multiple restricted range count
-          this.scope.restrictedRangeCount = 0
-
           // Recalculate slider view dimensions
           this.scope.$on('reCalcViewDimensions', calcDimFn)
 
@@ -684,7 +681,13 @@
         checkIfRestrictedBarIsMultiple: function(elem) {
           var jElem = angular.element(elem)
           this.restrictedBar = []
-          if (Array.isArray(this.options.restrictedRange)) {
+          if (this.options.restrictedRange) {
+            // this.options.restrictedRange converting to an array even if it's not entered as array.
+            this.options.restrictedRange = !Array.isArray(
+              this.options.restrictedRange
+            )
+              ? [this.options.restrictedRange]
+              : this.options.restrictedRange
             this.restrictedBar[0] = jElem
             var mainDiv = elem.parentElement
             for (var i = 1; i < this.options.restrictedRange.length; i++) {
@@ -695,8 +698,6 @@
               mainDiv.appendChild(sp)
               this.restrictedBar[i] = angular.element(sp)
             }
-          } else if (this.options.restrictedRange) {
-            this.restrictedBar[0] = jElem
           } else {
             elem.style.visibility = 'hidden'
             this.restrictedBar = null
@@ -812,13 +813,13 @@
             !this.range || !this.options.showOuterSelectionBars
           )
 
-          if (Array.isArray(this.options.restrictedRange)) {
-            for (var r in this.restrictedBar) {
+          // this.restrictedBar is everytime an array
+          for (var r in this.restrictedBar) {
+            if (this.restrictedBar[r])
               this.alwaysHide(
                 this.restrictedBar[r],
                 !this.options.restrictedRange[r]
               )
-            }
           }
 
           this.alwaysHide(
@@ -1410,7 +1411,6 @@
             )
               ? [this.options.restrictedRange]
               : this.options.restrictedRange
-            this.scope.restrictedRangeCount = this.options.restrictedRange.length
             for (var i in this.options.restrictedRange) {
               var from = this.valueToPosition(
                   this.options.restrictedRange[i].from
@@ -2273,8 +2273,7 @@
               ) {
                 return currentValue
               }
-
-              if (range.to >= currentValue && currentValue >= range.from) {
+              if (range.to > currentValue && currentValue > range.from) {
                 if (
                   Math.abs(range.to - currentValue) >
                   Math.abs(range.from - currentValue)
@@ -2337,9 +2336,6 @@
         onKeyboardEvent: function(event) {
           var keyCode = event.keyCode || event.which
           var currentValue = this[this.tracking]
-          currentValue = this.options.skipRestrictedRangesWithArrowKeys
-            ? this.skipRestrictedRanges(keyCode, currentValue)
-            : currentValue
           var keys = {
               38: 'UP',
               40: 'DOWN',
@@ -2364,6 +2360,9 @@
           var self = this
           $timeout(function() {
             var newValue = self.roundStep(self.sanitizeValue(action))
+            newValue = self.options.skipRestrictedRangesWithArrowKeys
+              ? self.skipRestrictedRanges(keyCode, newValue)
+              : newValue
             if (!self.options.draggableRangeOnly) {
               self.positionTrackingHandle(newValue)
             } else {

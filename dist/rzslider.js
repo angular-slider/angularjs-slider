@@ -1,7 +1,7 @@
 /*! angularjs-slider - v7.0.1 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervi.eu>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2022-04-27 */
+ 2022-05-24 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 ;(function(root, factory) {
@@ -386,9 +386,6 @@
           this.initHandles()
           this.manageEventsBindings()
 
-          // Multiple restricted range count
-          this.scope.restrictedRangeCount = 0
-
           // Recalculate slider view dimensions
           this.scope.$on('reCalcViewDimensions', calcDimFn)
 
@@ -677,22 +674,22 @@
          * @returns {undefined}
          */
 
-         checkIfRestrictedBarIsMultiple: function(elem) {
+        checkIfRestrictedBarIsMultiple: function(elem) {
           var jElem = angular.element(elem)
           this.restrictedBar = []
-          if (Array.isArray(this.options.restrictedRange)) {
-            this.restrictedBar[0] = jElem
-            var mainDiv = elem.parentElement
-            for (var i = 1; i < this.options.restrictedRange.length; i++) {
-              var sp = document.createElement('span')
-              sp.setAttribute('class', 'rz-bar-wrapper')
-              sp.innerHTML =
-                '<span class="rz-bar rz-restricted" ng-style="restrictionStyle"></span>'
-              mainDiv.appendChild(sp)
-              this.restrictedBar[i] = angular.element(sp)
-            }
-          } else if (this.options.restrictedRange) {
-            this.restrictedBar[0] = jElem
+          if (this.options.restrictedRange) {
+              // this.options.restrictedRange converting to an array even if it's not entered as array.
+              this.options.restrictedRange = !Array.isArray(this.options.restrictedRange) ? [this.options.restrictedRange] : this.options.restrictedRange;
+              this.restrictedBar[0] = jElem
+              var mainDiv = elem.parentElement
+              for (var i = 1; i < this.options.restrictedRange.length; i++) {
+                var sp = document.createElement('span')
+                sp.setAttribute('class', 'rz-bar-wrapper')
+                sp.innerHTML =
+                  '<span class="rz-bar rz-restricted" ng-style="restrictionStyle"></span>'
+                mainDiv.appendChild(sp)
+                this.restrictedBar[i] = angular.element(sp)
+              }
           } else {
             elem.style.visibility = 'hidden';
             this.restrictedBar = null
@@ -808,13 +805,13 @@
             !this.range || !this.options.showOuterSelectionBars
           )
 
-          if (Array.isArray(this.options.restrictedRange)) {
-            for (var r in this.restrictedBar) {
-              this.alwaysHide(
-                this.restrictedBar[r],
-                !this.options.restrictedRange[r]
-              )
-            }
+          // this.restrictedBar is everytime an array
+          for (var r in this.restrictedBar) {
+            if(this.restrictedBar[r])
+            this.alwaysHide(
+              this.restrictedBar[r],
+              !this.options.restrictedRange[r]
+            )
           }
 
           this.alwaysHide(
@@ -1397,7 +1394,7 @@
          *
          * @returns {undefined}
          */
-        updateRestrictionBar: function() {
+         updateRestrictionBar: function() {
           var position = 0,
             dimension = 0
           if (this.options.restrictedRange) {
@@ -1406,7 +1403,6 @@
             )
               ? [this.options.restrictedRange]
               : this.options.restrictedRange
-            this.scope.restrictedRangeCount = this.options.restrictedRange.length
             for (var i in this.options.restrictedRange) {
               var from = this.valueToPosition(
                   this.options.restrictedRange[i].from
@@ -2245,7 +2241,7 @@
          * @returns {number} currentValue value of the slider
          */
 
-        skipRestrictedRanges: function(key, currentValue) {
+         skipRestrictedRanges: function(key, currentValue) {
           if (
             this.options.restrictedRange &&
             Array.isArray(this.options.restrictedRange)
@@ -2254,23 +2250,16 @@
               var range = this.options.restrictedRange[i]
               // if it first or last value
               if (
-                (range.from === 0 &&
-                  currentValue === 0 &&
-                  [37, 40].includes(key)) || // LEFT or DOWN
-                (range.to >=
-                  this.options.restrictedRange[
-                    this.options.restrictedRange.length - 1
-                  ].to &&
-                  currentValue >=
-                    this.options.restrictedRange[
-                      this.options.restrictedRange.length - 1
-                    ].to &&
-                  [38, 39].includes(key)) // UP or RIGHT
+                (range.from === 0 && currentValue === 0 && [37, 40].includes(key)) || // LEFT or DOWN
+                (
+                  range.to >= this.options.restrictedRange[ this.options.restrictedRange.length - 1 ].to &&
+                  currentValue >= this.options.restrictedRange[ this.options.restrictedRange.length - 1 ].to && 
+                  [38, 39].includes(key)
+                ) // UP or RIGHT
               ) {
                 return currentValue
               }
-
-              if (range.to >= currentValue && currentValue >= range.from) {
+              if (range.to > currentValue && currentValue > range.from) {
                 if (
                   Math.abs(range.to - currentValue) >
                   Math.abs(range.from - currentValue)
@@ -2333,9 +2322,6 @@
         onKeyboardEvent: function(event) {
           var keyCode = event.keyCode || event.which
           var currentValue = this[this.tracking]
-          currentValue = this.options.skipRestrictedRangesWithArrowKeys
-            ? this.skipRestrictedRanges(keyCode, currentValue)
-            : currentValue
           var keys = {
               38: 'UP',
               40: 'DOWN',
@@ -2360,6 +2346,7 @@
           var self = this
           $timeout(function() {
             var newValue = self.roundStep(self.sanitizeValue(action))
+            newValue = self.options.skipRestrictedRangesWithArrowKeys ? self.skipRestrictedRanges(keyCode, newValue) : newValue
             if (!self.options.draggableRangeOnly) {
               self.positionTrackingHandle(newValue)
             } else {
