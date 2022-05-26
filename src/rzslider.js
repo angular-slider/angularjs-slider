@@ -678,7 +678,7 @@
          * @returns {undefined}
          */
 
-        checkIfRestrictedBarIsMultiple: function(elem) {
+        ensureRestrictedBarIsArray: function(elem) {
           var jElem = angular.element(elem)
           this.restrictedBar = []
           if (this.options.restrictedRange) {
@@ -732,7 +732,7 @@
                   this.selBar = jElem
                   break
                 case 4:
-                  this.checkIfRestrictedBarIsMultiple(elem)
+                  this.ensureRestrictedBarIsArray(elem)
                   break
                 case 5:
                   this.minH = jElem
