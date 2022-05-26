@@ -6,3 +6,4 @@ tests/coverage/
 yarn.lock
 cypress/videos
 npm-debug.log
+.history/

@@ -244,6 +244,7 @@ The default options are:
     minLimit: null,
     maxLimit: null,
     restrictedRange: null,
+    skipRestrictedRangesWithArrowKeys: null,
     minRange: null,
     maxRange: null,
     pushRange: false,
@@ -312,7 +313,9 @@ The default options are:
 
 **maxLimit** - _Number (defaults to null)_: The maximum value authorized on the slider.
 
-**restrictedRange** - _Object (defaults to null)_: Has two _Number_ properties, _from_ and _to_ that determine the bounds of an area that is not authorized for values. _Applies to range slider only._
+**restrictedRange** - _Object (defaults to null)_: Has two _Number_ properties, _from_ and _to_ that determine the bounds of an area that is not authorized for values. Can also use an array. _Applies to range slider only._
+
+**skipRestrictedRangesWithArrowKeys** - _Boolean (defaults to null)_: Set to true to skip restricted ranges with arrow keys.
 
 **minRange** - _Number (defaults to null)_: The minimum range authorized on the slider. _Applies to range slider only._
 

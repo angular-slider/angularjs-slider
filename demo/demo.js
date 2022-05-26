@@ -65,6 +65,23 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $uibModal) {
     },
   }
 
+  // Restricted range with multiple array and the feature skipRestrictedRangesWithArrowKeys
+  $scope.multipleRestrictedRangeSlider = {
+    minValue: 10,
+    maxValue: 90,
+    options: {
+      restrictedRange: [
+        { from: 20, to: 30 },
+        { from: 50, to: 60 },
+        { from: 75, to: 85 },
+      ],
+      skipRestrictedRangesWithArrowKeys: true,
+      floor: 0,
+      ceil: 100,
+      step: 1,
+    },
+  }
+
   //Range slider with minRange and maxRange config
   $scope.minMaxRangeSlider = {
     minValue: 40,

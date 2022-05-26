@@ -41,6 +41,7 @@
         minRange: null,
         maxRange: null,
         restrictedRange: null,
+        skipRestrictedRangesWithArrowKeys: null,
         pushRange: false,
         minLimit: null,
         maxLimit: null,
@@ -524,8 +525,8 @@
         },
 
         /*
-       * Reflow the slider when the low handle changes (called with throttle)
-       */
+         * Reflow the slider when the low handle changes (called with throttle)
+         */
         onLowHandleChange: function() {
           this.syncLowValue()
           if (this.range) this.syncHighValue()
@@ -540,8 +541,8 @@
         },
 
         /*
-       * Reflow the slider when the high handle changes (called with throttle)
-       */
+         * Reflow the slider when the high handle changes (called with throttle)
+         */
         onHighHandleChange: function() {
           this.syncLowValue()
           this.syncHighValue()
@@ -670,6 +671,40 @@
         },
 
         /**
+         * Check if the restrictedRange option using multiple or not
+         *
+         * Run only once during initialization and only in case 4
+         *
+         * @returns {undefined}
+         */
+
+        ensureRestrictedBarIsArray: function(elem) {
+          var jElem = angular.element(elem)
+          this.restrictedBar = []
+          if (this.options.restrictedRange) {
+            // this.options.restrictedRange converting to an array even if it's not entered as array.
+            this.options.restrictedRange = !Array.isArray(
+              this.options.restrictedRange
+            )
+              ? [this.options.restrictedRange]
+              : this.options.restrictedRange
+            this.restrictedBar[0] = jElem
+            var mainDiv = elem.parentElement
+            for (var i = 1; i < this.options.restrictedRange.length; i++) {
+              var sp = document.createElement('span')
+              sp.setAttribute('class', 'rz-bar-wrapper')
+              sp.innerHTML =
+                '<span class="rz-bar rz-restricted" ng-style="restrictionStyle"></span>'
+              mainDiv.appendChild(sp)
+              this.restrictedBar[i] = angular.element(sp)
+            }
+          } else {
+            elem.style.visibility = 'hidden'
+            this.restrictedBar = null
+          }
+        },
+
+        /**
          * Set the slider children to variables for easy access
          *
          * Run only once during initialization
@@ -697,7 +732,7 @@
                   this.selBar = jElem
                   break
                 case 4:
-                  this.restrictedBar = jElem
+                  this.ensureRestrictedBarIsArray(elem)
                   break
                 case 5:
                   this.minH = jElem
@@ -777,7 +812,16 @@
             this.leftOutSelBar,
             !this.range || !this.options.showOuterSelectionBars
           )
-          this.alwaysHide(this.restrictedBar, !this.options.restrictedRange)
+
+          // this.restrictedBar is everytime an array
+          for (var r in this.restrictedBar) {
+            if (this.restrictedBar[r])
+              this.alwaysHide(
+                this.restrictedBar[r],
+                !this.options.restrictedRange[r]
+              )
+          }
+
           this.alwaysHide(
             this.rightOutSelBar,
             !this.range || !this.options.showOuterSelectionBars
@@ -1362,14 +1406,23 @@
           var position = 0,
             dimension = 0
           if (this.options.restrictedRange) {
-            var from = this.valueToPosition(this.options.restrictedRange.from),
-              to = this.valueToPosition(this.options.restrictedRange.to)
-            dimension = Math.abs(to - from)
-            position = this.options.rightToLeft
-              ? to + this.handleHalfDim
-              : from + this.handleHalfDim
-            this.setDimension(this.restrictedBar, dimension)
-            this.setPosition(this.restrictedBar, position)
+            this.options.restrictedRange = !Array.isArray(
+              this.options.restrictedRange
+            )
+              ? [this.options.restrictedRange]
+              : this.options.restrictedRange
+            for (var i in this.options.restrictedRange) {
+              var from = this.valueToPosition(
+                  this.options.restrictedRange[i].from
+                ),
+                to = this.valueToPosition(this.options.restrictedRange[i].to)
+              dimension = Math.abs(to - from)
+              position = this.options.rightToLeft
+                ? to + this.handleHalfDim
+                : from + this.handleHalfDim
+              this.setDimension(this.restrictedBar[i], dimension)
+              this.setPosition(this.restrictedBar[i], position)
+            }
           }
         },
 
@@ -1451,8 +1504,8 @@
                   ? 'bottom'
                   : 'top'
                 : reversed
-                  ? 'left'
-                  : 'right'
+                ? 'left'
+                : 'right'
             this.scope.barStyle = {
               backgroundImage:
                 'linear-gradient(to ' +
@@ -2188,6 +2241,55 @@
         },
 
         /**
+         * Skip restricted range function when arrow keys use
+         *
+         * @param {number} currentValue value of the slider
+         * @param {number} key arrow key used
+         *
+         * @returns {number} currentValue value of the slider
+         */
+
+        skipRestrictedRanges: function(key, currentValue) {
+          if (
+            this.options.restrictedRange &&
+            Array.isArray(this.options.restrictedRange)
+          ) {
+            for (var i in this.options.restrictedRange) {
+              var range = this.options.restrictedRange[i]
+              // if it first or last value
+              if (
+                (range.from === 0 &&
+                  currentValue === 0 &&
+                  [37, 40].includes(key)) || // LEFT or DOWN
+                (range.to >=
+                  this.options.restrictedRange[
+                    this.options.restrictedRange.length - 1
+                  ].to &&
+                  currentValue >=
+                    this.options.restrictedRange[
+                      this.options.restrictedRange.length - 1
+                    ].to &&
+                  [38, 39].includes(key)) // UP or RIGHT
+              ) {
+                return currentValue
+              }
+              if (range.to > currentValue && currentValue > range.from) {
+                if (
+                  Math.abs(range.to - currentValue) >
+                  Math.abs(range.from - currentValue)
+                ) {
+                  currentValue = range.to
+                } else {
+                  currentValue = range.from
+                }
+              }
+            }
+          }
+
+          return currentValue
+        },
+
+        /**
          * Key actions helper function
          *
          * @param {number} currentValue value of the slider
@@ -2232,9 +2334,9 @@
         },
 
         onKeyboardEvent: function(event) {
-          var currentValue = this[this.tracking],
-            keyCode = event.keyCode || event.which,
-            keys = {
+          var keyCode = event.keyCode || event.which
+          var currentValue = this[this.tracking]
+          var keys = {
               38: 'UP',
               40: 'DOWN',
               37: 'LEFT',
@@ -2258,6 +2360,9 @@
           var self = this
           $timeout(function() {
             var newValue = self.roundStep(self.sanitizeValue(action))
+            newValue = self.options.skipRestrictedRangesWithArrowKeys
+              ? self.skipRestrictedRanges(keyCode, newValue)
+              : newValue
             if (!self.options.draggableRangeOnly) {
               self.positionTrackingHandle(newValue)
             } else {
@@ -2552,26 +2657,30 @@
         },
 
         applyRestrictedRange: function(newValue) {
-          if (
-            this.options.restrictedRange != null &&
-            newValue > this.options.restrictedRange.from &&
-            newValue < this.options.restrictedRange.to
-          ) {
-            var halfWidth =
-              (this.options.restrictedRange.to -
-                this.options.restrictedRange.from) /
-              2
-            if (this.tracking === 'lowValue') {
-              return newValue > this.options.restrictedRange.from + halfWidth
-                ? this.options.restrictedRange.to
-                : this.options.restrictedRange.from
-            }
-            if (this.tracking === 'highValue') {
-              return newValue < this.options.restrictedRange.to - halfWidth
-                ? this.options.restrictedRange.from
-                : this.options.restrictedRange.to
+          for (var i in this.options.restrictedRange) {
+            if (
+              this.options.restrictedRange[i] != null &&
+              newValue > this.options.restrictedRange[i].from &&
+              newValue < this.options.restrictedRange[i].to
+            ) {
+              var halfWidth =
+                (this.options.restrictedRange[i].to -
+                  this.options.restrictedRange[i].from) /
+                2
+              if (this.tracking === 'lowValue') {
+                return newValue >
+                  this.options.restrictedRange[i].from + halfWidth
+                  ? this.options.restrictedRange[i].to
+                  : this.options.restrictedRange[i].from
+              }
+              if (this.tracking === 'highValue') {
+                return newValue < this.options.restrictedRange[i].to - halfWidth
+                  ? this.options.restrictedRange[i].from
+                  : this.options.restrictedRange[i].to
+              }
             }
           }
+
           return newValue
         },
 
